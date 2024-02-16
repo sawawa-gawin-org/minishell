@@ -6,25 +6,101 @@
 
 プログラム名 : minishell  
 提出ファイル : Makefile, *.h, *.c  
-引数 : なし  
-<details>
-<summary>外部関数(折りたたみ)</summary>  
+引数 : なし 
 
-- readline  
-- rl_clear_history  
-- rl_on_new_line  
-- rl_replace_line  
-- rl_redisplay  
-- add_history  
+<details><summary>外部関数(折りたたみ)</summary>  
+
+<details><summary>readline</summary>
+
+Macのデフォルト環境に存在しないため、brew install readlineで入れる。  
+promptをプロンプトとして、読み取った行のテキストを返す。
+```
+#include <treadline/readline.h>
+#include <readline/history.h>
+
+char	*readline(const char *prompt);
+```
+</details>
+<details><summary>rl_clear_history</summary>
+
+readline()が履歴に保存したデータを消す。
+```
+void  rl_clear_history(void);
+```
+</details>
+<details><summary>rl_on_new_line</summary>
+
+改行を出力した後、新しい行に移動したことを更新関数に伝える。
+```
+int  rl_on_new_line(void);
+```
+</details>
+<details><summary>rl_replace_line</summary>
+
+呼ぶ前の行の文字列を指定した文字列に置き換える。  
+第二引数を0にすると置き換えた文字列を履歴に残さないが、1にすると残る。
+```
+void  rl_replace_line(const char *text, int clear_undo);
+```
+</details>
+<details><summary>rl_redisplay</summary>
+
+現在の行の状態を反映するために再描画する。
+```
+void  rl_redisplay(void);
+```
+</details>
+<details><summary>add_history</summary>
+
+履歴リストに現在の行を追加する。
+```
+void  add_history(const char *);
+```
+</details>
+
 - printf  
 - malloc  
 - free  
 - write  
-- access  
+
+<details><summary>access</summary>
+
+pathのファイルの実ユーザーに対するアクセス権をチェックする。  
+modeはチェック項目を設定する。R_OK(読取+ファイル存在)、W_OK(書込+ファイル存在)、X_OK(実行+ファイル存在)、F_OK(ファイル存在)がある。アクセス可能で0、不可またはエラーで-1を返し、errnoを設定する。
+```
+#include <unistd.h>
+
+int  access(const char *path, int mode);
+```
+</details>
+
+
 - open  
 - read  
 - close  
-- fork  
+<details><summary>fork</summary>
+
+呼び出し元プロセスを複製して新しいプロセス(子プロセス)を生成する。  
+使用後、親プロセスのpid_tは0より大きい数に、子プロセスは0になる。エラー時は-1となる。
+```
+#include <unistd.h>
+
+pid_t  fork(void);
+```
+</details>
+<details><summary>wait</summary>
+
+子プロセスの状態変化(終了やシグナルによる停止、再開)を待つ。statは子プロセスの終了ステータスを含む変数を指定する。exitの引数そのままではなく、ステータス & 0377である。不要ならNULLでもOK
+```
+#include <sys/wait.h>
+
+pid_t  wait(int *stat);
+
+//マクロ
+WIFEXITED(status) //子プロセスが正常に終了したら真
+```
+</details>
+
 - wait  
 - waitpid  
 - wait3  
@@ -75,7 +151,8 @@ Libft許可 : OK
 - 適切な実行可能ファイルを検索して開始する(環境変数PATHや相対パス、絶対パスに基づく)
 - 受け取ったsignalを示すために1つ以上のグローバル変数を使用することは避けてください。<br>このアプローチにより、シグナルハンドラがメインのデータ構造にアクセスしないことが保証される。  
 
-<span style="color: red; ">注意</span> : このグローバル変数は受け取ったsignalの番号以外の情報やデータアクセスを提供することはできない。したがって、グローバルでnormタイプの構造体の使用は禁止される。  
+> [!WARNING]
+> このグローバル変数は受け取ったsignalの番号以外の情報やデータアクセスを提供することはできない。したがって、グローバルでnormタイプの構造体の使用は禁止される。  
 
 - 閉じられていないクオートや、subject(対象?)に必要のないセミコロン、バックスラッシュのような特殊文字は解釈されない
 - 「'」(シングルクオート)を用いることでshellがクオートで囲まれたシーケンス内のメタキャラクタを解釈するのを防ぐ  
