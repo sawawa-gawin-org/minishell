@@ -1,28 +1,29 @@
 # Parameters
-NAME = <Program Name> # Fix it
+NAME = minishell # Fix it
 DNAME = $(addsuffix _debug, $(NAME))
 
 HEADER_DIR = ./include/
-HEADERS := <Header files> # Fix it
+HEADERS := minishell.h # Fix it
 
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
 
 SRC_DIR = ./src/
-SRCS := <Source files from SRC_DIR> # Fix it
+SRCS := main.c # Fix it
 
 SRCS := $(addprefix $(SRC_DIR), $(SRCS)) 
 
 TMP_DIR = ./tmp/
 OBJ_DIR = $(addprefix $(TMP_DIR),prod/)
 DOBJ_DIR = $(addprefix $(TMP_DIR),dev/)
-SUB_OBJ_DIR = <Sub directries in the SRC_DIR> # Fix it
+SUB_OBJ_DIR = obj # Fix it
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS = $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-LFLAGS = # Fix it
+# CFLAGS = -Wall -Wextra -Werror
+CFLAGS =
+LFLAGS = -lreadline # Fix it
 DFLAGS = -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS = -I$(HEADER_DIR)
 
