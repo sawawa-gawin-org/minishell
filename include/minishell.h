@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:52:14 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/02/28 18:07:27 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:36:16 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,23 @@
 
 # include <termios.h>
 
+typedef struct s_token
+{
+	struct s_token	*next;
+	struct s_token	*prev;
+	char			*token_str;
+}			t_token;
+
 size_t	ft_strlcpy(char *restrict dest, const char *restrict src, size_t size);
 size_t	ft_strlen(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *s, int c);
+char	*ft_strdup(char *src);
+
+t_token	*lstnew_2way(t_token *tokens, char *str);
+
+//debug
+void	put_lst(t_token *tokens);
+void	del_lst(t_token *tokens);
 
 #endif

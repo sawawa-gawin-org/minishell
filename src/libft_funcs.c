@@ -6,11 +6,11 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 18:05:16 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/02/28 18:06:20 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:35:42 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../include/minishell.h"
 
 char	*ft_strchr(const char *s, int c)
 {
@@ -79,4 +79,24 @@ size_t	ft_strlcpy(char *restrict dest, const char *restrict src, size_t size)
 	}
 	dest[i] = '\0';
 	return (len);
+}
+
+char	*ft_strdup(char *src)
+{
+	char	*copysrc;
+	size_t	i;
+	size_t	len;
+
+	i = 0;
+	len = ft_strlen(src);
+	copysrc = (char *)malloc((len + 1) * sizeof(char));
+	if (copysrc == NULL)
+		return (copysrc);
+	while (src[i])
+	{
+		copysrc[i] = src[i];
+		i++;
+	}
+	copysrc[i] = '\0';
+	return (copysrc);
 }

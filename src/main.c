@@ -6,19 +6,13 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/02/28 19:27:16 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:52:24 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// typedef struct s_token
-// {
-// 	t_token	*next;
-// 	t_token	*prev;
-// 	char	*token_str;
-// }			t_token;
-
+// "echo text"の't'(index=5)からprintfするだけ、debug用
 void	ft_echo(char *line)
 {
 	int	i;
@@ -44,7 +38,7 @@ void	sig_handler(int signal)
 	}
 }
 
-int	lexer(char *line) //lineはreadlineの出力
+t_token	*lexer(char *line, t_token *tokens)
 {
 	int		i;
 	int		j;
@@ -60,7 +54,7 @@ int	lexer(char *line) //lineはreadlineの出力
 			if (line[i] != '|' && line[i] == line[i + 1])
 				j = 2;
 			str = ft_substr(line, i, j);
-			printf("%s\n", str);
+			tokens = lstnew_2way(tokens, str);
 			free(str);
 			i += j;
 		}
@@ -70,14 +64,14 @@ int	lexer(char *line) //lineはreadlineの出力
 			while (line[j + i] != '\0' && ft_strchr(" <>|", line[j + i]) == NULL)
 				j++;
 			str = ft_substr(line, i, j);
-			printf("%s\n", str);
+			tokens = lstnew_2way(tokens, str);
 			free(str);
 			i += j;
 		}
 		if (line[i] == ' ')
 			i++;
 	}
-	return (0);
+	return (tokens);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -85,6 +79,7 @@ int	main(int argc, char *argv[], char *envp[])
 	struct termios	term; //端末の属性を変更する用の構造体
 	struct termios	save; //変更前の属性を保存する用の構造体
 	char			*line; //readlineで読み取った文字列用のchar*
+	t_token			*tokens;
 
 	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
 	term = save; //複製
@@ -95,6 +90,7 @@ int	main(int argc, char *argv[], char *envp[])
 	line = NULL;
 	while (1)
 	{
+		tokens = NULL;
 		line = readline("minishell> ");
 		if (line == NULL)
 			break ;
@@ -114,7 +110,9 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		else if (strncmp(line, "echo", 4) == 0)
 			ft_echo(line);
-		lexer(line);
+		tokens = lexer(line, tokens);
+		put_lst(tokens);
+		del_lst(tokens);
 		add_history(line);
 		free(line);
 	}

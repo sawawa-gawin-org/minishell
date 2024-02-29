@@ -8,7 +8,7 @@ HEADERS := minishell.h # Fix it
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
 
 SRC_DIR = ./src/
-SRCS := main.c libft_funcs.c # Fix it
+SRCS := main.c libft_funcs.c lst_2way.c # Fix it
 
 SRCS := $(addprefix $(SRC_DIR), $(SRCS)) 
 
