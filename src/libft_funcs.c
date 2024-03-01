@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   libft_funcs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 18:05:16 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/02/29 15:35:42 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/01 10:11:05 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 char	*ft_strchr(const char *s, int c)
 {

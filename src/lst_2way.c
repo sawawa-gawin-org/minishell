@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lst_2way.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:11:34 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/02/29 15:48:03 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/01 10:11:12 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 t_token	*lst_last(t_token *tokens)
 {
