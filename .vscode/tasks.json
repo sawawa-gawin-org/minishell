@@ -16,6 +16,22 @@
             ],
 			"group": "build",
 		},
+		{
+			"type": "cppbuild",
+			"label": "libft-make",
+			"command": "make",
+			"args": [
+				"test", "DEBUG_MODE=1",
+				"-C", "${workspaceFolder}/test/libft"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+            "problemMatcher": [
+                "$gcc"
+            ],
+			"group": "build",
+		},
     ],
     "version": "2.0.0"
 }
