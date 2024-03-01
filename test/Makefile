@@ -1,9 +1,9 @@
 DNAME := $(NAME:.out=_debug.out)
 
-NAME := $(addprefix $(OBJ_DIR),$(NAME))
-DNAME := $(addprefix $(DOBJ_DIR),$(DNAME))
-
 TEST_SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/test/$(BASE_DIRNAME)/)
+
+NAME := $(addprefix $(TEST_SRC_DIR),$(NAME))
+DNAME := $(addprefix $(TEST_SRC_DIR),$(DNAME))
 
 TEST_SRCS := $(addprefix $(TEST_SRC_DIR),$(TEST_SRCS)) 
 
@@ -25,3 +25,7 @@ $(NAME): $(OBJS) $(TEST_OBJS)
 
 $(OBJ_DIR)%.o: $(TEST_SRC_DIR)%.c $(HEADERS)
 	$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) -c $< -o $@
+
+.PHONY: tclean
+tclean:
+	rm -f $(NAME) $(DNAME)
