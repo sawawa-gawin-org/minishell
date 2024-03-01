@@ -8,7 +8,7 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 include $(REPOSITORY_ROOT)/src/$(BASE_DIRNAME)/Makefile
 
 # Parameters
-NAME := libft.out
+NAME := pipex.out
 TEST_SRCS := main.c
 
 include $(REPOSITORY_ROOT)/test/Makefile

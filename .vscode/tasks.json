@@ -32,6 +32,22 @@
             ],
 			"group": "build",
 		},
+		{
+			"type": "cppbuild",
+			"label": "pipex-make",
+			"command": "make",
+			"args": [
+				"test", "DEBUG_MODE=1",
+				"-C", "${workspaceFolder}/test/pipex"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+            "problemMatcher": [
+                "$gcc"
+            ],
+			"group": "build",
+		},
     ],
     "version": "2.0.0"
 }

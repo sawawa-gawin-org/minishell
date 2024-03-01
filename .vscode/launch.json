@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "Mandatory-linux",
+			"name": "linux-minishell",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/minishell_debug",
@@ -17,7 +17,35 @@
 			"preLaunchTask": "minishell-make",
 		},
 		{
-			"name": "Mandatory-mac",
+			"name": "linux-libft",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tmp/dev/libft/libft_debug.out",
+			"args": [
+				// if you want to pass arguments to your program
+			],
+			"stopAtEntry": false,
+			"cwd": "${fileDirname}",
+			"environment": [],
+			"MIMode": "gdb",
+			"preLaunchTask": "libft-make",
+		},
+		{
+			"name": "linux-pipex",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tmp/dev/pipex/pipex_debug.out",
+			"args": [
+				// if you want to pass arguments to your program
+			],
+			"stopAtEntry": false,
+			"cwd": "${fileDirname}",
+			"environment": [],
+			"MIMode": "gdb",
+			"preLaunchTask": "pipex-make",
+		},
+		{
+			"name": "mac-minishell",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/minishell_debug",
@@ -32,21 +60,7 @@
 			"preLaunchTask": "minishell-make",
 		},
 		{
-			"name": "libft-linux",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/tmp/dev/libft/libft_debug.out",
-			"args": [
-				// if you want to pass arguments to your program
-			],
-			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
-			"environment": [],
-			"MIMode": "gdb",
-			"preLaunchTask": "libft-make",
-		},
-		{
-			"name": "libft-mac",
+			"name": "mac-libft",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/tmp/dev/libft/libft_debug.out",
@@ -58,6 +72,20 @@
 			"environment": [],
 			"MIMode": "lldb",
 			"preLaunchTask": "libft-make",
+		},
+		{
+			"name": "mac-pipex",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/tmp/dev/pipex/pipex_debug.out",
+			"args": [
+				// if you want to pass arguments to your program
+			],
+			"stopAtEntry": false,
+			"cwd": "${fileDirname}",
+			"environment": [],
+			"MIMode": "lldb",
+			"preLaunchTask": "pipex-make",
 		},
 	]
 }
