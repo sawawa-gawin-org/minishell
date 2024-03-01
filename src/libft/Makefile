@@ -51,6 +51,7 @@ all: $(OBJ_DIR) $(LIB_NAME)
 
 $(OBJ_DIR):
 	mkdir -p $(addprefix $(OBJ_DIR), $(SUB_OBJ_DIR))
+	mkdir -p $(LIB_EXPORT_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
 	$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) -c $< -o $@
