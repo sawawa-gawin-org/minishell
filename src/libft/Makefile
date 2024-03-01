@@ -1,15 +1,17 @@
+# Hyper Parameter
+MAKEFILE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
+REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
+
 # Parameters
-LIB_EXPORT_DIR = ../../lib/
+LIB_EXPORT_DIR = $(addprefix $(REPOSITORY_ROOT),/lib)
 LIB_NAME := libft.a
 DLIB_NAME := $(LIB_NAME:.a=_debug.a)
 LIB_NAME := $(addprefix $(LIB_EXPORT_DIR), $(LIB_NAME))
 DLIB_NAME := $(addprefix $(LIB_EXPORT_DIR), $(DLIB_NAME))
 
-HEADER_DIR = ../../include/
+HEADER_DIR = $(addprefix $(REPOSITORY_ROOT),/include/)
 HEADERS := libft.h
-
-MAKEFILE_DIR:=$(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-BASE_DIRNAME = $(shell basename ${MAKEFILE_DIR})
 
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
 
@@ -25,10 +27,10 @@ SRCS := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c 
 
 SRCS := $(addprefix $(SRC_DIR), $(SRCS)) 
 
-TMP_DIR = ../../tmp/
+TMP_DIR = $(addprefix $(REPOSITORY_ROOT),/tmp/)
 OBJ_DIR = $(addprefix $(TMP_DIR),prod/$(BASE_DIRNAME)/)
 DOBJ_DIR = $(addprefix $(TMP_DIR),dev/$(BASE_DIRNAME)/)
-SUB_OBJ_DIR =  ./
+SUB_OBJ_DIR = ./
 
 OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS = $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
