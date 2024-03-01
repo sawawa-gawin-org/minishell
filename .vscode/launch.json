@@ -5,7 +5,7 @@
 			"name": "Mandatory-linux",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/*_debug",
+			"program": "${workspaceFolder}/minishell_debug",
 			"args": [
 				// if you want to pass arguments to your program
 			],
@@ -13,13 +13,14 @@
 			"cwd": "${fileDirname}",
 			"environment": [],
 			"MIMode": "gdb",
-			"preLaunchTask": "philo-make",
+			"externalConsole": true,
+			"preLaunchTask": "minishell-make",
 		},
 		{
 			"name": "Mandatory-mac",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/*_debug",
+			"program": "${workspaceFolder}/minishell_debug",
 			"args": [
 				// if you want to pass arguments to your program
 			],
@@ -27,7 +28,8 @@
 			"cwd": "${fileDirname}",
 			"environment": [],
 			"MIMode": "lldb",
-			"preLaunchTask": "philo-make",
+			"externalConsole": true,
+			"preLaunchTask": "minishell-make",
 		},
 	]
 }
