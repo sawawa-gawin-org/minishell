@@ -4,11 +4,11 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_EXPORT_DIR = $(addprefix $(REPOSITORY_ROOT),/lib)
+LIB_EXPORT_DIR = $(addprefix $(REPOSITORY_ROOT),/lib/)
 LIB_NAME := libft.a
 DLIB_NAME := $(LIB_NAME:.a=_debug.a)
-LIB_NAME := $(addprefix $(LIB_EXPORT_DIR), $(LIB_NAME))
-DLIB_NAME := $(addprefix $(LIB_EXPORT_DIR), $(DLIB_NAME))
+LIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(LIB_NAME))
+DLIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(DLIB_NAME))
 
 HEADER_DIR = $(addprefix $(REPOSITORY_ROOT),/include/)
 HEADERS := libft.h
