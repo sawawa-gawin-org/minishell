@@ -9,7 +9,6 @@ HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
 OBJS := $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS := $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
 
-
 # Rules
 ifdef DEBUG_MODE
 OBJS := $(DOBJS)
