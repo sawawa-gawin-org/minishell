@@ -63,7 +63,7 @@ debug:
 	make DEBUG_MODE=1
 
 clean:
-	rm -rf $(TMP_DIR) $(DLIB_NAME)
+	rm -rf $(OBJ_DIR) $(DOBJ_DIR) $(DLIB_NAME)
 
 fclean: clean
 	rm -f $(LIB_NAME)
@@ -71,6 +71,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all debug clean fclean re
-
-echo:
-	@echo $(DLIB_NAME)
