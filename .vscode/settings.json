@@ -1,5 +1,9 @@
 {
 	"files.associations": {
-		"libft.h": "c"
+		"libft.h": "c",
+		"pipex.h": "c",
+		"types.h": "c",
+		"wait.h": "c",
+		"stat.h": "c"
 	}
 }
