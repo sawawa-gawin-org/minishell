@@ -34,9 +34,9 @@
 			"name": "linux-pipex",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tmp/dev/pipex/pipex_debug.out",
+			"program": "${workspaceFolder}/test/pipex/pipex_debug.out",
 			"args": [
-				// if you want to pass arguments to your program
+				"${workspaceFolder}/test/pipex/infile.txt", "grep .c", "wc -l", "${workspaceFolder}/test/pipex/outfile.txt"
 			],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",
@@ -77,7 +77,7 @@
 			"name": "mac-pipex",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tmp/dev/pipex/pipex_debug.out",
+			"program": "${workspaceFolder}/test/pipex/pipex_debug.out",
 			"args": [
 				// if you want to pass arguments to your program
 			],
