@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:42:11 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/01 17:42:55 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/04 17:24:57 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_pipex
 	pid_t	pids[2];
 }		t_pipex;
 
+int		pipex(int argc, char *argv[], char *envp[]);
 int		close_fd(int *fds, int exit_code);
 void	free_split(char **s);
 void	exit_closepipe(t_pipex *pipex);
