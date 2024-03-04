@@ -2,11 +2,43 @@
     "tasks": [
 		{
 			"type": "cppbuild",
-			"label": "philo-make",
+			"label": "minishell-make",
 			"command": "make",
 			"args": [
 				"debug",
 				"-C", "${workspaceFolder}"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+            "problemMatcher": [
+                "$gcc"
+            ],
+			"group": "build",
+		},
+		{
+			"type": "cppbuild",
+			"label": "libft-make",
+			"command": "make",
+			"args": [
+				"test", "DEBUG_MODE=1",
+				"-C", "${workspaceFolder}/test/libft"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+            "problemMatcher": [
+                "$gcc"
+            ],
+			"group": "build",
+		},
+		{
+			"type": "cppbuild",
+			"label": "pipex-make",
+			"command": "make",
+			"args": [
+				"test", "DEBUG_MODE=1",
+				"-C", "${workspaceFolder}/test/pipex"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
