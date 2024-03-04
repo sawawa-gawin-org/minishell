@@ -18,8 +18,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <readline/history.h>
 # include <readline/readline.h>
+# include <readline/history.h>
 
 # include <termios.h>
 
@@ -29,12 +29,6 @@ typedef struct s_token
 	struct s_token	*prev;
 	char			*token_str;
 }			t_token;
-
-size_t	ft_strlcpy(char *restrict dest, const char *restrict src, size_t size);
-size_t	ft_strlen(const char *str);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strdup(char *src);
 
 t_token	*lstnew_2way(t_token *tokens, char *str);
 

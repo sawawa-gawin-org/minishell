@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
+#include "libft.h"
 
 // "echo text"の't'(index=5)からprintfするだけ、debug用
 void	ft_echo(char *line)
@@ -81,6 +82,9 @@ int	main(int argc, char *argv[], char *envp[])
 	char			*line; //readlineで読み取った文字列用のchar*
 	t_token			*tokens;
 
+	(void)argc;
+	(void)argv;
+	(void)envp;
 	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
 	term = save; //複製
 	term.c_lflag &= ~(ECHOCTL); //制御文字を消す
