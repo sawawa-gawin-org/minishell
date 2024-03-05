@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/01 17:23:20 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 03:40:45 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "pipex_int.h"
 
 int	close_fd(int *fds, int exit_code)
 {

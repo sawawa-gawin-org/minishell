@@ -6,12 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/01 17:43:56 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 03:40:57 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "pipex.h"
+#include "pipex_int.h"
 
 static char	*find_path(char *path, char *envs);
 static int	path_length_checker(char *env_path, int i);

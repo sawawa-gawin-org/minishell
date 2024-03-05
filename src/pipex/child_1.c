@@ -6,12 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:50:46 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/01 17:44:05 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 03:41:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "pipex.h"
+#include "pipex_int.h"
 
 static void	do_child_1(char **cmd, char *path, char *envp[], t_pipex *pipex);
 

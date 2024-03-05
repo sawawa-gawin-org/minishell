@@ -6,12 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/04 17:05:23 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 03:40:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "pipex.h"
+#include "pipex_int.h"
 
 static void	init_struct(t_pipex *pipex);
 static void	open_io_files(int argc, char *argv[], t_pipex *pipex);
