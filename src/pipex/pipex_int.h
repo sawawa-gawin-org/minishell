@@ -6,9 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:23:40 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/04 17:24:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 04:43:43 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* internal header file for pipex */
 
 #ifndef PIPEX_INT_H
 # define PIPEX_INT_H
