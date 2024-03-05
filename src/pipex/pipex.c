@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/05 06:44:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 08:50:59 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,19 @@ int	pipex(int argc, char *argv[], char *envp[])
 static t_pipex	*init_struct(int size)
 {
 	t_pipex	*ret;
+	int		i;
 
 	ret = ft_calloc((size_t) size, sizeof(t_pipex));
 	if (ret == NULL)
 		return (NULL);
 	ft_memset(ret, 0, sizeof(t_pipex) * (size_t) size);
+	i = 0;
+	while (i < size)
+	{
+		ret[i].head = (void *)ret;
+		ret[i].index = i;
+		i ++;
+	}	
 	return (ret);
 }
 
