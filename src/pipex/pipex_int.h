@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:23:40 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/05 04:43:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 05:39:51 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,8 @@ char	*find_cmd(char *path, char *envp[]);
 char	*my_strncpy(char *dest, char *src, int n);
 void	make_child_1(char *arg, char *envp[], t_pipex *pipex);
 void	make_child_2(char *arg, char *envp[], t_pipex *pipex);
+
+void	spawn_children(char **units, t_pipex pipex, char **envp);
+char	*join_args_with_space(int argc, char **argv);
 
 #endif

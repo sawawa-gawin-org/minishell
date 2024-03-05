@@ -6,16 +6,28 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/04 17:07:06 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 05:12:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "pipex.h"
 
+void	end(void)__attribute__((destructor));
+
+void	end(void)
+{
+	system("leaks pipex.out");
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
-	pipex(argc, argv, envp);
+	// pipex(argc, argv, envp);
+	char *str;
+	
+	str = join_args_with_space(argc, argv);
+	write(1,str,1);
+	(void) envp;
 	return (0);
 }
 
