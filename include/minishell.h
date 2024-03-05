@@ -23,13 +23,27 @@
 
 # include <termios.h>
 
+typedef enum e_token_type
+{
+	token,
+	tube,
+	less,
+	great,
+	heredoc,
+	append,
+	double_quote,
+	single_quote
+}	t_token_type;
+
 typedef struct s_token
 {
 	struct s_token	*next;
 	struct s_token	*prev;
-	char			*token_str;
-}			t_token;
+	t_token_type	token_type;
+	char			*token_name;
+}					t_token;
 
+t_token	*lexical_splitter(char *line, t_token *tokens);
 t_token	*lstnew_2way(t_token *tokens, char *str);
 
 //debug

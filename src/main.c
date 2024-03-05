@@ -39,42 +39,6 @@ void	sig_handler(int signal)
 	}
 }
 
-t_token	*lexer(char *line, t_token *tokens)
-{
-	int		i;
-	int		j;
-	char	*str;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		str = NULL;
-		if (ft_strchr("<>|", line[i]) != NULL)
-		{
-			j = 1;
-			if (line[i] != '|' && line[i] == line[i + 1])
-				j = 2;
-			str = ft_substr(line, i, j);
-			tokens = lstnew_2way(tokens, str);
-			free(str);
-			i += j;
-		}
-		else if (line[i] != ' ')
-		{
-			j = 0;
-			while (line[j + i] != '\0' && ft_strchr(" <>|", line[j + i]) == NULL)
-				j++;
-			str = ft_substr(line, i, j);
-			tokens = lstnew_2way(tokens, str);
-			free(str);
-			i += j;
-		}
-		if (line[i] == ' ')
-			i++;
-	}
-	return (tokens);
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	struct termios	term; //端末の属性を変更する用の構造体
@@ -98,6 +62,12 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("minishell> ");
 		if (line == NULL)
 			break ;
+		else if (strncmp(line, "exit", 4) == 0)
+		{
+			printf("exit\n");
+			free(line);
+			break ;
+		}
 		else if (strlen(line) == 0)
 		{
 			free(line);
@@ -106,15 +76,9 @@ int	main(int argc, char *argv[], char *envp[])
 			rl_redisplay();
 			continue ;
 		}
-		else if (strncmp(line, "exit", 4) == 0)
-		{
-			printf("exit\n");
-			free(line);
-			break ;
-		}
 		else if (strncmp(line, "echo", 4) == 0)
 			ft_echo(line);
-		tokens = lexer(line, tokens);
+		tokens = lexical_splitter(line, tokens);
 		put_lst(tokens);
 		del_lst(tokens);
 		add_history(line);
