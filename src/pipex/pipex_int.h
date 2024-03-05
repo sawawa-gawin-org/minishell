@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:23:40 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/05 05:39:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 06:06:35 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,18 @@ typedef struct s_pipex
 	pid_t	pids[2];
 }		t_pipex;
 
+char	**parse_argv(int argc, char **argv);
+
 int		close_fd(int *fds, int exit_code);
 void	free_split(char **s);
 void	exit_closepipe(t_pipex *pipex);
+int		count_units(char **units);
 
 char	*find_cmd(char *path, char *envp[]);
 char	*my_strncpy(char *dest, char *src, int n);
 void	make_child_1(char *arg, char *envp[], t_pipex *pipex);
 void	make_child_2(char *arg, char *envp[], t_pipex *pipex);
 
-void	spawn_children(char **units, t_pipex pipex, char **envp);
-char	*join_args_with_space(int argc, char **argv);
+void	spawn_children(char **units, int size, t_pipex *pipex, char **envp);
 
 #endif

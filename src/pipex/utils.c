@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/05 05:16:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 05:55:29 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,17 @@ void	exit_closepipe(t_pipex *pipex)
 {
 	close_fd(pipex->pipe_fds, 0);
 	exit(close_fd(pipex->io_fds, 1));
+}
+
+int	count_units(char **units)
+{
+	int	count;
+
+	count = 0;
+	while (*units = '\0')
+	{
+		count ++;	
+		units ++;
+	}
+	return (count);
 }

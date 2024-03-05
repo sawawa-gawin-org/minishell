@@ -6,32 +6,33 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/05 05:39:05 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 06:44:43 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "pipex_int.h"
 
-static void	init_struct(t_pipex *pipex);
+static t_pipex	*init_struct(int size);
 static void	open_io_files(int argc, char *argv[], t_pipex *pipex);
 
 int	pipex(int argc, char *argv[], char *envp[])
 {
-	t_pipex	pipex;
-	char	*joined_argv;
+	t_pipex	*pipex;
 	char	**units;
+	int		size;
 
-	joined_argv = join_args_with_space(argc, argv);
-	if (joined_argv == NULL)
-		exit(1);
-	units = ft_split(joined_argv, '|');
+	units = parse_argv(argc, argv);
 	if (units == NULL)
+		exit(1);
+	size = count_units(units);
+	pipex = init_struct(size);
+	if (pipex == NULL)
 	{
-		free(joined_argv);
+		free_split(units);
 		exit(1);
 	}
-	spawn_children(units, &pipex, envp);
+	spawn_children(units, size, pipex, envp);
 	/* 
 	- make_*_child関数の中でファイルの展開を行う
 	- wate_pidはこの関数内で行う
@@ -39,6 +40,17 @@ int	pipex(int argc, char *argv[], char *envp[])
 	 */
 	free_split(units);
 	return (0);
+}
+
+static t_pipex	*init_struct(int size)
+{
+	t_pipex	*ret;
+
+	ret = ft_calloc((size_t) size, sizeof(t_pipex));
+	if (ret == NULL)
+		return (NULL);
+	ft_memset(ret, 0, sizeof(t_pipex) * (size_t) size);
+	return (ret);
 }
 
 // static void	init_struct(t_pipex *pipex)

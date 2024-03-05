@@ -6,12 +6,33 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 05:15:47 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/05 05:16:53 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/05 06:03:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "pipex_int.h"
+
+static char *join_args_with_space(int argc, char **argv);
+
+char	**parse_argv(int argc, char **argv)
+{
+	char	**argv_units;
+	char	*joined_argv;
+
+	if (argv == NULL || *argv == NULL)
+		return (NULL);
+	joined_argv = join_args_with_space(argc, argv);
+	if (joined_argv == NULL)
+		return (NULL);
+	argv_units = ft_split(joined_argv, '|');
+	if (argv_units == NULL)
+	{
+		free(joined_argv);
+		return (NULL);
+	}
+	return (argv_units);
+}
 
 char	*join_args_with_space(int argc, char **argv)
 {
@@ -21,8 +42,6 @@ char	*join_args_with_space(int argc, char **argv)
 
 	i = 1;
 	ret = "";
-	if (argv == NULL || *argv == NULL)
-		return (NULL);
 	while (i < argc)
 	{
 		ret = ft_strjoin(ret, argv[i]);
