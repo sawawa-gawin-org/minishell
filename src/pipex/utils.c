@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/08 09:33:28 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:41:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	count_units(char **units)
 	int	count;
 
 	count = 0;
-	while (**units == '\0')
+	while (*units != NULL)
 	{
 		count ++;	
 		units ++;

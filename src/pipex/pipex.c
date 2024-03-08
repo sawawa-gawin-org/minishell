@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/08 09:30:32 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:54:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include "pipex.h"
 
 static t_pipex	*init_struct(int size);
+static void		wait_processes(t_pipex *pipe_arr, int size);
 
 int	pipex(int argc, char *argv[], char *envp[])
 {
-	t_pipex	*pipex;
+	t_pipex	*pipe_arr;
 	char	**units;
 	int		size;
 
@@ -25,14 +26,16 @@ int	pipex(int argc, char *argv[], char *envp[])
 	if (units == NULL)
 		exit(1);
 	size = count_units(units);
-	pipex = init_struct(size);
-	if (pipex == NULL)
+	pipe_arr = init_struct(size);
+	if (pipe_arr == NULL)
 	{
 		free_split(units);
 		exit(1);
 	}
-	spawn_children(units, size, pipex, envp);
+	spawn_children(units, size, pipe_arr, envp);
+	wait_processes(pipe_arr, size);
 	free_split(units);
+	free(pipe_arr);
 	return (0);
 }
 
@@ -53,6 +56,18 @@ static t_pipex	*init_struct(int size)
 		i ++;
 	}	
 	return (ret);
+}
+
+static void	wait_processes(t_pipex *pipe_arr, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		waitpid(pipe_arr[i].pids, NULL, 0);
+		i ++;
+	}
 }
 
 /* static void	init_struct(t_pipex *pipex)

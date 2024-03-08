@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:50:46 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/08 09:29:33 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:48:06 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ int	make_oldest_child(char *phrase, t_pipex *pipe, char *envp[])
 		free_split(cmd);
 		return (1);
 	}
-	next_pipe = &((t_pipex *) &(pipe->head))[pipe->index + 1];
-	pipe_fds(&pipe->pipe_out_fd, &next_pipe->pipe_in_fd);
+	next_pipe = &((t_pipex *) (pipe->head))[pipe->index + 1];
+	pipe_fds(&next_pipe->pipe_out_fd, &pipe->pipe_in_fd);
 	pipe->pids = fork();
 	if (pipe->pids == 0)
 		do_oldest_child(cmd, path, envp, pipe);

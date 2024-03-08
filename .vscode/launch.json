@@ -48,7 +48,7 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/test/pipex/pipex_debug.out",
 			"args": [
-				"${workspaceFolder}/test/pipex/infile.txt", "grep .c", "wc -l", "${workspaceFolder}/test/pipex/outfile.txt"
+				"ls -la", "|grep .c", "| wc -l"
 			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
