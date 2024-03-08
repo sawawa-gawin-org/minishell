@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:50:46 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/05 09:10:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:01:19 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	make_oldest_child(char *phrase, t_pipex *pipe, char *envp[])
 	pipe_fds(&pipe->pipe_out_fd, &next_pipe->pipe_in_fd);
 	pipe->pids = fork();
 	if (pipe->pids == 0)
-		do_youngest_child(cmd, path, envp, pipe);
+		do_oldest_child(cmd, path, envp, pipe);
 	free_split(cmd);
 	free(path);
 	if (next_pipe->pids < 0)
@@ -44,11 +44,8 @@ void	make_oldest_child(char *phrase, t_pipex *pipe, char *envp[])
 
 static void	do_oldest_child(char **cmd, char *path, char *envp[], t_pipex *pipe)
 {
-	t_pipex	*next_pipe;
-
-	next_pipe = (t_pipex *) &(pipe->head)[pipe->index + 1];
-	dup2(next_pipe->pipe_in_fd, STDOUT_FILENO);
-	close(pipe->pipe_in_fd);
-	// dup2(pipex->io_fds[0], STDIN_FILENO);
+	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
+	close(pipe->pipe_out_fd);
+	// dup2(pipe->in_fd, STDIN_FILENO);
 	execve(path, cmd, envp);
 }

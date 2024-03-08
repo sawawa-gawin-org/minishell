@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/05 08:34:35 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 08:41:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ int	count_units(char **units)
 	return (count);
 }
 
-int	pipe_fds(int *in_fd ,int *out_fd)
+int	pipe_fds(int *out_fd, int *in_fd)
 {
 	int	pipe_fd[2];
 
-	pipe_fd[0] = *in_fd;
-	pipe_fd[1] = *out_fd;
+	pipe_fd[0] = *out_fd;
+	pipe_fd[1] = *in_fd;
 	if (pipe(pipe_fd) < 0)
 		return (-1);
-	*in_fd = pipe_fd[0];
-	*out_fd = pipe_fd[1];
+	*out_fd = pipe_fd[0];
+	*in_fd = pipe_fd[1];
 	return (0);
 }
