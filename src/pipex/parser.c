@@ -6,12 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 05:15:47 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/05 06:03:24 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:26:03 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "pipex_int.h"
+#include "pipex.h"
 
 static char *join_args_with_space(int argc, char **argv);
 

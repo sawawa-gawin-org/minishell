@@ -6,12 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:35:17 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/08 09:03:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:29:04 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "pipex_int.h"
+#include "pipex.h"
 
 static void	do_middle_child(char **cmd, char *path, char *envp[], t_pipex *pipe);
 
@@ -31,8 +31,8 @@ int	make_middle_child(char *phrase, t_pipex *pipe, char *envp[])
 		free_split(cmd);
 		return (1);
 	}
-	pre_pipe = (t_pipex *) &(pipe->head)[pipe->index - 1];
-	next_pipe = (t_pipex *) &(pipe->head)[pipe->index + 1];
+	pre_pipe = &((t_pipex *) &(pipe->head))[pipe->index - 1];
+	next_pipe = &((t_pipex *) &(pipe->head))[pipe->index + 1];
 	pipe_fds(&pre_pipe->pipe_out_fd, &pipe->pipe_in_fd);
 	pipe_fds(&pipe->pipe_out_fd, &next_pipe->pipe_in_fd);
 	pipe->pids = fork();

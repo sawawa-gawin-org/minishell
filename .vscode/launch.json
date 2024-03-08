@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "linux-minishell",
+			"name": "minishell",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/minishell_debug",
@@ -10,7 +10,7 @@
 				// if you want to pass arguments to your program
 			],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"externalConsole": true,
 			"preLaunchTask": "minishell-make",
@@ -33,7 +33,7 @@
 			"stopAtEntry": false,
 			"environment": [],
 			"preLaunchTask": "libft-make",
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}",
 			"linux": {
 				"MIMode": "gdb",
 				"miDebuggerPath": "/usr/bin/gdb"
@@ -43,7 +43,7 @@
 			},
 		},
 		{
-			"name": "linux-pipex",
+			"name": "pipex",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/test/pipex/pipex_debug.out",
@@ -51,7 +51,7 @@
 				"${workspaceFolder}/test/pipex/infile.txt", "grep .c", "wc -l", "${workspaceFolder}/test/pipex/outfile.txt"
 			],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"MIMode": "gdb",
 			"preLaunchTask": "pipex-make",

@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/08 09:09:28 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:33:28 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_int.h"
+#include "pipex.h"
 
 int	close_fd(int *fds, int exit_code)
 {
@@ -36,7 +36,7 @@ int	count_units(char **units)
 	int	count;
 
 	count = 0;
-	while (*units = '\0')
+	while (**units == '\0')
 	{
 		count ++;	
 		units ++;
