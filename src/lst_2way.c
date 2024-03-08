@@ -15,6 +15,8 @@
 
 t_token	*lst_last(t_token *tokens)
 {
+	if (tokens == NULL)
+		return (NULL);
 	while (tokens->next != NULL)
 		tokens = tokens->next;
 	return (tokens);
@@ -37,32 +39,26 @@ t_token	*lstnew_2way(t_token *tokens, char *str)
 
 	lst_last_addr = NULL;
 	data = NULL;
+	data = lst_new();
+	data->token_str = ft_strdup(str);
+	data->token_type = 0;
+	data->next = NULL;
+	data->prev = NULL;
 	if (tokens != NULL)
 	{
 		lst_last_addr = lst_last(tokens);
-		data = lst_new();
-		data->token_name = ft_strdup(str);
 		data->prev = lst_last_addr;
-		data->next = NULL;
 		lst_last_addr->next = data;
 		return (tokens);
 	}
-	else
-	{
-		data = lst_new();
-		data->token_name = ft_strdup(str);
-		data->prev = NULL;
-		data->next = NULL;
-		return (data);
-	}
-	return (NULL);
+	return (data);
 }
 
 void	put_lst(t_token *tokens)
 {
 	while (tokens != NULL)
 	{
-		printf("%s\n", tokens->token_name);
+		printf("%s\n", tokens->token_str);
 		tokens = tokens->next;
 	}
 }
@@ -72,9 +68,9 @@ void	del_lst(t_token *tokens)
 	while (tokens->next != NULL)
 	{
 		tokens = tokens->next;
-		free(tokens->prev->token_name);
+		free(tokens->prev->token_str);
 		free(tokens->prev);
 	}
-	free(tokens->token_name);
+	free(tokens->token_str);
 	free(tokens);
 }

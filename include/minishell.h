@@ -26,13 +26,15 @@
 typedef enum e_token_type
 {
 	token,
-	tube,
-	less,
-	great,
-	heredoc,
-	append,
-	double_quote,
-	single_quote
+	tube,//|
+	less,//<
+	great,//>
+	heredoc,//<<
+	append,//>>
+	double_quote,//""
+	double_quote_val,//"$VAL"
+	single_quote,
+	env_val
 }	t_token_type;
 
 typedef struct s_token
@@ -40,7 +42,7 @@ typedef struct s_token
 	struct s_token	*next;
 	struct s_token	*prev;
 	t_token_type	token_type;
-	char			*token_name;
+	char			*token_str;
 }					t_token;
 
 t_token	*lexical_splitter(char *line, t_token *tokens);
