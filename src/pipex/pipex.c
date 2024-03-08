@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/05 08:50:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:06:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,6 @@ int	pipex(int argc, char *argv[], char *envp[])
 		exit(1);
 	}
 	spawn_children(units, size, pipex, envp);
-	/* 
-	- make_*_child関数の中でファイルの展開を行う
-	- wate_pidはこの関数内で行う
-	- close_fdは未定
-	 */
 	free_split(units);
 	return (0);
 }
