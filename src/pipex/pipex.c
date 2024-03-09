@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/09 10:30:28 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 11:16:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,13 @@ static t_pipex	*init_struct(int size)
 	ret = ft_calloc((size_t) size, sizeof(t_pipex));
 	if (ret == NULL)
 		return (NULL);
-	ft_memset(ret, 0, sizeof(t_pipex) * (size_t) size);
 	i = 0;
 	while (i < size)
 	{
+		ret[i].in_fd = -1;
+		ret[i].out_fd = -1;
+		ret[i].pipe_in_fd = -1;
+		ret[i].pipe_out_fd = -1;
 		ret[i].head = (void *)ret;
 		ret[i].index = i;
 		i ++;
