@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/08 09:41:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 10:18:18 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,29 @@ int	close_fd(int *fds, int exit_code)
 	return (exit_code);
 }
 
-void	free_split(char **s)
+int	close_fds(t_pipex *pipe_arr, int size, int exit_code)
+{
+	int		i;
+	int		fd;
+	t_pipex	*pipe;
+
+	i = 0;
+	while (i < size)
+	{
+		pipe = &pipe_arr[i];
+		if (pipe->in_fd >= 0)
+			close(pipe->in_fd);
+		if (pipe->out_fd >= 0)
+			close(pipe->out_fd);
+		if (pipe->pipe_in_fd >= 0)
+			close(pipe->pipe_in_fd);
+		if (pipe->pipe_out_fd >= 0)
+			close(pipe->pipe_out_fd);
+	}
+	return (exit_code);
+}
+
+int	free_split(char **s, int exit_code)
 {
 	int	i;
 
@@ -29,6 +51,7 @@ void	free_split(char **s)
 	while (s[++i] != NULL)
 		free(s[i]);
 	free(s);
+	return (exit_code);
 }
 
 int	count_units(char **units)

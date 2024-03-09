@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:35:17 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/08 09:46:28 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 10:08:49 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,13 @@ int	make_youngest_child(char *phrase, t_pipex *pipe, char *envp[])
 		return (1);
 	path = find_cmd(cmd[0], envp);
 	if (!path)
-	{
-		free_split(cmd);
-		return (1);
-	}
+		return (free_split(cmd, 1));
 	pre_pipe = &((t_pipex *) (pipe->head))[pipe->index - 1];
 	pipe_fds(&pipe->pipe_out_fd, &pre_pipe->pipe_in_fd);
 	pipe->pids = fork();
 	if (pipe->pids == 0)
 		do_youngest_child(cmd, path, envp, pipe);
-	free_split(cmd);
+	free_split(cmd, 0);
 	free(path);
 	if (pre_pipe->pids < 0)
 		return (1);

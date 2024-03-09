@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/08 09:54:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 10:15:01 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	pipex(int argc, char *argv[], char *envp[])
 	t_pipex	*pipe_arr;
 	char	**units;
 	int		size;
+	int		err;
 
 	units = parse_argv(argc, argv);
 	if (units == NULL)
@@ -28,13 +29,17 @@ int	pipex(int argc, char *argv[], char *envp[])
 	size = count_units(units);
 	pipe_arr = init_struct(size);
 	if (pipe_arr == NULL)
+		exit(free_split(units, 1));
+	err = spawn_children(units, size, pipe_arr, envp);
+	if (err)
 	{
-		free_split(units);
-		exit(1);
+		free_split(units, 0);
+		free(pipe_arr);
+		exit(close_fds(pipe_arr, size, 1));
 	}
-	spawn_children(units, size, pipe_arr, envp);
+	close_fds(pipe_arr, size, 0);
 	wait_processes(pipe_arr, size);
-	free_split(units);
+	free_split(units, 0);
 	free(pipe_arr);
 	return (0);
 }
