@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 05:22:42 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/09 11:05:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:54:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	init_pipeline(t_pipex *pipe_arr, int index, int size)
 	t_pipex	*next_pipe;
 
 	pipe = &pipe_arr[index];
-	if (index != size - 1)
+	if (index != size - 1 && index != 0)
 	{
 		next_pipe = &((t_pipex *) (pipe->head))[pipe->index + 1];
 		pipe_fds(&next_pipe->pipe_out_fd, &pipe->pipe_in_fd);

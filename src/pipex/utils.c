@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/09 10:19:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:56:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 int	close_fds(t_pipex *pipe_arr, int size, int exit_code)
 {
 	int		i;
-	int		fd;
 	t_pipex	*pipe;
 
 	i = 0;
@@ -30,6 +29,7 @@ int	close_fds(t_pipex *pipe_arr, int size, int exit_code)
 			close(pipe->pipe_in_fd);
 		if (pipe->pipe_out_fd >= 0)
 			close(pipe->pipe_out_fd);
+		i ++;
 	}
 	return (exit_code);
 }

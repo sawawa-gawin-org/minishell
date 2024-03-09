@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/09 11:24:16 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:29:56 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "pipex.h"
 
 static t_pipex	*init_struct(int size);
-static void		wait_processes(t_pipex *pipe_arr, int size);
 
 int	pipex(int argc, char *argv[], char *envp[])
 {
