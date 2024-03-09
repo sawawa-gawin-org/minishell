@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:03:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/09 10:15:01 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 10:30:28 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,11 @@ int	pipex(int argc, char *argv[], char *envp[])
 	if (pipe_arr == NULL)
 		exit(free_split(units, 1));
 	err = spawn_children(units, size, pipe_arr, envp);
-	if (err)
-	{
-		free_split(units, 0);
-		free(pipe_arr);
-		exit(close_fds(pipe_arr, size, 1));
-	}
 	close_fds(pipe_arr, size, 0);
-	wait_processes(pipe_arr, size);
 	free_split(units, 0);
 	free(pipe_arr);
+	if (err)
+		exit(1);
 	return (0);
 }
 
@@ -61,18 +56,6 @@ static t_pipex	*init_struct(int size)
 		i ++;
 	}	
 	return (ret);
-}
-
-static void	wait_processes(t_pipex *pipe_arr, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		waitpid(pipe_arr[i].pids, NULL, 0);
-		i ++;
-	}
 }
 
 /* static void	init_struct(t_pipex *pipex)

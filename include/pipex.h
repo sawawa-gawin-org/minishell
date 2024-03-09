@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:42:11 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/09 10:19:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 10:21:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*find_cmd(char *path, char *envp[]);
 void	make_child_1(char *arg, char *envp[], t_pipex *pipex);
 void	make_child_2(char *arg, char *envp[], t_pipex *pipex);
 
-int		spawn_children(char **units, int size, t_pipex *pipex_arr, char **envp);
+int		spawn_children(char **units, int size, t_pipex *pipe_arr, char **envp);
 int		make_oldest_child(char *phrase, t_pipex *pipe, char *envp[]);
 int		make_middle_child(char *phrase, t_pipex *pipe, char *envp[]);
 int		make_youngest_child(char *phrase, t_pipex *pipe, char *envp[]);
