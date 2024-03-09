@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:35:17 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/09 10:11:15 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 10:54:13 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ int	make_middle_child(char *phrase, t_pipex *pipe, char *envp[])
 {
 	char	**cmd;
 	char	*path;
-	t_pipex	*pre_pipe;
-	t_pipex	*next_pipe;
 
 	cmd = ft_split(phrase, ' ');
 	if (cmd == NULL)
@@ -28,16 +26,12 @@ int	make_middle_child(char *phrase, t_pipex *pipe, char *envp[])
 	path = find_cmd(cmd[0], envp);
 	if (!path)
 		return (free_split(cmd, 1));
-	pre_pipe = &((t_pipex *) (pipe->head))[pipe->index - 1];
-	next_pipe = &((t_pipex *) (pipe->head))[pipe->index + 1];
-	pipe_fds(&pipe->pipe_in_fd, &pre_pipe->pipe_out_fd);
-	pipe_fds(&next_pipe->pipe_in_fd, &pipe->pipe_out_fd);
 	pipe->pids = fork();
 	if (pipe->pids == 0)
 		do_middle_child(cmd, path, envp, pipe);
 	free_split(cmd, 0);
 	free(path);
-	if (next_pipe->pids < 0)
+	if (pipe->pids < 0)
 		return (1);
 	return (0);
 }
@@ -46,5 +40,5 @@ static void	do_middle_child(char **cmd, char *path, char *envp[], t_pipex *pipe)
 {
 	dup2(pipe->pipe_out_fd, STDIN_FILENO);
 	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
-	execve(path, cmd, envp);
+	execve(path, cmd + 1, envp);
 }
