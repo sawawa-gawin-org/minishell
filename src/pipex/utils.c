@@ -6,20 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/09 10:18:18 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 10:19:19 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-int	close_fd(int *fds, int exit_code)
-{
-	if (fds[0] >= 0)
-		close(fds[0]);
-	if (fds[1] >= 0)
-		close(fds[1]);
-	return (exit_code);
-}
 
 int	close_fds(t_pipex *pipe_arr, int size, int exit_code)
 {

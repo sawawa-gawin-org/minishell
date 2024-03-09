@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:42:11 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/09 10:16:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 10:19:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef struct s_pipex
 
 char	**parse_argv(int argc, char **argv);
 
-int		close_fd(int *fds, int exit_code);
 int		close_fds(t_pipex *pipe_arr, int size, int exit_code);
 int		free_split(char **s, int exit_code);
 int		count_units(char **units);
