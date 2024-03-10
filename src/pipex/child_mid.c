@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:35:17 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/09 16:45:13 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/10 12:01:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	make_middle_child(char *phrase, t_pipex *pipe, char *envp[])
 static void	do_middle_child(char **cmd, char *path, char *envp[], t_pipex *pipe)
 {
 	dup2(pipe->pipe_out_fd, STDIN_FILENO);
+	// close(pipe->pipe_out_fd);
 	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
-	execve(path, cmd + 1, envp);
+	// close(pipe->pipe_in_fd);
+	execve(path, cmd, envp);
 }

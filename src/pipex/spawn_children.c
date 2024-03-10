@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 05:22:42 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/09 16:54:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/10 12:01:38 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	spawn_children(char **units, int size, t_pipex *pipe_arr, char **envp)
 	int		i;
 	int		err;
 
-	i = 0;
+	i = size - 1;
 	err = 0;
-	while (i < size)
+	while (i >= 0)
 	{
 		init_pipeline(pipe_arr, i, size);
 		if (i == 0)
@@ -36,11 +36,10 @@ int	spawn_children(char **units, int size, t_pipex *pipe_arr, char **envp)
 		else
 			err = make_middle_child(units[i], &pipe_arr[i], envp);
 		if (err != 0)
-		{
-			return (wait_processes(pipe_arr, i));
-		}
-		i ++;
+			return (ERR); // TODO:waitpid
+		i --;
 	}
+	return (OK);
 	return (wait_processes(pipe_arr, size));
 }
 
@@ -50,7 +49,7 @@ static int	init_pipeline(t_pipex *pipe_arr, int index, int size)
 	t_pipex	*next_pipe;
 
 	pipe = &pipe_arr[index];
-	if (index != size - 1 && index != 0)
+	if (index != size - 1)
 	{
 		next_pipe = &((t_pipex *) (pipe->head))[pipe->index + 1];
 		pipe_fds(&next_pipe->pipe_out_fd, &pipe->pipe_in_fd);
