@@ -5,52 +5,86 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 12:40:15 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/08 12:44:45 by syamasaw         ###   ########.fr       */
+/*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/03/11 18:24:04 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 
-int	tokenizer(char *token_str)
+static int	add_token(char *line, t_token **tokens, int index, int target);
+static int	count_substr_len(char *line, int index, int target);
+
+t_token	*tokenizer(char *line, t_token *tokens)
 {
-	int	type;
+	int	i;
+	int	j;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		j = 0;
+		if (ft_strchr("<>|", line[i]) != NULL)
+			j = add_token(line, &tokens, i, 'm');
+		else if (ft_strchr("\'\"", line[i]) != NULL)
+			j = add_token(line, &tokens, i, 'q');
+		else if (line[i] != ' ')
+			j = add_token(line, &tokens, i, 'w');
+		if (j == -1)
+		{
+			del_lst(tokens);
+			return (NULL);
+		}
+		if (line[i + j] == ' ')
+			j++;
+		i += j;
+	}
+	return (tokens);
+}
+
+static int	add_token(char *line, t_token **tokens, int index, int target)
+{
+	char	*str;
+	int		pos;
+	int		type;
+
+	str = NULL;
+	pos = count_substr_len(line, index, target);
+	str = ft_substr(line, index, pos);
+	if (!str)
+		return (-1);
+	type = is_token_type(str, target);
+	*tokens = lstnew_2way(*tokens, str, type);
+	free(str);
+	if (*tokens == NULL)
+		return (-1);
+	return (pos);
+}
+
+static int	count_substr_len(char *line, int index, int target)
+{
 	int	len;
 
-	len = ft_strlen(token_str);
-	type = detect_redirect(token_str, len);
-	if (type > 0)
-		return (type);
-	
-	return (token);
-}
-
-int	detect_redirect(char *str, int len)
-{
-	if (len == 2)
+	len = 1;
+	if (target == 'm')
 	{
-		if (str[0] == '<' && str[1] == '<')
-			return (heredoc);
-		else if (str[0] == '>' && str[1] == '>')
-			return (append);
+		if (line[index] != '|' && line[index] == line[index + 1])
+			len = 2;
 	}
-	else if (len == 1)
+	else if (target == 'q')
 	{
-		if (str[0] == '<')
-			return (less);
-		else if (str[0] == '>')
-			return (great);
-		else if (str[0] == '|')
-			return (tube);
+		while (line[index + len] != '\0' && line[index] != line[index + len])
+			len++;
+		if (line[index + len] == '\'' || line[index + len] == '"')
+			len += 1;
 	}
-	return (token);
-}
-
-int	detect_quote(char *str, int len)
-{
-	if (str[0] == '"' && str[len - 1] == '"')
+	else if (target == 'w')
 	{
-		if ()
+		len = 0;
+		while (line[index + len] != '\0' && ft_strchr(" <>|\"\'", line[index \
+			+ len]) == NULL)
+			len++;
 	}
+	return (len);
 }

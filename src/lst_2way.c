@@ -32,7 +32,7 @@ t_token	*lst_new(void)
 	return (new);
 }
 
-t_token	*lstnew_2way(t_token *tokens, char *str)
+t_token	*lstnew_2way(t_token *tokens, char *str, int type)
 {
 	t_token	*lst_last_addr;
 	t_token	*data;
@@ -41,7 +41,7 @@ t_token	*lstnew_2way(t_token *tokens, char *str)
 	data = NULL;
 	data = lst_new();
 	data->token_str = ft_strdup(str);
-	data->token_type = 0;
+	data->token_type = type;
 	data->next = NULL;
 	data->prev = NULL;
 	if (tokens != NULL)
@@ -58,7 +58,7 @@ void	put_lst(t_token *tokens)
 {
 	while (tokens != NULL)
 	{
-		printf("%s\n", tokens->token_str);
+		printf("%s type: %d\n", tokens->token_str, tokens->token_type);
 		tokens = tokens->next;
 	}
 }

@@ -54,21 +54,24 @@ int	main(int argc, char *argv[], char *envp[])
 	term.c_lflag &= ~(ECHOCTL); //制御文字を消す
 	tcsetattr(STDIN_FILENO, TCSANOW, &term); //変更を即時反映
 	signal(SIGQUIT, SIG_IGN); //SIGQUIT(Ctrl+\)を無視
-	signal(SIGINT, sig_handler); //SIGINT(Ctrl+C)をハンドリング
+	signal(SIGINT, sig_handler); //SIGINT(Ctrl+C)をハンドリング sigaction SA_RESTART
 	line = NULL;
 	while (1)
 	{
 		tokens = NULL;
 		line = readline("minishell> ");
 		if (line == NULL)
+		{
+			//Ctrl+Dを押してEOFするとreadlineがNULLを返す。
 			break ;
+		}
 		else if (strncmp(line, "exit", 4) == 0)
 		{
 			printf("exit\n");
 			free(line);
 			break ;
 		}
-		else if (strlen(line) == 0)
+		else if (ft_strlen(line) == 0)
 		{
 			free(line);
 			rl_on_new_line();
@@ -78,7 +81,9 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		else if (strncmp(line, "echo", 4) == 0)
 			ft_echo(line);
-		tokens = lexical_splitter(line, tokens);
+		tokens = tokenizer(line, tokens);
+		// if (!tokens)
+		// 	printf("%s\n", "malloc error");
 		put_lst(tokens);
 		del_lst(tokens);
 		add_history(line);

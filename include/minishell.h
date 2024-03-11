@@ -33,8 +33,8 @@ typedef enum e_token_type
 	append,//>>
 	double_quote,//""
 	double_quote_val,//"$VAL"
-	single_quote,
-	env_val
+	single_quote,//'$VAL'
+	val
 }	t_token_type;
 
 typedef struct s_token
@@ -45,8 +45,12 @@ typedef struct s_token
 	char			*token_str;
 }					t_token;
 
-t_token	*lexical_splitter(char *line, t_token *tokens);
-t_token	*lstnew_2way(t_token *tokens, char *str);
+//tokenizer
+t_token	*tokenizer(char *line, t_token *tokens);
+int		is_token_type(char *str, int target);
+
+
+t_token	*lstnew_2way(t_token *tokens, char *str, int type);
 
 //debug
 void	put_lst(t_token *tokens);
