@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/11 18:24:04 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/12 20:03:35 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 static int	add_token(char *line, t_token **tokens, int index, int target);
 static int	count_substr_len(char *line, int index, int target);
 
+/*
+Tokenizer
+1. read input.
+2. discards all extra blankspaces(' ', '\t', etc.)
+3. identitifies special tokens (|, >, >>, etc.)
+4. create a token list to be passed on to the next steps.
+*/
 t_token	*tokenizer(char *line, t_token *tokens)
 {
 	int	i;
@@ -29,14 +36,14 @@ t_token	*tokenizer(char *line, t_token *tokens)
 			j = add_token(line, &tokens, i, 'm');
 		else if (ft_strchr("\'\"", line[i]) != NULL)
 			j = add_token(line, &tokens, i, 'q');
-		else if (line[i] != ' ')
+		else if (is_space(line[i]) == 0)
 			j = add_token(line, &tokens, i, 'w');
 		if (j == -1)
 		{
 			del_lst(tokens);
 			return (NULL);
 		}
-		if (line[i + j] == ' ')
+		if (is_space(line[i + j]))
 			j++;
 		i += j;
 	}
@@ -82,8 +89,8 @@ static int	count_substr_len(char *line, int index, int target)
 	else if (target == 'w')
 	{
 		len = 0;
-		while (line[index + len] != '\0' && ft_strchr(" <>|\"\'", line[index \
-			+ len]) == NULL)
+		while (line[index + len] != '\0' && ft_strchr("<>|\"\'", line[index \
+			+ len]) == NULL && is_space(line[index + len]) == 0)
 			len++;
 	}
 	return (len);

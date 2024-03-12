@@ -45,9 +45,10 @@ typedef struct s_token
 	char			*token_str;
 }					t_token;
 
-//tokenizer
 t_token	*tokenizer(char *line, t_token *tokens);
 int		is_token_type(char *str, int target);
+
+int		is_space(int c);
 
 
 t_token	*lstnew_2way(t_token *tokens, char *str, int type);
