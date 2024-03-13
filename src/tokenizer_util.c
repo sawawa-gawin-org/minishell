@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/12 18:39:24 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:37:11 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	type_quote(char *str)
 
 	len = ft_strlen(str);
 	if (len < 2)
-		return (-1);
+		return (open_quote);
 	if (str[0] == '\'' && str[0] == str[len - 1])
 		return (single_quote);
 	else if (str[0] == '\"' && str[0] == str[len - 1])
@@ -73,6 +73,8 @@ static int	type_quote(char *str)
 		else
 			return (double_quote);
 	}
+	else
+		return (open_quote);
 	return (token);
 }
 

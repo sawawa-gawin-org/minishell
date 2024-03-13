@@ -51,7 +51,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (1)
 	{
 		tokens = NULL;
-		line = readline("minishell> "); //Ctrl+Dを押してEOFするとreadlineがNULLを返す。
+		line = readline("minishell$ "); //Ctrl+Dを押してEOFするとreadlineがNULLを返す。
 		if (line == NULL)
 			break ;
 		if (line[0] != '\0') //もし空白やタブなどの入力が行われている場合は履歴に残す。改行だけなら残さない。
@@ -63,7 +63,8 @@ int	main(int argc, char *argv[], char *envp[])
 		}
 		add_history(line); //cmdの成否にかかわらず履歴に残る。
 		tokens = tokenizer(line, tokens);
-		put_lst(tokens);
+		if (syntax_checker(tokens))//構文不一致チェック
+			put_lst(tokens);
 		del_lst(tokens);
 		free(line);
 	}

@@ -34,7 +34,8 @@ typedef enum e_token_type
 	double_quote,//""
 	double_quote_val,//"$VAL"
 	single_quote,//'$VAL'
-	val
+	val,
+	open_quote
 }	t_token_type;
 
 typedef struct s_token
@@ -49,6 +50,8 @@ t_token	*tokenizer(char *line, t_token *tokens);
 int		is_token_type(char *str, int target);
 
 int		is_space(int c);
+
+int		syntax_checker(t_token *tokens);
 
 
 t_token	*lstnew_2way(t_token *tokens, char *str, int type);

@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/12 20:03:35 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:28:58 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_token	*tokenizer(char *line, t_token *tokens)
 			j = add_token(line, &tokens, i, 'q');
 		else if (is_space(line[i]) == 0)
 			j = add_token(line, &tokens, i, 'w');
-		if (j == -1)
+		if (j == -1)//malloc失敗
 		{
 			del_lst(tokens);
 			return (NULL);
