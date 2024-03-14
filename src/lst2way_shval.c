@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:17:38 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/14 20:12:13 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:30:16 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_shval	*lstnew_shval(void)
 	return (new);
 }
 
-t_shval	*lstadd_shval(t_shval *shvals, char *str, int len)
+t_shval	*lstadd_shval(t_shval *shvals, char *str, int len, int flag)
 {
 	t_shval	*lst_last_addr;
 	t_shval	*data;
@@ -42,7 +42,7 @@ t_shval	*lstadd_shval(t_shval *shvals, char *str, int len)
 	data = lstnew_shval();
 	data->key = ft_substr(str, 0, len);
 	data->val = ft_substr(str, len + 1, ft_strlen(str) - (len + 1));
-	data->exported = 0;
+	data->exported = flag;
 	data->next = NULL;
 	data->prev = NULL;
 	if (shvals != NULL)

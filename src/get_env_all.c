@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:37:15 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/14 20:14:00 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:30:23 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_shval	*get_env_all(char **envp, t_shval *shvals)
 	i = -1;
 	while (envp[++i] != NULL)
 	{
-		shvals = lstadd_shval(shvals, envp[i], strlen_eq(envp[i]));
+		shvals = lstadd_shval(shvals, envp[i], strlen_eq(envp[i]), 1);
 	}
 	return (shvals);
 }
