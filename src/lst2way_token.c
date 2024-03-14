@@ -32,7 +32,7 @@ t_token	*lst_new(void)
 	return (new);
 }
 
-t_token	*lstnew_2way(t_token *tokens, char *str, int type)
+t_token	*lstadd_token(t_token *tokens, char *str, int type)
 {
 	t_token	*lst_last_addr;
 	t_token	*data;

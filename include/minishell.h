@@ -46,18 +46,14 @@ typedef struct s_token
 	char			*token_str;
 }					t_token;
 
-typedef struct s_lst2way
+typedef struct s_shval
 {
-	void				*content;
-	struct s_lst2way	*next;
-	struct s_lst2way	*prev;
-}						t_lst2way;
-
-typedef struct s_tok
-{
-	t_token_type	type;
-	char			*str;
-}					t_tok;
+	struct s_shval	*next;
+	struct s_shval	*prev;
+	char			*key;
+	char			*val;
+	int				exported;
+}					t_shval;
 
 t_token	*tokenizer(char *line, t_token *tokens);
 int		is_token_type(char *str, int target);
@@ -67,10 +63,15 @@ int		is_space(int c);
 int		syntax_checker(t_token *tokens);
 
 
-t_token	*lstnew_2way(t_token *tokens, char *str, int type);
+t_token	*lstadd_token(t_token *tokens, char *str, int type);
 
 //debug
 void	put_lst(t_token *tokens);
 void	del_lst(t_token *tokens);
+
+t_shval	*get_env_all(char **envp, t_shval *shvals);
+t_shval	*lstadd_shval(t_shval *shvals, char *str, int len);
+void	del_lst_shval(t_shval *shvals);
+void	put_lst_shval(t_shval *shvals);
 
 #endif

@@ -39,10 +39,13 @@ int	main(int argc, char *argv[], char *envp[])
 	struct termios	save; //変更前の属性を保存する用の構造体
 	char			*line; //readlineで読み取った文字列用のchar*
 	t_token			*tokens;
+	t_shval			*shvals;
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	shvals = NULL;
+	shvals = get_env_all(envp, shvals); //既存の環境変数のリスト化
+	put_lst_shval(shvals);
 	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
 	term = save; //複製
 	term.c_lflag &= ~(ECHOCTL); //制御文字を消す
@@ -71,6 +74,7 @@ int	main(int argc, char *argv[], char *envp[])
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &save);
+	del_lst_shval(shvals);
 	return (0);
 }
 

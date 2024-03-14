@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/13 15:28:58 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:25:52 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	add_token(char *line, t_token **tokens, int index, int target)
 	if (!str)
 		return (-1);
 	type = is_token_type(str, target);
-	*tokens = lstnew_2way(*tokens, str, type);
+	*tokens = lstadd_token(*tokens, str, type);
 	free(str);
 	if (*tokens == NULL)
 		return (-1);
