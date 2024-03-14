@@ -31,6 +31,8 @@
 static int	is_blank_str(char *str);
 void		sig_handler(int signal);
 
+
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	struct termios	term; //端末の属性を変更する用の構造体

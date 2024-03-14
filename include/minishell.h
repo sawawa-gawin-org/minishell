@@ -46,6 +46,19 @@ typedef struct s_token
 	char			*token_str;
 }					t_token;
 
+typedef struct s_lst2way
+{
+	void				*content;
+	struct s_lst2way	*next;
+	struct s_lst2way	*prev;
+}						t_lst2way;
+
+typedef struct s_tok
+{
+	t_token_type	type;
+	char			*str;
+}					t_tok;
+
 t_token	*tokenizer(char *line, t_token *tokens);
 int		is_token_type(char *str, int target);
 
