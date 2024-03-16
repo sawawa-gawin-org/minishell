@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/14 19:25:52 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/16 17:14:54 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 static int	add_token(char *line, t_token **tokens, int index, int target);
 static int	count_substr_len(char *line, int index, int target);
+static int	skip_blank(char *line, int index);
 
 /*
 Tokenizer
@@ -28,7 +29,7 @@ t_token	*tokenizer(char *line, t_token *tokens)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = skip_blank(line, 0);
 	while (line[i] != '\0')
 	{
 		j = 0;
@@ -36,15 +37,15 @@ t_token	*tokenizer(char *line, t_token *tokens)
 			j = add_token(line, &tokens, i, 'm');
 		else if (ft_strchr("\'\"", line[i]) != NULL)
 			j = add_token(line, &tokens, i, 'q');
-		else if (is_space(line[i]) == 0)
+		else if (is_blank(line[i]) == 0)
 			j = add_token(line, &tokens, i, 'w');
-		if (j == -1)//malloc失敗
+		else if (is_blank(line[i]))
+			j = add_token(line, &tokens, i, 'b');
+		if (j == -1)
 		{
 			del_lst(tokens);
 			return (NULL);
 		}
-		if (is_space(line[i + j]))
-			j++;
 		i += j;
 	}
 	return (tokens);
@@ -90,8 +91,20 @@ static int	count_substr_len(char *line, int index, int target)
 	{
 		len = 0;
 		while (line[index + len] != '\0' && ft_strchr("<>|\"\'", line[index \
-			+ len]) == NULL && is_space(line[index + len]) == 0)
+			+ len]) == NULL && is_blank(line[len + index]) == 0)
 			len++;
 	}
+	else if (target == 'b')
+		len = skip_blank(line, index);
+	return (len);
+}
+
+static int	skip_blank(char *line, int index)
+{
+	int	len;
+
+	len = 0;
+	while (line[len + index] != '\0' && is_blank(line[len + index]))
+		len++;
 	return (len);
 }

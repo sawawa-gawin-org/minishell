@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/13 15:37:11 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:35:37 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	is_token_type(char *str, int target)
 		return (type_meta_chr(str));
 	else if (target == 'q')
 		return (type_quote(str));
+	else if (target == 'b')
+		return (space);
 	else if (target == 'w')
 	{
 		if (is_val(str))

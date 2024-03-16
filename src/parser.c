@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/13 16:01:15 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/16 15:32:14 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ Parser
 3. if inconsistencies are found, the flow comes to a halt and an error is returned.
 */
 
-//変数の展開、空文字列""の削除、クオートの削除、文字列同士の結合
+//空文字列""の削除、クオートの削除、文字列同士の結合
 
 int	syntax_checker(t_token *tokens)
 {
@@ -49,3 +49,12 @@ int	syntax_checker(t_token *tokens)
 	}
 	return (1);
 }
+
+int	parser(t_token **tokens)
+{
+	if (!syntax_checker(*tokens))
+		return (0);
+	return (1);
+}
+
+

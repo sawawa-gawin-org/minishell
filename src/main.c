@@ -38,14 +38,14 @@ int	main(int argc, char *argv[], char *envp[])
 	struct termios	term; //端末の属性を変更する用の構造体
 	struct termios	save; //変更前の属性を保存する用の構造体
 	char			*line; //readlineで読み取った文字列用のchar*
-	t_token			*tokens;
-	t_shval			*shvals;
+	t_token			*tokens; //字句分割後のトークン格納用の双方向連結リスト
+	t_shval			*shvals; //環境変数およびシェル変数用の双方向連結リスト
 
 	(void)argc;
 	(void)argv;
 	shvals = NULL;
 	shvals = get_env_all(envp, shvals); //既存の環境変数のリスト化
-	put_lst_shval(shvals);
+	// put_lst_shval(shvals);
 	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
 	term = save; //複製
 	term.c_lflag &= ~(ECHOCTL); //制御文字を消す
@@ -59,16 +59,15 @@ int	main(int argc, char *argv[], char *envp[])
 		line = readline("minishell$ "); //Ctrl+Dを押してEOFするとreadlineがNULLを返す。
 		if (line == NULL)
 			break ;
-		if (line[0] != '\0') //もし空白やタブなどの入力が行われている場合は履歴に残す。改行だけなら残さない。
+		if (line[0] != '\0') //もし空白やタブなどの入力が行われている場合は履歴に残す。改行だけなら残さない。cmdの成否にかかわらず履歴に残る。
 			add_history(line);
 		if (is_blank_str(line)) //lineがisspace()の文字のみであればcontinue
 		{
 			free(line);
 			continue ;
 		}
-		add_history(line); //cmdの成否にかかわらず履歴に残る。
 		tokens = tokenizer(line, tokens);
-		if (syntax_checker(tokens))//構文不一致チェック
+		if (parser(&tokens))
 			put_lst(tokens);
 		del_lst(tokens);
 		free(line);
@@ -83,18 +82,16 @@ static int	is_blank_str(char *str)
 	int	i;
 
 	i = 0;
-	while (is_space(str[i]))
+	while (is_blank(str[i]))
 		i++;
 	if (str[i] == '\0')
 		return (1);
 	return (0);
 }
 
-int	is_space(int c)
+int	is_blank(int c)
 {
-	if ((c >= '\t' && c <= '\r') || c == ' ')
-		return (1);
-	return (0);
+	return (c == ' ' || c == '\t');
 }
 
 void	sig_handler(int signal)
