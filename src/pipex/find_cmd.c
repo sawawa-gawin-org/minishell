@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/01 17:43:56 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/08 09:26:03 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static char	*find_path(char *path, char *envs)
 		full = (char *)malloc((path_len + env + 2) * sizeof(char));
 		if (!full)
 			return (NULL);
-		my_strncpy(full, envs + index, env);
-		my_strncpy(full + env, "/", 1);
-		my_strncpy(full + env + 1, path, path_len);
+		ft_memcpy(full, envs + index, env);
+		ft_memcpy(full + env, "/", 1);
+		ft_memcpy(full + env + 1, path, path_len);
 		full[path_len + env + 1] = '\0';
 		if (access(full, X_OK) == 0)
 			return (full);

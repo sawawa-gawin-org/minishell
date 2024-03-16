@@ -2,7 +2,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "linux-minishell",
+			"name": "minishell",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/minishell_debug",
@@ -10,82 +10,58 @@
 				// if you want to pass arguments to your program
 			],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}",
 			"environment": [],
-			"MIMode": "gdb",
 			"externalConsole": true,
 			"preLaunchTask": "minishell-make",
+			"linux": {
+				"MIMode": "gdb",
+				"miDebuggerPath": "/usr/bin/gdb"
+			},
+			"osx": {
+				"MIMode": "lldb"
+			},
 		},
 		{
-			"name": "linux-libft",
+			"name": "libft",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/tmp/dev/libft/libft_debug.out",
+			"program": "${workspaceFolder}/test/libft/libft_debug.out",
 			"args": [
 				// if you want to pass arguments to your program
 			],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
 			"environment": [],
-			"MIMode": "gdb",
 			"preLaunchTask": "libft-make",
+			"cwd": "${workspaceFolder}",
+			"linux": {
+				"MIMode": "gdb",
+				"miDebuggerPath": "/usr/bin/gdb"
+			},
+			"osx": {
+				"MIMode": "lldb"
+			},
 		},
 		{
-			"name": "linux-pipex",
+			"name": "pipex",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/test/pipex/pipex_debug.out",
 			"args": [
-				"${workspaceFolder}/test/pipex/infile.txt", "grep .c", "wc -l", "${workspaceFolder}/test/pipex/outfile.txt"
+				"ls -la|", "grep root", "|wc -l"
 			],
 			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
+			"cwd": "${workspaceFolder}",
 			"environment": [],
 			"MIMode": "gdb",
 			"preLaunchTask": "pipex-make",
-		},
-		{
-			"name": "mac-minishell",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/minishell_debug",
-			"args": [
-				// if you want to pass arguments to your program
-			],
-			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
-			"environment": [],
-			"MIMode": "lldb",
-			"externalConsole": true,
-			"preLaunchTask": "minishell-make",
-		},
-		{
-			"name": "mac-libft",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/tmp/dev/libft/libft_debug.out",
-			"args": [
-				// if you want to pass arguments to your program
-			],
-			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
-			"environment": [],
-			"MIMode": "lldb",
-			"preLaunchTask": "libft-make",
-		},
-		{
-			"name": "mac-pipex",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/test/pipex/pipex_debug.out",
-			"args": [
-				// if you want to pass arguments to your program
-			],
-			"stopAtEntry": false,
-			"cwd": "${fileDirname}",
-			"environment": [],
-			"MIMode": "lldb",
-			"preLaunchTask": "pipex-make",
+			"linux": {
+				"MIMode": "gdb",
+				"miDebuggerPath": "/usr/bin/gdb"
+			},
+			"osx": {
+				"MIMode": "lldb"
+			},
 		},
 	]
 }

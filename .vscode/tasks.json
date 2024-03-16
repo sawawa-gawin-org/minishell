@@ -22,7 +22,8 @@
 			"command": "make",
 			"args": [
 				"test", "DEBUG_MODE=1",
-				"-C", "${workspaceFolder}/test/libft"
+				"-C", "${workspaceFolder}/test/libft",
+				"-j", "6"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -38,7 +39,8 @@
 			"command": "make",
 			"args": [
 				"test", "DEBUG_MODE=1",
-				"-C", "${workspaceFolder}/test/pipex"
+				"-C", "${workspaceFolder}/test/pipex",
+				"-j", "6"
 			],
 			"options": {
 				"cwd": "${fileDirname}"

@@ -6,7 +6,7 @@
 #    By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 19:07:05 by syamasaw          #+#    #+#              #
-#    Updated: 2024/03/01 18:43:23 by saraki           ###   ########.fr        #
+#    Updated: 2024/03/16 16:27:21 by saraki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 LIB_NAME := pipex.a
 HEADERS := pipex.h
 
-SRCS := find_cmd.c my_strncpy.c child_1.c child_2.c utils.c
+SRCS := child_mid.c child_old.c child_young.c find_cmd.c parser.c pipex.c spawn_children.c utils.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -67,7 +67,7 @@ $(OBJ_DIR):
 	mkdir -p $(LIB_EXPORT_DIR)
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
-	$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(LIB_NAME): $(OBJS)
 	ar rc $@ $(OBJS)

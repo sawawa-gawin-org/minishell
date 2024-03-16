@@ -6,22 +6,35 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/01 17:23:20 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/09 16:56:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int	close_fd(int *fds, int exit_code)
+int	close_fds(t_pipex *pipe_arr, int size, int exit_code)
 {
-	if (fds[0] >= 0)
-		close(fds[0]);
-	if (fds[1] >= 0)
-		close(fds[1]);
+	int		i;
+	t_pipex	*pipe;
+
+	i = 0;
+	while (i < size)
+	{
+		pipe = &pipe_arr[i];
+		if (pipe->in_fd >= 0)
+			close(pipe->in_fd);
+		if (pipe->out_fd >= 0)
+			close(pipe->out_fd);
+		if (pipe->pipe_in_fd >= 0)
+			close(pipe->pipe_in_fd);
+		if (pipe->pipe_out_fd >= 0)
+			close(pipe->pipe_out_fd);
+		i ++;
+	}
 	return (exit_code);
 }
 
-void	free_split(char **s)
+int	free_split(char **s, int exit_code)
 {
 	int	i;
 
@@ -29,10 +42,31 @@ void	free_split(char **s)
 	while (s[++i] != NULL)
 		free(s[i]);
 	free(s);
+	return (exit_code);
 }
 
-void	exit_closepipe(t_pipex *pipex)
+int	count_units(char **units)
 {
-	close_fd(pipex->pipe_fds, 0);
-	exit(close_fd(pipex->io_fds, 1));
+	int	count;
+
+	count = 0;
+	while (*units != NULL)
+	{
+		count ++;	
+		units ++;
+	}
+	return (count);
+}
+
+int	pipe_fds(int *out_fd, int *in_fd)
+{
+	int	pipe_fd[2];
+
+	pipe_fd[0] = *out_fd;
+	pipe_fd[1] = *in_fd;
+	if (pipe(pipe_fd) < 0)
+		return (-1);
+	*out_fd = pipe_fd[0];
+	*in_fd = pipe_fd[1];
+	return (0);
 }

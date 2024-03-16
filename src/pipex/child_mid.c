@@ -1,47 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child_2.c                                          :+:      :+:    :+:   */
+/*   child_mid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:35:17 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/01 17:44:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/10 12:01:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "pipex.h"
 
-static void	do_child_2(char **cmd, char *path, char *envp[], t_pipex *pipex);
+static void	do_middle_child(char **cmd, char *path, char *envp[], t_pipex *pipe);
 
-void	make_child_2(char *arg, char *envp[], t_pipex *pipex)
+int	make_middle_child(char *phrase, t_pipex *pipe, char *envp[])
 {
 	char	**cmd;
 	char	*path;
 
-	cmd = ft_split(arg, ' ');
-	if (!cmd)
-		exit_closepipe(pipex);
+	cmd = ft_split(phrase, ' ');
+	if (cmd == NULL)
+		return (1);
 	path = find_cmd(cmd[0], envp);
 	if (!path)
-	{
-		free_split(cmd);
-		exit_closepipe(pipex);
-	}
-	pipex->pids[1] = fork();
-	if (pipex->pids[1] == 0)
-		do_child_2(cmd, path, envp, pipex);
-	free_split(cmd);
+		return (free_split(cmd, 1));
+	pipe->pids = fork();
+	if (pipe->pids == 0)
+		do_middle_child(cmd, path, envp, pipe);
+	free_split(cmd, 0);
 	free(path);
-	if (pipex->pids[1] < 0)
-		exit_closepipe(pipex);
+	if (pipe->pids < 0)
+		return (1);
+	return (0);
 }
 
-static void	do_child_2(char **cmd, char *path, char *envp[], t_pipex *pipex)
+static void	do_middle_child(char **cmd, char *path, char *envp[], t_pipex *pipe)
 {
-	dup2(pipex->pipe_fds[0], STDIN_FILENO);
-	close(pipex->pipe_fds[1]);
-	dup2(pipex->io_fds[1], STDOUT_FILENO);
+	dup2(pipe->pipe_out_fd, STDIN_FILENO);
+	// close(pipe->pipe_out_fd);
+	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
+	// close(pipe->pipe_in_fd);
 	execve(path, cmd, envp);
 }
