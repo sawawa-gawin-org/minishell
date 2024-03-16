@@ -52,7 +52,6 @@
 			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
-			"environment": [],
 			"MIMode": "gdb",
 			"preLaunchTask": "pipex-make",
 			"linux": {
@@ -60,7 +59,10 @@
 				"miDebuggerPath": "/usr/bin/gdb"
 			},
 			"osx": {
-				"MIMode": "lldb"
+				"MIMode": "lldb",
+				"environment": [
+					{ "name": "DEBUGGER", "value": "vscode" }
+				],
 			},
 		},
 	]
