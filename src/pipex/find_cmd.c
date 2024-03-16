@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/08 09:26:03 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 17:31:04 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,13 @@ char	*find_cmd(char *path, char *envp[])
 {
 	int		i;
 
-	i = -1;
-	while (envp[++i])
+	i = 0;
+	while (envp[i])
+	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 			return (find_path(path, envp[i]));
+		i ++;
+	}
 	return (NULL);
 }
 
