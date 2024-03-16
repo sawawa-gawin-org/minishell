@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 05:22:42 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/16 17:54:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 21:43:51 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,22 @@ static int	wait_processes(t_pipex *pipe_arr, int size)
 {
 	int		i;
 	pid_t 	err;
+	t_pipex	*pre_pipe;
+	int		index;
 
 	i = 0;
 	while (i < size)
 	{
+		if (i != 0)
+		{
+			index = pipe_arr[i].index;
+			pre_pipe = &((t_pipex *) (pipe_arr[i].head))[index - 1];
+			close(pre_pipe->pipe_in_fd);
+			pre_pipe->pipe_in_fd = -1;
+		}
 		err = waitpid(pipe_arr[i].pids, NULL, 0);
+		if (pipe_arr[i].pipe_out_fd > 0)
+			close(pipe_arr[i].pipe_out_fd);
 		i ++;
 	}
 	if (err)
