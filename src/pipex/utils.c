@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/09 16:56:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 16:53:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	pipe_fds(int *out_fd, int *in_fd)
 	pipe_fd[0] = *out_fd;
 	pipe_fd[1] = *in_fd;
 	if (pipe(pipe_fd) < 0)
-		return (-1);
+		return (ERR);
 	*out_fd = pipe_fd[0];
 	*in_fd = pipe_fd[1];
-	return (0);
+	return (OK);
 }

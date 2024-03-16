@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:50:46 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/10 12:00:56 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 17:54:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,5 @@ static void	do_oldest_child(char **cmd, char *path, char *envp[], t_pipex *pipe)
 {
 	close(pipe->pipe_out_fd);
 	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
-	close(pipe->pipe_in_fd);
 	execve(path, cmd, envp);
 }
