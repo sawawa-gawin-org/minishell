@@ -24,7 +24,7 @@ $(NAME): $(OBJS) $(TEST_OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS) $(LFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(TEST_SRC_DIR)%.c $(HEADERS)
-	$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 .PHONY: tclean
 tclean:
