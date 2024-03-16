@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:42:11 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/09 10:21:24 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 14:28:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <fcntl.h>
 # include <sys/types.h>
+# include <stdio.h>
 
 # include <sys/wait.h> // Linux
 # include <sys/stat.h> // Linux
@@ -33,12 +34,14 @@ typedef struct s_pipex
 	int		pipe_out_fd;
 	pid_t	pids;
 	void	*head;
+	int		size;
 	int		index;
 }		t_pipex;
 
 char	**parse_argv(int argc, char **argv);
 
 int		close_fds(t_pipex *pipe_arr, int size, int exit_code);
+void	close_fds_in_child(t_pipex *pipe_arr, int index, int size);
 int		free_split(char **s, int exit_code);
 int		count_units(char **units);
 int		pipe_fds(int *in_fd, int *out_fd);

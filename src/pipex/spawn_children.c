@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 05:22:42 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/16 21:43:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 14:28:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ static int	init_pipeline(t_pipex *pipe_arr, int size)
 static int	wait_processes(t_pipex *pipe_arr, int size)
 {
 	int		i;
-	pid_t 	err;
 	t_pipex	*pre_pipe;
 	int		index;
 
@@ -79,14 +78,12 @@ static int	wait_processes(t_pipex *pipe_arr, int size)
 			index = pipe_arr[i].index;
 			pre_pipe = &((t_pipex *) (pipe_arr[i].head))[index - 1];
 			close(pre_pipe->pipe_in_fd);
+			close(pre_pipe->pipe_out_fd);
 			pre_pipe->pipe_in_fd = -1;
 		}
-		err = waitpid(pipe_arr[i].pids, NULL, 0);
-		if (pipe_arr[i].pipe_out_fd > 0)
-			close(pipe_arr[i].pipe_out_fd);
+		if (waitpid(pipe_arr[i].pids, NULL, 0) == -1)
+			printf("waitpid error\n");
 		i ++;
 	}
-	if (err)
-		return (ERR);
 	return (OK);
 }

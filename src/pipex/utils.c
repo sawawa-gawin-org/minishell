@@ -6,11 +6,34 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/16 16:53:23 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 14:17:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	close_fds_in_child(t_pipex *pipe_arr, int index, int size)
+{
+	int		i;
+	t_pipex	*pipe;
+
+	i = 0;
+	while (i < size)
+	{
+		if (i == index)
+		{
+			i ++;
+			continue;
+		}
+		pipe = &pipe_arr[i];
+		if (pipe->pipe_in_fd >= 0)
+			close(pipe->pipe_in_fd);
+		if (pipe->pipe_out_fd >= 0)
+			close(pipe->pipe_out_fd);
+		i ++;
+	}
+	return ;
+}
 
 int	close_fds(t_pipex *pipe_arr, int size, int exit_code)
 {
