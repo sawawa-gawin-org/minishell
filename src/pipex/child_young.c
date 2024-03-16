@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:35:17 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/16 17:55:13 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 18:08:05 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ int	make_youngest_child(char *phrase, t_pipex *pipe, char *envp[])
 
 static void	do_youngest_child(char **cmd, char *path, char *envp[], t_pipex *pipe)
 {
+	t_pipex	*pre_pipe;
+	int		index;
+
+	index = pipe->index;
+	pre_pipe = &((t_pipex *) (pipe->head))[index - 1];
 	dup2(pipe->pipe_out_fd, STDIN_FILENO);
+	close(pre_pipe->pipe_in_fd);
 	close(pipe->pipe_in_fd);
 	execve(path, cmd, envp);
 }
