@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/16 15:32:14 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:45:54 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,26 @@ int	parser(t_token **tokens)
 {
 	if (!syntax_checker(*tokens))
 		return (0);
+	//tokenリスト内を走査して、""空文字列要素を削除
+	//"hoge""huge$VAL"->hogehuge$VAL (blank(' ', '\t')を挟まずに)連続する文字列を結合
+	//クオートの削除
+	//<, >, <<, >> の後に来るtokenをdelimiter(デリミタ)とする(token_typeの変更?)
+	//各リダイレクトを順に読み込み、最終的な入力や出力先を保持する。
+	//ヒアドキュメントの展開
+	//変数展開
+	//"|"区切りでコマンドごとに分割
 	return (1);
 }
 
+/*
+typedef struct s_cmd_table
+{
+	char **cmd; (={"ls", "-lar", "/Desktop", NULL})
+	int fd_in;
+	int fd_out;
+	bool is_builtin;
+}	t_cmd_table;
+*/
+// <、>、>>はfdがわかる。<<は文章でありファイルではないので、openでfdを知ることはできない。
+//そのため、heredoc処理の出力をwriteでfd指定でpipeを通してcmd1に渡す。
 
