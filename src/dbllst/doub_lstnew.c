@@ -6,17 +6,17 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 03:16:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
 
-t_dbl_list	*doub_lstnew(void *data)
+t_bi_lst	*doub_lstnew(void *data)
 {
-	t_dbl_list	*new;
+	t_bi_lst	*new;
 
-	new = malloc(sizeof(t_dbl_list));
+	new = malloc(sizeof(t_bi_lst));
 	if (new == NULL)
 		return (NULL);
 	new->prev = new;

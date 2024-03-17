@@ -6,15 +6,15 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 02:52:34 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 03:16:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
 
-void	doub_lstprepend(t_dbl_list **head, t_dbl_list *new_node)
+void	doub_lstprepend(t_bi_lst **head, t_bi_lst *new_node)
 {
-	t_dbl_list	*sentinel;
+	t_bi_lst	*sentinel;
 
 	if (new_node == NULL)
 		return ;

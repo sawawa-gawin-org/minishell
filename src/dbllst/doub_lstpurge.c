@@ -6,17 +6,17 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 03:16:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
 
-t_dbl_list	*doub_lstpurge(t_dbl_list **target)
+t_bi_lst	*doub_lstpurge(t_bi_lst **target)
 {
-	t_dbl_list	*next;
-	t_dbl_list	*prev;
-	t_dbl_list	*purged;
+	t_bi_lst	*next;
+	t_bi_lst	*prev;
+	t_bi_lst	*purged;
 
 	if (target == NULL || *target == NULL)
 		return (NULL);
