@@ -53,4 +53,5 @@ dkms.conf
 
 # Add user ignored files
 minishell
+!minishell/
 lib
