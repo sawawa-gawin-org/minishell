@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:37:15 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/18 05:30:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 05:45:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	*new_get_env_all(char **envp)
 {
 	t_blst			*ret;
 	t_blst			*new_node;
-	t_shval_data	*shval;
 
 	ret = doub_lstnew(NULL);
 	if (ret == NULL)
