@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doub_lstappend.c                                   :+:      :+:    :+:   */
+/*   doub_lstdelall.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 01:50:48 by saraki           ###   ########.fr       */
+/*   Created: 2023/11/07 14:36:14 by saraki            #+#    #+#             */
+/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "dbllst.h"
 
-void	doub_lstappend(t_dbl_list **head, t_dbl_list *new)
+void	doub_lstdelall(t_dbl_list **lst, void (*del_f)(void*))
 {
-	t_dbl_list	*sentinel;
-	t_dbl_list	*last;
+	t_dbl_list	*next_lst;
 
-	if (new == NULL)
+	if (lst == NULL || *lst == NULL)
 		return ;
-	sentinel = (*head)->prev;
-	last = sentinel->prev;
-	last->next = new;
-	new->prev = last;
-	new->next = sentinel;
-	sentinel->prev = new;
-	if ((*head)->data == NULL)
-		*head = new;
+	while ((*lst)->data != NULL)
+	{
+		del_f((*lst)->data);
+		(*lst)->data = NULL;
+		next_lst = (*lst)->next;
+		free(*lst);
+		*lst = next_lst;
+	}
+	free(*lst);
 	return ;
 }

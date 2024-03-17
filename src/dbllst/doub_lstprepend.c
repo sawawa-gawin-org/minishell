@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doub_lstpush.c                                     :+:      :+:    :+:   */
+/*   doub_lstprepend.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 01:46:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 02:52:34 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "dbllst.h"
 
-void	doub_lstprepend(t_dbl_list **head, t_dbl_list *new)
+void	doub_lstprepend(t_dbl_list **head, t_dbl_list *new_node)
 {
 	t_dbl_list	*sentinel;
 
-	if (new == NULL)
+	if (new_node == NULL)
 		return ;
 	sentinel = (*head)->prev;
-	sentinel->next = new;
-	new->prev = sentinel;
-	new->next = (*head);
-	(*head)->prev = new;
-	*head = new;
+	sentinel->next = new_node;
+	new_node->prev = sentinel;
+	new_node->next = (*head);
+	(*head)->prev = new_node;
+	*head = new_node;
 	return ;
 }

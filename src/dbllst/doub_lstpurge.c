@@ -1,34 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doub_lstsearch.c                                   :+:      :+:    :+:   */
+/*   doub_lstpurge.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/19 18:34:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 02:45:46 by saraki           ###   ########.fr       */
+/*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
+/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "dbllst.h"
 
-typedef int (t_cmp_f)(void *, void *);
-
-t_dbl_list	*doub_lstsearch(t_dbl_list *lst, void *query_pt, t_cmp_f cmp_f)
+t_dbl_list	*doub_lstpurge(t_dbl_list **target)
 {
-	t_dbl_list	*ret_node;
-	int		i;
+	t_dbl_list	*next;
+	t_dbl_list	*prev;
+	t_dbl_list	*purged;
 
-	if (lst == NULL)
+	if (target == NULL || *target == NULL)
 		return (NULL);
-	i = 0;
-	ret_node = lst;
-	while (ret_node->data != NULL)
-	{
-		if (cmp_f(ret_node->data, query_pt))
-			return (ret_node);
-		ret_node = ret_node->next;
-		i ++;
-	}
-	return (ret_node);
+	next = (*target)->next;
+	prev = (*target)->prev;
+	next->prev = prev;
+	prev->next = next;
+	(*target)->next = NULL;
+	(*target)->prev = NULL;
+	purged = *target;
+	*target = next;
+	return (purged);
 }

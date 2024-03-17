@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doub_lstnew.c                                      :+:      :+:    :+:   */
+/*   doub_lstsearch.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 01:44:25 by saraki           ###   ########.fr       */
+/*   Created: 2023/11/19 18:34:48 by saraki            #+#    #+#             */
+/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "dbllst.h"
 
-t_dbl_list	*doub_lstnew(void *data)
+typedef int (t_cmp_f)(void *, void *);
+
+t_dbl_list	*doub_lstsearch(t_dbl_list *lst, void *query_pt, t_cmp_f cmp_f)
 {
-	t_dbl_list	*new;
+	t_dbl_list	*ret_node;
+	int		i;
 
-	new = malloc(sizeof(t_dbl_list));
-	if (new == NULL)
+	if (lst == NULL)
 		return (NULL);
-	new->prev = new;
-	new->data = data;
-	new->next = new;
-	return (new);
+	i = 0;
+	ret_node = lst;
+	while (ret_node->data != NULL)
+	{
+		if (cmp_f(ret_node->data, query_pt))
+			return (ret_node);
+		ret_node = ret_node->next;
+		i ++;
+	}
+	return (ret_node);
 }

@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 02:18:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "dbllst.h"
 
 void	doub_lstdelone(t_dbl_list *lst, void (*del_f)(void*))
 {
