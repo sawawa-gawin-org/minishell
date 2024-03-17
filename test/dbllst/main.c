@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/18 03:34:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 04:27:57 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	main(void)
 
 	// Make list
 	head = make_list();
+	if (head == NULL)
+		return (1);
 	node = head;
 	while (node->data != NULL)
 	{
@@ -49,13 +51,19 @@ static t_head *make_list(void)
 {
 	t_head		*head;
 	t_node		*node;
+	void		*data;
 	int			i;
 
 	head = doub_lstnew(NULL);
 	i = 0;
 	while (i < 10)
 	{
-		node = doub_lstnew(strdup(&"abcdefghij"[i]));
+		data = strdup(&"abcdefghij"[i]);
+		if (data == NULL)
+		{
+			doub_lstdelall(&head, free);
+			return (NULL);
+		}
 		doub_lstappend(&head, node);
 		i ++;
 	}
