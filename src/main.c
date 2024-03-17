@@ -13,25 +13,8 @@
 #include "minishell.h"
 #include "libft.h"
 
-// "echo text"の't'(index=5)からprintfするだけ、debug用
-// void	ft_echo(char *line)
-// {
-// 	int	i;
-
-// 	i = 4;
-// 	if (line[4] == ' ')
-// 	{
-// 		while (line[i] == ' ')
-// 			i++;
-// 		printf("%s", line + 5);
-// 	}
-// 	printf("\n");
-// }
-
 static int	is_blank_str(char *str);
 void		sig_handler(int signal);
-
-
 
 int	main(int argc, char *argv[], char *envp[])
 {
