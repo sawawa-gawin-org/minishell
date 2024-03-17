@@ -6,14 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:19:46 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 03:00:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
-
-typedef void *(*t_dup_f)(void *);
-typedef void (*t_del_f)(void*);
 
 t_dbl_list	*doub_lstdup(t_dbl_list *src, t_dup_f dup_f, t_del_f del_f)
 {

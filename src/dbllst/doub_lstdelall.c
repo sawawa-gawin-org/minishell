@@ -6,13 +6,13 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:36:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 03:01:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
 
-void	doub_lstdelall(t_dbl_list **lst, void (*del_f)(void*))
+void	doub_lstdelall(t_dbl_list **lst, t_del_f del_f)
 {
 	t_dbl_list	*next_lst;
 

@@ -6,13 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:34:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 02:52:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 03:00:22 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
-
-typedef int (t_cmp_f)(void *, void *);
 
 t_dbl_list	*doub_lstsearch(t_dbl_list *lst, void *query_pt, t_cmp_f cmp_f)
 {
