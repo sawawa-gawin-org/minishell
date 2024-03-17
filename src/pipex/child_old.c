@@ -6,12 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 16:50:46 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/10 12:00:56 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/16 14:15:56 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "pipex.h"
+
+#include <stdio.h>
 
 static void	do_oldest_child(char **cmd, char *path, char *envp[], t_pipex *pipe);
 
@@ -38,8 +40,7 @@ int	make_oldest_child(char *phrase, t_pipex *pipe, char *envp[])
 
 static void	do_oldest_child(char **cmd, char *path, char *envp[], t_pipex *pipe)
 {
-	close(pipe->pipe_out_fd);
+	close_fds_in_child(pipe->head, pipe->index, pipe->size);
 	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
-	close(pipe->pipe_in_fd);
 	execve(path, cmd, envp);
 }
