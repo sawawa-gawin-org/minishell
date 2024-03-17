@@ -6,16 +6,16 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 03:16:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 04:42:49 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
 
-void	doub_lstappend(t_bi_lst **head, t_bi_lst *new)
+void	doub_lstappend(t_blst **head, t_blst *new)
 {
-	t_bi_lst	*sentinel;
-	t_bi_lst	*last;
+	t_blst	*sentinel;
+	t_blst	*last;
 
 	if (new == NULL)
 		return ;

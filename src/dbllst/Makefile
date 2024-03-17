@@ -6,7 +6,7 @@
 #    By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 19:07:05 by syamasaw          #+#    #+#              #
-#    Updated: 2024/03/18 02:55:12 by saraki           ###   ########.fr        #
+#    Updated: 2024/03/18 05:21:43 by saraki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := dbllst.a
+LIB_NAME := libdbllst.a
 HEADERS := dbllst.h
 
 SRCS := doub_lstappend.c doub_lstdelall.c doub_lstdelone.c doub_lstdup.c \

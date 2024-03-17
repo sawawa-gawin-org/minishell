@@ -6,17 +6,17 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:19:46 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 03:16:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 05:31:21 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
 
-t_bi_lst	*doub_lstdup(t_bi_lst *src, t_dup_f dup_f, t_del_f del_f)
+t_blst	*doub_lstdup(t_blst *src, t_dup_f dup_f, t_del_f del_f)
 {
-	t_bi_lst	*duped;
-	t_bi_lst	*new;
-	void		*value;
+	t_blst	*duped;
+	t_blst	*new;
+	void	*value;
 
 	duped = doub_lstnew(NULL);
 	if (duped == NULL)
