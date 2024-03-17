@@ -56,6 +56,13 @@ typedef struct s_shval
 	int				exported;
 }					t_shval;
 
+typedef struct	s_shval_data
+{
+	char			*key;
+	char			*val;
+	int				exported;
+}				t_shval_data;
+
 typedef struct s_cmd
 {
 	struct s_cmd	*next;
@@ -78,6 +85,9 @@ void	put_lst(t_token *tokens);
 void	del_lst(t_token *tokens);
 
 t_shval	*get_env_all(char **envp, t_shval *shvals);
+void	*new_get_env_all(char **envp);
+void	free_shval_data(void *data);
+
 t_shval	*lstadd_shval(t_shval *shvals, char *str, int len, int flag);
 void	del_lst_shval(t_shval *shvals);
 void	put_lst_shval(t_shval *shvals);
