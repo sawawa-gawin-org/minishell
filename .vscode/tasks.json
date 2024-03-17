@@ -5,8 +5,8 @@
 			"label": "minishell-make",
 			"command": "make",
 			"args": [
-				"debug",
-				"-C", "${workspaceFolder}"
+				"test", "DEBUG_MODE=1",
+				"-C", "${workspaceFolder}/test"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
