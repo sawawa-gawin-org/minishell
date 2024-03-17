@@ -6,13 +6,13 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:36:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 01:55:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 02:18:52 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	doub_lstdelall(t_dbl_list **lst)
+void	doub_lstdelall(t_dbl_list **lst, void (*del_f)(void*))
 {
 	t_dbl_list	*next_lst;
 
@@ -20,7 +20,7 @@ void	doub_lstdelall(t_dbl_list **lst)
 		return ;
 	while ((*lst)->data != NULL)
 	{
-		free((*lst)->data);
+		del_f((*lst)->data);
 		(*lst)->data = NULL;
 		next_lst = (*lst)->next;
 		free(*lst);
