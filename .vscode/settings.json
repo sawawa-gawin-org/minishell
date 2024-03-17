@@ -1,0 +1,11 @@
+{
+	"files.associations": {
+		"stdio.h": "c",
+		"termios.h": "c",
+		"minishell.h": "c",
+		"string.h": "c",
+		"stdlib.h": "c",
+		"libft.h": "c"
+	},
+	"C_Cpp.errorSquiggles": "enabled"
+}
