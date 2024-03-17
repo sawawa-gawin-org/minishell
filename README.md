@@ -1,3 +1,11 @@
+<p align="center">
+Summary:<br>
+This project is about creating a simple shell.<br>
+Yes, your own little bash.<br>
+You will learn a lot about processes and file descriptors.<br>
+Version: 7.1<br>
+</p>
+
 # minishell  
 bashの再実装  
 

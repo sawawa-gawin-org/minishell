@@ -48,11 +48,10 @@
 			"request": "launch",
 			"program": "${workspaceFolder}/test/pipex/pipex_debug.out",
 			"args": [
-				"ls -la|", "grep root", "|wc -l"
+				"ls -la|grep saraki| wc -l"
 			],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
-			"environment": [],
 			"MIMode": "gdb",
 			"preLaunchTask": "pipex-make",
 			"linux": {
@@ -60,7 +59,10 @@
 				"miDebuggerPath": "/usr/bin/gdb"
 			},
 			"osx": {
-				"MIMode": "lldb"
+				"MIMode": "lldb",
+				"environment": [
+					{ "name": "DEBUGGER", "value": "vscode" }
+				],
 			},
 		},
 	]
