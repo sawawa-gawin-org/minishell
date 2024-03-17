@@ -11,4 +11,38 @@ include $(REPOSITORY_ROOT)/src/$(BASE_DIRNAME)/Makefile
 NAME := pipex.out
 TEST_SRCS := main.c
 
-include $(REPOSITORY_ROOT)/test/Makefile
+# *****************************************************************************
+# From here onward is the same
+# *****************************************************************************
+
+DNAME := $(NAME:.out=_debug.out)
+
+TEST_SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/test/$(BASE_DIRNAME)/)
+
+NAME := $(addprefix $(TEST_SRC_DIR),$(NAME))
+DNAME := $(addprefix $(TEST_SRC_DIR),$(DNAME))
+
+TEST_SRCS := $(addprefix $(TEST_SRC_DIR),$(TEST_SRCS)) 
+
+TEST_OBJS := $(patsubst $(TEST_SRC_DIR)%.c,$(OBJ_DIR)%.o,$(TEST_SRCS))
+TEST_DOBJS := $(patsubst $(TEST_SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(TEST_SRCS))
+
+# Rules
+ifdef DEBUG_MODE
+TEST_OBJS := $(TEST_DOBJS)
+NAME := $(DNAME)
+endif
+
+# Rules
+.PHONY: test
+test: $(OBJ_DIR) $(NAME)
+
+$(NAME): $(OBJS) $(TEST_OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS) $(LFLAGS) -o $(NAME)
+
+$(OBJ_DIR)%.o: $(TEST_SRC_DIR)%.c $(HEADERS)
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+
+.PHONY: tclean
+tclean:
+	rm -f $(NAME) $(DNAME)
