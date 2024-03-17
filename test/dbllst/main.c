@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/18 04:42:49 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 05:58:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ static t_head *make_list(void)
 	void		*data;
 	int			i;
 
-	head = doub_lstnew(NULL);
 	i = 0;
-	while (i < 10)
+	head = doub_lstnew(NULL);
+	while (head != NULL && i < 10)
 	{
 		data = strdup(&"abcdefghij"[i]);
 		if (data == NULL)
