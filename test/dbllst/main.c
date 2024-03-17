@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/18 04:27:57 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/18 04:42:49 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 // 	system("leaks dbllst.out");
 // }
 
-typedef t_bi_lst t_head;
-typedef t_bi_lst t_node;
+typedef t_blst t_head;
+typedef t_blst t_node;
 
 static t_head *make_list(void);
 
