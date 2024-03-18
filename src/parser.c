@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/18 19:13:25 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/18 20:11:52 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	parser(t_token **tokens)
 	//各リダイレクトを順に読み込み、最終的な入力や出力先を保持する。(ここでリダイレクトの処理をするか、exec部分で処理するかは未定)
 	//(リダイレクトリストを作成？)
 	//ヒアドキュメントの展開
-	//変数展開
+	//変数展開 ARG="ho hoge"; ec$ARG がありえる
 	//"|"区切りでコマンド列ごとに分割
 	//< infile | echo hoge のような、実行可能コマンドがない場合も考慮して実装する。
 	return (1);
@@ -71,8 +71,8 @@ int	parser(t_token **tokens)
 typedef struct s_cmd_table
 {
 	char **cmd; (={"ls", "-lar", "/Desktop", NULL})
-	int fd_in;
-	int fd_out;
+	struct s_list *redirects_in;
+	struct s_list *redirects_out;//ここ2つのリストについて順に操作を行い、最終的に使用するfdを割り出す(その過程でheredocの入力やファイルの新規作成を行う。)
 	bool is_builtin;
 }	t_cmd_table;
 */
