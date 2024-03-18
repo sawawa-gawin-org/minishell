@@ -35,6 +35,7 @@ int	minishell(int argc, char *argv[], char *envp[])
 	tcsetattr(STDIN_FILENO, TCSANOW, &term); //変更を即時反映
 	signal(SIGQUIT, SIG_IGN); //SIGQUIT(Ctrl+\)を無視
 	signal(SIGINT, sig_handler); //SIGINT(Ctrl+C)をハンドリング sigaction SA_RESTART
+	//シェル初期化処理ここまで
 	line = NULL;
 	while (1)
 	{
@@ -44,7 +45,7 @@ int	minishell(int argc, char *argv[], char *envp[])
 			break ;
 		if (line[0] != '\0') //もし空白やタブなどの入力が行われている場合は履歴に残す。改行だけなら残さない。cmdの成否にかかわらず履歴に残る。
 			add_history(line);
-		if (is_blank_str(line)) //lineがisspace()の文字のみであればcontinue
+		if (is_blank_str(line)) //lineが' 'または'\t'であればcontinue
 		{
 			free(line);
 			continue ;
