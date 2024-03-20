@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/20 16:23:16 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:11:10 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ int	syntax_checker(t_token *tokens)
 	return (1);
 }
 
-int	parser(t_token **tokens)
+int	parser(t_token **tokens, struct sigaction *sa)
 {
+	(void)sa;
 	if (!syntax_checker(*tokens))
 		return (0);
 	

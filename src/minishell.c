@@ -31,7 +31,7 @@ int	minishell(char *envp[])
 	set_signal(SIGINT, sig_handler, &sa);
 	set_signal(SIGQUIT, SIG_IGN, &sa);
 	//シェル初期化処理ここまで
-	repl(shvals);//loop
+	repl(shvals, &sa);//loop
 	tcsetattr(STDIN_FILENO, TCSANOW, &save);
 	del_lst_shval(shvals);
 	return (0);

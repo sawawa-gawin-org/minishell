@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 17:26:30 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/20 17:42:27 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:10:23 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_blank_str(char *str);
 
-int	repl(t_shval *shvals)
+int	repl(t_shval *shvals, struct sigaction *sa)
 {
 	t_token	*tokens;
 	char	*line;
@@ -35,7 +35,7 @@ int	repl(t_shval *shvals)
 			continue ;
 		}
 		tokens = tokenizer(line, tokens);
-		if (parser(&tokens))
+		if (parser(&tokens, sa))
 			put_lst(tokens);
 		del_lst(tokens);
 		free(line);
