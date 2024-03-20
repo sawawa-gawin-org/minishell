@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:37:15 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/18 05:59:30 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/20 18:24:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,7 @@ int	strlen_eq(char *str)
 	return (i);
 }
 
-t_shval	*get_env_all(char **envp, t_shval *shvals)
-{
-	int	i;
-
-	i = -1;
-	while (envp[++i] != NULL)
-	{
-		shvals = lstadd_shval(shvals, envp[i], strlen_eq(envp[i]), 1);
-	}
-	return (shvals);
-}
-
-void	*new_get_env_all(char **envp)
+void	*get_env_all(char **envp)
 {
 	t_blst			*ret;
 	t_blst			*new_node;

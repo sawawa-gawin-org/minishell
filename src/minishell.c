@@ -23,16 +23,12 @@ int	minishell(int argc, char *argv[], char *envp[])
 	struct termios	save; //変更前の属性を保存する用の構造体
 	char			*line; //readlineで読み取った文字列用のchar*
 	t_token			*tokens; //字句分割後のトークン格納用の双方向連結リスト
-	t_shval			*shvals; //環境変数およびシェル変数用の双方向連結リスト
-	t_blst			*shvals_lst; //組み込みコマンドのリスト
+	t_blst			*shvals_lst; //環境変数およびシェル変数用の双方向連結リスト
 
 	(void)argc;
 	(void)argv;
-	shvals = NULL;
-	shvals = get_env_all(envp, shvals); //既存の環境変数のリスト化
-	shvals_lst = new_get_env_all(envp);
-	doub_lstdelall(&shvals_lst, free_shval_data);
-	// put_lst_shval(shvals);
+
+	shvals_lst = get_env_all(envp); //既存の環境変数のリスト化	
 	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
 	term = save; //複製
 	term.c_lflag &= ~(ECHOCTL); //制御文字を消す
@@ -60,7 +56,7 @@ int	minishell(int argc, char *argv[], char *envp[])
 		free(line);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &save);
-	del_lst_shval(shvals);
+	doub_lstdelall(&shvals_lst, free_shval_data);
 	return (0);
 }
 

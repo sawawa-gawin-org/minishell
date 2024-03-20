@@ -84,8 +84,7 @@ t_token	*lstadd_token(t_token *tokens, char *str, int type);
 void	put_lst(t_token *tokens);
 void	del_lst(t_token *tokens);
 
-t_shval	*get_env_all(char **envp, t_shval *shvals);
-void	*new_get_env_all(char **envp);
+void	*get_env_all(char **envp);
 void	free_shval_data(void *data);
 
 t_shval	*lstadd_shval(t_shval *shvals, char *str, int len, int flag);
