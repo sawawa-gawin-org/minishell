@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/18 20:11:52 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:23:16 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	parser(t_token **tokens)
 {
 	if (!syntax_checker(*tokens))
 		return (0);
+	
 	//tokenリスト内を走査して、""空文字列要素を削除
 	//"hoge""huge$VAL"->hogehuge$VAL (blank(' ', '\t')を挟まずに)連続する文字列を結合
 	//クオートの削除

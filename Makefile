@@ -8,8 +8,8 @@ HEADERS := minishell.h # Fix it
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
 
 SRC_DIR = ./src/
-SRCS := main.c lst2way_token.c tokenizer.c tokenizer_util.c parser.c \
-		lst2way_shval.c get_env_all.c
+SRCS := lst2way_token.c tokenizer.c tokenizer_util.c parser.c \
+		lst2way_shval.c get_env_all.c signal_util.c minishell.c main.c repl.c
 
 SRCS := $(addprefix $(SRC_DIR), $(SRCS)) 
 

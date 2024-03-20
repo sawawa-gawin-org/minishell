@@ -84,6 +84,10 @@ void	put_lst_shval(t_shval *shvals);
 
 int	parser(t_token **tokens);
 
-int	minishell(int argc, char *argv[], char *envp[]);
+void	set_signal(int signum, void handler(int), struct sigaction *sa);
+int	repl(t_shval *shval);
+
+int	minishell(char *envp[]);
+
 
 #endif
