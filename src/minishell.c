@@ -27,8 +27,9 @@ int	minishell(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	(void)argv;
-
-	shvals_lst = get_env_all(envp); //既存の環境変数のリスト化	
+	shvals_lst = get_env_all(envp); //既存の環境変数のリスト化
+	if (shvals_lst == NULL)
+		return (1);
 	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
 	term = save; //複製
 	term.c_lflag &= ~(ECHOCTL); //制御文字を消す

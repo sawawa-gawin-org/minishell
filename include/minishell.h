@@ -47,14 +47,11 @@ typedef struct s_token
 	char			*token_str;
 }					t_token;
 
-typedef struct s_shval
+typedef struct		s_token_data
 {
-	struct s_shval	*next;
-	struct s_shval	*prev;
-	char			*key;
-	char			*val;
-	int				exported;
-}					t_shval;
+	t_token_type	token_type;
+	char			*token_str;
+}					t_token_data;
 
 typedef struct	s_shval_data
 {
@@ -77,6 +74,7 @@ int		is_blank(int c);
 
 int		syntax_checker(t_token *tokens);
 
+void	free_token_data(void *data);
 
 t_token	*lstadd_token(t_token *tokens, char *str, int type);
 
@@ -86,10 +84,6 @@ void	del_lst(t_token *tokens);
 
 void	*get_env_all(char **envp);
 void	free_shval_data(void *data);
-
-t_shval	*lstadd_shval(t_shval *shvals, char *str, int len, int flag);
-void	del_lst_shval(t_shval *shvals);
-void	put_lst_shval(t_shval *shvals);
 
 int	parser(t_token **tokens);
 
