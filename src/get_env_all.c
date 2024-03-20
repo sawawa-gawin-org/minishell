@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:37:15 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/20 18:24:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/20 19:28:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,9 @@
 #include "libft.h"
 #include "dbllst.h"
 
-static	t_blst			*new_shval_node(char *str, int flag);
-static	t_shval_data	*new_shval_data(char *str, int flag);
-
-int	strlen_eq(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '=')
-		i++;
-	return (i);
-}
+static int			strlen_eq(char *str);
+static t_blst		*new_shval_node(char *str, int flag);
+static t_shval_data	*new_shval_data(char *str, int flag);
 
 void	*get_env_all(char **envp)
 {
@@ -47,11 +38,11 @@ void	*get_env_all(char **envp)
 	return ((void *)ret);
 }
 
-static	t_blst	*new_shval_node(char *str, int flag)
+static t_blst	*new_shval_node(char *str, int flag)
 {
 	t_blst			*node;
 	t_shval_data	*data;
-	
+
 	data = new_shval_data(str, flag);
 	if (data == NULL)
 		return (NULL);
@@ -64,7 +55,7 @@ static	t_blst	*new_shval_node(char *str, int flag)
 	return (node);
 }
 
-static	t_shval_data	*new_shval_data(char *str, int flag)
+static t_shval_data	*new_shval_data(char *str, int flag)
 {
 	t_shval_data	*ret;
 	int				len;
@@ -88,6 +79,16 @@ static	t_shval_data	*new_shval_data(char *str, int flag)
 		return (NULL);
 	}
 	return (ret);
+}
+
+static int	strlen_eq(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '=')
+		i++;
+	return (i);
 }
 
 void	free_shval_data(void *data)
