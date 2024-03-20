@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:56:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/17 14:57:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/20 18:23:46 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,6 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	minishell(argc, argv, envp);
+	minishell(envp);
 	return (0);
 }
