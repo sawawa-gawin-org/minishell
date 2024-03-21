@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/21 13:46:17 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:05:25 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ int	get_heredoc_fd(char *delimiter)
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
+	{
+		close(pipefd[0]);
+		close(pipefd[1]);
 		return (-1);
+	}
 	else if (pid == 0)
 	{
 		signal(SIGINT, handle_heredoc);
