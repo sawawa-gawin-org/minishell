@@ -82,8 +82,13 @@ t_shval	*lstadd_shval(t_shval *shvals, char *str, int len, int flag);
 void	del_lst_shval(t_shval *shvals);
 void	put_lst_shval(t_shval *shvals);
 
-int	parser(t_token **tokens);
+int		parser(t_token **tokens);
 
-int	minishell(int argc, char *argv[], char *envp[]);
+//1個のみ、シグナル番号の情報のためにグローバル変数が許可される
+volatile sig_atomic_t	g_signal = 0;
+void	sig_handler(int signal);
+int		get_heredoc_fd(char *delimiter);
+
+int		minishell(int argc, char *argv[], char *envp[]);
 
 #endif
