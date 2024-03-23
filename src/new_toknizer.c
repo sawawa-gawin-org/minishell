@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/20 19:53:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/23 16:54:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,21 @@ static t_blst	*new_token_node(char **line)
 static t_token_data	*new_token_data(char **line)
 {
 	t_token_data	*data;
-	char			*token_str;
-
+	char			*next_token_str;
+	int				next_token_type;
+	
+	next_token_type = 0;
 	data = (t_token_data *)malloc(sizeof(t_token_data));
 	if (data == NULL)
 		return (NULL);
-	token_str = allocate_next_token(line);
-	if (token_str == NULL)
+	next_token_str = allocate_next_token(line, &next_token_type);
+	if (next_token_str == NULL)
 	{
 		free(data);
 		return (NULL);
 	}
-	data->token_str = token_str;
-	data->token_type = check_token_type(token_str);
+	data->token_str = next_token_str;
+	data->token_type = next_token_type;
 	return (data);
 }
 

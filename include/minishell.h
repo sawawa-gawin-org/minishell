@@ -39,6 +39,21 @@ typedef enum e_token_type
 	open_quote
 }	t_token_type;
 
+typedef enum e_tokens {
+    TOKEN_FLAG = 1,
+    TUBE_FLAG = 1 << 1,
+    LESS_FLAG = 1 << 2,
+    GREAT_FLAG = 1 << 3,
+    HEREDOC_FLAG = 1 << 4,
+    APPEND_FLAG = 1 << 5,
+    DOUBLE_QUOTE_FLAG = 1 << 6,
+    DOUBLE_QUOTE_VAL_FLAG = 1 << 7,
+    SINGLE_QUOTE_FLAG = 1 << 8,
+    VAL_FLAG = 1 << 9,
+    SPACE_FLAG = 1 << 10,
+    OPEN_QUOTE_FLAG = 1 << 11
+} t_tokens;
+
 typedef struct s_token
 {
 	struct s_token	*next;
@@ -69,7 +84,7 @@ typedef struct s_cmd
 
 t_token	*tokenizer(char *line, t_token *tokens);
 int		is_token_type(char *str, int target);
-
+int		check_token_type(char **str);
 int		is_blank(int c);
 
 int		syntax_checker(t_token *tokens);

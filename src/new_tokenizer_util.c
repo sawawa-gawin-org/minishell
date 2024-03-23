@@ -6,31 +6,34 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/20 20:02:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/23 19:22:29 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-static int	detect_token_len(char **line, int target);
+static int	detect_token_type_len(char **line, int *target);
 static int	type_meta_chr(char *str);
 static int	type_quote(char *str);
 static int	is_val(char *str);
 
-char *allocate_next_token(char **line)
+char *allocate_next_token(char **line, int *next_token_type)
 {
 	char	*token_str;
 	int		token_len;
 
-	if (ft_strchr("<>|", **line) != NULL)
-		token_len = detect_token_len(line, 'm');
-	else if (ft_strchr("\'\"", **line) != NULL)
-		token_len = detect_token_len(line, 'q');
-	else if (is_blank(**line) == 0)
-		token_len = detect_token_len(line, 'w');
-	else
-		token_len = detect_token_len(line, 'b');
+	if (next_token_type == NULL)
+		return (NULL);
+	if (ft_strchr("<>|", **line) != NULL) // m
+		*next_token_type = LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG;
+	else if (ft_strchr("\'\"", **line) != NULL) // q
+		*next_token_type = OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG | OPEN_QUOTE_FLAG | TOKEN_FLAG;
+	else if (is_blank(**line) == 0) // w
+		*next_token_type = VAL_FLAG | TOKEN_FLAG;
+	else //b
+		*next_token_type = SPACE_FLAG;
+	token_len = detect_token_type_len(*line, next_token_type);
 	if (token_len == -1)
 		return (NULL);
 	token_str = ft_substr(*line, 0, token_len);
@@ -40,7 +43,35 @@ char *allocate_next_token(char **line)
 	return (token_str);
 }
 
-static int	detect_token_len(char **line, int target)
+static int	detect_token_type_len(char *line, int *target_type)
+{
+	int	len;
+
+	len = 1;
+	if (line == LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG)
+	{
+		if (line[len] != '|' && line[len] == line[len + 1])
+			len = 2;
+	}
+	else if (*target_type == OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG | OPEN_QUOTE_FLAG | TOKEN_FLAG)
+	{
+		while (line[len] != '\0' && line[0] != line[len])
+			len++;
+		if (line[len] == '\'' || line[len] == '"')
+			len += 1;
+	}
+	else if (*target_type = VAL_FLAG | TOKEN_FLAG)
+	{
+		len = 0;
+		while (line[len] != '\0' && ft_strchr("<>|\"\'", line[len]) == NULL && is_blank(line[len]) == 0)
+			len++;
+	}
+	else if (*target_type = SPACE_FLAG)
+		len = skip_blank(line, index);
+	return (len);
+}
+
+int	check_token_type(char **str)
 {
 	
 }
