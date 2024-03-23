@@ -23,7 +23,7 @@
 # include <termios.h>
 
 //1個のみ、シグナル番号の情報のためにグローバル変数が許可される
-extern volatile sig_atomic_t	g_signal;
+volatile sig_atomic_t	g_signal;
 
 typedef enum e_token_type
 {
@@ -95,9 +95,9 @@ void	set_signal(int signum, void handler(int), struct sigaction *sa);
 void	sig_handler(int signal);
 
 //repl.c
-int	repl(t_shval *shval, struct sigaction *sa);
+int		repl(t_shval *shval, struct sigaction *sa);
 
 //heredoc_utils.c
-int	get_heredoc_fd(char *delimiter);
+int		get_heredoc_fd(char *delimiter);
 
 #endif

@@ -6,16 +6,16 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/23 18:53:34 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/23 19:04:41 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-static void	get_heredoc_input(char *delimiter, int *pipefd);
-static void	handle_heredoc(int sig);
-static int	hook_sigint(void);
+void	get_heredoc_input(char *delimiter, int *pipefd);
+void	handle_heredoc(int sig);
+int		hook_sigint(void);
 
 //fd = get_heredoc_fd(char *delimiter);
 int	get_heredoc_fd(char *delimiter)
@@ -23,7 +23,6 @@ int	get_heredoc_fd(char *delimiter)
 	int		pipefd[2];
 	pid_t	pid;
 
-	g_signal = 0;
 	if (pipe(pipefd) < 0)
 		return (-1);
 	signal(SIGINT, SIG_IGN);
@@ -46,7 +45,7 @@ int	get_heredoc_fd(char *delimiter)
 	return (pipefd[0]);
 }
 
-static void	get_heredoc_input(char *delimiter, int *pipefd)
+void	get_heredoc_input(char *delimiter, int *pipefd)
 {
 	char	*line;
 
@@ -73,12 +72,12 @@ static void	get_heredoc_input(char *delimiter, int *pipefd)
 	exit(0);
 }
 
-static void	handle_heredoc(int sig)
+void	handle_heredoc(int sig)
 {
 	g_signal = sig;
 }
 
-static int	hook_sigint(void)
+int	hook_sigint(void)
 {
 	if (g_signal == SIGINT)
 	{
