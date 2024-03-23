@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_util.c                                      :+:      :+:    :+:   */
+/*   doub_lstnew.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 16:31:40 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/20 16:48:04 by syamasaw         ###   ########.fr       */
+/*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
+/*   Updated: 2024/03/18 04:42:49 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "dbllst.h"
 
-void	set_signal(int signum, void handler(int), struct sigaction *sa)
+t_blst	*doub_lstnew(void *data)
 {
-	sa->sa_flags = SA_RESTART;
-	sa->sa_handler = handler;
-	sigemptyset(&(sa->sa_mask));
-	sigaction(signum, sa, NULL);
+	t_blst	*new;
+
+	new = malloc(sizeof(t_blst));
+	if (new == NULL)
+		return (NULL);
+	new->prev = new;
+	new->data = data;
+	new->next = new;
+	return (new);
 }

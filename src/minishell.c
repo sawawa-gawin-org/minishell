@@ -12,14 +12,13 @@
 
 #include "minishell.h"
 #include "libft.h"
-
-void		sig_handler(int signal);
+#include "dbllst.h"
 
 int	minishell(char *envp[])
 {
-	struct termios	term; //端末の属性を変更する用の構造体
-	struct termios	save; //変更前の属性を保存する用の構造体
-	t_shval			*shvals; //環境変数およびシェル変数用の双方向連結リスト
+	struct termios		term; //端末の属性を変更する用の構造体
+	struct termios		save; //変更前の属性を保存する用の構造体
+	t_shval				*shvals; //環境変数およびシェル変数用の双方向連結リスト
 	struct sigaction	sa;
 
 	shvals = NULL;
@@ -40,15 +39,4 @@ int	minishell(char *envp[])
 int	is_blank(int c)
 {
 	return (c == ' ' || c == '\t');
-}
-
-void	sig_handler(int signal)
-{
-	if (signal == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
 }

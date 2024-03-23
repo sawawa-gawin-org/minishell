@@ -20,8 +20,10 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
 # include <termios.h>
+
+//1個のみ、シグナル番号の情報のためにグローバル変数が許可される
+extern volatile sig_atomic_t	g_signal;
 
 typedef enum e_token_type
 {
@@ -39,6 +41,7 @@ typedef enum e_token_type
 	open_quote
 }	t_token_type;
 
+//双方向リスト専用構造体は廃止、置き換え予定
 typedef struct s_token
 {
 	struct s_token	*next;
@@ -63,31 +66,38 @@ typedef struct s_cmd
 	char			*cmd;
 }					t_cmd;
 
+//tokenizer.c
 t_token	*tokenizer(char *line, t_token *tokens);
+//tokenizer_util.c
 int		is_token_type(char *str, int target);
 
+//minishell.c
+int		minishell(char *envp[]);
 int		is_blank(int c);
 
+//parser.c
 int		syntax_checker(t_token *tokens);
+int		parser(t_token **tokens, struct sigaction *sa);
 
-
+//lst2way* 廃止予定
 t_token	*lstadd_token(t_token *tokens, char *str, int type);
-
-//debug
-void	put_lst(t_token *tokens);
-void	del_lst(t_token *tokens);
-
-t_shval	*get_env_all(char **envp, t_shval *shvals);
 t_shval	*lstadd_shval(t_shval *shvals, char *str, int len, int flag);
-void	del_lst_shval(t_shval *shvals);
+void	put_lst(t_token *tokens);
 void	put_lst_shval(t_shval *shvals);
+void	del_lst(t_token *tokens);
+void	del_lst_shval(t_shval *shvals);
 
-int	parser(t_token **tokens, struct sigaction *sa);
+//get_env_all.c
+t_shval	*get_env_all(char **envp, t_shval *shvals);
 
+//signal_utils.h
 void	set_signal(int signum, void handler(int), struct sigaction *sa);
+void	sig_handler(int signal);
+
+//repl.c
 int	repl(t_shval *shval, struct sigaction *sa);
 
-int	minishell(char *envp[]);
-
+//heredoc_utils.c
+int	get_heredoc_fd(char *delimiter);
 
 #endif

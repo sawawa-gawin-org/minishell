@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/20 15:45:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/20 16:23:11 by syamasaw         ###   ########.fr       */
+/*   Created: 2024/03/20 16:31:40 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/03/23 18:36:43 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	heredoc(char *delimiter)
+void	set_signal(int signum, void handler(int), struct sigaction *sa)
 {
-	pid_t	pid;
-	int		fd_heredoc;
+	sa->sa_flags = SA_RESTART;
+	sa->sa_handler = handler;
+	sigemptyset(&(sa->sa_mask));
+	sigaction(signum, sa, NULL);
+}
 
-	pid = fork();
-	if (pid == 0)
+void	sig_handler(int signal)
+{
+	if (signal == SIGINT)
 	{
-		//read
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
-	
 }

@@ -6,12 +6,12 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/16 17:14:54 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/23 18:43:27 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "minishell.h"
+#include "libft.h"
 
 static int	add_token(char *line, t_token **tokens, int index, int target);
 static int	count_substr_len(char *line, int index, int target);

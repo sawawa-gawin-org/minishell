@@ -9,7 +9,8 @@ HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
 
 SRC_DIR = ./src/
 SRCS := lst2way_token.c tokenizer.c tokenizer_util.c parser.c \
-		lst2way_shval.c get_env_all.c signal_util.c minishell.c main.c repl.c
+		lst2way_shval.c get_env_all.c signal_utils.c minishell.c main.c repl.c \
+		heredoc_utils.c
 
 SRCS := $(addprefix $(SRC_DIR), $(SRCS)) 
 
@@ -22,6 +23,7 @@ OBJS = $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS = $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
 
 LIBFT = lib/libft.a
+DBLLST = lib/libdbllst.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -38,7 +40,7 @@ NAME := $(DNAME)
 OBJ_DIR := $(DOBJ_DIR)
 endif
 
-all: $(OBJ_DIR) $(LIBFT) $(NAME)
+all: $(OBJ_DIR) $(LIBFT) $(DBLLST) $(NAME)
 
 $(OBJ_DIR):
 	mkdir -p $(addprefix $(OBJ_DIR), $(SUB_OBJ_DIR))
@@ -47,20 +49,25 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LFLAGS) -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(DBLLST) $(LFLAGS) -o $(NAME)
 
 $(LIBFT):
 	make -C src/libft
+
+$(DBLLST):
+	make -C src/dbllst
 
 debug:
 	make DEBUG_MODE=1
 
 clean:
 	make -C src/libft clean
+	make -C src/dbllst clean
 	rm -rf $(TMP_DIR) $(DNAME)
 
 fclean: clean
 	make -C src/libft fclean
+	make -C src/dbllst fclean
 	rm -f $(NAME)
 
 re: fclean all
