@@ -14,7 +14,6 @@
 #include "libft.h"
 
 static int	is_blank_str(char *str);
-void		sig_handler(int signal);
 
 int	minishell(int argc, char *argv[], char *envp[])
 {
@@ -75,15 +74,4 @@ static int	is_blank_str(char *str)
 int	is_blank(int c)
 {
 	return (c == ' ' || c == '\t');
-}
-
-void	sig_handler(int signal)
-{
-	if (signal == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
-	}
 }
