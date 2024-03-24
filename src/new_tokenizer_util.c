@@ -6,14 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/23 19:22:29 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/24 05:56:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "libft.h"
 
-static int	detect_token_type_len(char **line, int *target);
+static int	detect_token_len(char *line, int *target_type);
 static int	type_meta_chr(char *str);
 static int	type_quote(char *str);
 static int	is_val(char *str);
@@ -25,55 +25,89 @@ char *allocate_next_token(char **line, int *next_token_type)
 
 	if (next_token_type == NULL)
 		return (NULL);
-	if (ft_strchr("<>|", **line) != NULL) // m
+	if (ft_strchr("<>|", **line) != NULL)
 		*next_token_type = LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG;
-	else if (ft_strchr("\'\"", **line) != NULL) // q
+	else if (ft_strchr("\'\"", **line) != NULL)
 		*next_token_type = OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG | OPEN_QUOTE_FLAG | TOKEN_FLAG;
-	else if (is_blank(**line) == 0) // w
+	else if (is_blank(**line) == 0)
 		*next_token_type = VAL_FLAG | TOKEN_FLAG;
-	else //b
+	else
 		*next_token_type = SPACE_FLAG;
-	token_len = detect_token_type_len(*line, next_token_type);
+	token_len = detect_token_len(*line, *next_token_type);
 	if (token_len == -1)
 		return (NULL);
 	token_str = ft_substr(*line, 0, token_len);
 	if (token_str == NULL)
 		return (NULL);
+	if (detect_token_type(token_str, next_token_type))
+		return (NULL);
 	*line += token_len;
 	return (token_str);
 }
 
-static int	detect_token_type_len(char *line, int *target_type)
+static int	detect_token_len(char *line, int target_type)
 {
 	int	len;
 
 	len = 1;
-	if (line == LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG)
+	if (target_type == LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG)
 	{
 		if (line[len] != '|' && line[len] == line[len + 1])
 			len = 2;
 	}
-	else if (*target_type == OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG | OPEN_QUOTE_FLAG | TOKEN_FLAG)
+	else if (target_type == OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG | OPEN_QUOTE_FLAG | TOKEN_FLAG)
 	{
 		while (line[len] != '\0' && line[0] != line[len])
 			len++;
 		if (line[len] == '\'' || line[len] == '"')
 			len += 1;
 	}
-	else if (*target_type = VAL_FLAG | TOKEN_FLAG)
+	else if (target_type = VAL_FLAG | TOKEN_FLAG)
 	{
 		len = 0;
 		while (line[len] != '\0' && ft_strchr("<>|\"\'", line[len]) == NULL && is_blank(line[len]) == 0)
 			len++;
 	}
-	else if (*target_type = SPACE_FLAG)
+	else if (target_type = SPACE_FLAG)
 		len = skip_blank(line, index);
 	return (len);
 }
 
-int	check_token_type(char **str)
+static int	detect_token_type(char *token_str, int *target_type)
 {
+	if (*target_type == LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG)
+	{
+		if (*token_str == '|')
+			*target_type = TUBE_FLAG;
+		else if (*token_str == '<')
+			*target_type = LESS_FLAG | HEREDOC_FLAG;
+		else if (*token_str == '>')
+			*target_type = GREAT_FLAG | APPEND_FLAG;
+	}
+	else if (*target_type == OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG | OPEN_QUOTE_FLAG | TOKEN_FLAG)
+	{
+
+	}
+	else if (*target_type = VAL_FLAG | TOKEN_FLAG)
+	{
+
+	}
+
 	
+	if (target == 'm')
+		return (type_meta_chr(str));
+	else if (target == 'q')
+		return (type_quote(str));
+	else if (target == 'b')
+		return (space);
+	else if (target == 'w')
+	{
+		if (is_val(str))
+			return (val);
+		else
+			return (token);
+	}
+	return (-1);
 }
 
 static int	add_token(char *line, t_token **tokens, int index, int target)
