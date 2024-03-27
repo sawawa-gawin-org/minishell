@@ -9,7 +9,7 @@ LIB_NAME := minishell.a
 HEADERS := minishell.h
 
 SRCS := minishell.c lst2way_token.c tokenizer.c tokenizer_util.c parser.c \
-		get_env_all.c new_toknizer.c
+		get_env_all.c new_tokenizer.c new_tokenizer_util.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

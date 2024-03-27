@@ -23,6 +23,7 @@ int	minishell(int argc, char *argv[], char *envp[])
 	struct termios	save; //変更前の属性を保存する用の構造体
 	char			*line; //readlineで読み取った文字列用のchar*
 	t_token			*tokens; //字句分割後のトークン格納用の双方向連結リスト
+	t_blst			*tokens_lst;
 	t_blst			*shvals_lst; //環境変数およびシェル変数用の双方向連結リスト
 
 	(void)argc;
@@ -51,10 +52,12 @@ int	minishell(int argc, char *argv[], char *envp[])
 			continue ;
 		}
 		tokens = tokenizer(line, tokens);
+		tokens_lst = new_tokenizer(&line);
 		if (parser(&tokens))
 			put_lst(tokens);
 		del_lst(tokens);
 		free(line);
+		doub_lstdelall(&tokens_lst, free_token_data);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &save);
 	doub_lstdelall(&shvals_lst, free_shval_data);

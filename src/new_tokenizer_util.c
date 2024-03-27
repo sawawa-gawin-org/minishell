@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/27 16:55:25 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/27 17:55:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 
 static size_t	detect_token_len(char *line, int target_type);
-static int		detect_token_type(char *token_str, int *type);
+static void		detect_token_type(char *token_str, int *type);
 static void		detect_meta_token_type(char *meta_token_str, int *type);
 static int		is_val(char *str);
 
@@ -26,21 +26,20 @@ char	*allocate_next_token(char **line, int *next_token_type)
 	if (next_token_type == NULL)
 		return (NULL);
 	if (ft_strchr("<>|", **line) != NULL)
-		*next_token_type = META_CHAR;
+		*next_token_type = META_FLAG;
 	else if (ft_strchr("\'\"", **line) != NULL)
-		*next_token_type = QUOTE_CHAR;
+		*next_token_type = QUOTE_FLAG;
 	else if (is_blank(**line) == 0)
-		*next_token_type = WORD_CHAR;
+		*next_token_type = WORD_FLAG;
 	else
-		*next_token_type = BLANK_CHAR;
+		*next_token_type = BLANK_FLAG;
 	token_len = detect_token_len(*line, *next_token_type);
 	if (token_len == -1)
 		return (NULL);
 	token_str = ft_substr(*line, 0, token_len);
 	if (token_str == NULL)
 		return (NULL);
-	if (detect_token_type(token_str, next_token_type))
-		return (NULL);
+	detect_token_type(token_str, next_token_type);
 	*line += token_len;
 	return (token_str);
 }
@@ -50,37 +49,40 @@ static size_t	detect_token_len(char *line, int target_type)
 	size_t	len;
 
 	len = 1;
-	if (target_type == META_CHAR && line[0] != '|' && line[0] == line[len])
+	if (target_type == META_FLAG && line[0] != '|' && line[0] == line[len])
 		len = 2;
-	else if (target_type == QUOTE_CHAR)
+	else if (target_type == QUOTE_FLAG)
 	{
 		while (line[0] != '\0' && line[0] != line[len])
 			len++;
 		if (line[len] == '\'' || line[len] == '"')
 			len += 1;
 	}
-	else if (target_type == WORD_CHAR)
+	else if (target_type == WORD_FLAG)
 	{
 		len = 0;
 		while (line[0] != '\0' && ft_strchr("<>|\"\'", line[len]) == NULL
 			&& is_blank(line[len]) == 0)
 			len++;
 	}
-	else if (target_type == BLANK_CHAR)
-		len = skip_blank(line, index);
+	else if (target_type == BLANK_FLAG)
+	{
+		while (line[len] != '\0' && is_blank(line[len]))
+			len++;
+	}
 	return (len);
 }
 
-static int	detect_token_type(char *token_str, int *type)
+static void	detect_token_type(char *token_str, int *type)
 {
 	size_t	len;
 	int		is_closed;
 
 	len = ft_strlen(token_str);
 	is_closed = token_str[0] == token_str[len - 1];
-	if (*type == META_CHAR)
+	if (*type == META_FLAG)
 		detect_meta_token_type(token_str, type);
-	else if (*type == QUOTE_CHAR)
+	else if (*type == QUOTE_FLAG)
 	{
 		if (len >= 2 && token_str[0] == '\"' && is_closed && is_val(token_str))
 			*type = DOUBLE_QUOTE_VAL_FLAG;
@@ -91,13 +93,12 @@ static int	detect_token_type(char *token_str, int *type)
 		else if (token_str[0] == '\'')
 			*type = OPEN_QUOTE_FLAG;
 	}
-	else if (*type == WORD_CHAR && is_val(token_str))
+	else if (*type == WORD_FLAG && is_val(token_str))
 		*type = VAL_FLAG;
-	else if (*type == BLANK_CHAR)
+	else if (*type == BLANK_FLAG)
 		*type = SPACE_FLAG;
 	else
 		*type = TOKEN_FLAG;
-	return (-1);
 }
 
 static void	detect_meta_token_type(char *meta_token_str, int *type)

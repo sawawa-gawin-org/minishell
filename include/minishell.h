@@ -54,10 +54,10 @@ typedef enum e_tokens {
     OPEN_QUOTE_FLAG = 1 << 11
 } t_tokens;
 
-# define META_CHAR LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG
-# define QUOTE_CHAR OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG // remove TOKEN_FLAG
-# define WORD_CHAR VAL_FLAG | TOKEN_FLAG
-# define BLANK_CHAR SPACE_FLAG
+# define META_FLAG (LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG)
+# define QUOTE_FLAG (OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG)
+# define WORD_FLAG (VAL_FLAG | TOKEN_FLAG)
+# define BLANK_FLAG (SPACE_FLAG)
 
 typedef struct s_token
 {
@@ -69,7 +69,7 @@ typedef struct s_token
 
 typedef struct		s_token_data
 {
-	t_token_type	token_type;
+	t_tokens		token_type;
 	char			*token_str;
 }					t_token_data;
 
@@ -87,16 +87,25 @@ typedef struct s_cmd
 	char			*cmd;
 }					t_cmd;
 
+int		is_blank(int c);
+
+// tokenizer
 t_token	*tokenizer(char *line, t_token *tokens);
 int		is_token_type(char *str, int target);
 int		check_token_type(char **str);
-int		is_blank(int c);
 
-int		syntax_checker(t_token *tokens);
-
+// new tokenizer
+void	*new_tokenizer(char **line);
 void	free_token_data(void *data);
+char	*allocate_next_token(char **line, int *next_token_type);
 
+t_token	*lst_last(t_token *tokens);
+t_token	*lst_new(void);
 t_token	*lstadd_token(t_token *tokens, char *str, int type);
+
+
+// parser
+int		syntax_checker(t_token *tokens);
 
 //debug
 void	put_lst(t_token *tokens);

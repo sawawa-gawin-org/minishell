@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/27 16:58:29 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/27 17:19:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,21 @@
 static t_blst		*new_token_node(char **line);
 static t_token_data	*new_token_data(char **line);
 
-void	*new_tokenizer(char *line)
+void	*new_tokenizer(char **line)
 {
+	char		*line_head;
 	t_blst		*ret;
 	t_blst		*new_node;
 	int			i;
 	int			j;
 
-	while (*line != '\0' && is_blank(*line))
-		line++;
+	line_head = *line;
+	while (**line != '\0' && is_blank(**line))
+		*line++;
 	ret = doub_lstnew(NULL);
-	while (ret != NULL && *line != '\0')
+	while (ret != NULL && **line != '\0')
 	{
-		new_node = new_token_node(&line);
+		new_node = new_token_node(line);
 		if (new_node == NULL)
 		{
 			doub_lstdelall(&ret, free_token_data);
@@ -37,6 +39,7 @@ void	*new_tokenizer(char *line)
 		}
 		doub_lstappend(&ret, new_node);
 	}
+	*line = line_head;
 	return ((void *)ret);
 }
 
