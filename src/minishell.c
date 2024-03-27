@@ -35,8 +35,3 @@ int	minishell(char *envp[])
 	del_lst_shval(shvals);
 	return (0);
 }
-
-int	is_blank(int c)
-{
-	return (c == ' ' || c == '\t');
-}

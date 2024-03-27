@@ -73,7 +73,10 @@ int		is_token_type(char *str, int target);
 
 //minishell.c
 int		minishell(char *envp[]);
+
+//utils.c
 int		is_blank(int c);
+int		is_blank_str(char *str);
 
 //parser.c
 int		syntax_checker(t_token *tokens);
@@ -90,7 +93,7 @@ void	del_lst_shval(t_shval *shvals);
 //get_env_all.c
 t_shval	*get_env_all(char **envp, t_shval *shvals);
 
-//signal_utils.h
+//signal_utils.c
 void	set_signal(int signum, void handler(int), struct sigaction *sa);
 void	sig_handler(int signal);
 

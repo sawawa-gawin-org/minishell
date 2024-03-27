@@ -10,7 +10,7 @@ HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
 SRC_DIR = ./src/
 SRCS := lst2way_token.c tokenizer.c tokenizer_util.c parser.c \
 		lst2way_shval.c get_env_all.c signal_utils.c minishell.c main.c repl.c \
-		heredoc_utils.c
+		heredoc_utils.c utils.c
 
 SRCS := $(addprefix $(SRC_DIR), $(SRCS)) 
 
