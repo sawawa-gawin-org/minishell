@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/27 16:51:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:55:25 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int		is_val(char *str);
 
 char	*allocate_next_token(char **line, int *next_token_type)
 {
-	char	*token_str;
-	int		token_len;
+	char		*token_str;
+	size_t		token_len;
 
 	if (next_token_type == NULL)
 		return (NULL);

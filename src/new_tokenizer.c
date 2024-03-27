@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_toknizer.c                                     :+:      :+:    :+:   */
+/*   new_tokenizer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/23 16:54:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:58:29 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "dbllst.h"
 
-static t_blst	*new_token_node(char **line);
+static t_blst		*new_token_node(char **line);
 static t_token_data	*new_token_data(char **line);
 
 void	*new_tokenizer(char *line)
@@ -62,7 +62,7 @@ static t_token_data	*new_token_data(char **line)
 	t_token_data	*data;
 	char			*next_token_str;
 	int				next_token_type;
-	
+
 	next_token_type = 0;
 	data = (t_token_data *)malloc(sizeof(t_token_data));
 	if (data == NULL)
