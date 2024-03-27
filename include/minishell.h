@@ -54,6 +54,11 @@ typedef enum e_tokens {
     OPEN_QUOTE_FLAG = 1 << 11
 } t_tokens;
 
+# define META_CHAR LESS_FLAG | GREAT_FLAG | TUBE_FLAG | HEREDOC_FLAG | APPEND_FLAG
+# define QUOTE_CHAR OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG // remove TOKEN_FLAG
+# define WORD_CHAR VAL_FLAG | TOKEN_FLAG
+# define BLANK_CHAR SPACE_FLAG
+
 typedef struct s_token
 {
 	struct s_token	*next;
