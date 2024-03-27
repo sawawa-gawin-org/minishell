@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/27 16:46:57 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/27 16:51:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 
 static size_t	detect_token_len(char *line, int target_type);
+static int		detect_token_type(char *token_str, int *type);
 static void		detect_meta_token_type(char *meta_token_str, int *type);
 static int		is_val(char *str);
 
