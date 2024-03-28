@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/27 17:19:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/28 16:07:28 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ void	*new_tokenizer(char **line)
 	char		*line_head;
 	t_blst		*ret;
 	t_blst		*new_node;
-	int			i;
-	int			j;
 
 	line_head = *line;
 	while (**line != '\0' && is_blank(**line))
-		*line++;
+		(*line) ++;
 	ret = doub_lstnew(NULL);
 	while (ret != NULL && **line != '\0')
 	{

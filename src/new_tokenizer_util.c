@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/27 17:55:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/28 16:08:12 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ char	*allocate_next_token(char **line, int *next_token_type)
 	else
 		*next_token_type = BLANK_FLAG;
 	token_len = detect_token_len(*line, *next_token_type);
-	if (token_len == -1)
-		return (NULL);
 	token_str = ft_substr(*line, 0, token_len);
 	if (token_str == NULL)
 		return (NULL);
