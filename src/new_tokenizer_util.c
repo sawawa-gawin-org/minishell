@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/28 16:08:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/29 10:49:03 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ char	*allocate_next_token(char **line, int *next_token_type)
 	char		*token_str;
 	size_t		token_len;
 
+	if (**line == '\0')
+		return (NULL);
 	if (next_token_type == NULL)
 		return (NULL);
 	if (ft_strchr("<>|", **line) != NULL)
@@ -47,7 +49,7 @@ static size_t	detect_token_len(char *line, int target_type)
 	size_t	len;
 
 	len = 1;
-	if (target_type == META_FLAG && line[0] != '|' && line[0] == line[len])
+	if (target_type == META_FLAG && line[0] != '|' && line[0] == line[len]) // bag
 		len = 2;
 	else if (target_type == QUOTE_FLAG)
 	{
