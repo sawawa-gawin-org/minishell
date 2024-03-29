@@ -68,5 +68,24 @@
 				],
 			},
 		},
+		{
+			"name": "dbllst",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/test/dbllst/dbllst_debug.out",
+			"args": [
+			],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"MIMode": "gdb",
+			"preLaunchTask": "dbllst-make",
+			"linux": {
+				"MIMode": "gdb",
+				"miDebuggerPath": "/usr/bin/gdb"
+			},
+			"osx": {
+				"MIMode": "lldb",
+			},
+		},
 	]
 }

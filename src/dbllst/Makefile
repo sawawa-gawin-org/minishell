@@ -1,29 +1,40 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/02/24 19:07:05 by syamasaw          #+#    #+#              #
+#    Updated: 2024/03/18 05:21:43 by saraki           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
 # Hyper Parameter
 MAKEFILE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
-REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../)
+REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := minishell.a
-HEADERS := minishell.h
+LIB_NAME := libdbllst.a
+HEADERS := dbllst.h
 
-SRCS := minishell.c lst2way_token.c tokenizer.c tokenizer_util.c parser.c \
-		get_env_all.c new_tokenizer.c new_tokenizer_util.c
+SRCS := doub_lstappend.c doub_lstdelall.c doub_lstdelone.c doub_lstdup.c \
+	doub_lstnew.c doub_lstprepend.c doub_lstpurge.c doub_lstsearch.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
 
-SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/src/)
+SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/src/$(BASE_DIRNAME)/)
 
 TMP_DIR := $(addprefix $(REPOSITORY_ROOT),/tmp/)
-OBJ_DIR := $(addprefix $(TMP_DIR),prod/)
-DOBJ_DIR := $(addprefix $(TMP_DIR),dev/)
+OBJ_DIR := $(addprefix $(TMP_DIR),prod/$(BASE_DIRNAME)/)
+DOBJ_DIR := $(addprefix $(TMP_DIR),dev/$(BASE_DIRNAME)/)
 SUB_OBJ_DIR := ./
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LFLAGS = -lreadline -L$(LIB_EXPORT_DIR) -lft -L$(LIB_EXPORT_DIR) -ldbllst
+LFLAGS = 
 DFLAGS = -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS = -I$(HEADER_DIR)
 

@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "libft.h"
+#include "dbllst.h"
 
 static int	is_blank_str(char *str);
 
@@ -21,13 +22,14 @@ int	minishell(int argc, char *argv[], char *envp[])
 	struct termios	save; //変更前の属性を保存する用の構造体
 	char			*line; //readlineで読み取った文字列用のchar*
 	t_token			*tokens; //字句分割後のトークン格納用の双方向連結リスト
-	t_shval			*shvals; //環境変数およびシェル変数用の双方向連結リスト
+	t_blst			*tokens_lst;
+	t_blst			*shvals_lst; //環境変数およびシェル変数用の双方向連結リスト
 
 	(void)argc;
 	(void)argv;
-	shvals = NULL;
-	shvals = get_env_all(envp, shvals); //既存の環境変数のリスト化
-	// put_lst_shval(shvals);
+	shvals_lst = get_env_all(envp); //既存の環境変数のリスト化
+	if (shvals_lst == NULL)
+		return (1);
 	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
 	term = save; //複製
 	term.c_lflag &= ~(ECHOCTL); //制御文字を消す
@@ -49,13 +51,15 @@ int	minishell(int argc, char *argv[], char *envp[])
 			continue ;
 		}
 		tokens = tokenizer(line, tokens);
+		tokens_lst = new_tokenizer(&line);
 		if (parser(&tokens))
 			put_lst(tokens);
 		del_lst(tokens);
 		free(line);
+		doub_lstdelall(&tokens_lst, free_token_data);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &save);
-	del_lst_shval(shvals);
+	doub_lstdelall(&shvals_lst, free_shval_data);
 	return (0);
 }
 
