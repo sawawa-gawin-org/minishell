@@ -75,6 +75,8 @@ typedef struct s_init_data
 	struct sigaction	sa;
 }						t_init_data;
 
+int	parser(t_blst **tokens_lst);
+
 // new tokenizer
 void	*new_tokenizer(char **line);
 void	free_token_data(void *data);

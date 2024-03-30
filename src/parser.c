@@ -6,13 +6,13 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/30 14:20:35 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/30 18:27:05 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "libft.h"
-// #include "minishell.h"
-// #include "dbllst.h"
+#include "dbllst.h"
+#include "libft.h"
+#include "minishell.h"
 
 /*
 Parser
@@ -51,34 +51,87 @@ Parser
 // 	return (1);
 // }
 
-// int	new_parser(t_blst **tokens)
+//SyntaxErrorCases
+//case1. 先頭のtokenでtypeがTUBE
+//case2. 現在typeがTUBEで次tokenのtypeがTUBE
+//case3. 現在typeがリダイレクトのどれかで次typeがTUBE
+//case4. 現在typeがリダイレクトのどれかで次typeもリダイレクト
+//case5. 現在typeがリダイレクトまたはTUBEで、nextがNULL
+//case6. 現在typeがOPEN_QUOTE
+int	cmp_syntax(t_token_data *data, t_blst *node)
+{
+	t_token_data	*next_data;
+
+	next_data = node->next->data;
+	if (node->prev == NULL && data->token_type == TUBE_FLAG)
+		return (1);
+	if (node->next != NULL)
+	{
+		if (data->token_type == TUBE_FLAG && next_data->token_type == TUBE_FLAG)
+			return (1);
+		if (LESS_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
+		{
+			if (TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
+				return (1);
+		}
+	}
+	else
+		if (TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
+			return (1);
+	if (data->token_type == OPEN_QUOTE_FLAG)
+		return (1);
+	return (0);
+}
+
+// int	syntax_checker(t_blst *tokens_lst)
 // {
-// 	(void)tokens;
-// 	if (!new_syntax_checker(*tokens))
+// 	//doub_lstsearchを使って、構文不一致(検索したいデータ)を検索
+// 	//NULLが帰ってきた=構文不一致がないなら、return 0;
+// 	if (!doub_lstsearch(tokens_lst, NULL, cmp_syntax))
 // 		return (0);
 // 	return (1);
 // }
 
-// int	parser(t_token **tokens, struct sigaction *sa)
-// {
-// 	(void)sa;
-// 	if (!syntax_checker(*tokens))
-// 		return (0);
-	
-	//tokenリスト内を走査して、""空文字列要素を削除
-	//"hoge""huge$VAL"->hogehuge$VAL (blank(' ', '\t')を挟まずに)連続する文字列を結合
-	//クオートの削除
-	//<, >, <<, >> の後に来るtokenをdelimiter(デリミタ)やfileとする(token_typeの変更?)
-	//各リダイレクトを順に読み込み、最終的な入力や出力先を保持する。(ここでリダイレクトの処理をするか、exec部分で処理するかは未定)
-	//(リダイレクトリストを作成？)
-	//ヒアドキュメントの展開
-	//変数展開 ARG="ho hoge"; ec$ARG がありえる
-	//"|"区切りでコマンド列ごとに分割
-	//< infile | echo hoge のような、実行可能コマンドがない場合も考慮して実装する。
-// 	return (1);
-// }
+t_blst	*syntax_checker(t_blst *lst, t_cmp_f cmp_f)
+{
+	t_blst	*ret_node;
+	int		i;
 
-/*
+	if (lst == NULL)
+		return (NULL);
+	i = 0;
+	ret_node = lst;
+	while (ret_node->data != NULL)
+	{
+		if (cmp_f(ret_node->data, ret_node))
+			return (ret_node);
+		ret_node = ret_node->next;
+		i ++;
+	}
+	return (ret_node);
+}
+
+int	parser(t_blst **tokens_lst)
+{
+	(void)tokens_lst;
+	if (syntax_checker(*tokens_lst, cmp_syntax))
+		return (0);
+	printf("debug: parse OK\n");
+	return (1);
+}
+
+//tokenリスト内を走査して、""空文字列要素を削除
+//"hoge""huge$VAL"->hogehuge$VAL (blank(' ', '\t')を挟まずに)連続する文字列を結合
+//クオートの削除
+//<, >, <<, >> の後に来るtokenをdelimiter(デリミタ)やfileとする(token_typeの変更?)
+//各リダイレクトを順に読み込み、最終的な入力や出力先を保持する。(ここでリダイレクトの処理をするか、exec部分で処理するかは未定)
+//(リダイレクトリストを作成？)
+//ヒアドキュメントの展開
+//変数展開 ARG="ho hoge"; ec$ARG がありえる
+//"|"区切りでコマンド列ごとに分割
+//< infile | echo hoge のような、実行可能コマンドがない場合も考慮して実装する。
+
+/*  
 typedef struct s_cmd_table
 {
 	char **cmd; (={"ls", "-lar", "/Desktop", NULL})
