@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:56:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/30 13:57:19 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:11:47 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	// (void) argc;
-	// (void) argv;
+	(void) argc;
+	(void) argv;
 	// (void) envp;
 	// char	*str[] = {"echo  hello \"world\", \"asdf\" $NAME \'NAME\'"};
 	// char	*ret;
@@ -39,6 +39,6 @@ int	main(int argc, char *argv[], char *envp[])
 	// 		free(ret);
 	// 	}
 	// }
-	minishell(argc, argv, envp);
+	minishell(envp);
 	return (0);
 }
