@@ -30,12 +30,13 @@ TEST_DOBJS := $(patsubst $(TEST_SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(TEST_SRCS))
 # Rules
 ifdef DEBUG_MODE
 TEST_OBJS := $(TEST_DOBJS)
+LFLAGS := $(DLFLAGS)
 NAME := $(DNAME)
 endif
 
 # Rules
 .PHONY: test
-test: $(OBJ_DIR) $(NAME)
+test: $(OBJ_DIR) $(DEPENDENCY) $(NAME)
 
 $(NAME): $(OBJS) $(TEST_OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS) $(LFLAGS) -o $(NAME)

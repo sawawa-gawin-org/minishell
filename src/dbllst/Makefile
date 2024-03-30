@@ -6,7 +6,7 @@
 #    By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 19:07:05 by syamasaw          #+#    #+#              #
-#    Updated: 2024/03/18 05:21:43 by saraki           ###   ########.fr        #
+#    Updated: 2024/03/30 21:20:00 by saraki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,14 @@ OBJ_DIR := $(addprefix $(TMP_DIR),prod/$(BASE_DIRNAME)/)
 DOBJ_DIR := $(addprefix $(TMP_DIR),dev/$(BASE_DIRNAME)/)
 SUB_OBJ_DIR := ./
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-LFLAGS = 
-DFLAGS = -fdiagnostics-color=always -g3 -fsanitize=address
-IFLAGS = -I$(HEADER_DIR)
+CC := cc
+CFLAGS := -Wall -Wextra -Werror
+LFLAGS := 
+DLFLAGS := 
+DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
+IFLAGS := -I$(HEADER_DIR)
+
+DEPENDENCY := 
 
 # *****************************************************************************
 # From here onward is the same
@@ -61,7 +64,7 @@ LIB_NAME := $(DLIB_NAME)
 OBJ_DIR := $(DOBJ_DIR)
 endif
 
-all: $(OBJ_DIR) $(LIB_NAME)
+all: $(OBJ_DIR) $(DEPENDENCY) $(LIB_NAME)
 
 $(OBJ_DIR):
 	mkdir -p $(addprefix $(OBJ_DIR), $(SUB_OBJ_DIR))
@@ -73,10 +76,19 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
 $(LIB_NAME): $(OBJS)
 	ar rc $@ $(OBJS)
 
+define LIB_MACRO
+.PHONY: $(1)
+$(1):
+	make -C $(addprefix $(REPOSITORY_ROOT),/src/$(1))
+$(1)_clean:
+	make -C $(addprefix $(REPOSITORY_ROOT),/src/$(1)) fclean
+endef
+$(foreach lib,$(DEPENDENCY),$(eval $(call LIB_MACRO,$(lib))))
+
 debug:
 	make DEBUG_MODE=1
 
-clean:
+clean: $(DEPENDENCY:=_clean)
 	rm -rf $(OBJ_DIR) $(DOBJ_DIR) $(DLIB_NAME)
 
 fclean: clean
