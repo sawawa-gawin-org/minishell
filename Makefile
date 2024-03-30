@@ -9,7 +9,7 @@ HEADERS := minishell.h libft.h dbllst.h
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
 
 SRC_DIR = ./src/
-SRCS := main.c new_tokenizer.c new_tokenizer_util.c \
+SRCS := main.c tokenizer.c tokenizer_util.c \
 		get_env_all.c signal_util.c minishell.c parser.c
 
 SRCS := $(addprefix $(SRC_DIR), $(SRCS)) 
