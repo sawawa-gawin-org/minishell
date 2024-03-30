@@ -1,11 +1,10 @@
-
 # Hyper Parameter
 MAKEFILE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
-REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../)
+REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := minishell.a
+LIB_NAME := libminishell.a
 HEADERS := minishell.h
 
 SRCS := minishell.c signal_util.c parser.c \
@@ -14,11 +13,11 @@ SRCS := minishell.c signal_util.c parser.c \
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
 
-SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/src/)
+SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/src/$(BASE_DIRNAME)/)
 
 TMP_DIR := $(addprefix $(REPOSITORY_ROOT),/tmp/)
-OBJ_DIR := $(addprefix $(TMP_DIR),prod/)
-DOBJ_DIR := $(addprefix $(TMP_DIR),dev/)
+OBJ_DIR := $(addprefix $(TMP_DIR),prod/$(BASE_DIRNAME)/)
+DOBJ_DIR := $(addprefix $(TMP_DIR),dev/$(BASE_DIRNAME)/)
 SUB_OBJ_DIR := ./
 
 CC = cc

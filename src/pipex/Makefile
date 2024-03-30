@@ -6,7 +6,7 @@
 #    By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 19:07:05 by syamasaw          #+#    #+#              #
-#    Updated: 2024/03/17 14:26:22 by saraki           ###   ########.fr        #
+#    Updated: 2024/03/30 20:39:38 by saraki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := pipex.a
+LIB_NAME := libpipex.a
 HEADERS := pipex.h
 
 SRCS := child_mid.c child_old.c child_young.c find_cmd.c parser.c pipex.c spawn_children.c utils.c
