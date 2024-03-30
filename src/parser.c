@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/30 19:24:24 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:44:37 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,50 +68,50 @@ static int	cmp_syntax(void *d, void *n)
 	node = n;
 	next_data = node->next->data;
 	if (node->prev->data == NULL && data->token_type == TUBE_FLAG)
-		return (1);
+		return (printf("A\n"), 1);
 	if (next_data != NULL)
 	{
-		if (data->token_type == TUBE_FLAG && next_data->token_type == TUBE_FLAG)
-			return (1);
+		if (data->token_type == TUBE_FLAG && next_data->token_type == TUBE_FLAG)//SPACEをtokenに含めたので、スペースを挟んで隣り合った場合を検出できない
+			return (printf("B\n"), 1);
 		if (LESS_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
 		{
 			if (TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
-				return (1);
+				return (printf("C\n"), 1);
 		}
 	}
 	else
 		if (TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
-			return (1);
+			return (printf("D\n"), 1);
 	if (data->token_type == OPEN_QUOTE_FLAG)
-		return (1);
+		return (printf("E\n"), 1);
 	return (0);
 }
 
-//non-NULL=detect syntax_err
-static t_blst	*syntax_checker(t_blst *lst, t_cmp_f cmp_f)
+//syntax_ok=1
+static int	syntax_checker(t_blst *lst, t_cmp_f cmp_f)
 {
 	t_blst	*ret_node;
 	int		i;
 
 	if (lst == NULL)
-		return (NULL);
+		return (0);
 	i = 0;
 	ret_node = lst;
 	while (ret_node->data != NULL)
 	{
 		if (cmp_f(ret_node->data, ret_node))
-			return (ret_node);
+			return (0);
 		ret_node = ret_node->next;
 		i ++;
 	}
-	return (ret_node);
+	return (1);
 }
 
 int	parser(t_blst **tokens_lst)
 {
 	(void)tokens_lst;
 	printf("debug: parse start\n");
-	if (syntax_checker(*tokens_lst, cmp_syntax) != NULL)
+	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
 	printf("debug: parse OK\n");
 	return (1);
