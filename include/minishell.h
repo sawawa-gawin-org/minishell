@@ -20,24 +20,10 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-
 # include <termios.h>
 
-typedef enum e_token_type
-{
-	token,
-	tube,//|
-	less,//<
-	great,//>
-	heredoc,//<<
-	append,//>>
-	double_quote,//""
-	double_quote_val,//"$VAL"
-	single_quote,//'$VAL'
-	val,
-	space, //' ', '\t'
-	open_quote
-}	t_token_type;
+//1個のみ、シグナル番号の情報のためにグローバル変数が許可される
+volatile sig_atomic_t	g_signal;
 
 typedef enum e_tokens
 {
@@ -67,67 +53,43 @@ typedef enum e_tokens
 # define WORD_FLAG 513
 # define BLANK_FLAG 1024
 
-typedef struct s_token
-{
-	struct s_token	*next;
-	struct s_token	*prev;
-	t_token_type	token_type;
-	char			*token_str;
-}					t_token;
-
 typedef struct s_token_data
 {
-	t_tokens		token_type;
-	char			*token_str;
-}					t_token_data;
+	t_tokens	token_type;
+	char		*token_str;
+}				t_token_data;
 
 typedef struct s_shval_data
 {
-	char			*key;
-	char			*val;
-	int				exported;
-}				t_shval_data;
+	char	*key;
+	char	*val;
+	int		exported;
+}			t_shval_data;
 
-typedef struct s_cmd
+//save: 変更前の属性を保存する用の構造体
+//term: 現在の端末の属性を変更する用の構造体
+typedef struct s_init_data
 {
-	struct s_cmd	*next;
-	struct s_cmd	*prev;
-	char			*cmd;
-}					t_cmd;
-
-int		is_blank(int c);
-
-// tokenizer
-t_token	*tokenizer(char *line, t_token *tokens);
-int		is_token_type(char *str, int target);
-int		check_token_type(char **str);
+	struct termios		term;
+	struct termios		save;
+	struct sigaction	sa;
+}						t_init_data;
 
 // new tokenizer
 void	*new_tokenizer(char **line);
 void	free_token_data(void *data);
 char	*allocate_next_token(char **line, int *next_token_type);
 
-t_token	*lst_last(t_token *tokens);
-t_token	*lst_new(void);
-t_token	*lstadd_token(t_token *tokens, char *str, int type);
-
-// parser
-int		syntax_checker(t_token *tokens);
-
-//debug
-void	put_lst(t_token *tokens);
-void	del_lst(t_token *tokens);
-
 void	*get_env_all(char **envp);
 void	free_shval_data(void *data);
 
-int		parser(t_token **tokens);
-
-//1個のみ、シグナル番号の情報のためにグローバル変数が許可される
-volatile sig_atomic_t	g_signal = 0;
 void	sig_handler(int signal);
+void	set_signal(int signum, void handler(int), struct sigaction *sa);
+
 int		get_heredoc_fd(char *delimiter);
 
-int		minishell(int argc, char *argv[], char *envp[]);
+// minishell.c
+int		minishell(char *envp[]);
+int		is_blank(int c);
 
 #endif

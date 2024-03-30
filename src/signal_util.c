@@ -5,12 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 13:35:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/21 13:39:22 by syamasaw         ###   ########.fr       */
+/*   Created: 2024/03/20 16:31:40 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/03/30 13:59:50 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	set_signal(int signum, void handler(int), struct sigaction *sa)
+{
+	sa->sa_flags = SA_RESTART;
+	sa->sa_handler = handler;
+	sigemptyset(&(sa->sa_mask));
+	sigaction(signum, sa, NULL);
+}
 
 void	sig_handler(int signal)
 {

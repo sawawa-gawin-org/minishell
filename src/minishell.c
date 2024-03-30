@@ -15,51 +15,50 @@
 #include "dbllst.h"
 
 static int	is_blank_str(char *str);
+static int	init_minishell(t_init_data *init_data);
 
-int	minishell(int argc, char *argv[], char *envp[])
+int	minishell(char *envp[])
 {
-	struct termios	term; //端末の属性を変更する用の構造体
-	struct termios	save; //変更前の属性を保存する用の構造体
-	char			*line; //readlineで読み取った文字列用のchar*
-	t_token			*tokens; //字句分割後のトークン格納用の双方向連結リスト
+	char			*line;
 	t_blst			*tokens_lst;
-	t_blst			*shvals_lst; //環境変数およびシェル変数用の双方向連結リスト
+	t_blst			*shvals_lst;
+	t_init_data		init_data;
 
-	(void)argc;
-	(void)argv;
 	shvals_lst = get_env_all(envp); //既存の環境変数のリスト化
 	if (shvals_lst == NULL)
 		return (1);
-	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
-	term = save; //複製
-	term.c_lflag &= ~(ECHOCTL); //制御文字を消す
-	tcsetattr(STDIN_FILENO, TCSANOW, &term); //変更を即時反映
-	signal(SIGQUIT, SIG_IGN); //SIGQUIT(Ctrl+\)を無視
-	signal(SIGINT, sig_handler); //SIGINT(Ctrl+C)をハンドリング sigaction SA_RESTART
+	init_minishell(&init_data);
 	line = NULL;
 	while (1)
 	{
-		tokens = NULL;
-		line = readline("minishell$ "); //Ctrl+Dを押してEOFするとreadlineがNULLを返す。
+		tokens_lst = NULL;
+		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
 		if (line[0] != '\0') //もし空白やタブなどの入力が行われている場合は履歴に残す。改行だけなら残さない。cmdの成否にかかわらず履歴に残る。
 			add_history(line);
-		if (is_blank_str(line)) //lineがisspace()の文字のみであればcontinue
+		if (is_blank_str(line))
 		{
 			free(line);
 			continue ;
 		}
-		tokens = tokenizer(line, tokens);
 		tokens_lst = new_tokenizer(&line);
-		if (parser(&tokens))
-			put_lst(tokens);
-		del_lst(tokens);
 		free(line);
 		doub_lstdelall(&tokens_lst, free_token_data);
 	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &save);
+	tcsetattr(STDIN_FILENO, TCSANOW, &init_data.save);
 	doub_lstdelall(&shvals_lst, free_shval_data);
+	return (0);
+}
+
+static int	init_minishell(t_init_data *init_data)
+{
+	tcgetattr(STDIN_FILENO, &init_data->save); //初期状態の取得
+	init_data->term = init_data->save; //複製
+	init_data->term.c_cflag &= ~(ECHOCTL); //制御文字を消す
+	tcsetattr(STDIN_FILENO, TCSANOW, &init_data->term); //変更を即時反映
+	set_signal(SIGINT, sig_handler, &init_data->sa);
+	set_signal(SIGQUIT, SIG_IGN, &init_data->sa);
 	return (0);
 }
 
