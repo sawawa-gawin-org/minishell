@@ -6,7 +6,7 @@
 #    By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/24 19:07:05 by syamasaw          #+#    #+#              #
-#    Updated: 2024/03/30 21:05:27 by saraki           ###   ########.fr        #
+#    Updated: 2024/03/30 21:20:00 by saraki           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,11 +32,12 @@ OBJ_DIR := $(addprefix $(TMP_DIR),prod/$(BASE_DIRNAME)/)
 DOBJ_DIR := $(addprefix $(TMP_DIR),dev/$(BASE_DIRNAME)/)
 SUB_OBJ_DIR := ./
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-LFLAGS = 
-DFLAGS = -fdiagnostics-color=always -g3 -fsanitize=address
-IFLAGS = -I$(HEADER_DIR)
+CC := cc
+CFLAGS := -Wall -Wextra -Werror
+LFLAGS := 
+DLFLAGS := 
+DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
+IFLAGS := -I$(HEADER_DIR)
 
 DEPENDENCY := 
 

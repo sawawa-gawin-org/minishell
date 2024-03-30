@@ -30,6 +30,7 @@ TEST_DOBJS := $(patsubst $(TEST_SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(TEST_SRCS))
 # Rules
 ifdef DEBUG_MODE
 TEST_OBJS := $(TEST_DOBJS)
+LFLAGS := $(DLFLAGS)
 NAME := $(DNAME)
 endif
 
