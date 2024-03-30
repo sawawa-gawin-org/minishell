@@ -6,7 +6,7 @@
 			"command": "make",
 			"args": [
 				"test", "DEBUG_MODE=1",
-				"-C", "${workspaceFolder}/test"
+				"-C", "${workspaceFolder}/test/minishell",
 			],
 			"options": {
 				"cwd": "${fileDirname}"
