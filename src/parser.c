@@ -6,13 +6,13 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/27 14:39:31 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/30 14:20:35 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "minishell.h"
-#include "dbllst.h"
+// #include "libft.h"
+// #include "minishell.h"
+// #include "dbllst.h"
 
 /*
 Parser
@@ -23,33 +23,33 @@ Parser
 
 //空文字列""の削除、クオートの削除、文字列同士の結合
 
-int	syntax_checker(t_token *tokens)
-{
-	while (tokens != NULL)
-	{
-		if (tokens->prev == NULL && tokens->token_type == 1)
-			return (0);//先頭が|
-		if (tokens->next != NULL)
-		{
-			if (tokens->token_type == 1 && tokens->next->token_type == 1)
-				return (0);//| |
-			if (less <= tokens->token_type && tokens->token_type <= append)
-			{
-				if (tokens->next->token_type == tube)
-					return (0);//redirect |
-				if (less <= tokens->next->token_type && tokens->next->token_type <= append)
-					return (0);//redirect redirect
-			}
-		}
-		else
-			if (tube <= tokens->token_type && tokens->token_type <= append)
-				return (0);//redirect EOF or | EOF
-		if (tokens->token_type == open_quote)
-			return (0);
-		tokens = tokens->next;
-	}
-	return (1);
-}
+// int	syntax_checker(t_token *tokens)
+// {
+// 	while (tokens != NULL)
+// 	{
+// 		if (tokens->prev == NULL && tokens->token_type == 1)
+// 			return (0);//先頭が|
+// 		if (tokens->next != NULL)
+// 		{
+// 			if (tokens->token_type == 1 && tokens->next->token_type == 1)
+// 				return (0);//| |
+// 			if (less <= tokens->token_type && tokens->token_type <= append)
+// 			{
+// 				if (tokens->next->token_type == tube)
+// 					return (0);//redirect |
+// 				if (less <= tokens->next->token_type && tokens->next->token_type <= append)
+// 					return (0);//redirect redirect
+// 			}
+// 		}
+// 		else
+// 			if (tube <= tokens->token_type && tokens->token_type <= append)
+// 				return (0);//redirect EOF or | EOF
+// 		if (tokens->token_type == open_quote)
+// 			return (0);
+// 		tokens = tokens->next;
+// 	}
+// 	return (1);
+// }
 
 // int	new_parser(t_blst **tokens)
 // {
@@ -59,11 +59,11 @@ int	syntax_checker(t_token *tokens)
 // 	return (1);
 // }
 
-int	parser(t_token **tokens, struct sigaction *sa)
-{
-	(void)sa;
-	if (!syntax_checker(*tokens))
-		return (0);
+// int	parser(t_token **tokens, struct sigaction *sa)
+// {
+// 	(void)sa;
+// 	if (!syntax_checker(*tokens))
+// 		return (0);
 	
 	//tokenリスト内を走査して、""空文字列要素を削除
 	//"hoge""huge$VAL"->hogehuge$VAL (blank(' ', '\t')を挟まずに)連続する文字列を結合
@@ -75,8 +75,8 @@ int	parser(t_token **tokens, struct sigaction *sa)
 	//変数展開 ARG="ho hoge"; ec$ARG がありえる
 	//"|"区切りでコマンド列ごとに分割
 	//< infile | echo hoge のような、実行可能コマンドがない場合も考慮して実装する。
-	return (1);
-}
+// 	return (1);
+// }
 
 /*
 typedef struct s_cmd_table
