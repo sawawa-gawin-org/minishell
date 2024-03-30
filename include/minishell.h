@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "dbllst.h"
 # include <signal.h>
 # include <unistd.h>
 # include <stdio.h>

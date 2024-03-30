@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/30 18:27:05 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/30 19:24:24 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,18 @@ Parser
 //case4. 現在typeがリダイレクトのどれかで次typeもリダイレクト
 //case5. 現在typeがリダイレクトまたはTUBEで、nextがNULL
 //case6. 現在typeがOPEN_QUOTE
-int	cmp_syntax(t_token_data *data, t_blst *node)
+static int	cmp_syntax(void *d, void *n)
 {
+	t_token_data	*data;
 	t_token_data	*next_data;
+	t_blst			*node;
 
+	data = d;
+	node = n;
 	next_data = node->next->data;
-	if (node->prev == NULL && data->token_type == TUBE_FLAG)
+	if (node->prev->data == NULL && data->token_type == TUBE_FLAG)
 		return (1);
-	if (node->next != NULL)
+	if (next_data != NULL)
 	{
 		if (data->token_type == TUBE_FLAG && next_data->token_type == TUBE_FLAG)
 			return (1);
@@ -83,16 +87,8 @@ int	cmp_syntax(t_token_data *data, t_blst *node)
 	return (0);
 }
 
-// int	syntax_checker(t_blst *tokens_lst)
-// {
-// 	//doub_lstsearchを使って、構文不一致(検索したいデータ)を検索
-// 	//NULLが帰ってきた=構文不一致がないなら、return 0;
-// 	if (!doub_lstsearch(tokens_lst, NULL, cmp_syntax))
-// 		return (0);
-// 	return (1);
-// }
-
-t_blst	*syntax_checker(t_blst *lst, t_cmp_f cmp_f)
+//non-NULL=detect syntax_err
+static t_blst	*syntax_checker(t_blst *lst, t_cmp_f cmp_f)
 {
 	t_blst	*ret_node;
 	int		i;
@@ -114,7 +110,8 @@ t_blst	*syntax_checker(t_blst *lst, t_cmp_f cmp_f)
 int	parser(t_blst **tokens_lst)
 {
 	(void)tokens_lst;
-	if (syntax_checker(*tokens_lst, cmp_syntax))
+	printf("debug: parse start\n");
+	if (syntax_checker(*tokens_lst, cmp_syntax) != NULL)
 		return (0);
 	printf("debug: parse OK\n");
 	return (1);
@@ -130,16 +127,3 @@ int	parser(t_blst **tokens_lst)
 //変数展開 ARG="ho hoge"; ec$ARG がありえる
 //"|"区切りでコマンド列ごとに分割
 //< infile | echo hoge のような、実行可能コマンドがない場合も考慮して実装する。
-
-/*  
-typedef struct s_cmd_table
-{
-	char **cmd; (={"ls", "-lar", "/Desktop", NULL})
-	struct s_list *redirects_in;
-	struct s_list *redirects_out;//ここ2つのリストについて順に操作を行い、最終的に使用するfdを割り出す(その過程でheredocの入力やファイルの新規作成を行う。)
-	bool is_builtin;
-}	t_cmd_table;
-*/
-// <、>、>>はfdがわかる。<<は文章でありファイルではないので、openでfdを知ることはできない。
-//そのため、heredoc処理の出力をwriteでfd指定でpipeを通してcmd1に渡す。
-
