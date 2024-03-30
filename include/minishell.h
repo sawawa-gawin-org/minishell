@@ -69,34 +69,6 @@ typedef enum e_tokens
 # define WORD_FLAG 513
 # define BLANK_FLAG 1024
 
-typedef enum e_tokens
-{
-	TOKEN_FLAG = 1,
-	TUBE_FLAG = 1 << 1,
-	LESS_FLAG = 1 << 2,
-	GREAT_FLAG = 1 << 3,
-	HEREDOC_FLAG = 1 << 4,
-	APPEND_FLAG = 1 << 5,
-	DOUBLE_QUOTE_FLAG = 1 << 6,
-	DOUBLE_QUOTE_VAL_FLAG = 1 << 7,
-	SINGLE_QUOTE_FLAG = 1 << 8,
-	VAL_FLAG = 1 << 9,
-	SPACE_FLAG = 1 << 10,
-	OPEN_QUOTE_FLAG = 1 << 11
-}	t_tokens;
-
-// # define META_FLAG (LESS_FLAG | GREAT_FLAG | TUBE_FLAG | 
-// 					HEREDOC_FLAG | APPEND_FLAG)
-// # define QUOTE_FLAG (OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | 
-// 					DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG)
-// # define WORD_FLAG (VAL_FLAG | TOKEN_FLAG)
-// # define BLANK_FLAG (SPACE_FLAG)
-
-# define META_FLAG 62
-# define QUOTE_FLAG 2496
-# define WORD_FLAG 513
-# define BLANK_FLAG 1024
-
 //双方向リスト専用構造体は廃止、置き換え予定
 typedef struct s_token
 {

@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:37:15 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/30 13:54:31 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:56:08 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,14 +103,4 @@ void	free_shval_data(void *data)
 	if (shval->val != NULL)
 		free(shval->val);
 	free(shval);
-}
-
-static int	strlen_eq(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '=')
-		i++;
-	return (i);
 }
