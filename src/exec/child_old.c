@@ -1,0 +1,46 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   child_old.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/24 16:50:46 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/03/17 14:28:52 by saraki           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libft.h"
+#include "pipex.h"
+
+#include <stdio.h>
+
+static void	do_oldest_child(char **cmd, char *path, char *envp[], t_pipex *pipe);
+
+int	make_oldest_child(char *phrase, t_pipex *pipe, char *envp[])
+{
+	char	**cmd;
+	char	*path;
+
+	cmd = ft_split(phrase, ' ');
+	if (cmd == NULL)
+		return (1);
+	path = find_cmd(cmd[0], envp);
+	if (!path)
+		return (free_split(cmd, 1));
+	pipe->pids = fork();
+	if (pipe->pids == 0)
+		do_oldest_child(cmd, path, envp, pipe);
+	free_split(cmd, 0);
+	free(path);
+	if (pipe->pids < 0)
+		return (1);
+	return (0);
+}
+
+static void	do_oldest_child(char **cmd, char *path, char *envp[], t_pipex *pipe)
+{
+	close_fds_in_child(pipe->head, pipe->index, pipe->size);
+	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
+	execve(path, cmd, envp);
+}
