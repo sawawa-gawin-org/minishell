@@ -35,7 +35,7 @@ endif
 
 # Rules
 .PHONY: test
-test: $(OBJ_DIR) $(NAME)
+test: $(OBJ_DIR) $(DEPENDENCY) $(NAME)
 
 $(NAME): $(OBJS) $(TEST_OBJS)
 	$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS) $(LFLAGS) -o $(NAME)
