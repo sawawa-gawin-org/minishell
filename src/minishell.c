@@ -14,24 +14,68 @@
 #include "libft.h"
 #include "dbllst.h"
 
+static int	is_blank_str(char *str);
+
 int	minishell(char *envp[])
 {
-	struct termios		term; //端末の属性を変更する用の構造体
-	struct termios		save; //変更前の属性を保存する用の構造体
-	t_shval				*shvals; //環境変数およびシェル変数用の双方向連結リスト
-	struct sigaction	sa;
+	struct termios	term; //端末の属性を変更する用の構造体
+	struct termios	save; //変更前の属性を保存する用の構造体
+	char			*line; //readlineで読み取った文字列用のchar*
+	t_token			*tokens; //字句分割後のトークン格納用の双方向連結リスト
+	t_blst			*tokens_lst;
+	t_blst			*shvals_lst; //環境変数およびシェル変数用の双方向連結リスト
 
-	shvals = NULL;
-	shvals = get_env_all(envp, shvals); //既存の環境変数のリスト化
+	(void)argc;
+	(void)argv;
+	shvals_lst = get_env_all(envp); //既存の環境変数のリスト化
+	if (shvals_lst == NULL)
+		return (1);
 	tcgetattr(STDIN_FILENO, &save); //初期状態の取得
 	term = save; //複製
 	term.c_lflag &= ~(ECHOCTL); //制御文字を消す
 	tcsetattr(STDIN_FILENO, TCSANOW, &term); //変更を即時反映
-	set_signal(SIGINT, sig_handler, &sa);
-	set_signal(SIGQUIT, SIG_IGN, &sa);
-	//シェル初期化処理ここまで
-	repl(shvals, &sa);//loop
+	signal(SIGQUIT, SIG_IGN); //SIGQUIT(Ctrl+\)を無視
+	signal(SIGINT, sig_handler); //SIGINT(Ctrl+C)をハンドリング sigaction SA_RESTART
+	line = NULL;
+	while (1)
+	{
+		tokens = NULL;
+		line = readline("minishell$ "); //Ctrl+Dを押してEOFするとreadlineがNULLを返す。
+		if (line == NULL)
+			break ;
+		if (line[0] != '\0') //もし空白やタブなどの入力が行われている場合は履歴に残す。改行だけなら残さない。cmdの成否にかかわらず履歴に残る。
+			add_history(line);
+		if (is_blank_str(line)) //lineがisspace()の文字のみであればcontinue
+		{
+			free(line);
+			continue ;
+		}
+		tokens = tokenizer(line, tokens);
+		tokens_lst = new_tokenizer(&line);
+		if (parser(&tokens))
+			put_lst(tokens);
+		del_lst(tokens);
+		free(line);
+		doub_lstdelall(&tokens_lst, free_token_data);
+	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &save);
-	del_lst_shval(shvals);
+	doub_lstdelall(&shvals_lst, free_shval_data);
 	return (0);
+}
+
+static int	is_blank_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (is_blank(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return (1);
+	return (0);
+}
+
+int	is_blank(int c)
+{
+	return (c == ' ' || c == '\t');
 }

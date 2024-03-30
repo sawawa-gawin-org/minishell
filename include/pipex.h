@@ -6,13 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:42:11 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/17 14:28:46 by saraki           ###   ########.fr       */
+/*   Updated: 2024/03/27 17:50:15 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
-
 
 # include <unistd.h>
 # include <stdlib.h>

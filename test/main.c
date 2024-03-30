@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:56:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/23 19:07:13 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:57:19 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,23 @@
 
 int	main(int argc, char *argv[], char *envp[])
 {
-	g_signal = 0;
-	minishell(envp);
+	// (void) argc;
+	// (void) argv;
+	// (void) envp;
+	// char	*str[] = {"echo  hello \"world\", \"asdf\" $NAME \'NAME\'"};
+	// char	*ret;
+	// int		type;
+
+	// int size = sizeof(str) / sizeof(str[0]);
+	// for (int i = 0; i < size; i++)
+	// {
+	// 	while (*str[i] != '\0')
+	// 	{
+	// 		ret = allocate_next_token(&str[i], &type);
+	// 		printf("%s-%d\n", ret, type);
+	// 		free(ret);
+	// 	}
+	// }
+	minishell(argc, argv, envp);
 	return (0);
 }
