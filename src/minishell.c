@@ -24,7 +24,7 @@ int	minishell(char *envp[])
 	t_blst			*shvals_lst;
 	t_init_data		init_data;
 
-	shvals_lst = get_env_all(envp); //既存の環境変数のリスト化
+	shvals_lst = get_env_all(envp);
 	if (shvals_lst == NULL)
 		return (1);
 	init_minishell(&init_data);
@@ -35,7 +35,7 @@ int	minishell(char *envp[])
 		line = readline("minishell$ ");
 		if (line == NULL)
 			break ;
-		if (line[0] != '\0') //もし空白やタブなどの入力が行われている場合は履歴に残す。改行だけなら残さない。cmdの成否にかかわらず履歴に残る。
+		if (line[0] != '\0')
 			add_history(line);
 		if (is_blank_str(line))
 		{
@@ -43,6 +43,7 @@ int	minishell(char *envp[])
 			continue ;
 		}
 		tokens_lst = new_tokenizer(&line);
+		printf("%d\n", parser(&tokens_lst));
 		free(line);
 		doub_lstdelall(&tokens_lst, free_token_data);
 	}

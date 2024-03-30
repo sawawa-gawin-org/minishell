@@ -13,6 +13,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "dbllst.h"
 # include <signal.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -74,6 +75,8 @@ typedef struct s_init_data
 	struct termios		save;
 	struct sigaction	sa;
 }						t_init_data;
+
+int	parser(t_blst **tokens_lst);
 
 // new tokenizer
 void	*new_tokenizer(char **line);

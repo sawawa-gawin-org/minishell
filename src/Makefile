@@ -8,8 +8,8 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../)
 LIB_NAME := minishell.a
 HEADERS := minishell.h
 
-SRCS := minishell.c signal_util.c \
-		get_env_all.c new_tokenizer.c new_tokenizer_util.c
+SRCS := minishell.c signal_util.c parser.c \
+		get_env_all.c tokenizer.c tokenizer_util.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
