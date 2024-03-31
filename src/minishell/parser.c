@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/31 16:52:26 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/31 19:38:37 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,56 @@
 #include "libft.h"
 #include "minishell.h"
 
+static void	put_tokens_lst(t_blst *tokens_lst)
+{
+	t_blst			*tmp;
+	t_token_data	*data;
+
+	tmp = tokens_lst;
+	while (tmp->data != NULL)
+	{
+		data = tmp->data;
+		printf("text:%s, type:%d\n", data->token_str, data->token_type);
+		tmp = tmp->next;
+	}
+}
+
+// static void	replace_noquote(char **str)
+// {
+
+// }
+
+static void	delete_quote(t_blst **tokens_lst)
+{
+	t_blst			*tmp;
+	t_token_data	*data;
+	int				len;
+
+	tmp = *tokens_lst;
+	while (tmp->data != NULL)
+	{
+		len = 0;
+		data = tmp->data;
+		len = ft_strlen(data->token_str);
+		if (len == 2)
+		{
+			if (DOUBLE_QUOTE_FLAG <= data->token_type && data->token_type <= SINGLE_QUOTE_FLAG)
+				doub_lstpurge(&tmp);
+		}
+		else if (2 < len && data->token_str[0] == data->token_str[len - 1])
+			; //token_strをquote削除後の文字列に置き換える
+		tmp = tmp->next;
+	}
+}
+
 int	parser(t_blst **tokens_lst)
 {
 	printf("debug: parse start\n");
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
+	delete_quote(tokens_lst);
 	printf("debug: parse OK\n");
+	put_tokens_lst(*tokens_lst);
 	return (1);
 }
 
