@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/31 19:38:37 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:01:34 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,18 @@ static void	put_tokens_lst(t_blst *tokens_lst)
 	}
 }
 
-// static void	replace_noquote(char **str)
-// {
+static void	replace_noquote(char *str, int len)
+{
+	int	i;
 
-// }
+	i = 0;
+	while (i < len - 2)
+	{
+		str[i] = str[i + 1];
+		i++;
+	}
+	str[i] = '\0';
+}
 
 static void	delete_quote(t_blst **tokens_lst)
 {
@@ -51,7 +59,9 @@ static void	delete_quote(t_blst **tokens_lst)
 				doub_lstpurge(&tmp);
 		}
 		else if (2 < len && data->token_str[0] == data->token_str[len - 1])
-			; //token_strをquote削除後の文字列に置き換える
+		{
+			replace_noquote(data->token_str, len);
+		}
 		tmp = tmp->next;
 	}
 }
