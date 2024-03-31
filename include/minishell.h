@@ -76,8 +76,6 @@ typedef struct s_init_data
 	struct sigaction	sa;
 }						t_init_data;
 
-int	parser(t_blst **tokens_lst);
-
 // new tokenizer
 void	*new_tokenizer(char **line);
 void	free_token_data(void *data);
@@ -94,5 +92,9 @@ int		get_heredoc_fd(char *delimiter);
 // minishell.c
 int		minishell(char *envp[]);
 int		is_blank(int c);
+
+int		parser(t_blst **tokens_lst);
+int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
+int		cmp_syntax(void *d, void *n);
 
 #endif

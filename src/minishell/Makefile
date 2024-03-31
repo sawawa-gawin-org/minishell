@@ -7,7 +7,7 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 LIB_NAME := libminishell.a
 HEADERS := minishell.h
 
-SRCS := minishell.c signal_util.c parser.c \
+SRCS := minishell.c signal_util.c parser.c syntax_checker.c \
 		get_env_all.c tokenizer.c tokenizer_util.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
