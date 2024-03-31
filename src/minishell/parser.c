@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/30 19:44:37 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/31 16:52:26 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,102 +14,8 @@
 #include "libft.h"
 #include "minishell.h"
 
-/*
-Parser
-1. read token list.
-2. checks for syntax inconsistencies (e.g. ls > | echo, ls -l | | cat)
-3. if inconsistencies are found, the flow comes to a halt and an error is returned.
-*/
-
-//空文字列""の削除、クオートの削除、文字列同士の結合
-
-// int	syntax_checker(t_token *tokens)
-// {
-// 	while (tokens != NULL)
-// 	{
-// 		if (tokens->prev == NULL && tokens->token_type == 1)
-// 			return (0);//先頭が|
-// 		if (tokens->next != NULL)
-// 		{
-// 			if (tokens->token_type == 1 && tokens->next->token_type == 1)
-// 				return (0);//| |
-// 			if (less <= tokens->token_type && tokens->token_type <= append)
-// 			{
-// 				if (tokens->next->token_type == tube)
-// 					return (0);//redirect |
-// 				if (less <= tokens->next->token_type && tokens->next->token_type <= append)
-// 					return (0);//redirect redirect
-// 			}
-// 		}
-// 		else
-// 			if (tube <= tokens->token_type && tokens->token_type <= append)
-// 				return (0);//redirect EOF or | EOF
-// 		if (tokens->token_type == open_quote)
-// 			return (0);
-// 		tokens = tokens->next;
-// 	}
-// 	return (1);
-// }
-
-//SyntaxErrorCases
-//case1. 先頭のtokenでtypeがTUBE
-//case2. 現在typeがTUBEで次tokenのtypeがTUBE
-//case3. 現在typeがリダイレクトのどれかで次typeがTUBE
-//case4. 現在typeがリダイレクトのどれかで次typeもリダイレクト
-//case5. 現在typeがリダイレクトまたはTUBEで、nextがNULL
-//case6. 現在typeがOPEN_QUOTE
-static int	cmp_syntax(void *d, void *n)
-{
-	t_token_data	*data;
-	t_token_data	*next_data;
-	t_blst			*node;
-
-	data = d;
-	node = n;
-	next_data = node->next->data;
-	if (node->prev->data == NULL && data->token_type == TUBE_FLAG)
-		return (printf("A\n"), 1);
-	if (next_data != NULL)
-	{
-		if (data->token_type == TUBE_FLAG && next_data->token_type == TUBE_FLAG)//SPACEをtokenに含めたので、スペースを挟んで隣り合った場合を検出できない
-			return (printf("B\n"), 1);
-		if (LESS_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
-		{
-			if (TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
-				return (printf("C\n"), 1);
-		}
-	}
-	else
-		if (TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
-			return (printf("D\n"), 1);
-	if (data->token_type == OPEN_QUOTE_FLAG)
-		return (printf("E\n"), 1);
-	return (0);
-}
-
-//syntax_ok=1
-static int	syntax_checker(t_blst *lst, t_cmp_f cmp_f)
-{
-	t_blst	*ret_node;
-	int		i;
-
-	if (lst == NULL)
-		return (0);
-	i = 0;
-	ret_node = lst;
-	while (ret_node->data != NULL)
-	{
-		if (cmp_f(ret_node->data, ret_node))
-			return (0);
-		ret_node = ret_node->next;
-		i ++;
-	}
-	return (1);
-}
-
 int	parser(t_blst **tokens_lst)
 {
-	(void)tokens_lst;
 	printf("debug: parse start\n");
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
