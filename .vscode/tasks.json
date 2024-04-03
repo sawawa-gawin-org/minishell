@@ -40,7 +40,6 @@
 			"args": [
 				"test", "DEBUG_MODE=1",
 				"-C", "${workspaceFolder}/test/pipex",
-				"-j", "6"
 			],
 			"options": {
 				"cwd": "${fileDirname}"

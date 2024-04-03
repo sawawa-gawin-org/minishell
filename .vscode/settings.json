@@ -7,7 +7,10 @@
 		"stdlib.h": "c",
 		"libft.h": "c",
 		"readline.h": "c",
-		"fcntl.h": "c"
+		"fcntl.h": "c",
+		"exec_int.h": "c",
+		"dbllst.h": "c",
+		"pipex.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }
