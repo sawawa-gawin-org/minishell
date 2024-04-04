@@ -6,14 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/03 18:53:34 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/04 16:00:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
 
-// head_node
-// execute the command in the linked list.
+// # about head_node
+// `head_node` is a linked list that stores the command line.
 // exapmle:
 // head_node->data = "ls"
 // head_node->next->data = "-l"

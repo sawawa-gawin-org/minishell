@@ -6,36 +6,38 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/03 18:21:53 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/04 16:06:36 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "exec_int.h"
 
-void	close_fds_in_child(t_pipex *pipe_arr, int index, int size)
+void	close_fds_in_processes(t_blst *pipe_head_node, int index)
 {
-	int		i;
 	t_pipex	*pipe;
+	int		i;
 
 	i = 0;
-	while (i < size)
+	while (pipe_head_node->data != NULL)
 	{
 		if (i == index)
 		{
 			i ++;
+			pipe_head_node = pipe_head_node->next;
 			continue;
 		}
-		pipe = &pipe_arr[i];
+		pipe = (t_pipex	*) pipe_head_node->data;
 		if (pipe->pipe_in_fd >= 0)
 			close(pipe->pipe_in_fd);
 		if (pipe->pipe_out_fd >= 0)
 			close(pipe->pipe_out_fd);
 		i ++;
+		pipe_head_node = pipe_head_node->next;
 	}
 	return ;
 }
 
-int	close_fds(t_pipex *pipe_arr, int size, int exit_code)
+int	close_fds_all(t_pipex *pipe_arr, int size, int exit_code)
 {
 	int		i;
 	t_pipex	*pipe;

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/03 19:06:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/04 16:07:30 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 static int	init_pipeline(t_blst *pipe_head_node);
 static int	wait_processes(t_blst *pipe_head_node);
+static int	make_process(char *phrase, t_pipex *pipe, t_callback callback);
 
 int	make_processes(t_blst *token_head_node, t_blst *pipe_head_node)
 {
@@ -26,11 +27,11 @@ int	make_processes(t_blst *token_head_node, t_blst *pipe_head_node)
 	while (pipe_head_node->data != NULL)
 	{
 		if (pipe_head_node->prev->data == NULL)
-			err = make_oldest_child(units[i], &pipe_arr[i], envp);
+			err = make_process(units[i], &pipe_arr[i], do_first_process);
 		else if (pipe_head_node->next->data == NULL)
-			err = make_youngest_child(units[i], &pipe_arr[i], envp);
+			err = make_process(units[i], &pipe_arr[i], do_last_process);
 		else
-			err = make_middle_child(units[i], &pipe_arr[i], envp);
+			err = make_process(units[i], &pipe_arr[i], do_middle_process);
 		if (err != 0)
 			return (ERR); // TODO:waitpid
 		pipe_head_node = pipe_head_node->next;
@@ -79,4 +80,26 @@ static int	wait_processes(t_blst *pipe_head_node)
 		pipe_head_node = pipe_head_node->next;
 	}
 	return (OK);
+}
+
+// TODO next
+static int	make_process(char *phrase, t_pipex *pipe, t_callback callback)
+{
+	char	**cmd;
+	char	*path;
+
+	cmd = ft_split(phrase, ' ');
+	if (cmd == NULL)
+		return (1);
+	path = find_cmd(cmd[0], environ);
+	if (!path)
+		return (free_split(cmd, 1));
+	pipe->pids = fork();
+	if (pipe->pids == 0)
+		callback(cmd, path, pipe);
+	free_split(cmd, 0);
+	free(path);
+	if (pipe->pids < 0)
+		return (1);
+	return (0);
 }
