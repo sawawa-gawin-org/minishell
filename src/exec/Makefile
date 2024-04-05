@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/24 19:07:05 by syamasaw          #+#    #+#              #
-#    Updated: 2024/03/30 23:27:35 by saraki           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 # Hyper Parameter
 MAKEFILE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
@@ -19,7 +7,7 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 LIB_NAME := libexec.a
 HEADERS := pipex.h
 
-SRCS := child_mid.c child_old.c child_young.c find_cmd.c parser.c pipex.c spawn_children.c utils.c
+SRCS := exec.c find_cmd.c make_processes.c make_processes_util.c process_callback.c utils.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

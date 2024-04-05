@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 03:55:38 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 05:36:52 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	make_process(
 	cmd = convert_tokenlst_to_char_array(section_start_node);
 	if (cmd == NULL)
 		return (ERR);
-	path = find_cmd(section_start_node->data, environ);
+	path = find_cmd(section_start_node->data);
 	if (!path)
 	{
 		free(cmd);

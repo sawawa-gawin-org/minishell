@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 02:54:48 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 04:34:41 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 
 static int	init_pipeline(t_blst *pipe_head_node);
+static int	pipe_fds(int *out_fd, int *in_fd);
 static int	wait_processes(t_blst *pipe_head_node);
 
 int	make_processes(t_tokenlst *token_head_node, t_pipelst *pipe_head_node)
@@ -57,11 +58,23 @@ static int	init_pipeline(t_pipelst *pipe_head_node)
 	return (OK);
 }
 
+static int	pipe_fds(int *out_fd, int *in_fd)
+{
+	int	pipe_fd[2];
+
+	pipe_fd[0] = *out_fd;
+	pipe_fd[1] = *in_fd;
+	if (pipe(pipe_fd) < 0)
+		return (ERR);
+	*out_fd = pipe_fd[0];
+	*in_fd = pipe_fd[1];
+	return (OK);
+}
+
 static int	wait_processes(t_pipelst *pipe_head_node)
 {
 	t_pipex	*now_pipe;
 	t_pipex	*pre_pipe;
-	int		index;
 
 	while (pipe_head_node->data != NULL)
 	{

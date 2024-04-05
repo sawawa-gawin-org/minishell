@@ -10,7 +10,8 @@
 		"fcntl.h": "c",
 		"exec_int.h": "c",
 		"dbllst.h": "c",
-		"pipex.h": "c"
+		"pipex.h": "c",
+		"unistd.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "enabled"
 }

@@ -6,13 +6,13 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:30:28 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/03 17:30:58 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 04:00:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
 
-int	exec(void *head_node);
+int	exec(void *token_head_node);
 
 # endif
