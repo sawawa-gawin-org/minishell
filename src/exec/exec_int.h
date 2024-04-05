@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/04 16:05:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 03:53:33 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ typedef struct s_node
 	struct s_node	*next;
 }				t_blst;
 
+typedef t_blst	t_tokenlst;
+typedef t_blst	t_pipelst;
+
 typedef struct s_pipex
 {
 	int		in_fd;
@@ -37,12 +40,20 @@ typedef struct s_pipex
 	int		pipe_in_fd;
 	int		pipe_out_fd;
 	pid_t	pids;
+	void	*head_node;
 	int		index;
 }				t_pipex;
 
 typedef void	(*t_callback)(char **, char *, t_pipex *);
 
 void	close_fds_in_processes(t_blst *pipe_head_node, int index);
+
+int	make_process(
+	t_tokenlst *token_head_node,
+	t_pipelst *pipe_head_node,
+	t_callback callback);
+
+char	*find_cmd(char *path, char *envp[]);
 
 void	do_first_process(char **cmd, char *path, t_pipex *pipe);
 void	do_middle_process(char **cmd, char *path, t_pipex *pipe);

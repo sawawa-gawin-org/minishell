@@ -6,25 +6,25 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/17 14:29:04 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 03:54:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "pipex.h"
+#include "exec_int.h"
 
 static char	*find_path(char *path, char *envs);
 static int	path_length_checker(char *env_path, int i);
 
-char	*find_cmd(char *path, char *envp[])
+char	*find_cmd(char *path)
 {
 	int		i;
 
 	i = 0;
-	while (envp[i])
+	while (environ[i])
 	{
-		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
-			return (find_path(path, envp[i]));
+		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
+			return (find_path(path, environ[i]));
 		i ++;
 	}
 	return (NULL);

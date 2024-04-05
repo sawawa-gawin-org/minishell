@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/04 16:00:39 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 02:46:20 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 // head_node->next->next->next->data = "wc"
 // head_node->next->next->next->next->data = "-l"
 
-int	exec(t_blst *token_head_node)
+int	exec(t_tokenlst *token_head_node)
 {
-	t_blst	*pipe_head_node;
+	t_pipelst	*pipe_head_node;
 
 	if (token_head_node == NULL)
 		return (1);
@@ -33,11 +33,11 @@ int	exec(t_blst *token_head_node)
 	make_processes(token_head_node, pipe_head_node);
 }
 
-static t_blst	*init_pipe_lst(t_blst *token_head_node)
+static t_pipelst	*init_pipe_lst(t_tokenlst	*token_head_node)
 {
-	int		index;
-	t_blst	*pipe_head_node;
-	t_blst	*new_node;
+	int			index;
+	t_pipelst	*pipe_head_node;
+	t_pipelst	*new_node;
 
 	index = 0;
 	pipe_head_node = doub_lstnew(NULL);
@@ -50,6 +50,7 @@ static t_blst	*init_pipe_lst(t_blst *token_head_node)
 			return (NULL);
 		}
 		doub_lstappend(&pipe_head_node, new_node);
+		((t_pipex *) (new_node->data))->head_node = pipe_head_node;
 		while (!ft_strcmp((char *)token_head_node->data, "|"))
 			token_head_node = token_head_node->next;
 		token_head_node = token_head_node->next;
@@ -57,10 +58,10 @@ static t_blst	*init_pipe_lst(t_blst *token_head_node)
 	return (pipe_head_node);
 }
 
-static t_blst	*init_pipe_node(int index)
+static t_pipelst	*init_pipe_node(int index)
 {
-	t_blst	*node;
-	t_pipex	*pipedata;
+	t_pipelst	*node;
+	t_pipex		*pipedata;
 
 	pipedata = (t_pipex *)malloc(sizeof(t_pipex));
 	if (pipedata == NULL)
@@ -71,7 +72,7 @@ static t_blst	*init_pipe_node(int index)
 	pipedata->pipe_out_fd = -1;
 	pipedata->index = index;
 	pipedata->pids = 0;
-	node = doub_lstnew((void *)pipedata);
+	node = (t_pipelst *)doub_lstnew((void *)pipedata);
 	if (node == NULL)
 	{
 		free(pipedata);
