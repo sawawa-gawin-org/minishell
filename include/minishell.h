@@ -54,6 +54,13 @@ typedef enum e_tokens
 # define WORD_FLAG 513
 # define BLANK_FLAG 1024
 
+typedef struct s_node
+{
+	struct s_node	*prev;
+	void			*data;
+	struct s_node	*next;
+}				t_blst;
+
 typedef struct s_token_data
 {
 	t_tokens	token_type;
@@ -75,6 +82,8 @@ typedef struct s_init_data
 	struct termios		save;
 	struct sigaction	sa;
 }						t_init_data;
+
+typedef int		(*t_cmp_f)(void *, void *);
 
 // new tokenizer
 void	*new_tokenizer(char **line);
