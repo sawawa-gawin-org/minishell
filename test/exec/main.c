@@ -6,12 +6,13 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/17 14:29:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 12:25:46 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "pipex.h"
+#include "exec.h"
+#include "dbllst.h"
 
 // void	end(void)__attribute__((destructor));
 
@@ -20,10 +21,48 @@
 // 	system("leaks pipex.out");
 // }
 
-int	main(int argc, char *argv[], char *envp[])
+typedef struct s_node
 {
-	pipex(argc, argv, envp);
+	struct s_node	*prev;
+	char			*data;
+	struct s_node	*next;
+}				t_blst;
+
+static t_blst *debug_parselst(char **cmd);
+
+int	main(void)
+{
+	char *cmd1[] = {"ls", "-la", NULL};
+	// char *cmd2[] = {"ls", "-la", "|", "wc", "-l", NULL};
+	// char *cmd3[] = {"ls", "-la", "|", "wc", "-l", "|", "wc", "-l", NULL};
+
+	t_blst *token_head_node = debug_parselst((char **)cmd1);
+	if (token_head_node == NULL)
+		return (1);
+	exec((void *)token_head_node);
+	doub_lstdelall((void **)&token_head_node, NULL);
 	return (0);
+}
+
+static t_blst *debug_parselst(char **cmd)
+{
+	t_blst	*head_node;
+	t_blst	*new_node;
+	int i = 0;
+
+	head_node = doub_lstnew(NULL);
+	while (head_node != NULL && cmd[i] != NULL)
+	{
+		new_node = doub_lstnew(cmd[i]);
+		if (new_node == NULL)
+		{
+			doub_lstdelall((void **)&head_node, NULL);
+			return (NULL);
+		}
+		doub_lstappend((void **)&head_node, new_node);
+		i++;
+	}
+	return (head_node);
 }
 
 // #include <sys/types.h>

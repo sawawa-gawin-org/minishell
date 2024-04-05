@@ -21,12 +21,12 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lft
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lft_debug
+LFLAGS := -L$(LIB_EXPORT_DIR) -lft -L$(LIB_EXPORT_DIR) -ldbllst
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lft_debug -L$(LIB_EXPORT_DIR) -ldbllst_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft
+DEPENDENCY := libft dbllst
 
 # *****************************************************************************
 # From here onward is the same
