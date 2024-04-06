@@ -5,7 +5,8 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
 LIB_NAME := libexec.a
-HEADERS := pipex.h
+HEADERS := exec.h
+INT_HEADERS := exec_int.h
 
 SRCS := exec.c find_cmd.c make_processes.c make_processes_util.c process_callback.c utils.c
 
@@ -39,6 +40,7 @@ LIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(LIB_NAME))
 DLIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(DLIB_NAME))
 
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
+INT_HEADERS := $(addprefix $(MAKEFILE_DIR),$(INT_HEADERS))
 
 OBJS := $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS := $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
@@ -57,7 +59,7 @@ $(OBJ_DIR):
 	mkdir -p $(addprefix $(OBJ_DIR), $(SUB_OBJ_DIR))
 	mkdir -p $(LIB_EXPORT_DIR)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(INT_HEADERS)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(LIB_NAME): $(OBJS)
@@ -84,3 +86,6 @@ fclean: clean
 re: fclean all
 
 .PHONY: all debug clean fclean re
+
+echo:
+	@echo $(HEADERS)
