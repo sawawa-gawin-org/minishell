@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 04:31:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/06 04:15:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	exec(t_tokenlst *token_head_node)
 	return (0);
 }
 
-static t_pipelst	*init_pipe_lst(t_tokenlst	*token_head_node)
+static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
 {
 	int			index;
 	t_pipelst	*pipe_head_node;
@@ -56,10 +56,14 @@ static t_pipelst	*init_pipe_lst(t_tokenlst	*token_head_node)
 			doub_lstdelall((void **)&pipe_head_node, free);
 			return (NULL);
 		}
+		index ++;
 		doub_lstappend((void **)&pipe_head_node, new_node);
-		((t_pipex *) (new_node->data))->head_node = pipe_head_node;
-		while (!ft_strcmp((char *)token_head_node->data, "|"))
+		((t_pipex *)(new_node->data))->head_node = pipe_head_node;
+		while (token_head_node->data != NULL
+			&& ft_strcmp((char *)token_head_node->data, "|"))
 			token_head_node = token_head_node->next;
+		if (token_head_node->data == NULL)
+			break ;
 		token_head_node = token_head_node->next;
 	}
 	return (pipe_head_node);
@@ -90,8 +94,8 @@ static t_pipelst	*init_pipe_node(int index)
 
 static void	close_fds_all(t_pipelst *pipe_head_node)
 {
-	t_pipex	*pipe;
-	t_pipelst *now_node;
+	t_pipex		*pipe;
+	t_pipelst	*now_node;
 
 	now_node = pipe_head_node;
 	while (now_node->data != NULL)
@@ -105,5 +109,6 @@ static void	close_fds_all(t_pipelst *pipe_head_node)
 			close(pipe->pipe_in_fd);
 		if (pipe->pipe_out_fd >= 0)
 			close(pipe->pipe_out_fd);
+		now_node = now_node->next;
 	}
 }

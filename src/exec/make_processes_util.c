@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:36:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 13:12:55 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	**convert_tokenlst_to_char_array(t_tokenlst *section_start_node)
 
 	size = 0;
 	now_node = section_start_node;
-	while (now_node->data != NULL || ft_strcmp((char *)now_node->data, "|") == 0)
+	while (now_node->data != NULL && ft_strcmp((char *)now_node->data, "|"))
 	{
 		size ++;
 		now_node = now_node->next;

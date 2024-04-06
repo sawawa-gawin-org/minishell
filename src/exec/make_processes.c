@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 04:34:41 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/06 04:31:49 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	make_processes(t_tokenlst *token_head_node, t_pipelst *pipe_head_node)
 			return (ERR); // TODO:waitpid
 		pipe_head_node = pipe_head_node->next;
 	}
-	return (wait_processes(pipe_head_node));
+	return (wait_processes(pipe_head_node->next));
 }
 
 static int	init_pipeline(t_pipelst *pipe_head_node)
@@ -87,7 +87,7 @@ static int	wait_processes(t_pipelst *pipe_head_node)
 		}
 		now_pipe = (t_pipex *)pipe_head_node->data;
 		if (waitpid(now_pipe->pids, NULL, 0) == -1)
-			printf("waitpid error\n");
+			return (ERR);
 		pipe_head_node = pipe_head_node->next;
 	}
 	return (OK);
