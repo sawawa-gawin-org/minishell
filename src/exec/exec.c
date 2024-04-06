@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/06 04:15:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/06 05:08:52 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ int	exec(t_tokenlst *token_head_node)
 	pipe_head_node = init_pipe_lst(token_head_node);
 	if (pipe_head_node == NULL)
 		return (1);
-	make_processes(token_head_node, pipe_head_node);
+	if (make_processes(token_head_node, pipe_head_node))
+		write(2, "Error\n", 6);
 	close_fds_all(pipe_head_node);
 	doub_lstdelall((void **)&pipe_head_node, free);
 	return (0);

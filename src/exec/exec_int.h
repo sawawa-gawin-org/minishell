@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:38:18 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/06 04:55:38 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define OK 0
 # define ERR -1
 
-extern char	**environ;
+extern char		**environ;
 
 typedef struct s_node
 {
@@ -36,9 +36,6 @@ typedef struct s_node
 	void			*data;
 	struct s_node	*next;
 }				t_blst;
-
-typedef t_blst	t_tokenlst;
-typedef t_blst	t_pipelst;
 
 typedef struct s_pipex
 {
@@ -51,23 +48,24 @@ typedef struct s_pipex
 	int		index;
 }				t_pipex;
 
+typedef t_blst	t_tokenlst;
+typedef t_blst	t_pipelst;
 typedef void	(*t_callback)(char **, char *, t_pipex *);
 
-int		make_processes(
-			t_tokenlst *token_head_node,
-			t_pipelst *pipe_head_node);
+int				make_processes(
+					t_tokenlst *token_head_node,
+					t_pipelst *pipe_head_node);
+int				make_process(
+					t_tokenlst *token_head_node,
+					t_pipelst *pipe_head_node,
+					t_callback callback);
 
-int		make_process(
-			t_tokenlst *token_head_node,
-			t_pipelst *pipe_head_node,
-			t_callback callback);
+char			*find_cmd(char *path);
 
-char	*find_cmd(char *path);
-
-void	do_first_process(char **cmd, char *path, t_pipex *pipe);
-void	do_middle_process(char **cmd, char *path, t_pipex *pipe);
-void	do_last_process(char **cmd, char *path, t_pipex *pipe);
+void			do_first_process(char **cmd, char *path, t_pipex *pipe);
+void			do_middle_process(char **cmd, char *path, t_pipex *pipe);
+void			do_last_process(char **cmd, char *path, t_pipex *pipe);
 
 int				ft_strcmp(const char *s1, const char *s2);
 
-# endif
+#endif

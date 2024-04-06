@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 03:43:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:38:01 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/06 04:51:21 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static void	close_fds_in_processes(t_blst *pipe_head_node, int index)
 		{
 			i ++;
 			pipe_head_node = pipe_head_node->next;
-			continue;
+			continue ;
 		}
-		pipe = (t_pipex	*) pipe_head_node->data;
+		pipe = (t_pipex *) pipe_head_node->data;
 		if (pipe->pipe_in_fd >= 0)
 			close(pipe->pipe_in_fd);
 		if (pipe->pipe_out_fd >= 0)
