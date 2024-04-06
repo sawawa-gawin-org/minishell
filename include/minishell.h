@@ -24,7 +24,7 @@
 # include <termios.h>
 
 //1個のみ、シグナル番号の情報のためにグローバル変数が許可される
-volatile sig_atomic_t	g_signal;
+extern volatile sig_atomic_t g_signal;
 
 typedef enum e_tokens
 {
@@ -97,6 +97,8 @@ void	sig_handler(int signal);
 void	set_signal(int signum, void handler(int), struct sigaction *sa);
 
 int		get_heredoc_fd(char *delimiter);
+
+int	exec_tokenslst_cmds(t_blst *tokens_lst);
 
 // minishell.c
 int		minishell(char *envp[]);

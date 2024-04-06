@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_tokenizer.c                                    :+:      :+:    :+:   */
+/*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/28 16:07:28 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/06 06:04:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ void	*new_tokenizer(char **line)
 		new_node = new_token_node(line);
 		if (new_node == NULL)
 		{
-			doub_lstdelall(&ret, free_token_data);
+			doub_lstdelall((void **) &ret, free_token_data);
 			return (NULL);
 		}
-		doub_lstappend(&ret, new_node);
+		doub_lstappend((void **)&ret, new_node);
 	}
 	*line = line_head;
 	return ((void *)ret);

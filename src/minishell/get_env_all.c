@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env_all.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 19:37:15 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/30 13:56:08 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/06 06:10:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	*get_env_all(char **envp)
 		new_node = new_shval_node(*envp, 1);
 		if (new_node == NULL)
 		{
-			doub_lstdelall(&ret, free_shval_data);
+			doub_lstdelall((void **)&ret, free_shval_data);
 			return (NULL);
 		}
-		doub_lstappend(&ret, new_node);
+		doub_lstappend((void **)&ret, new_node);
 		envp ++;
 	}
 	return ((void *)ret);
