@@ -14,8 +14,9 @@
 # define MINISHELL_H
 
 # include "dbllst.h"
-# include <signal.h>
 # include <unistd.h>
+# include <signal.h>
+# include <sys/types.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -24,7 +25,7 @@
 # include <termios.h>
 
 //1個のみ、シグナル番号の情報のためにグローバル変数が許可される
-volatile sig_atomic_t	g_signal;
+// volatile sig_atomic_t	g_signal;
 
 typedef enum e_tokens
 {
