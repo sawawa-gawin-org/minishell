@@ -56,7 +56,7 @@ static int	init_minishell(t_init_data *init_data)
 {
 	tcgetattr(STDIN_FILENO, &init_data->save); //初期状態の取得
 	init_data->term = init_data->save; //複製
-	init_data->term.c_cflag &= ~(ECHOCTL); //制御文字を消す
+	init_data->term.c_cflag &= ~ECHOCTL; //制御文字を消す
 	tcsetattr(STDIN_FILENO, TCSANOW, &init_data->term); //変更を即時反映
 	set_signal(SIGINT, sig_handler, &init_data->sa);
 	set_signal(SIGQUIT, SIG_IGN, &init_data->sa);

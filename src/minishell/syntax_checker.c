@@ -6,13 +6,16 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 16:50:29 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/31 16:52:36 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/31 18:10:49 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
 #include "libft.h"
 #include "minishell.h"
+
+static int	find_contd_tube(t_blst *node);
+static int	find_contd_redirect(t_blst *node);
 
 //syntax_ok=1
 int	syntax_checker(t_blst *lst, t_cmp_f cmp_f)

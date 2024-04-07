@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/31 16:52:26 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/03/31 20:01:34 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,31 @@
 #include "libft.h"
 #include "minishell.h"
 
+static void	put_tokens_lst(t_blst *tokens_lst);
+
 int	parser(t_blst **tokens_lst)
 {
 	printf("debug: parse start\n");
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
+	delete_quote(tokens_lst);
 	printf("debug: parse OK\n");
+	put_tokens_lst(*tokens_lst);
 	return (1);
+}
+
+static void	put_tokens_lst(t_blst *tokens_lst)
+{
+	t_blst			*tmp;
+	t_token_data	*data;
+
+	tmp = tokens_lst;
+	while (tmp->data != NULL)
+	{
+		data = tmp->data;
+		printf("text:%s, type:%d\n", data->token_str, data->token_type);
+		tmp = tmp->next;
+	}
 }
 
 //tokenリスト内を走査して、""空文字列要素を削除
