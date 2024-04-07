@@ -94,8 +94,14 @@ int		get_heredoc_fd(char *delimiter);
 int		minishell(char *envp[]);
 int		is_blank(int c);
 
+// parser.c
 int		parser(t_blst **tokens_lst);
+
+// syntax_checker.c
 int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 int		cmp_syntax(void *d, void *n);
+
+// delete_quote.c
+void	delete_quote(t_blst **tokens_lst);
 
 #endif

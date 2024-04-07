@@ -14,6 +14,19 @@
 #include "libft.h"
 #include "minishell.h"
 
+static void	put_tokens_lst(t_blst *tokens_lst);
+
+int	parser(t_blst **tokens_lst)
+{
+	printf("debug: parse start\n");
+	if (!syntax_checker(*tokens_lst, cmp_syntax))
+		return (0);
+	delete_quote(tokens_lst);
+	printf("debug: parse OK\n");
+	put_tokens_lst(*tokens_lst);
+	return (1);
+}
+
 static void	put_tokens_lst(t_blst *tokens_lst)
 {
 	t_blst			*tmp;
@@ -26,55 +39,6 @@ static void	put_tokens_lst(t_blst *tokens_lst)
 		printf("text:%s, type:%d\n", data->token_str, data->token_type);
 		tmp = tmp->next;
 	}
-}
-
-static void	replace_noquote(char *str, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len - 2)
-	{
-		str[i] = str[i + 1];
-		i++;
-	}
-	str[i] = '\0';
-}
-
-static void	delete_quote(t_blst **tokens_lst)
-{
-	t_blst			*tmp;
-	t_token_data	*data;
-	int				len;
-
-	tmp = *tokens_lst;
-	while (tmp->data != NULL)
-	{
-		len = 0;
-		data = tmp->data;
-		len = ft_strlen(data->token_str);
-		if (len == 2)
-		{
-			if (DOUBLE_QUOTE_FLAG <= data->token_type && data->token_type <= SINGLE_QUOTE_FLAG)
-				doub_lstpurge(&tmp);
-		}
-		else if (2 < len && data->token_str[0] == data->token_str[len - 1])
-		{
-			replace_noquote(data->token_str, len);
-		}
-		tmp = tmp->next;
-	}
-}
-
-int	parser(t_blst **tokens_lst)
-{
-	printf("debug: parse start\n");
-	if (!syntax_checker(*tokens_lst, cmp_syntax))
-		return (0);
-	delete_quote(tokens_lst);
-	printf("debug: parse OK\n");
-	put_tokens_lst(*tokens_lst);
-	return (1);
 }
 
 //tokenリスト内を走査して、""空文字列要素を削除
