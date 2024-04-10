@@ -90,6 +90,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all debug clean fclean re
-
-echo:
-	@echo $(ADDITIONAL)

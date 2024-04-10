@@ -6,6 +6,7 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 # Parameters
 LIB_NAME := libminishell.a
 HEADERS := minishell.h
+INT_HEADERS :=
 
 SRCS := minishell.c signal_util.c parser.c syntax_checker.c \
 		get_env_all.c tokenizer.c tokenizer_util.c exec_bridge.c
@@ -40,6 +41,7 @@ LIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(LIB_NAME))
 DLIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(DLIB_NAME))
 
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
+INT_HEADERS := $(addprefix $(MAKEFILE_DIR),$(INT_HEADERS))
 
 OBJS := $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS := $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))

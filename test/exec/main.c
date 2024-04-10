@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/10 12:18:28 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/10 12:39:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	end(void)__attribute__((destructor));
 
 void	end(void)
 {
-	system("leaks pipex.out");
+	system("leaks exec.out");
 }
 
 typedef struct s_node
