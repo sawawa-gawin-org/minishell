@@ -6,13 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/06 05:10:48 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/10 12:18:28 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "exec.h"
-#include "dbllst.h"
 
 #include <unistd.h>
 

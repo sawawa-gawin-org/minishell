@@ -22,8 +22,8 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lft -L$(LIB_EXPORT_DIR) -ldbllst
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lft_debug -L$(LIB_EXPORT_DIR) -ldbllst_debug
+LFLAGS := -L$(LIB_EXPORT_DIR) -llibft -L$(LIB_EXPORT_DIR) -ldbllst
+DLFLAGS := -L$(LIB_EXPORT_DIR) -llibft_debug -L$(LIB_EXPORT_DIR) -ldbllst_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
@@ -45,12 +45,16 @@ INT_HEADERS := $(addprefix $(MAKEFILE_DIR),$(INT_HEADERS))
 OBJS := $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS := $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
 
+ADDITIONAL := $(addprefix $(LIB_EXPORT_DIR)/lib,$(DEPENDENCY:=.a))
 # Rules
 ifdef DEBUG_MODE
 OBJS := $(DOBJS)
 CFLAGS := $(DFLAGS)
 LIB_NAME := $(DLIB_NAME)
 OBJ_DIR := $(DOBJ_DIR)
+LFLAGS := -L$(LIB_EXPORT_DIR) -llibft -L$(LIB_EXPORT_DIR) -ldbllst
+
+ADDITIONAL := $(addprefix $(LIB_EXPORT_DIR)/lib,$(DEPENDENCY:=_debug.a))
 endif
 
 all: $(OBJ_DIR) $(DEPENDENCY) $(LIB_NAME)
@@ -63,7 +67,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(INT_HEADERS)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(LIB_NAME): $(OBJS)
-	ar rc $@ $(OBJS)
+	ar rc $@ $(OBJS) $(ADDITIONAL)
 
 define LIB_MACRO
 .PHONY: $(1)
@@ -86,3 +90,6 @@ fclean: clean
 re: fclean all
 
 .PHONY: all debug clean fclean re
+
+echo:
+	@echo $(ADDITIONAL)
