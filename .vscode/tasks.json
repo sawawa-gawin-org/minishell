@@ -40,7 +40,6 @@
 			"args": [
 				"test", "DEBUG_MODE=1",
 				"-C", "${workspaceFolder}/test/pipex",
-				"-j", "6"
 			],
 			"options": {
 				"cwd": "${fileDirname}"
@@ -58,6 +57,22 @@
 				"test", "DEBUG_MODE=1",
 				"-C", "${workspaceFolder}/test/dbllst",
 				"-j", "6"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+            "problemMatcher": [
+                "$gcc"
+            ],
+			"group": "build",
+		},
+		{
+			"type": "cppbuild",
+			"label": "exec-make",
+			"command": "make",
+			"args": [
+				"test", "DEBUG_MODE=1",
+				"-C", "${workspaceFolder}/test/exec",
 			],
 			"options": {
 				"cwd": "${fileDirname}"

@@ -4,12 +4,11 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := libdbllst.a
-HEADERS := dbllst.h
-INT_HEADERS := dbllst_int.h
+LIB_NAME := libexec.a
+HEADERS := exec.h
+INT_HEADERS := exec_int.h
 
-SRCS := doub_lstappend.c doub_lstdelall.c doub_lstdelone.c doub_lstdup.c \
-	doub_lstnew.c doub_lstprepend.c doub_lstpurge.c doub_lstsearch.c
+SRCS := exec.c find_cmd.c make_processes.c make_processes_util.c process_callback.c utils.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -23,12 +22,12 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := 
-DLFLAGS := 
+LFLAGS := -L$(LIB_EXPORT_DIR) -lft -L$(LIB_EXPORT_DIR) -ldbllst
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lft_debug -L$(LIB_EXPORT_DIR) -ldbllst_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := 
+DEPENDENCY := libft dbllst
 
 # *****************************************************************************
 # From here onward is the same

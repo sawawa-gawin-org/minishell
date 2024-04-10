@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/19 18:34:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/03/18 04:42:49 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/05 12:08:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
+#include "dbllst_int.h"
 
 t_blst	*doub_lstsearch(t_blst *lst, void *query_pt, t_cmp_f cmp_f)
 {
@@ -23,7 +23,7 @@ t_blst	*doub_lstsearch(t_blst *lst, void *query_pt, t_cmp_f cmp_f)
 	ret_node = lst;
 	while (ret_node->data != NULL)
 	{
-		if (cmp_f(ret_node->data, query_pt))
+		if (cmp_f != NULL && cmp_f(ret_node->data, query_pt))
 			return (ret_node);
 		ret_node = ret_node->next;
 		i ++;

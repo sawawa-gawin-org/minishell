@@ -6,9 +6,10 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 # Parameters
 LIB_NAME := libminishell.a
 HEADERS := minishell.h
+INT_HEADERS :=
 
 SRCS := minishell.c signal_util.c parser.c syntax_checker.c \
-		get_env_all.c tokenizer.c tokenizer_util.c delete_quote.c
+		get_env_all.c tokenizer.c tokenizer_util.c delete_quote.c exec_bridge.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -22,12 +23,12 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -lreadline -L$(LIB_EXPORT_DIR) -lft -L$(LIB_EXPORT_DIR) -ldbllst
-DLFLAGS := -lreadline -L$(LIB_EXPORT_DIR) -lft_debug -L$(LIB_EXPORT_DIR) -ldbllst_debug
+LFLAGS := -lreadline -L$(LIB_EXPORT_DIR) -lft -L$(LIB_EXPORT_DIR) -ldbllst -L$(LIB_EXPORT_DIR) -lexec
+DLFLAGS := -lreadline -L$(LIB_EXPORT_DIR) -lftdebug -L$(LIB_EXPORT_DIR) -ldbllst_debug -L$(LIB_EXPORT_DIR) -lexec_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst
+DEPENDENCY := libft dbllst exec
 
 # *****************************************************************************
 # From here onward is the same
@@ -40,6 +41,7 @@ LIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(LIB_NAME))
 DLIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(DLIB_NAME))
 
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
+INT_HEADERS := $(addprefix $(MAKEFILE_DIR),$(INT_HEADERS))
 
 OBJS := $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS := $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
