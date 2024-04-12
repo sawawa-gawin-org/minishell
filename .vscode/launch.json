@@ -87,5 +87,24 @@
 				"MIMode": "lldb",
 			},
 		},
+		{
+			"name": "exec",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/test/exec/exec_debug.out",
+			"args": [
+			],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"MIMode": "gdb",
+			"preLaunchTask": "exec-make",
+			"linux": {
+				"MIMode": "gdb",
+				"miDebuggerPath": "/usr/bin/gdb"
+			},
+			"osx": {
+				"MIMode": "lldb",
+			},
+		},
 	]
 }

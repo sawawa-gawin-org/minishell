@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doub_lstpurge.c                                    :+:      :+:    :+:   */
+/*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 04:25:43 by saraki           ###   ########.fr       */
+/*   Created: 2024/04/03 17:30:28 by saraki            #+#    #+#             */
+/*   Updated: 2024/04/10 12:16:50 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst_int.h"
+#ifndef EXEC_H
+# define EXEC_H
 
-t_blst	*doub_lstpurge(t_blst **target)
-{
-	t_blst	*next;
-	t_blst	*prev;
-	t_blst	*purged;
+# include "dbllst.h"
+# include "libft.h"
 
-	if (target == NULL || *target == NULL)
-		return (NULL);
-	next = (*target)->next;
-	prev = (*target)->prev;
-	next->prev = prev;
-	prev->next = next;
-	(*target)->next = NULL;
-	(*target)->prev = NULL;
-	purged = *target;
-	*target = next;
-	return (purged);
-}
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <stdio.h>
+
+# include <sys/wait.h> // Linux
+# include <sys/stat.h> // Linux
+
+int	exec(void *token_head_node);
+
+# endif

@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/24 19:07:05 by syamasaw          #+#    #+#              #
-#    Updated: 2024/03/30 21:20:00 by saraki           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 # Hyper Parameter
 MAKEFILE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
@@ -18,6 +6,7 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 # Parameters
 LIB_NAME := libdbllst.a
 HEADERS := dbllst.h
+INT_HEADERS := dbllst_int.h
 
 SRCS := doub_lstappend.c doub_lstdelall.c doub_lstdelone.c doub_lstdup.c \
 	doub_lstnew.c doub_lstprepend.c doub_lstpurge.c doub_lstsearch.c
@@ -52,6 +41,7 @@ LIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(LIB_NAME))
 DLIB_NAME := $(addprefix $(LIB_EXPORT_DIR),$(DLIB_NAME))
 
 HEADERS := $(addprefix $(HEADER_DIR), $(HEADERS))
+INT_HEADERS := $(addprefix $(MAKEFILE_DIR),$(INT_HEADERS))
 
 OBJS := $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS := $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
@@ -70,7 +60,7 @@ $(OBJ_DIR):
 	mkdir -p $(addprefix $(OBJ_DIR), $(SUB_OBJ_DIR))
 	mkdir -p $(LIB_EXPORT_DIR)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(INT_HEADERS)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(LIB_NAME): $(OBJS)
@@ -79,7 +69,7 @@ $(LIB_NAME): $(OBJS)
 define LIB_MACRO
 .PHONY: $(1)
 $(1):
-	make -C $(addprefix $(REPOSITORY_ROOT),/src/$(1))
+	make -C $(addprefix $(REPOSITORY_ROOT),/src/$(1)) 
 $(1)_clean:
 	make -C $(addprefix $(REPOSITORY_ROOT),/src/$(1)) fclean
 endef

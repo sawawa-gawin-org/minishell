@@ -43,12 +43,13 @@ int	minishell(char *envp[])
 			continue ;
 		}
 		tokens_lst = new_tokenizer(&line);
-		printf("%d\n", parser(&tokens_lst));
+		// printf("%d\n", parser(&tokens_lst));
+		exec_tokenslst_cmds(tokens_lst);
 		free(line);
-		doub_lstdelall(&tokens_lst, free_token_data);
+		doub_lstdelall((void **)&tokens_lst, free_token_data);
 	}
 	tcsetattr(STDIN_FILENO, TCSANOW, &init_data.save);
-	doub_lstdelall(&shvals_lst, free_shval_data);
+	doub_lstdelall((void **)&shvals_lst, free_shval_data);
 	return (0);
 }
 

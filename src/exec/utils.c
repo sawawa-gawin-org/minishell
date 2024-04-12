@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doub_lstpurge.c                                    :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/03 19:46:29 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 04:25:43 by saraki           ###   ########.fr       */
+/*   Created: 2024/02/24 15:45:21 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/04/05 04:19:13 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst_int.h"
+#include "exec_int.h"
 
-t_blst	*doub_lstpurge(t_blst **target)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_blst	*next;
-	t_blst	*prev;
-	t_blst	*purged;
+	size_t			i;
+	unsigned char	u_c1;
+	unsigned char	u_c2;
 
-	if (target == NULL || *target == NULL)
-		return (NULL);
-	next = (*target)->next;
-	prev = (*target)->prev;
-	next->prev = prev;
-	prev->next = next;
-	(*target)->next = NULL;
-	(*target)->prev = NULL;
-	purged = *target;
-	*target = next;
-	return (purged);
+	i = 0;
+	while (!(s1[i] == '\0' && s2[i] == '\0'))
+	{
+		u_c1 = (unsigned char) s1[i];
+		u_c2 = (unsigned char) s2[i];
+		if (u_c1 != u_c2)
+			return ((int)(u_c1 - u_c2));
+		i ++;
+	}
+	return (0);
 }

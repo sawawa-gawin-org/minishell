@@ -25,7 +25,7 @@
 # include <termios.h>
 
 //1個のみ、シグナル番号の情報のためにグローバル変数が許可される
-// volatile sig_atomic_t	g_signal;
+extern volatile sig_atomic_t g_signal;
 
 typedef enum e_tokens
 {
@@ -55,6 +55,13 @@ typedef enum e_tokens
 # define WORD_FLAG 513
 # define BLANK_FLAG 1024
 
+typedef struct s_node
+{
+	struct s_node	*prev;
+	void			*data;
+	struct s_node	*next;
+}				t_blst;
+
 typedef struct s_token_data
 {
 	t_tokens	token_type;
@@ -77,6 +84,8 @@ typedef struct s_init_data
 	struct sigaction	sa;
 }						t_init_data;
 
+typedef int		(*t_cmp_f)(void *, void *);
+
 // new tokenizer
 void	*new_tokenizer(char **line);
 void	free_token_data(void *data);
@@ -89,6 +98,8 @@ void	sig_handler(int signal);
 void	set_signal(int signum, void handler(int), struct sigaction *sa);
 
 int		get_heredoc_fd(char *delimiter);
+
+int	exec_tokenslst_cmds(t_blst *tokens_lst);
 
 // minishell.c
 int		minishell(char *envp[]);

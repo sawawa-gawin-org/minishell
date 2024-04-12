@@ -4,12 +4,11 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := libminishell.a
-HEADERS := minishell.h
-INT_HEADERS :=
+LIB_NAME := libexec.a
+HEADERS := exec.h
+INT_HEADERS := exec_int.h
 
-SRCS := minishell.c signal_util.c parser.c syntax_checker.c \
-		get_env_all.c tokenizer.c tokenizer_util.c delete_quote.c exec_bridge.c
+SRCS := exec.c find_cmd.c make_processes.c make_processes_util.c process_callback.c utils.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -23,12 +22,12 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -lreadline -L$(LIB_EXPORT_DIR) -lft -L$(LIB_EXPORT_DIR) -ldbllst -L$(LIB_EXPORT_DIR) -lexec
-DLFLAGS := -lreadline -L$(LIB_EXPORT_DIR) -lft_debug -L$(LIB_EXPORT_DIR) -ldbllst_debug -L$(LIB_EXPORT_DIR) -lexec_debug
+LFLAGS := -L$(LIB_EXPORT_DIR) -lft -L$(LIB_EXPORT_DIR) -ldbllst
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lft_debug -L$(LIB_EXPORT_DIR) -ldbllst_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst exec
+DEPENDENCY := libft dbllst
 
 # *****************************************************************************
 # From here onward is the same
@@ -60,7 +59,7 @@ $(OBJ_DIR):
 	mkdir -p $(addprefix $(OBJ_DIR), $(SUB_OBJ_DIR))
 	mkdir -p $(LIB_EXPORT_DIR)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(INT_HEADERS)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(LIB_NAME): $(OBJS)
