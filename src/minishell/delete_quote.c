@@ -31,7 +31,7 @@ void	delete_quote(t_blst **tokens_lst)
 		if (len == 2)
 		{
 			if (DOUBLE_QUOTE_FLAG <= data->token_type && data->token_type <= SINGLE_QUOTE_FLAG)
-				doub_lstpurge(&tmp);
+				doub_lstpurge((void **)&tmp);
 		}
 		else if (2 < len && data->token_str[0] == data->token_str[len - 1])
 		{
