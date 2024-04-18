@@ -46,29 +46,6 @@
 			},
 		},
 		{
-			"name": "pipex",
-			"type": "cppdbg",
-			"request": "launch",
-			"program": "${workspaceFolder}/test/pipex/pipex_debug.out",
-			"args": [
-				"ls -la|grep saraki| wc -l"
-			],
-			"stopAtEntry": false,
-			"cwd": "${workspaceFolder}",
-			"MIMode": "gdb",
-			"preLaunchTask": "pipex-make",
-			"linux": {
-				"MIMode": "gdb",
-				"miDebuggerPath": "/usr/bin/gdb"
-			},
-			"osx": {
-				"MIMode": "lldb",
-				"environment": [
-					{ "name": "DEBUGGER", "value": "vscode" }
-				],
-			},
-		},
-		{
 			"name": "dbllst",
 			"type": "cppdbg",
 			"request": "launch",
