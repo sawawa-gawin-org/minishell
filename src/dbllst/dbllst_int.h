@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DBLLST_H
-# define DBLLST_H
+#ifndef DBLLST_INT_H
+# define DBLLST_INT_H
 
 # include <stdlib.h>
 
