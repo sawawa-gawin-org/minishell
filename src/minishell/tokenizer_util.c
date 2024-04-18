@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_tokenizer_util.c                               :+:      :+:    :+:   */
+/*   tokenizer_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/29 10:49:03 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/18 16:08:01 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
 #include "libft.h"
+#include "minishell.h"
 
 static size_t	detect_token_len(char *line, int target_type);
 static void		detect_token_type(char *token_str, int *type);
@@ -20,8 +20,8 @@ static int		is_val(char *str);
 
 char	*allocate_next_token(char **line, int *next_token_type)
 {
-	char		*token_str;
-	size_t		token_len;
+	char	*token_str;
+	size_t	token_len;
 
 	if (**line == '\0')
 		return (NULL);
@@ -61,8 +61,8 @@ static size_t	detect_token_len(char *line, int target_type)
 	else if (target_type == WORD_FLAG)
 	{
 		len = 0;
-		while (line[0] != '\0' && ft_strchr("<>|\"\'", line[len]) == NULL
-			&& is_blank(line[len]) == 0)
+		while (line[0] != '\0' && ft_strchr("<>|\"\'", line[len]) == NULL \
+				&& is_blank(line[len]) == 0)
 			len++;
 	}
 	else if (target_type == BLANK_FLAG)
@@ -87,10 +87,10 @@ static void	detect_token_type(char *token_str, int *type)
 		if (len >= 2 && token_str[0] == '\"' && is_closed && is_val(token_str))
 			*type = DOUBLE_QUOTE_VAL_FLAG;
 		else if (len >= 2 && token_str[0] == '\"' && is_closed)
-			*type = DOUBLE_QUOTE_VAL_FLAG;
+			*type = DOUBLE_QUOTE_FLAG;
 		else if (len >= 2 && token_str[0] == '\'' && is_closed)
 			*type = SINGLE_QUOTE_FLAG;
-		else if (token_str[0] == '\'')
+		else
 			*type = OPEN_QUOTE_FLAG;
 	}
 	else if (*type == WORD_FLAG && is_val(token_str))
