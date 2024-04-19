@@ -115,4 +115,8 @@ int		cmp_syntax(void *d, void *n);
 // delete_quote.c
 void	delete_quote(t_blst **tokens_lst);
 
+int	heredoc_get(char *delimiter);
+char	*heredoc_open(char *delimiter);
+int	heredoc_put(t_blst **tokens_lst);
+
 #endif

@@ -6,10 +6,12 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/19 15:43:05 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/19 18:38:23 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "dbllst.h"
+#include "libft.h"
 #include "minishell.h"
 
 static void	get_heredoc_input(char *delimiter, int *pipefd);
