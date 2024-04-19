@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/19 18:29:45 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/19 22:27:47 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "minishell.h"
 
-static void	lstdel_middle_n(t_blst **lst, int n);
+static void	process_tokens(t_blst **tmp, t_token_data *data);
 static int	rewrite_token(t_blst **lst, char *str, int type);
 
 //tokens_lstを読み込み、ヒアドキュメント記号<<を見つける。
@@ -22,50 +22,34 @@ int	heredoc_put(t_blst **tokens_lst)
 {
 	t_blst			*tmp;
 	t_token_data	*data;
-	int				i;
-	char			*heredoc_str;
 
 	tmp = *tokens_lst;
 	while (tmp->data != NULL)
 	{
 		data = tmp->data;
 		if (data->token_type == HEREDOC_FLAG) //ヒアドキュメントの記号<<を見つけたら
-		{
-			//data->token_typeがSPACE_FLAG以外になるまでtokens_lstを読み込む
-			tmp = tmp->next;
-			data = tmp->data;
-			i = 1; //<<(0)空白(1)EOF(2)
-			while (data->token_type == SPACE_FLAG) //SPACE_FLAG以外になるまでtokens_lstを読み込む
-			{
-				tmp = tmp->next;
-				data = tmp->data;
-				i++; //デリミタの位置を記録
-			}
-			heredoc_str = heredoc_open(data->token_str);
-			if (!heredoc_str)
-				return (0);
-			tmp = tmp->next;
-			lstdel_middle_n(&tmp, i);
-			rewrite_token(&tmp, heredoc_str, DOUBLE_QUOTE_VAL_FLAG);
-			free(heredoc_str);
-		}
-		else
+			process_tokens(&tmp, data);
+		if (tmp != NULL)
 			tmp = tmp->next;
 	}
 	return (1);
 }
 
-static void	lstdel_middle_n(t_blst **lst, int n)
+static void	process_tokens(t_blst **tmp, t_token_data *data)
 {
-	t_blst	*tmp;
 	t_blst	*purged;
+	char	*heredoc_str;
 
-	tmp = *lst;
-	while (n > 0)
+	while (data->token_type == HEREDOC_FLAG || data->token_type == SPACE_FLAG)
 	{
-		purged = doub_lstpurge((void **)&tmp->prev);
+		purged = doub_lstpurge((void **)&(*tmp));
 		doub_lstdelone(purged, free_token_data);
-		n--;
+		data = (*tmp)->data;
+	}
+	if (*tmp != NULL && (*tmp)->data != NULL)
+	{
+		heredoc_str = heredoc_open(data->token_str);
+		rewrite_token(tmp, heredoc_str, DOUBLE_QUOTE_VAL_FLAG);
 	}
 }
 
@@ -73,7 +57,7 @@ static int	rewrite_token(t_blst **lst, char *str, int type)
 {
 	t_token_data	*data;
 
-	data = (*lst)->prev->data;
+	data = (*lst)->data;
 	if (data->token_str)
 		free(data->token_str);
 	data->token_str = ft_strdup(str);
@@ -82,3 +66,5 @@ static int	rewrite_token(t_blst **lst, char *str, int type)
 	data->token_type = type;
 	return (1);
 }
+
+//data->token_typeとheredoc_strから、"$VAL"か'VAL'か"VAL"かを判断して、FLAGを割り当てる
