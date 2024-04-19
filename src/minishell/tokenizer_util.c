@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/18 16:08:01 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/19 22:34:00 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 static size_t	detect_token_len(char *line, int target_type);
 static void		detect_token_type(char *token_str, int *type);
 static void		detect_meta_token_type(char *meta_token_str, int *type);
-static int		is_val(char *str);
 
 char	*allocate_next_token(char **line, int *next_token_type)
 {
@@ -119,7 +118,7 @@ static void	detect_meta_token_type(char *meta_token_str, int *type)
 }
 
 //$のあとがスペースやヌルだけでなく、予約語が来るのはよくない？
-static int	is_val(char *str)
+int	is_val(char *str)
 {
 	char	*p;
 

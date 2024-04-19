@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/19 22:27:47 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/19 22:35:18 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 
 static void	process_tokens(t_blst **tmp, t_token_data *data);
 static int	rewrite_token(t_blst **lst, char *str, int type);
+static int	is_flag(char *heredoc_str, int type);
 
 //tokens_lstを読み込み、ヒアドキュメント記号<<を見つける。
 int	heredoc_put(t_blst **tokens_lst)
@@ -27,7 +28,7 @@ int	heredoc_put(t_blst **tokens_lst)
 	while (tmp->data != NULL)
 	{
 		data = tmp->data;
-		if (data->token_type == HEREDOC_FLAG) //ヒアドキュメントの記号<<を見つけたら
+		if (data->token_type == HEREDOC_FLAG)
 			process_tokens(&tmp, data);
 		if (tmp != NULL)
 			tmp = tmp->next;
@@ -49,7 +50,7 @@ static void	process_tokens(t_blst **tmp, t_token_data *data)
 	if (*tmp != NULL && (*tmp)->data != NULL)
 	{
 		heredoc_str = heredoc_open(data->token_str);
-		rewrite_token(tmp, heredoc_str, DOUBLE_QUOTE_VAL_FLAG);
+		rewrite_token(tmp, heredoc_str, is_flag(heredoc_str, data->token_type));
 	}
 }
 
@@ -68,3 +69,15 @@ static int	rewrite_token(t_blst **lst, char *str, int type)
 }
 
 //data->token_typeとheredoc_strから、"$VAL"か'VAL'か"VAL"かを判断して、FLAGを割り当てる
+static int	is_flag(char *heredoc_str, int type)
+{
+	if (type == SINGLE_QUOTE_FLAG)
+		return (SINGLE_QUOTE_FLAG);
+	else
+	{
+		if (is_val(heredoc_str))
+			return (DOUBLE_QUOTE_VAL_FLAG);
+		else
+			return (DOUBLE_QUOTE_FLAG);
+	}
+}

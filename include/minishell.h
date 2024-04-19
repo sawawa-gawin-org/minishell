@@ -90,6 +90,7 @@ typedef int		(*t_cmp_f)(void *, void *);
 void	*new_tokenizer(char **line);
 void	free_token_data(void *data);
 char	*allocate_next_token(char **line, int *next_token_type);
+int		is_val(char *str);
 
 void	*get_env_all(char **envp);
 void	free_shval_data(void *data);
