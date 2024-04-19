@@ -43,8 +43,8 @@ int	minishell(char *envp[])
 			continue ;
 		}
 		tokens_lst = new_tokenizer(&line);
-		// printf("%d\n", parser(&tokens_lst));
-		exec_tokenslst_cmds(tokens_lst);
+		printf("%d\n", parser(&tokens_lst));
+		// exec_tokenslst_cmds(tokens_lst);
 		free(line);
 		doub_lstdelall((void **)&tokens_lst, free_token_data);
 	}

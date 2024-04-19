@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utils.c                                    :+:      :+:    :+:   */
+/*   heredoc_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/03/30 13:58:08 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:43:05 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static void	get_heredoc_input(char *delimiter, int *pipefd);
 static void	handle_heredoc(int sig);
 static int	hook_sigint(void);
 
-//fd = get_heredoc_fd(char *delimiter);
-int	get_heredoc_fd(char *delimiter)
+//fd = heredoc_get(char *delimiter);
+int	heredoc_get(char *delimiter)
 {
 	int		pipefd[2];
 	pid_t	pid;

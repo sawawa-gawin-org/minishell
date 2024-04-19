@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/10 13:00:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/18 17:29:26 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	parser(t_blst **tokens_lst)
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
 	delete_quote(tokens_lst);
+	put_heredoc(tokens_lst);
 	printf("debug: parse OK\n");
 	put_tokens_lst(*tokens_lst);
 	return (1);
