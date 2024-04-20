@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/20 17:47:15 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/20 20:35:24 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "minishell.h"
 
-static void	put_tokens_lst(t_blst *tokens_lst);
+// static void	put_tokens_lst(t_blst *tokens_lst);
 
 int	parser(t_blst **tokens_lst, t_init_data *init_data)
 {
@@ -23,23 +23,23 @@ int	parser(t_blst **tokens_lst, t_init_data *init_data)
 	delete_quote(tokens_lst);
 	if (!heredoc_put(tokens_lst, init_data))
 		return (0);
-	put_tokens_lst(*tokens_lst);
+	// put_tokens_lst(*tokens_lst);
 	return (1);
 }
 
-static void	put_tokens_lst(t_blst *tokens_lst)
-{
-	t_blst			*tmp;
-	t_token_data	*data;
+// static void	put_tokens_lst(t_blst *tokens_lst)
+// {
+// 	t_blst			*tmp;
+// 	t_token_data	*data;
 
-	tmp = tokens_lst;
-	while (tmp->data != NULL)
-	{
-		data = tmp->data;
-		printf("text:%s, type:%d\n", data->token_str, data->token_type);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = tokens_lst;
+// 	while (tmp->data != NULL)
+// 	{
+// 		data = tmp->data;
+// 		printf("text:%s, type:%d\n", data->token_str, data->token_type);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 //tokenリスト内を走査して、""空文字列要素を削除
 //"hoge""huge$VAL"->hogehuge$VAL (blank(' ', '\t')を挟まずに)連続する文字列を結合
@@ -51,3 +51,5 @@ static void	put_tokens_lst(t_blst *tokens_lst)
 //変数展開 ARG="ho hoge"; ec$ARG がありえる
 //"|"区切りでコマンド列ごとに分割
 //< infile | echo hoge のような、実行可能コマンドがない場合も考慮して実装する。
+
+//stringに挟まれた空白以外の空白を削除
