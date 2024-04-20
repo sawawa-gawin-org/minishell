@@ -107,17 +107,18 @@ int		minishell(char *envp[]);
 int		is_blank(int c);
 
 // parser.c
-int		parser(t_blst **tokens_lst);
-
+int		parser(t_blst **tokens_lst, t_init_data *init_data);
 // syntax_checker.c
 int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 int		cmp_syntax(void *d, void *n);
-
 // delete_quote.c
 void	delete_quote(t_blst **tokens_lst);
+// heredoc_put.c
+int		heredoc_put(t_blst **tokens_lst, t_init_data *init_data);
+// heredoc_open.c
+char	*heredoc_open(char *delimiter, t_init_data *init_data);
+// heredoc_get.c
+int		heredoc_get(char *delimiter, t_init_data *init_data);
 
-int	heredoc_get(char *delimiter);
-char	*heredoc_open(char *delimiter);
-int	heredoc_put(t_blst **tokens_lst);
 
 #endif

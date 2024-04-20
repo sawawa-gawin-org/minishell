@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/19 18:59:10 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:47:15 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,13 @@
 
 static void	put_tokens_lst(t_blst *tokens_lst);
 
-int	parser(t_blst **tokens_lst)
+int	parser(t_blst **tokens_lst, t_init_data *init_data)
 {
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
 	delete_quote(tokens_lst);
-	heredoc_put(tokens_lst);
+	if (!heredoc_put(tokens_lst, init_data))
+		return (0);
 	put_tokens_lst(*tokens_lst);
 	return (1);
 }

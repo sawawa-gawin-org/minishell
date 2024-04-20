@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:30:24 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/19 15:44:09 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:49:58 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static char	*strjoin_with_free(char *s1, char *s2);
 static char	*read_line(int fd, char *buf);
 static char	*get_all_line(int fd);
 
-char	*heredoc_open(char *delimiter)
+char	*heredoc_open(char *delimiter, t_init_data *init_data)
 {
 	int		fd;
 	char	*line;
 
-	fd = heredoc_get(delimiter);
+	fd = heredoc_get(delimiter, init_data);
 	if (fd == -1)
 		return (NULL);
 	line = get_all_line(fd);

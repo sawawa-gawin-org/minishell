@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/19 22:35:18 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/20 17:55:08 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "libft.h"
 #include "minishell.h"
 
-static void	process_tokens(t_blst **tmp, t_token_data *data);
-static int	rewrite_token(t_blst **lst, char *str, int type);
+static int	process_tokens(t_blst **tmp, t_token_data *data, t_init_data *init_data);
+static int	rewrite_tok(t_blst **lst, char *str, int type);
 static int	is_flag(char *heredoc_str, int type);
 
 //tokens_lstを読み込み、ヒアドキュメント記号<<を見つける。
-int	heredoc_put(t_blst **tokens_lst)
+int	heredoc_put(t_blst **tokens_lst, t_init_data *init_data)
 {
 	t_blst			*tmp;
 	t_token_data	*data;
@@ -29,17 +29,21 @@ int	heredoc_put(t_blst **tokens_lst)
 	{
 		data = tmp->data;
 		if (data->token_type == HEREDOC_FLAG)
-			process_tokens(&tmp, data);
+		{
+			if (!process_tokens(&tmp, data, init_data))
+				return (0);
+		}
 		if (tmp != NULL)
 			tmp = tmp->next;
 	}
 	return (1);
 }
 
-static void	process_tokens(t_blst **tmp, t_token_data *data)
+static int	process_tokens(t_blst **tmp, t_token_data *data, t_init_data *init_data)
 {
 	t_blst	*purged;
 	char	*heredoc_str;
+	int		flag;
 
 	while (data->token_type == HEREDOC_FLAG || data->token_type == SPACE_FLAG)
 	{
@@ -49,12 +53,16 @@ static void	process_tokens(t_blst **tmp, t_token_data *data)
 	}
 	if (*tmp != NULL && (*tmp)->data != NULL)
 	{
-		heredoc_str = heredoc_open(data->token_str);
-		rewrite_token(tmp, heredoc_str, is_flag(heredoc_str, data->token_type));
+		flag = 0;
+		heredoc_str = heredoc_open(data->token_str, init_data);
+		flag = is_flag(heredoc_str, data->token_type);
+		if (!rewrite_tok(tmp, heredoc_str, flag))
+			return (0);
 	}
+	return (1);
 }
 
-static int	rewrite_token(t_blst **lst, char *str, int type)
+static int	rewrite_tok(t_blst **lst, char *str, int type)
 {
 	t_token_data	*data;
 

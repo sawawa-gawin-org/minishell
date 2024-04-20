@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/19 18:38:23 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/20 19:58:56 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static void	handle_heredoc(int sig);
 static int	hook_sigint(void);
 
 //fd = heredoc_get(char *delimiter);
-int	heredoc_get(char *delimiter)
+int	heredoc_get(char *delimiter, t_init_data *init_data)
 {
 	int		pipefd[2];
 	pid_t	pid;
 
 	if (pipe(pipefd) < 0)
 		return (-1);
-	signal(SIGINT, SIG_IGN);
+	set_signal(SIGINT, SIG_IGN, &init_data->sa);
 	pid = fork();
 	if (pid < 0)
 	{
@@ -36,13 +36,13 @@ int	heredoc_get(char *delimiter)
 	}
 	else if (pid == 0)
 	{
-		signal(SIGINT, handle_heredoc);
+		set_signal(SIGINT, handle_heredoc, &init_data->sa);
 		rl_event_hook = hook_sigint;
 		get_heredoc_input(delimiter, pipefd);
 	}
 	close(pipefd[1]);
 	waitpid(pid, NULL, 0);
-	signal(SIGINT, sig_handler);
+	set_signal(SIGINT, sig_handler, &init_data->sa);
 	return (pipefd[0]);
 }
 
