@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/21 17:48:59 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/21 18:41:24 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	heredoc_get(char *delimiter)
 	}
 	close(pipefd[1]);
 	waitpid(pid, NULL, 0);
+	g_signal = 0;
 	return (pipefd[0]);
 }
 
@@ -50,7 +51,6 @@ static void	get_heredoc_input(char *delimiter, int *pipefd)
 		line = readline("> ");
 		if (line == NULL || g_signal != 0)
 		{
-			write(1, "> ", 2);
 			break ;
 		}
 		else if (strcmp(line, delimiter) == 0)
