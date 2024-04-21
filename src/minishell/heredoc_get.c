@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/21 18:41:24 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/21 18:59:50 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ int	heredoc_get(char *delimiter)
 		return (-1);
 	}
 	else if (pid == 0)
-	{
 		get_heredoc_input(delimiter, pipefd);
-	}
 	close(pipefd[1]);
 	waitpid(pid, NULL, 0);
-	g_signal = 0;
+	if (g_signal != 0)
+	{
+		close(pipefd[0]);
+		g_signal = 0;
+		return (-1);
+	}
 	return (pipefd[0]);
 }
 
