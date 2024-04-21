@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/20 20:35:24 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:07:56 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 
 // static void	put_tokens_lst(t_blst *tokens_lst);
 
-int	parser(t_blst **tokens_lst, t_init_data *init_data)
+int	parser(t_blst **tokens_lst)
 {
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
 	delete_quote(tokens_lst);
-	if (!heredoc_put(tokens_lst, init_data))
+	if (!heredoc_put(tokens_lst))
 		return (0);
 	// put_tokens_lst(*tokens_lst);
 	return (1);
@@ -40,16 +40,3 @@ int	parser(t_blst **tokens_lst, t_init_data *init_data)
 // 		tmp = tmp->next;
 // 	}
 // }
-
-//tokenリスト内を走査して、""空文字列要素を削除
-//"hoge""huge$VAL"->hogehuge$VAL (blank(' ', '\t')を挟まずに)連続する文字列を結合
-//クオートの削除
-//<, >, <<, >> の後に来るtokenをdelimiter(デリミタ)やfileとする(token_typeの変更?)
-//各リダイレクトを順に読み込み、最終的な入力や出力先を保持する。(ここでリダイレクトの処理をするか、exec部分で処理するかは未定)
-//(リダイレクトリストを作成？)
-//ヒアドキュメントの展開
-//変数展開 ARG="ho hoge"; ec$ARG がありえる
-//"|"区切りでコマンド列ごとに分割
-//< infile | echo hoge のような、実行可能コマンドがない場合も考慮して実装する。
-
-//stringに挟まれた空白以外の空白を削除

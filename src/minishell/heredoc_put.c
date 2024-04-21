@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/20 17:55:08 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/21 17:49:25 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "libft.h"
 #include "minishell.h"
 
-static int	process_tokens(t_blst **tmp, t_token_data *data, t_init_data *init_data);
+static int	process_tokens(t_blst **tmp, t_token_data *data);
 static int	rewrite_tok(t_blst **lst, char *str, int type);
 static int	is_flag(char *heredoc_str, int type);
 
 //tokens_lstを読み込み、ヒアドキュメント記号<<を見つける。
-int	heredoc_put(t_blst **tokens_lst, t_init_data *init_data)
+int	heredoc_put(t_blst **tokens_lst)
 {
 	t_blst			*tmp;
 	t_token_data	*data;
@@ -30,7 +30,7 @@ int	heredoc_put(t_blst **tokens_lst, t_init_data *init_data)
 		data = tmp->data;
 		if (data->token_type == HEREDOC_FLAG)
 		{
-			if (!process_tokens(&tmp, data, init_data))
+			if (!process_tokens(&tmp, data))
 				return (0);
 		}
 		if (tmp != NULL)
@@ -39,7 +39,7 @@ int	heredoc_put(t_blst **tokens_lst, t_init_data *init_data)
 	return (1);
 }
 
-static int	process_tokens(t_blst **tmp, t_token_data *data, t_init_data *init_data)
+static int	process_tokens(t_blst **tmp, t_token_data *data)
 {
 	t_blst	*purged;
 	char	*heredoc_str;
@@ -54,7 +54,7 @@ static int	process_tokens(t_blst **tmp, t_token_data *data, t_init_data *init_da
 	if (*tmp != NULL && (*tmp)->data != NULL)
 	{
 		flag = 0;
-		heredoc_str = heredoc_open(data->token_str, init_data);
+		heredoc_str = heredoc_open(data->token_str);
 		flag = is_flag(heredoc_str, data->token_type);
 		if (!rewrite_tok(tmp, heredoc_str, flag))
 			return (0);

@@ -15,27 +15,29 @@
 #include "dbllst.h"
 
 static int	is_blank_str(char *str);
-static int	init_minishell(t_init_data *init_data);
+
+volatile sig_atomic_t	g_signal = 0;
 
 int	minishell(char *envp[])
 {
 	char			*line;
 	t_blst			*tokens_lst;
 	t_blst			*shvals_lst;
-	t_init_data		init_data;
 
 	shvals_lst = get_env_all(envp);
 	if (shvals_lst == NULL)
 		return (1);
-	init_minishell(&init_data);
+	init_signal();
 	line = NULL;
 	while (1)
 	{
 		tokens_lst = NULL;
 		line = readline("minishell$ ");
+		if (g_signal != 0)
+			g_signal = 0;
 		if (line == NULL)
 			break ;
-		if (line[0] != '\0')
+		if (*line)
 			add_history(line);
 		if (is_blank_str(line))
 		{
@@ -43,25 +45,12 @@ int	minishell(char *envp[])
 			continue ;
 		}
 		tokens_lst = new_tokenizer(&line);
-		// printf("%d\n", parser(&tokens_lst, &init_data));
-		parser(&tokens_lst, &init_data);
-		exec_tokenslst_cmds(tokens_lst);
+		printf("%d\n", parser(&tokens_lst));
+		// exec_tokenslst_cmds(tokens_lst);
 		free(line);
 		doub_lstdelall((void **)&tokens_lst, free_token_data);
 	}
-	tcsetattr(STDIN_FILENO, TCSANOW, &init_data.save);
 	doub_lstdelall((void **)&shvals_lst, free_shval_data);
-	return (0);
-}
-
-static int	init_minishell(t_init_data *init_data)
-{
-	tcgetattr(STDIN_FILENO, &init_data->save); //初期状態の取得
-	init_data->term = init_data->save; //複製
-	init_data->term.c_cflag &= ~ECHOCTL; //制御文字を消す
-	tcsetattr(STDIN_FILENO, TCSANOW, &init_data->term); //変更を即時反映
-	set_signal(SIGINT, sig_handler, &init_data->sa);
-	set_signal(SIGQUIT, SIG_IGN, &init_data->sa);
 	return (0);
 }
 
