@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   delete_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          #+#  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-04-07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024-04-07 07:33:25 by syamasaw         ###   ########.fr       */
+/*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/04/20 17:25:43 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "minishell.h"
 
+static void	process_token_length(t_blst **tmp, t_token_data *data);
 static void	replace_noquote(char *str, int len);
 
 void	delete_quote(t_blst **tokens_lst)
@@ -27,17 +28,30 @@ void	delete_quote(t_blst **tokens_lst)
 	{
 		len = 0;
 		data = tmp->data;
-		len = ft_strlen(data->token_str);
-		if (len == 2)
+		process_token_length(&tmp, data);
+		if (tmp != NULL)
+			tmp = tmp->next;
+	}
+}
+
+static void	process_token_length(t_blst **tmp, t_token_data *data)
+{
+	int		len;
+	t_blst	*purged;
+
+	len = ft_strlen(data->token_str);
+	if (len == 2)
+	{
+		if (DOUBLE_QUOTE_FLAG <= data->token_type
+			&& data->token_type <= SINGLE_QUOTE_FLAG)
 		{
-			if (DOUBLE_QUOTE_FLAG <= data->token_type && data->token_type <= SINGLE_QUOTE_FLAG)
-				doub_lstpurge((void **)&tmp);
+			purged = doub_lstpurge((void **)&(*tmp));
+			doub_lstdelone(purged, free_token_data);
 		}
-		else if (2 < len && data->token_str[0] == data->token_str[len - 1])
-		{
-			replace_noquote(data->token_str, len);
-		}
-		tmp = tmp->next;
+	}
+	else if (2 < len && data->token_str[0] == data->token_str[len - 1])
+	{
+		replace_noquote(data->token_str, len);
 	}
 }
 
