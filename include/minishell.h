@@ -40,7 +40,9 @@ typedef enum e_tokens
 	SINGLE_QUOTE_FLAG = 1 << 8,
 	VAL_FLAG = 1 << 9,
 	SPACE_FLAG = 1 << 10,
-	OPEN_QUOTE_FLAG = 1 << 11
+	OPEN_QUOTE_FLAG = 1 << 11,
+	HEREDOC_QUOTE_FLAG = 1 << 12,
+	COMMAND_FLAG = 1 << 13
 }	t_tokens;
 
 // # define META_FLAG (LESS_FLAG | GREAT_FLAG | TUBE_FLAG | 
@@ -117,5 +119,7 @@ int		heredoc_get(char *delimiter);
 void	init_signal(void);
 void	set_signal(int signum);
 void	ign_signal(int signum);
+
+int		delete_blank(t_blst **tokens_lst);
 
 #endif
