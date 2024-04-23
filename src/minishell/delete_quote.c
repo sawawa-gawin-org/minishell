@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/22 21:57:55 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:29:03 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@ static void	replace_noquote(char *str, int len);
 
 void	delete_quote(t_blst **tokens_lst)
 {
-	t_blst			*tmp;
 	t_token_data	*data;
 
-	tmp = *tokens_lst;
-	while (tmp->data != NULL)
+	data = (*tokens_lst)->data;
+	while ((*tokens_lst)->data != NULL)
 	{
-		data = tmp->data;
-		process_token_length(&tmp, data);
-		if (tmp != NULL)
-			tmp = tmp->next;
+		data = (*tokens_lst)->data;
+		process_token_length(tokens_lst, data);
+		*tokens_lst = (*tokens_lst)->next;
 	}
+	while ((*tokens_lst)->prev->data != NULL)
+		*tokens_lst = (*tokens_lst)->prev;
 }
 
 static void	process_token_length(t_blst **tmp, t_token_data *data)
