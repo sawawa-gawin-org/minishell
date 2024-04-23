@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_tokenlst.c                                  :+:      :+:    :+:   */
+/*   delete_blank.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/22 12:59:46 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/23 22:05:19 by syamasaw         ###   ########.fr       */
+/*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/04/23 21:59:55 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include "libft.h"
 #include "minishell.h"
 
-int	format_tokenlst(t_blst **tokens_lst)
+void	delete_blank(t_blst **tokens_lst)
 {
-	merge_redirects(tokens_lst);
-	delete_quote(tokens_lst);
-	delete_blank(tokens_lst); // 2個連続したSPACE_FLAGを消す関数
-	return (1);
 }

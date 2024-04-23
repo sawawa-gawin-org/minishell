@@ -113,6 +113,8 @@ int		format_tokenlst(t_blst **tokens_lst);
 void	delete_quote(t_blst **tokens_lst);
 // merge_redirects.c
 void	merge_redirects(t_blst **tokens_lst);
+// delete_blank.c
+void	delete_blank(t_blst **tokens_lst);
 
 
 // heredoc_put.c
