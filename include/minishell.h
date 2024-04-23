@@ -106,8 +106,14 @@ int		parser(t_blst **tokens_lst);
 // syntax_checker.c
 int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 int		cmp_syntax(void *d, void *n);
+// format_tokenlst.c
+int		format_tokenlst(t_blst **tokens_lst);
 // delete_quote.c
 void	delete_quote(t_blst **tokens_lst);
+// merge_redirects.c
+int		merge_redirects(t_blst **tokens_lst);
+
+
 // heredoc_put.c
 int		heredoc_put(t_blst **tokens_lst);
 // heredoc_open.c
@@ -119,7 +125,5 @@ int		heredoc_get(char *delimiter);
 void	init_signal(void);
 void	set_signal(int signum);
 void	ign_signal(int signum);
-
-int		delete_blank(t_blst **tokens_lst);
 
 #endif

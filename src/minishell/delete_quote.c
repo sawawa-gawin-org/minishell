@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/23 14:29:03 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/23 14:50:03 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static void	process_token_length(t_blst **tmp, t_token_data *data)
 		}
 	}
 	else if (2 < len && data->token_str[0] == data->token_str[len - 1])
-	{
-		replace_noquote(data->token_str, len);
-	}
+		if (DOUBLE_QUOTE_FLAG <= data->token_type
+			&& data->token_type <= SINGLE_QUOTE_FLAG)
+			replace_noquote(data->token_str, len);
 }
 
 static void	replace_noquote(char *str, int len)
