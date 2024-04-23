@@ -67,6 +67,7 @@ typedef struct s_node
 typedef struct s_token_data
 {
 	t_tokens	token_type;
+	t_tokens	sub_type;
 	char		*token_str;
 }				t_token_data;
 

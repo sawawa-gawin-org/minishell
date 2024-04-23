@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   merge_redirect.c                                   :+:      :+:    :+:   */
+/*   merge_redirects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/23 15:01:11 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/23 16:30:14 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,16 @@ static int	scrape(t_blst **lst, int type)
 		doub_lstdelone((void *)purged, free_token_data);
 		data = (*lst)->data;
 	}
+	// while ((*lst)->data != NULL)
+	// {
+		
+	// }
+	
 	if (*lst != NULL && (*lst)->data != NULL)
 	{
+		//現在のstrと、それに続く文字列すべてが対象になる
+		//<< EOF""EOFの場合、変数展開が起こらない
+		
 		if (DOUBLE_QUOTE_FLAG <= data->token_type \
 			&& data->token_type <= SINGLE_QUOTE_FLAG)
 			if (type == HEREDOC_FLAG)
@@ -63,6 +71,23 @@ static int	scrape(t_blst **lst, int type)
 	}
 	return (1);
 }
+
+// static int	is_type(t_blst *lst)
+// {
+// 	t_blst			*tmp;
+// 	t_token_data	*data;
+// 	int				type;
+
+// 	tmp = lst;
+// 	type = 0;
+// 	data = tmp->data;
+// 	while (tmp->data != NULL)
+// 	{
+// 		data = tmp->data;
+// 		printf("text:%s, type:%d\n", data->token_str, data->token_type);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 static int	rewrite_tok(t_blst **lst, int type)
 {

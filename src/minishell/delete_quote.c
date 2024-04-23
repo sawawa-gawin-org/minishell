@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/23 14:50:03 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:45:51 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "minishell.h"
 
-static void	process_token_length(t_blst **tmp, t_token_data *data);
+static void	process_token_length(t_blst **lst, t_token_data *data);
 static void	replace_noquote(char *str, int len);
 
 void	delete_quote(t_blst **tokens_lst)
@@ -32,7 +32,7 @@ void	delete_quote(t_blst **tokens_lst)
 		*tokens_lst = (*tokens_lst)->prev;
 }
 
-static void	process_token_length(t_blst **tmp, t_token_data *data)
+static void	process_token_length(t_blst **lst, t_token_data *data)
 {
 	int		len;
 	void	*purged;
@@ -43,7 +43,7 @@ static void	process_token_length(t_blst **tmp, t_token_data *data)
 		if (DOUBLE_QUOTE_FLAG <= data->token_type
 			&& data->token_type <= SINGLE_QUOTE_FLAG)
 		{
-			purged = doub_lstpurge((void **)tmp);
+			purged = doub_lstpurge((void **)lst);
 			doub_lstdelone(purged, free_token_data);
 		}
 	}
