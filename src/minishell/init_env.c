@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_env_all.c                                      :+:      :+:    :+:   */
+/*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/14 19:37:15 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/06 06:10:23 by saraki           ###   ########.fr       */
+/*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/04/24 17:52:58 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,52 +15,53 @@
 #include "dbllst.h"
 
 static int			strlen_eq(char *str);
-static t_blst		*new_shval_node(char *str, int flag);
-static t_shval_data	*new_shval_data(char *str, int flag);
+static t_blst		*new_env_node(char *str, int flag);
+static t_env_data	*new_env_data(char *str, int flag);
 
-void	*get_env_all(char **envp)
+void	*init_env(void)
 {
-	t_blst			*ret;
-	t_blst			*new_node;
+	t_blst		*ret;
+	t_blst		*new_node;
+	extern char	**environ;
 
 	ret = doub_lstnew(NULL);
-	while (ret != NULL && *envp != NULL)
+	while (ret != NULL && *environ != NULL)
 	{
-		new_node = new_shval_node(*envp, 1);
+		new_node = new_env_node(*environ, 1);
 		if (new_node == NULL)
 		{
-			doub_lstdelall((void **)&ret, free_shval_data);
+			doub_lstdelall((void **)&ret, free_env_data);
 			return (NULL);
 		}
 		doub_lstappend((void **)&ret, new_node);
-		envp ++;
+		environ ++;
 	}
 	return ((void *)ret);
 }
 
-static t_blst	*new_shval_node(char *str, int flag)
+static t_blst	*new_env_node(char *str, int flag)
 {
-	t_blst			*node;
-	t_shval_data	*data;
+	t_blst		*node;
+	t_env_data	*data;
 
-	data = new_shval_data(str, flag);
+	data = new_env_data(str, flag);
 	if (data == NULL)
 		return (NULL);
 	node = doub_lstnew((void *)data);
 	if (node == NULL)
 	{
-		free_shval_data(data);
+		free_env_data(data);
 		return (NULL);
 	}
 	return (node);
 }
 
-static t_shval_data	*new_shval_data(char *str, int flag)
+static t_env_data	*new_env_data(char *str, int flag)
 {
-	t_shval_data	*ret;
-	int				len;
+	t_env_data	*ret;
+	int			len;
 
-	ret = (t_shval_data *)malloc(sizeof(t_shval_data));
+	ret = (t_env_data *)malloc(sizeof(t_env_data));
 	if (ret == NULL)
 		return (NULL);
 	len = strlen_eq(str);
@@ -91,16 +92,16 @@ static int	strlen_eq(char *str)
 	return (i);
 }
 
-void	free_shval_data(void *data)
+void	free_env_data(void *data)
 {
-	t_shval_data	*shval;
+	t_env_data	*env;
 
-	shval = (t_shval_data *)data;
-	if (shval == NULL)
+	env = (t_env_data *)data;
+	if (env == NULL)
 		return ;
-	if (shval->key != NULL)
-		free(shval->key);
-	if (shval->val != NULL)
-		free(shval->val);
-	free(shval);
+	if (env->key != NULL)
+		free(env->key);
+	if (env->val != NULL)
+		free(env->val);
+	free(env);
 }

@@ -22,10 +22,10 @@ int	minishell(char *envp[])
 {
 	char			*line;
 	t_blst			*tokens_lst;
-	t_blst			*shvals_lst;
+	t_blst			*env_lst;
 
-	shvals_lst = get_env_all(envp);
-	if (shvals_lst == NULL)
+	env_lst = init_env();
+	if (env_lst == NULL)
 		return (1);
 	init_signal();
 	line = NULL;
@@ -48,14 +48,14 @@ int	minishell(char *envp[])
 		if (parser(&tokens_lst))
 		{
 			// expand
-			expander(&tokens_lst);
+			expander(&tokens_lst, &env_lst);
 			// exec_tokenslst_cmds(tokens_lst);
 		}
 		// exec_tokenslst_cmds(tokens_lst);
 		free(line);
 		doub_lstdelall((void **)&tokens_lst, free_token_data);
 	}
-	doub_lstdelall((void **)&shvals_lst, free_shval_data);
+	doub_lstdelall((void **)&env_lst, free_shval_data);
 	return (0);
 }
 

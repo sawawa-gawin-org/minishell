@@ -78,6 +78,13 @@ typedef struct s_shval_data
 	int		exported;
 }			t_shval_data;
 
+typedef struct s_env_data
+{
+	char	*key;
+	char	*val;
+	int		exported;
+}			t_env_data;
+
 typedef struct s_sig
 {
 	int	interrupt;
@@ -91,14 +98,15 @@ void	free_token_data(void *data);
 char	*allocate_next_token(char **line, int *next_token_type);
 int		is_val(char *str);
 
-void	*get_env_all(char **envp);
-void	free_shval_data(void *data);
-
 int		exec_tokenslst_cmds(t_blst *tokens_lst);
 
 // minishell.c
 int		minishell(char *envp[]);
 int		is_blank(int c);
+
+// init_env.c
+void	*init_env(void);
+void	free_env_data(void *data);
 
 // parser.c
 int		parser(t_blst **tokens_lst);
