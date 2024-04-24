@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/06 06:04:23 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/23 18:45:37 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static t_token_data	*new_token_data(char **line)
 	}
 	data->token_str = next_token_str;
 	data->token_type = next_token_type;
+	data->sub_type = TOKEN_FLAG;
 	return (data);
 }
 

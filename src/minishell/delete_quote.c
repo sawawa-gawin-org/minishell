@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/20 17:25:43 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/23 21:04:14 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,46 @@
 #include "libft.h"
 #include "minishell.h"
 
-static void	process_token_length(t_blst **tmp, t_token_data *data);
+static void	process_token_length(t_blst **lst);
 static void	replace_noquote(char *str, int len);
 
 void	delete_quote(t_blst **tokens_lst)
 {
-	t_blst			*tmp;
 	t_token_data	*data;
-	int				len;
 
-	tmp = *tokens_lst;
-	while (tmp->data != NULL)
+	data = (*tokens_lst)->data;
+	while ((*tokens_lst)->data != NULL)
 	{
-		len = 0;
-		data = tmp->data;
-		process_token_length(&tmp, data);
-		if (tmp != NULL)
-			tmp = tmp->next;
-	}
-}
-
-static void	process_token_length(t_blst **tmp, t_token_data *data)
-{
-	int		len;
-	t_blst	*purged;
-
-	len = ft_strlen(data->token_str);
-	if (len == 2)
-	{
+		data = (*tokens_lst)->data;
 		if (DOUBLE_QUOTE_FLAG <= data->token_type
 			&& data->token_type <= SINGLE_QUOTE_FLAG)
 		{
-			purged = doub_lstpurge((void **)&(*tmp));
-			doub_lstdelone(purged, free_token_data);
+			process_token_length(tokens_lst);
+			continue ;
 		}
+		*tokens_lst = (*tokens_lst)->next;
+	}
+	while ((*tokens_lst)->prev->data != NULL)
+		*tokens_lst = (*tokens_lst)->prev;
+}
+
+static void	process_token_length(t_blst **lst)
+{
+	int				len;
+	void			*purged;
+	t_token_data	*data;
+
+	data = (*lst)->data;
+	len = ft_strlen(data->token_str);
+	if (len == 2)
+	{
+		purged = doub_lstpurge((void **)lst);
+		doub_lstdelone(purged, free_token_data);
 	}
 	else if (2 < len && data->token_str[0] == data->token_str[len - 1])
 	{
 		replace_noquote(data->token_str, len);
+		*lst = (*lst)->next;
 	}
 }
 

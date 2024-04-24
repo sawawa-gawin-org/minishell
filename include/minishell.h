@@ -40,7 +40,9 @@ typedef enum e_tokens
 	SINGLE_QUOTE_FLAG = 1 << 8,
 	VAL_FLAG = 1 << 9,
 	SPACE_FLAG = 1 << 10,
-	OPEN_QUOTE_FLAG = 1 << 11
+	OPEN_QUOTE_FLAG = 1 << 11,
+	HEREDOC_QUOTE_FLAG = 1 << 12,
+	COMMAND_FLAG = 1 << 13
 }	t_tokens;
 
 // # define META_FLAG (LESS_FLAG | GREAT_FLAG | TUBE_FLAG | 
@@ -65,6 +67,7 @@ typedef struct s_node
 typedef struct s_token_data
 {
 	t_tokens	token_type;
+	t_tokens	sub_type;
 	char		*token_str;
 }				t_token_data;
 
@@ -106,12 +109,18 @@ int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 int		cmp_syntax(void *d, void *n);
 // delete_quote.c
 void	delete_quote(t_blst **tokens_lst);
-// heredoc_put.c
-int		heredoc_put(t_blst **tokens_lst);
-// heredoc_open.c
-char	*heredoc_open(char *delimiter);
-// heredoc_get.c
-int		heredoc_get(char *delimiter);
+// merge_redirects.c
+void	merge_redirects(t_blst **tokens_lst);
+// delete_blank.c
+void	delete_blank(t_blst **tokens_lst);
+
+// 一部使用、一部廃止予定
+// // heredoc_put.c
+// int		heredoc_put(t_blst **tokens_lst);
+// // heredoc_open.c
+// char	*heredoc_open(char *delimiter);
+// // heredoc_get.c
+// int		heredoc_get(char *delimiter);
 
 //signal_util.c
 void	init_signal(void);

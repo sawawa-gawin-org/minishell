@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/10 12:37:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/04/22 21:34:56 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 #include <stdio.h>
 #include <string.h>
 
-// void	end(void)__attribute__((destructor));
+void	end(void)__attribute__((destructor));
 
-// void	end(void)
-// {
-// 	system("leaks dbllst.out");
-// }
+void	end(void)
+{
+	system("leaks dbllst.out");
+}
 typedef struct s_node
 {
 	struct s_node	*prev;
@@ -33,15 +33,30 @@ typedef struct s_node
 static t_blst *make_list(char *src);
 
 
+void purge_and_delete(void **head) {
+    void *purge = doub_lstpurge(head);
+    doub_lstdelone(purge, NULL);
+}
+
 int	main(void)
 {
 	t_blst		*head;
 	t_blst		*node;
+	// t_blst		*tmp;
 
 	// Make list
 	head = make_list("abcdefghij");
 	if (head == NULL)
 		return (1);
+	node = head;
+	while (node->data != NULL)
+	{
+		printf("data:%s\n", (char *)node->data);
+		node = node->next;
+	}
+	// tmp = doub_lstpurge((void **)&head);
+	// doub_lstdelone((void *)tmp, NULL);
+	purge_and_delete((void **)&head);
 	node = head;
 	while (node->data != NULL)
 	{
