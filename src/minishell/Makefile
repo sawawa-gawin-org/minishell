@@ -10,8 +10,7 @@ INT_HEADERS :=
 
 SRCS := minishell.c signal_util.c parser.c syntax_checker.c \
 		get_env_all.c tokenizer.c tokenizer_util.c delete_quote.c exec_bridge.c \
-		heredoc_get.c heredoc_open.c heredoc_put.c format_tokenlst.c \
-		merge_redirects.c delete_blank.c
+		delete_blank.c merge_redirects.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
