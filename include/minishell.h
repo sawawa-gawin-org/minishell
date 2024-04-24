@@ -94,9 +94,7 @@ int		is_val(char *str);
 void	*get_env_all(char **envp);
 void	free_shval_data(void *data);
 
-int		get_heredoc_fd(char *delimiter);
-
-int	exec_tokenslst_cmds(t_blst *tokens_lst);
+int		exec_tokenslst_cmds(t_blst *tokens_lst);
 
 // minishell.c
 int		minishell(char *envp[]);
@@ -113,6 +111,9 @@ void	delete_quote(t_blst **tokens_lst);
 void	merge_redirects(t_blst **tokens_lst);
 // delete_blank.c
 void	delete_blank(t_blst **tokens_lst);
+
+// expander.c
+int		expander(t_blst **tokens_lst);
 
 // 一部使用、一部廃止予定
 // // heredoc_put.c
