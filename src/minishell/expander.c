@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/24 21:08:36 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/25 18:00:36 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,26 +31,7 @@ static void	put_tokens_lst(t_blst *tokens_lst)
 	}
 }
 
-void	expand_vals(t_blst **tokens_lst, t_blst *env_lst)
-{
-	t_token_data	*data;
-
-	data = (*tokens_lst)->data;
-	while ((*tokens_lst)->data != NULL)
-	{
-		data = (*tokens_lst)->data;
-		if ((data->token_type == VAL_FLAG \
-			|| data->token_type == DOUBLE_QUOTE_VAL_FLAG) \
-			&& (data->sub_type != HEREDOC_FLAG \
-			|| data->sub_type != HEREDOC_QUOTE_FLAG))
-			expand_val(tokens_lst, env_lst);
-		*tokens_lst = (*tokens_lst)->next;
-	}
-	while ((*tokens_lst)->prev->data != NULL)
-		*tokens_lst = (*tokens_lst)->prev;
-}
-
-static void	expand_val(t_blst **tokens_lst, t_blst *env_lst)
+static void	expand_val(t_blst **tokens_lst, t_blst *env_lst) //ボツ
 {
 	t_blst			*tmp;
 	t_env_data		*envdata;
@@ -62,7 +43,7 @@ static void	expand_val(t_blst **tokens_lst, t_blst *env_lst)
 	while (tmp->data != NULL)
 	{
 		envdata = tmp->data;
-		if (ft_strcmp(tokendata->token_str, envdata->key) == 0)
+		if (ft_strcmp(tokendata->token_str + 1, envdata->key) == 0)
 		{
 			overwrite();
 			return ;
@@ -79,3 +60,11 @@ int	expander(t_blst **tokens_lst, t_blst **env_lst)
 	put_tokens_lst(*tokens_lst);
 	return (1);
 }
+
+//1. tokenlstから変数を含むtokenを見つける
+//2. tokenstrから$を見つける
+//3. $以降、$か空白か終端までの文字列を変数リストから探す
+//4. あったらそれに置き換え、なければ$文字列を削除
+//5. 2に戻り、token_strが終端まで探し終わったらbreak
+
+//printfと同じじゃね...?
