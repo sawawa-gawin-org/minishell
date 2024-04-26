@@ -121,7 +121,9 @@ void	merge_redirects(t_blst **tokens_lst);
 void	delete_blank(t_blst **tokens_lst);
 
 // expander.c
-int		expander(t_blst **tokens_lst);
+int		expander(t_blst **tokens_lst, t_blst **env_lst);
+
+void	expamd_val(t_blst **tokens_lst, t_blst *env_lst);
 
 // 一部使用、一部廃止予定
 // // heredoc_put.c

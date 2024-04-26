@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/25 18:00:36 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/26 21:22:23 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,28 @@ static void	put_tokens_lst(t_blst *tokens_lst)
 	}
 }
 
-static void	expand_val(t_blst **tokens_lst, t_blst *env_lst) //ボツ
+static void	put_env_lst(t_blst *env)
 {
-	t_blst			*tmp;
-	t_env_data		*envdata;
-	t_token_data	*tokendata;
+	t_blst		*tmp;
+	t_env_data	*data;
+	int				i;
 
-	tmp = env_lst;
-	envdata = tmp->data;
-	tokendata = (*tokens_lst)->data;
+	tmp = env;
+	i = 1;
 	while (tmp->data != NULL)
 	{
-		envdata = tmp->data;
-		if (ft_strcmp(tokendata->token_str + 1, envdata->key) == 0)
-		{
-			overwrite();
-			return ;
-		}
+		data = tmp->data;
+		printf("key:%s, val:%s, exported:%d\n", data->key, data->val, data->exported);
 		tmp = tmp->next;
+		i++;
 	}
-	// envになければ削除
 }
 
 int	expander(t_blst **tokens_lst, t_blst **env_lst)
 {
 	// 変数の展開
-	
+	expamd_val(tokens_lst, *env_lst);
+	// put_env_lst(*env_lst);
 	put_tokens_lst(*tokens_lst);
 	return (1);
 }

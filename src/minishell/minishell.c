@@ -55,7 +55,7 @@ int	minishell(char *envp[])
 		free(line);
 		doub_lstdelall((void **)&tokens_lst, free_token_data);
 	}
-	doub_lstdelall((void **)&env_lst, free_shval_data);
+	doub_lstdelall((void **)&env_lst, free_env_data);
 	return (0);
 }
 
