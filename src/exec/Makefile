@@ -28,6 +28,7 @@ DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
 DEPENDENCY := libft dbllst
+DEPENDENCY_LIB := libft.a libdbllst.a
 
 # *****************************************************************************
 # From here onward is the same
@@ -45,12 +46,16 @@ INT_HEADERS := $(addprefix $(MAKEFILE_DIR),$(INT_HEADERS))
 OBJS := $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 DOBJS := $(patsubst $(SRC_DIR)%.c,$(DOBJ_DIR)%.o,$(SRCS))
 
+DEPENDENCY_LIB := $(addprefix $(LIB_EXPORT_DIR),$(DEPENDENCY_LIB))
+DDEPENDENCY_LIB := $(DEPENDENCY_LIB:.a=_debug.a)
+
 # Rules
 ifdef DEBUG_MODE
 OBJS := $(DOBJS)
 CFLAGS := $(DFLAGS)
 LIB_NAME := $(DLIB_NAME)
 OBJ_DIR := $(DOBJ_DIR)
+DEPENDENCY_LIB := $(DDEPENDENCY_LIB)
 endif
 
 all: $(OBJ_DIR) $(DEPENDENCY) $(LIB_NAME)
