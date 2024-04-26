@@ -1,10 +1,79 @@
-all:
-	make -C ./test/minishell
-	cc ./tmp/prod/dbllst/*.o ./tmp/prod/exec/*.o ./tmp/prod/libft/*.o ./tmp/prod/minishell/*.o ./test/minishell/main.c ./include/*.h -I./include -I./tmp/prod/dbllst -I./tmp/prod/exec -I./tmp/prod/libft -I./tmp/prod/minishell -I./test/minishell -lreadline -Wall -Werror -Wextra -fsanitize=address -g3
-	rm ./include/*.gch
+# Exec Makefile
+## Hyper Parameter
+MAKEFILE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
+REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/)
 
-clean:
-	rm -rf ./tmp
+NAME := minishell
+
+## Parameters
+LIB_NAME := 
+HEADERS := minishell.h
+INT_HEADERS := 
+
+SRCS := minishell.c
+
+LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
+HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
+
+SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/cmd/$(BASE_DIRNAME)/)
+
+CC := cc
+CFLAGS := -Wall -Wextra -Werror
+LFLAGS := -L$(LIB_EXPORT_DIR) -lminishell -lexec -ldbllst -lft -lreadline
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lminishell_debug -lexec_debug -ldbllst_debug -lft_debug -lreadline
+DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
+IFLAGS := -I$(HEADER_DIR)
+
+DEPENDENCY := libft dbllst exec minishell
+DEPENDENCY_LIB := libft.a libdbllst.a libexec.a libminishell.a
+
+# *****************************************************************************
+# From here onward is the same
+# *****************************************************************************
+
+SRCS := $(addprefix $(SRC_DIR),$(SRCS)) 
+
+NAME := $(addprefix $(REPOSITORY_ROOT),/$(NAME))
+DNAME := $(NAME:=_debug)
+
+HEADERS := $(addprefix $(HEADER_DIR),$(HEADERS))
+INT_HEADERS := $(addprefix $(MAKEFILE_DIR),$(INT_HEADERS))
+
+DEPENDENCY_LIB := $(addprefix $(LIB_EXPORT_DIR),$(DEPENDENCY_LIB))
+DDEPENDENCY_LIB := $(DEPENDENCY_LIB:.a=_debug.a)
+
+# Rules
+ifdef DEBUG_MODE
+CFLAGS := $(DFLAGS)
+LFLAGS := $(DLFLAGS)
+NAME := $(DNAME)
+DEPENDENCY_LIB := $(DDEPENDENCY_LIB)
+endif
+
+all: $(DEPENDENCY) $(NAME)
+
+$(NAME): $(SRCS) $(DEPENDENCY_LIB)
+	$(CC) $(CFLAGS) $(IFLAGS) $< $(LFLAGS) -o $@
+
+define LIB_MACRO
+.PHONY: $(1)
+$(1):
+	make -C $(addprefix $(REPOSITORY_ROOT),/src/$(1)) 
+$(1)_clean:
+	make -C $(addprefix $(REPOSITORY_ROOT),/src/$(1)) fclean
+endef
+$(foreach lib,$(DEPENDENCY),$(eval $(call LIB_MACRO,$(lib))))
+
+debug:
+	make DEBUG_MODE=1
+
+clean: $(DEPENDENCY:=_clean)
+	rm -rf $(OBJ_DIR) $(DOBJ_DIR) $(DNAME)
 
 fclean: clean
-	rm -f a.out
+	rm -f $(NAME)
+
+re: fclean all
+
+.PHONY: all debug clean fclean re
