@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/26 21:21:27 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/27 14:12:00 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*get_env_for_key(char *search, t_blst *env_lst);
 static char	*strjoin_with_free(char *str1, char *str2);
 static int	get_val_len(char *str, int j);
 
-// 1. tokenlstからVALでありHEREDOCではないトークンを探す
+// tokenlstからVALでありHEREDOCではないトークンを探す
 void	expamd_val(t_blst **tokens_lst, t_blst *env_lst)
 {
 	t_token_data	*data;
@@ -33,7 +33,7 @@ void	expamd_val(t_blst **tokens_lst, t_blst *env_lst)
 		if ((data->token_type == VAL_FLAG \
 			|| data->token_type == DOUBLE_QUOTE_VAL_FLAG) \
 			&& (data->sub_type != HEREDOC_FLAG \
-			|| data->sub_type != HEREDOC_QUOTE_FLAG))
+			&& data->sub_type != HEREDOC_QUOTE_FLAG))
 			find_val(tokens_lst, env_lst);
 		*tokens_lst = (*tokens_lst)->next;
 	}
@@ -56,19 +56,16 @@ static void	*find_val(t_blst **tokens_lst, t_blst *env_lst)
 	tokendata = (*tokens_lst)->data;
 	i = 0;
 	created = 0;
-	printf("loopstart\n");
 	str = ft_calloc(1, 1);
 	if (!str)
 		return (NULL);
 	while (tokendata->token_str[i] != '\0')
 	{
-		printf("s%s\n", tokendata->token_str);
 		if (tokendata->token_str[i] == '$') //$があった
 		{
 			str = get_non_val(str, tokendata->token_str, created, i);
 			if (!str)
 				return (NULL);
-			printf("1:%s\n", str);
 			created += i;
 			len = get_val_len(tokendata->token_str, i + 1);
 			val = get_env_val(tokendata->token_str, i + 1, len, env_lst);
@@ -77,14 +74,12 @@ static void	*find_val(t_blst **tokens_lst, t_blst *env_lst)
 				free(str);
 				return (NULL);
 			}
-			printf("2:%s\n", val);
-			str = strjoin_with_free(str, val); // 文字列を結合
+			str = strjoin_with_free(str, val);
 			if (!str)
 			{
 				free(val);
 				return (NULL);
 			}
-			printf("3:%s\n", str);
 			i += (1 + len); // indexを$+環境変数名分更新
 			created += (1 + len);
 		}
@@ -99,11 +94,9 @@ static void	*find_val(t_blst **tokens_lst, t_blst *env_lst)
 					return (NULL);
 			}
 		}
-		printf("%d\n", i);
 	}
 	free(tokendata->token_str);
 	tokendata->token_str = str;
-	printf("loopfin\n");
 	return (NULL);
 }
 
@@ -129,7 +122,7 @@ static char	*get_env_val(char *tokenstr, int i, int len, t_blst *env_lst)
 	char	*ret;
 
 	// 環境変数名を取得
-	name = ft_substr(tokenstr, i + 1, len); //i=3+1から4文字
+	name = ft_substr(tokenstr, i, len);
 	if (!name)
 		return (NULL);
 	// nameをkeyにして置換する文字列をenv_lstから探す
