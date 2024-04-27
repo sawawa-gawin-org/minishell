@@ -6,11 +6,12 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/27 18:26:16 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/27 18:48:22 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "expander.h"
 #include "libft.h"
 #include "dbllst.h"
 
@@ -19,7 +20,7 @@ static char	*strjoin_with_free(char *str1, char *str2);
 static int	update_token_str(t_token_data *tok, char *str, int i, int old);
 
 // tokenlstからVALでありHEREDOCではないトークンを探す
-int	expamd_env(t_blst **tokens_lst, t_blst *env_lst)
+int	expand_env(t_blst **tokens_lst, t_blst *env_lst)
 {
 	t_token_data	*data;
 

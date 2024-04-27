@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 #include "parser.h"
+#include "expander.h"
 #include "libft.h"
 #include "dbllst.h"
 
@@ -48,8 +49,8 @@ int	minishell(char *envp[])
 		tokens_lst = new_tokenizer(&line);
 		if (parser(&tokens_lst))
 		{
-			// expand
-			expander(&tokens_lst, &env_lst);
+			if (!expander(&tokens_lst, &env_lst))
+				exit(1);
 			// exec_tokenslst_cmds(tokens_lst);
 		}
 		// exec_tokenslst_cmds(tokens_lst);
