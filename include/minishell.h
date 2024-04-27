@@ -108,18 +108,6 @@ int		is_blank(int c);
 void	*init_env(void);
 void	free_env_data(void *data);
 
-// parser.c
-int		parser(t_blst **tokens_lst);
-// syntax_checker.c
-int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
-int		cmp_syntax(void *d, void *n);
-// delete_quote.c
-void	delete_quote(t_blst **tokens_lst);
-// merge_redirects.c
-void	merge_redirects(t_blst **tokens_lst);
-// delete_blank.c
-void	delete_blank(t_blst **tokens_lst);
-
 // expander.c
 int		expander(t_blst **tokens_lst, t_blst **env_lst);
 
