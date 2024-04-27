@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/26 21:22:23 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:14:02 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void	put_env_lst(t_blst *env)
 int	expander(t_blst **tokens_lst, t_blst **env_lst)
 {
 	// 変数の展開
-	expamd_val(tokens_lst, *env_lst);
+	// expamd_val(tokens_lst, *env_lst);
 	// put_env_lst(*env_lst);
 	put_tokens_lst(*tokens_lst);
 	return (1);

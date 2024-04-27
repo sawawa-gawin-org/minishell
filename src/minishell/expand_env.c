@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/27 14:12:00 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:13:05 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ static void	*find_val(t_blst **tokens_lst, t_blst *env_lst)
 		return (NULL);
 	while (tokendata->token_str[i] != '\0')
 	{
-		if (tokendata->token_str[i] == '$') //$があった
+		// printf("%c, %d, %d\n", tokendata->token_str[i], i, created);
+		if (tokendata->token_str[i] == '$') //$があった 3, 8
 		{
-			str = get_non_val(str, tokendata->token_str, created, i);
+			str = get_non_val(str, tokendata->token_str, created, i); //0-3, 4-8
 			if (!str)
 				return (NULL);
-			created += i;
+			created += i - created;
 			len = get_val_len(tokendata->token_str, i + 1);
+
 			val = get_env_val(tokendata->token_str, i + 1, len, env_lst);
 			if (!val)
 			{
@@ -75,25 +77,26 @@ static void	*find_val(t_blst **tokens_lst, t_blst *env_lst)
 				return (NULL);
 			}
 			str = strjoin_with_free(str, val);
+			printf("%s\n", str);
 			if (!str)
 			{
 				free(val);
 				return (NULL);
 			}
-			i += (1 + len); // indexを$+環境変数名分更新
 			created += (1 + len);
+			i += (1 + len);
 		}
 		else
 			i++;
-		if (tokendata->token_str[i] == '\0')
-		{
-			if (created < i) //作成済み文字列が終端まで達していない
-			{
-				str = get_non_val(str, tokendata->token_str, created, i);
-				if (!str)
-					return (NULL);
-			}
-		}
+		// if (tokendata->token_str[i] == '\0')
+		// {
+		// 	if (created < i) //作成済み文字列が終端まで達していない
+		// 	{
+		// 		str = get_non_val(str, tokendata->token_str, created, i);
+		// 		if (!str)
+		// 			return (NULL);
+		// 	}
+		// }
 	}
 	free(tokendata->token_str);
 	tokendata->token_str = str;
