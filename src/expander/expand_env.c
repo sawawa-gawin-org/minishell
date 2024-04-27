@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/27 18:48:22 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/27 20:48:11 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,17 @@ static int	update_token_str(t_token_data *tok, char *str, int now, int old)
 		new_str = strjoin_allfree(str, current);
 		if (!new_str)
 			return (0);
+		free(tok->token_str);
+		tok->token_str = ft_strdup(new_str);
+		free(new_str);
 	}
-	free(tok->token_str);
-	tok->token_str = new_str;
+	else
+	{
+		free(tok->token_str);
+		tok->token_str = ft_strdup(str);
+		free(str);
+	}
+	if (tok->token_str == NULL)
+		return (0);
 	return (1);
 }
