@@ -10,7 +10,7 @@ INT_HEADERS :=
 
 SRCS := minishell.c signal_util.c \
 		tokenizer.c tokenizer_util.c exec_bridge.c \
-		expander.c init_env.c expand_env.c
+		expander.c init_env.c expand_env.c expand_env_util.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

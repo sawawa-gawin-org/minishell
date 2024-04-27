@@ -110,8 +110,12 @@ void	free_env_data(void *data);
 
 // expander.c
 int		expander(t_blst **tokens_lst, t_blst **env_lst);
-
-void	expamd_val(t_blst **tokens_lst, t_blst *env_lst);
+// expand_env.c
+int		expamd_env(t_blst **tokens_lst, t_blst *env_lst);
+// expand_util.c
+char	*add_val_to_str(char *tokstr, char *str, int *now_old, t_blst *envlst);
+int		get_val_len(char *str, int now);
+char	*strjoin_allfree(char *str1, char *str2);
 
 // 一部使用、一部廃止予定
 // // heredoc_put.c
