@@ -38,7 +38,7 @@ endif
 .PHONY: test
 test: $(OBJ_DIR) $(DEPENDENCY) $(NAME)
 
-$(NAME): $(OBJS) $(TEST_OBJS)
+$(NAME): $(OBJS) $(TEST_OBJS) $(DEPENDENCY_LIB)
 	$(CC) $(CFLAGS) $(OBJS) $(TEST_OBJS) $(LFLAGS) -o $(NAME)
 
 $(OBJ_DIR)%.o: $(TEST_SRC_DIR)%.c $(HEADERS)
