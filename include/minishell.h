@@ -78,6 +78,13 @@ typedef struct s_shval_data
 	int		exported;
 }			t_shval_data;
 
+typedef struct s_env_data
+{
+	char	*key;
+	char	*val;
+	int		exported;
+}			t_env_data;
+
 typedef struct s_sig
 {
 	int	interrupt;
@@ -91,28 +98,15 @@ void	free_token_data(void *data);
 char	*allocate_next_token(char **line, int *next_token_type);
 int		is_val(char *str);
 
-void	*get_env_all(char **envp);
-void	free_shval_data(void *data);
-
-int		get_heredoc_fd(char *delimiter);
-
-int	exec_tokenslst_cmds(t_blst *tokens_lst);
+int		exec_tokenslst_cmds(t_blst *tokens_lst);
 
 // minishell.c
 int		minishell(char *envp[]);
 int		is_blank(int c);
 
-// parser.c
-int		parser(t_blst **tokens_lst);
-// syntax_checker.c
-int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
-int		cmp_syntax(void *d, void *n);
-// delete_quote.c
-void	delete_quote(t_blst **tokens_lst);
-// merge_redirects.c
-void	merge_redirects(t_blst **tokens_lst);
-// delete_blank.c
-void	delete_blank(t_blst **tokens_lst);
+// init_env.c
+void	*init_env(void);
+void	free_env_data(void *data);
 
 // 一部使用、一部廃止予定
 // // heredoc_put.c

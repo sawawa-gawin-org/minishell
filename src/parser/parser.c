@@ -6,11 +6,12 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/24 15:57:39 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/27 15:43:43 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dbllst.h"
+#include "parser.h"
 #include "libft.h"
 #include "minishell.h"
 

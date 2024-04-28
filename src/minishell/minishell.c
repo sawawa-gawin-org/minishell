@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parser.h"
+#include "expander.h"
 #include "libft.h"
 #include "dbllst.h"
 
@@ -22,10 +24,10 @@ int	minishell(char *envp[])
 {
 	char			*line;
 	t_blst			*tokens_lst;
-	t_blst			*shvals_lst;
+	t_blst			*env_lst;
 
-	shvals_lst = get_env_all(envp);
-	if (shvals_lst == NULL)
+	env_lst = init_env();
+	if (env_lst == NULL)
 		return (1);
 	init_signal();
 	line = NULL;
@@ -45,17 +47,17 @@ int	minishell(char *envp[])
 			continue ;
 		}
 		tokens_lst = new_tokenizer(&line);
-		parser(&tokens_lst);
-		// if (parser(&tokens_lst))
-		// {
-		// 	// expand
-		// 	exec_tokenslst_cmds(tokens_lst);
-		// }
+		if (parser(&tokens_lst))
+		{
+			if (!expander(&tokens_lst, &env_lst))
+				exit(1);
+			// exec_tokenslst_cmds(tokens_lst);
+		}
 		// exec_tokenslst_cmds(tokens_lst);
 		free(line);
 		doub_lstdelall((void **)&tokens_lst, free_token_data);
 	}
-	doub_lstdelall((void **)&shvals_lst, free_shval_data);
+	doub_lstdelall((void **)&env_lst, free_env_data);
 	return (0);
 }
 
