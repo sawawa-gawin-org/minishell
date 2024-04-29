@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/24 17:52:58 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/29 22:46:01 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,20 @@ void	*init_env(void)
 	t_blst		*ret;
 	t_blst		*new_node;
 	extern char	**environ;
+	int			i;
 
+	i = 0;
 	ret = doub_lstnew(NULL);
-	while (ret != NULL && *environ != NULL)
+	while (ret != NULL && environ[i] != NULL)
 	{
-		new_node = new_env_node(*environ, 1);
+		new_node = new_env_node(environ[i], 1);
 		if (new_node == NULL)
 		{
 			doub_lstdelall((void **)&ret, free_env_data);
 			return (NULL);
 		}
 		doub_lstappend((void **)&ret, new_node);
-		environ ++;
+		i ++;
 	}
 	return ((void *)ret);
 }
