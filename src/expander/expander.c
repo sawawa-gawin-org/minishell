@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/27 20:39:18 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/29 23:10:40 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "expander.h"
-#include "minishell.h"
-#include "libft.h"
+#include "expander_int.h"
 
 static void	put_tokens_lst(t_blst *tokens_lst);
 

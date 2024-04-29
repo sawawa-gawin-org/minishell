@@ -3,20 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/27 20:48:11 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/04/29 23:17:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "expander.h"
-#include "libft.h"
-#include "dbllst.h"
+#include "expander_int.h"
 
 static int	find_val(t_blst **tokens_lst, t_blst *env_lst);
-static char	*strjoin_with_free(char *str1, char *str2);
 static int	update_token_str(t_token_data *tok, char *str, int i, int old);
 
 // tokenlstからVALでありHEREDOCではないトークンを探す
@@ -48,7 +44,6 @@ static int	find_val(t_blst **tokens_lst, t_blst *env_lst)
 	t_token_data	*tokendata;
 	int				now_old[2];
 	char			*ret;
-	char			*current;
 
 	tokendata = (*tokens_lst)->data;
 	now_old[0] = 0;

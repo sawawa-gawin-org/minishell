@@ -9,7 +9,8 @@
 		"readline.h": "c",
 		"fcntl.h": "c",
 		"signal.h": "c",
-		"dbllst.h": "c"
+		"dbllst.h": "c",
+		"expander_int.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }
