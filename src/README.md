@@ -1,1 +1,0 @@
-![dependencies](./minishell-Dependencies.drawio.svg)
