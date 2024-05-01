@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:04:58 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:50:43 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	process_token_length(t_blst **lst)
 	if (len == 2)
 	{
 		purged = doub_lstpurge((void **)lst);
-		doub_lstdelone(purged, free_token_data_tmp);
+		doub_lstdelone(purged, free_token_data);
 	}
 	else if (2 < len && data->token_str[0] == data->token_str[len - 1])
 	{

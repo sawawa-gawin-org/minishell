@@ -4,12 +4,17 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := libminishell.a
-HEADERS := minishell.h
-INT_HEADERS :=
+LIB_NAME := libtokens.a
+HEADERS := tokens.h
+INT_HEADERS := tokens_int.h
 
-SRCS := minishell.c signal_util.c init_env.c \
-		tokenizer.c tokenizer_util.c exec_bridge.c
+SRC :=
+
+SRCS += heredoc_get.c
+SRCS += heredoc_open.c
+SRCS +=  heredoc_put.c
+SRCS += tokenizer.c
+SRCS += tokenizer_util.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

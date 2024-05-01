@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/01 15:37:20 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:52:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,6 @@ typedef struct s_env_data
 	int		exported;
 }			t_env_data;
 
-typedef struct s_sig
-{
-	int	interrupt;
-}		t_sig;
-
 typedef int		(*t_cmp_f)(void *, void *);
 
 // tokenizer.c
@@ -90,5 +85,26 @@ int		heredoc_put(t_blst **tokens_lst);
 char	*heredoc_open(char *delimiter)
 // heredoc_get.c
 int		heredoc_get(char *delimiter)
+
+/* parser */
+// syntax_checker.c
+int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
+int		cmp_syntax(void *d, void *n);
+// delete_quote.c
+void	delete_quote(t_blst **tokens_lst);
+// merge_redirects.c
+void	merge_redirects(t_blst **tokens_lst);
+// delete_blank.c
+void	delete_blank(t_blst **tokens_lst);
+
+/* expander */
+// expander.c
+int		expander(t_blst **tokens_lst, t_blst **env_lst);
+// expand_env.c
+int		expand_env(t_blst **tokens_lst, t_blst *env_lst);
+// expand_util.c
+char	*add_val_to_str(char *tokstr, char *str, int *now_old, t_blst *envlst);
+int		get_val_len(char *str, int now);
+char	*strjoin_allfree(char *str1, char *str2);
 
 # endif
