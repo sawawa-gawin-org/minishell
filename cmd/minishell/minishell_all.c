@@ -6,11 +6,13 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:58:47 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 16:11:36 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "tokens.h"
+#include "dbllst.h"
 
 // void	end(void)__attribute__((destructor));
 
@@ -26,8 +28,8 @@ volatile sig_atomic_t	g_signal = 0;
 int	minishell(void)
 {
 	char			*line;
-	t_blst			*tokens_lst;
-	t_blst			*env_lst;
+	void			*tokens_lst;
+	void			*env_lst;
 
 	env_lst = init_env();
 	if (env_lst == NULL)
@@ -50,17 +52,17 @@ int	minishell(void)
 			continue ;
 		}
 		tokens_lst = new_tokenizer(&line);
-		if (parser((void **) &tokens_lst))
+		if (parser(&tokens_lst))
 		{
-			if (!expander((void **)&tokens_lst, (void **)&env_lst))
+			if (!expander(&tokens_lst, &env_lst))
 				exit(1);
 			exec_tokenslst_cmds(tokens_lst);
 		}
 		// exec_tokenslst_cmds(tokens_lst);
 		free(line);
-		doub_lstdelall((void **)&tokens_lst, free_token_data);
+		doub_lstdelall(&tokens_lst, free_token_data);
 	}
-	doub_lstdelall((void **)&env_lst, free_env_data);
+	doub_lstdelall(&env_lst, free_env_data);
 	return (0);
 }
 

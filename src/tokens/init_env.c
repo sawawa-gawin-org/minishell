@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 16:02:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 16:09:46 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
+#include "tokens_int.h"
 #include "dbllst.h"
 #include "libft.h"
 
