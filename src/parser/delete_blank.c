@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   delete_blank.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/24 15:49:53 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:07:21 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "libft.h"
-#include "minishell.h"
+#include "parser_int.h"
 
 static void	purge(t_blst **lst);
 

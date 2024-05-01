@@ -6,7 +6,7 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 # Parameters
 LIB_NAME := libparser.a
 HEADERS := parser.h
-INT_HEADERS :=
+INT_HEADERS := parser_int.h
 
 SRCS := parser.c syntax_checker.c delete_quote.c delete_blank.c merge_redirects.c
 

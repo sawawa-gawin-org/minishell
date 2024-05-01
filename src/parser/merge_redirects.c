@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   merge_redirects.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/23 20:28:23 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:07:33 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "libft.h"
-#include "minishell.h"
+#include "parser_int.h"
 
 static void	scrape(t_blst **lst, int type);
 static int	is_type(t_blst **lst, int type);
@@ -21,11 +19,9 @@ static void	rewrite_tok(t_blst **lst, int type);
 void	merge_redirects(t_blst **tokens_lst)
 {
 	t_token_data	*data;
-	int				len;
 
 	while ((*tokens_lst)->data != NULL)
 	{
-		len = 0;
 		data = (*tokens_lst)->data;
 		if (LESS_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
 		{

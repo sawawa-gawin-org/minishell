@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   delete_quote.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/23 21:04:14 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:07:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "libft.h"
-#include "minishell.h"
+#include "parser_int.h"
 
 static void	process_token_length(t_blst **lst);
 static void	replace_noquote(char *str, int len);

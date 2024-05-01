@@ -20,7 +20,7 @@ static int	is_blank_str(char *str);
 
 volatile sig_atomic_t	g_signal = 0;
 
-int	minishell(char *envp[])
+int	minishell(void)
 {
 	char			*line;
 	t_blst			*tokens_lst;
@@ -47,9 +47,9 @@ int	minishell(char *envp[])
 			continue ;
 		}
 		tokens_lst = new_tokenizer(&line);
-		if (parser(&tokens_lst))
+		if (parser((void **) &tokens_lst))
 		{
-			if (!expander(&tokens_lst, &env_lst))
+			if (!expander((void **)&tokens_lst, (void **)&env_lst))
 				exit(1);
 			// exec_tokenslst_cmds(tokens_lst);
 		}

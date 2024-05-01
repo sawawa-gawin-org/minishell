@@ -101,7 +101,7 @@ int		is_val(char *str);
 int		exec_tokenslst_cmds(t_blst *tokens_lst);
 
 // minishell.c
-int		minishell(char *envp[]);
+int		minishell(void);
 int		is_blank(int c);
 
 // init_env.c
