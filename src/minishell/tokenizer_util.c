@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/19 22:34:00 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:51:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell_int.h"
 #include "libft.h"
-#include "minishell.h"
 
 static size_t	detect_token_len(char *line, int target_type);
 static void		detect_token_type(char *token_str, int *type);

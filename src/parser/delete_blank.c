@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:07:21 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:04:58 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ static void	purge(t_blst **lst)
 	void	*purged;
 
 	purged = doub_lstpurge((void **)lst);
-	doub_lstdelone(purged, free_token_data);
+	doub_lstdelone(purged, free_token_data_tmp);
 }

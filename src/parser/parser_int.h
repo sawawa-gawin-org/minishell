@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 15:31:30 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:16:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:04:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	merge_redirects(t_blst **tokens_lst);
 // delete_blank.c
 void	delete_blank(t_blst **tokens_lst);
 
-void	free_token_data(void *data);
+void	free_token_data_tmp(void *data);
 
 #endif

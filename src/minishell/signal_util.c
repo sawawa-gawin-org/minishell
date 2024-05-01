@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:31:40 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/21 18:02:35 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:47:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_int.h"
 
 static void	handler(int signum);
 static int	check_signum(void);

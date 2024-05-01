@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_put.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/21 17:49:25 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:47:46 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "libft.h"
-#include "minishell.h"
+#include "minishell_int.h"
 
 static int	process_tokens(t_blst **tmp, t_token_data *data);
 static int	rewrite_tok(t_blst **lst, char *str, int type);

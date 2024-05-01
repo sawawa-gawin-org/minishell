@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_get.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/21 18:59:50 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:47:40 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "libft.h"
-#include "minishell.h"
+#include "minishell_int.h"
 
 static void	get_heredoc_input(char *delimiter, int *pipefd);
 

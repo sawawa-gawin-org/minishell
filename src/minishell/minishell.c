@@ -10,11 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "minishell_int.h"
 #include "parser.h"
 #include "expander.h"
-#include "libft.h"
-#include "dbllst.h"
 
 static int	is_blank_str(char *str);
 
@@ -51,7 +49,7 @@ int	minishell(void)
 		{
 			if (!expander((void **)&tokens_lst, (void **)&env_lst))
 				exit(1);
-			// exec_tokenslst_cmds(tokens_lst);
+			exec_tokenslst_cmds(tokens_lst);
 		}
 		// exec_tokenslst_cmds(tokens_lst);
 		free(line);

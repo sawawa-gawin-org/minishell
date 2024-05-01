@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/23 18:45:37 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 14:50:48 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "libft.h"
+#include "minishell_int.h"
 #include "dbllst.h"
 
 static t_blst		*new_token_node(char **line);

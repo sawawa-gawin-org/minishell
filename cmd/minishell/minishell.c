@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:56:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/26 18:38:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 14:39:53 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 // 	system("leaks minishell");
 // }
 
-int	main(int argc, char *argv[], char *envp[])
+int	main(void)
 {
-	(void) argc;
-	(void) argv;
-	minishell(envp);
+	minishell();
 	return (0);
 }

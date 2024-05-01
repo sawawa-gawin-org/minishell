@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:07:33 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:04:58 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	scrape(t_blst **lst, int type)
 		|| data->token_type == SPACE_FLAG)
 	{
 		purged = doub_lstpurge((void **)lst);
-		doub_lstdelone((void *)purged, free_token_data);
+		doub_lstdelone((void *)purged, free_token_data_tmp);
 		data = (*lst)->data;
 	}
 	type = is_type(lst, type);
