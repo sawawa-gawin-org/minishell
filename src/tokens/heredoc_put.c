@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:47:46 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:36:53 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
+#include "tokens_int.h"
 
 static int	process_tokens(t_blst **tmp, t_token_data *data);
 static int	rewrite_tok(t_blst **lst, char *str, int type);

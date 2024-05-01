@@ -1,30 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_int.h                                    :+:      :+:    :+:   */
+/*   tokens_int.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/01 14:46:02 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/01 14:46:02 by saraki           ###   ########.fr       */
+/*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
+/*   Updated: 2024/05/01 15:37:20 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_INT_H
-# define MINISHELL_INT_H
-
-# include <unistd.h>
-# include <signal.h>
-# include <sys/types.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <termios.h>
-
-//1個のみ、シグナル番号の情報のためにグローバル変数が許可される
-extern volatile sig_atomic_t g_signal;
+#ifndef TOKENS_INT_H
+# define TOKENS_INT_H
 
 typedef enum e_tokens
 {
@@ -56,19 +43,20 @@ typedef enum e_tokens
 # define WORD_FLAG 513
 # define BLANK_FLAG 1024
 
-typedef struct s_node
-{
-	struct s_node	*prev;
-	void			*data;
-	struct s_node	*next;
-}				t_blst;
-
 typedef struct s_token_data
 {
 	t_tokens	token_type;
 	t_tokens	sub_type;
 	char		*token_str;
 }				t_token_data;
+
+typedef struct s_node
+{
+	struct s_node	*prev;
+	t_token_data	*data;
+	struct s_node	*next;
+}				t_blst;
+
 
 typedef struct s_shval_data
 {
@@ -91,33 +79,16 @@ typedef struct s_sig
 
 typedef int		(*t_cmp_f)(void *, void *);
 
-// new tokenizer
-void	*new_tokenizer(char **line);
+// tokenizer.c
 void	free_token_data(void *data);
+// tokenizer_util.c
 char	*allocate_next_token(char **line, int *next_token_type);
 int		is_val(char *str);
+// heredoc_put.c
+int		heredoc_put(t_blst **tokens_lst);
+// heredoc_open.c
+char	*heredoc_open(char *delimiter)
+// heredoc_get.c
+int		heredoc_get(char *delimiter)
 
-int		exec_tokenslst_cmds(t_blst *tokens_lst);
-
-// minishell.c
-int		minishell(void);
-int		is_blank(int c);
-
-// init_env.c
-void	*init_env(void);
-void	free_env_data(void *data);
-
-// 一部使用、一部廃止予定
-// // heredoc_put.c
-// int		heredoc_put(t_blst **tokens_lst);
-// // heredoc_open.c
-// char	*heredoc_open(char *delimiter);
-// // heredoc_get.c
-// int		heredoc_get(char *delimiter);
-
-//signal_util.c
-void	init_signal(void);
-void	set_signal(int signum);
-void	ign_signal(int signum);
-
-#endif
+# endif
