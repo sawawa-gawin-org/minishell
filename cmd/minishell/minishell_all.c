@@ -1,18 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   minishell_all.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/02/29 15:52:24 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:58:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
-#include "parser.h"
-#include "expander.h"
+#include "minishell.h"
+
+// void	end(void)__attribute__((destructor));
+
+// void	end(void)
+// {
+// 	system("leaks minishell");
+// }
 
 static int	is_blank_str(char *str);
 

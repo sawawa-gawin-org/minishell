@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 16:50:29 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:07:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:56:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser_int.h"
+#include "tokens_int.h"
 
 static int	find_contd_tube(t_blst *node);
 static int	find_contd_redirect(t_blst *node);

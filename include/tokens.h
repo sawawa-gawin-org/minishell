@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/01 15:33:35 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:58:04 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,7 @@
 # define TOKENS_H
 
 void	*tokenizer(char **line);
+
+int		exec_tokenslst_cmds(void *tokens_lst);
 
 # endif

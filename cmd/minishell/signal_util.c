@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:31:40 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:47:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:57:08 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
+#include "minishell.h"
 
 static void	handler(int signum);
 static int	check_signum(void);
