@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:56:06 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:22:18 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	delete_quote(t_blst **tokens_lst)
 {
 	t_token_data	*data;
 
-	data = (*tokens_lst)->data;
-	while ((*tokens_lst)->data != NULL)
+	data = (*tokens_lst)->data.t_data;
+	while ((*tokens_lst)->data.t_data != NULL)
 	{
-		data = (*tokens_lst)->data;
+		data = (*tokens_lst)->data.t_data;
 		if (DOUBLE_QUOTE_FLAG <= data->token_type
 			&& data->token_type <= SINGLE_QUOTE_FLAG)
 		{
@@ -31,7 +31,7 @@ void	delete_quote(t_blst **tokens_lst)
 		}
 		*tokens_lst = (*tokens_lst)->next;
 	}
-	while ((*tokens_lst)->prev->data != NULL)
+	while ((*tokens_lst)->prev->data.t_data != NULL)
 		*tokens_lst = (*tokens_lst)->prev;
 }
 
@@ -41,7 +41,7 @@ static void	process_token_length(t_blst **lst)
 	void			*purged;
 	t_token_data	*data;
 
-	data = (*lst)->data;
+	data = (*lst)->data.t_data;
 	len = ft_strlen(data->token_str);
 	if (len == 2)
 	{

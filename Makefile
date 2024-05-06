@@ -11,7 +11,11 @@ LIB_NAME :=
 HEADERS := minishell.h
 INT_HEADERS := 
 
-SRCS := minishell.c
+SRCS :=
+
+SRCS += minishell.c
+SRCS += signal_util.c
+
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -20,13 +24,13 @@ SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/cmd/$(BASE_DIRNAME)/)
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lminishell -lexec -ldbllst -lft -lreadline -lparser -lexpander
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lminishell_debug -lexec_debug -ldbllst_debug -lft_debug -lreadline -lparser_debug -lexpander_debug
+LFLAGS := -L$(LIB_EXPORT_DIR) -ltokens -lexec -ldbllst -lft -lreadline 
+DLFLAGS := -L$(LIB_EXPORT_DIR) -ltokens_debug -lexec_debug -ldbllst_debug -lft_debug -lreadline
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst exec parser expander minishell
-DEPENDENCY_LIB := libft.a libdbllst.a libexec.a libparser.a libexpander.a libminishell.a
+DEPENDENCY := libft dbllst exec tokens
+DEPENDENCY_LIB := libft.a libdbllst.a libexec.a libtokens.a
 
 # *****************************************************************************
 # From here onward is the same
@@ -54,7 +58,7 @@ endif
 all: $(DEPENDENCY) $(NAME)
 
 $(NAME): $(SRCS) $(DEPENDENCY_LIB)
-	$(CC) $(CFLAGS) $(IFLAGS) $< $(LFLAGS) -o $@
+	$(CC) $(CFLAGS) $(IFLAGS) $(SRCS) $(LFLAGS) -o $@
 
 define LIB_MACRO
 .PHONY: $(1)
@@ -77,3 +81,6 @@ fclean: clean
 re: fclean all
 
 .PHONY: all debug clean fclean re
+
+echo:
+	@echo $(SRCS) 

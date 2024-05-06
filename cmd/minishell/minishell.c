@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_all.c                                    :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 16:11:36 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 16:00:31 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
 // 	system("leaks minishell");
 // }
 
-static int	is_blank_str(char *str);
-
 volatile sig_atomic_t	g_signal = 0;
 
-int	minishell(void)
+static int	is_blank_str(char *str);
+
+int	main(void)
 {
 	char			*line;
 	void			*tokens_lst;
@@ -51,7 +51,7 @@ int	minishell(void)
 			free(line);
 			continue ;
 		}
-		tokens_lst = new_tokenizer(&line);
+		tokens_lst = tokenizer(&line);
 		if (parser(&tokens_lst))
 		{
 			if (!expander(&tokens_lst, &env_lst))
@@ -76,9 +76,4 @@ static int	is_blank_str(char *str)
 	if (str[i] == '\0')
 		return (1);
 	return (0);
-}
-
-int	is_blank(int c)
-{
-	return (c == ' ' || c == '\t');
 }

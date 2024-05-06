@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:56:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:23:04 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ int	expand_env(t_blst **tokens_lst, t_blst *env_lst)
 {
 	t_token_data	*data;
 
-	data = (*tokens_lst)->data;
-	while ((*tokens_lst)->data != NULL)
+	data = (*tokens_lst)->data.t_data;
+	while ((*tokens_lst)->data.t_data != NULL)
 	{
-		data = (*tokens_lst)->data;
+		data = (*tokens_lst)->data.t_data;
 		if ((data->token_type == VAL_FLAG \
 			|| data->token_type == DOUBLE_QUOTE_VAL_FLAG) \
 			&& (data->sub_type != HEREDOC_FLAG \
@@ -34,7 +34,7 @@ int	expand_env(t_blst **tokens_lst, t_blst *env_lst)
 		}
 		*tokens_lst = (*tokens_lst)->next;
 	}
-	while ((*tokens_lst)->prev->data != NULL)
+	while ((*tokens_lst)->prev->data.t_data != NULL)
 		*tokens_lst = (*tokens_lst)->prev;
 	return (1);
 }
@@ -45,7 +45,7 @@ static int	find_val(t_blst **tokens_lst, t_blst *env_lst)
 	int				now_old[2];
 	char			*ret;
 
-	tokendata = (*tokens_lst)->data;
+	tokendata = (*tokens_lst)->data.t_data;
 	now_old[0] = 0;
 	now_old[1] = 0;
 	ret = ft_calloc(1, 1);

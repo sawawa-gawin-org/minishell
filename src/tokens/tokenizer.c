@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:32:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:39:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,9 @@ void	free_token_data(void *data)
 	if (token_data->token_str != NULL)
 		free(token_data->token_str);
 	free(token_data);
+}
+
+int	is_blank(int c)
+{
+	return (c == ' ' || c == '\t');
 }

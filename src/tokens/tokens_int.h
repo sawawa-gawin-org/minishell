@@ -6,12 +6,26 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/01 15:52:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 16:13:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_INT_H
 # define TOKENS_INT_H
+
+# include "libft.h"
+# include "dbllst.h"
+
+# include <stdio.h>
+# include <stddef.h>
+# include <fcntl.h>
+# include <sys/wait.h> // Linux
+# include <sys/stat.h> // Linux
+
+# include <readline/readline.h>
+# include <readline/history.h>
+
+extern volatile sig_atomic_t g_signal;
 
 typedef enum e_tokens
 {
@@ -50,14 +64,6 @@ typedef struct s_token_data
 	char		*token_str;
 }				t_token_data;
 
-typedef struct s_node
-{
-	struct s_node	*prev;
-	t_token_data	*data;
-	struct s_node	*next;
-}				t_blst;
-
-
 typedef struct s_shval_data
 {
 	char	*key;
@@ -72,23 +78,38 @@ typedef struct s_env_data
 	int		exported;
 }			t_env_data;
 
+typedef struct s_node
+{
+	struct s_node	*prev;
+	
+    union {
+        t_token_data	*t_data;
+		t_env_data		*e_data;
+    }	data;
+	struct s_node	*next;
+}				t_blst;
+
 typedef int		(*t_cmp_f)(void *, void *);
 
+// init_env.c
+void	free_env_data(void *data);
 // tokenizer.c
 void	free_token_data(void *data);
+int		is_blank(int c);
 // tokenizer_util.c
 char	*allocate_next_token(char **line, int *next_token_type);
 int		is_val(char *str);
 // heredoc_put.c
 int		heredoc_put(t_blst **tokens_lst);
 // heredoc_open.c
-char	*heredoc_open(char *delimiter)
+char	*heredoc_open(char *delimiter);
 // heredoc_get.c
-int		heredoc_get(char *delimiter)
+int		heredoc_get(char *delimiter);
 
 /* parser */
 // syntax_checker.c
 int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
+
 int		cmp_syntax(void *d, void *n);
 // delete_quote.c
 void	delete_quote(t_blst **tokens_lst);
