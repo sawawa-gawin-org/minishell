@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:15:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/29 23:19:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:23:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "expander_int.h"
+#include "tokens_int.h"
 
 static char	*get_value_from_env(char *tokenstr, int now, t_blst *envlst);
 static char	*get_env_for_key(char *val_name, t_blst *env_lst);
@@ -71,9 +71,9 @@ static char	*get_env_for_key(char *val_name, t_blst *env_lst)
 	char		*ret;
 
 	tmp = env_lst;
-	while (tmp->data != NULL)
+	while (tmp->data.e_data != NULL)
 	{
-		data = tmp->data;
+		data = tmp->data.e_data;
 		if (ft_strcmp(val_name, data->key) == 0)
 		{
 			ret = ft_strdup(data->val);

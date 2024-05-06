@@ -6,17 +6,17 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 12:28:52 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:50:48 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:39:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
+#include "tokens_int.h"
 #include "dbllst.h"
 
 static t_blst		*new_token_node(char **line);
 static t_token_data	*new_token_data(char **line);
 
-void	*new_tokenizer(char **line)
+void	*tokenizer(char **line)
 {
 	char		*line_head;
 	t_blst		*ret;
@@ -89,4 +89,9 @@ void	free_token_data(void *data)
 	if (token_data->token_str != NULL)
 		free(token_data->token_str);
 	free(token_data);
+}
+
+int	is_blank(int c)
+{
+	return (c == ' ' || c == '\t');
 }

@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 13:33:56 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:47:40 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:37:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
+#include "tokens_int.h"
 
 static void	get_heredoc_input(char *delimiter, int *pipefd);
 

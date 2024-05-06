@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_int.h                                    :+:      :+:    :+:   */
+/*   tokens_int.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/01 14:46:02 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/01 14:46:02 by saraki           ###   ########.fr       */
+/*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
+/*   Updated: 2024/05/06 16:13:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_INT_H
-# define MINISHELL_INT_H
+#ifndef TOKENS_INT_H
+# define TOKENS_INT_H
 
-# include <unistd.h>
-# include <signal.h>
-# include <sys/types.h>
+# include "libft.h"
+# include "dbllst.h"
+
 # include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
+# include <stddef.h>
+# include <fcntl.h>
+# include <sys/wait.h> // Linux
+# include <sys/stat.h> // Linux
+
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <termios.h>
 
-//1個のみ、シグナル番号の情報のためにグローバル変数が許可される
 extern volatile sig_atomic_t g_signal;
 
 typedef enum e_tokens
@@ -56,13 +57,6 @@ typedef enum e_tokens
 # define WORD_FLAG 513
 # define BLANK_FLAG 1024
 
-typedef struct s_node
-{
-	struct s_node	*prev;
-	void			*data;
-	struct s_node	*next;
-}				t_blst;
-
 typedef struct s_token_data
 {
 	t_tokens	token_type;
@@ -84,40 +78,54 @@ typedef struct s_env_data
 	int		exported;
 }			t_env_data;
 
-typedef struct s_sig
+typedef struct s_node
 {
-	int	interrupt;
-}		t_sig;
+	struct s_node	*prev;
+	
+    union {
+        t_token_data	*t_data;
+		t_env_data		*e_data;
+    }	data;
+	struct s_node	*next;
+}				t_blst;
 
 typedef int		(*t_cmp_f)(void *, void *);
 
-// new tokenizer
-void	*new_tokenizer(char **line);
+// init_env.c
+void	free_env_data(void *data);
+// tokenizer.c
 void	free_token_data(void *data);
+int		is_blank(int c);
+// tokenizer_util.c
 char	*allocate_next_token(char **line, int *next_token_type);
 int		is_val(char *str);
+// heredoc_put.c
+int		heredoc_put(t_blst **tokens_lst);
+// heredoc_open.c
+char	*heredoc_open(char *delimiter);
+// heredoc_get.c
+int		heredoc_get(char *delimiter);
 
-int		exec_tokenslst_cmds(t_blst *tokens_lst);
+/* parser */
+// syntax_checker.c
+int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 
-// minishell.c
-int		minishell(void);
-int		is_blank(int c);
+int		cmp_syntax(void *d, void *n);
+// delete_quote.c
+void	delete_quote(t_blst **tokens_lst);
+// merge_redirects.c
+void	merge_redirects(t_blst **tokens_lst);
+// delete_blank.c
+void	delete_blank(t_blst **tokens_lst);
 
-// init_env.c
-void	*init_env(void);
-void	free_env_data(void *data);
+/* expander */
+// expander.c
+int		expander(t_blst **tokens_lst, t_blst **env_lst);
+// expand_env.c
+int		expand_env(t_blst **tokens_lst, t_blst *env_lst);
+// expand_util.c
+char	*add_val_to_str(char *tokstr, char *str, int *now_old, t_blst *envlst);
+int		get_val_len(char *str, int now);
+char	*strjoin_allfree(char *str1, char *str2);
 
-// 一部使用、一部廃止予定
-// // heredoc_put.c
-// int		heredoc_put(t_blst **tokens_lst);
-// // heredoc_open.c
-// char	*heredoc_open(char *delimiter);
-// // heredoc_get.c
-// int		heredoc_get(char *delimiter);
-
-//signal_util.c
-void	init_signal(void);
-void	set_signal(int signum);
-void	ign_signal(int signum);
-
-#endif
+# endif

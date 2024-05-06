@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:04:41 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:56:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser_int.h"
+#include "tokens_int.h"
 
 // static void	put_tokens_lst(t_blst *tokens_lst);
 
@@ -23,18 +23,6 @@ int	parser(t_blst **tokens_lst)
 	delete_blank(tokens_lst);
 	// put_tokens_lst(*tokens_lst);
 	return (1);
-}
-
-void	free_token_data_tmp(void *data)
-{
-	t_token_data	*token_data;
-
-	token_data = (t_token_data *)data;
-	if (token_data == NULL)
-		return ;
-	if (token_data->token_str != NULL)
-		free(token_data->token_str);
-	free(token_data);
 }
 
 // static void	put_tokens_lst(t_blst *tokens_lst)

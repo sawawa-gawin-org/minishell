@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:51:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:34:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
+#include "tokens_int.h"
 #include "libft.h"
 
 static size_t	detect_token_len(char *line, int target_type);

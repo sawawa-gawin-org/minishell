@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 17:30:24 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:47:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 15:36:56 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
+#include "tokens_int.h"
 
 static char	*strjoin_with_free(char *s1, char *s2);
 static char	*read_line(int fd, char *buf);

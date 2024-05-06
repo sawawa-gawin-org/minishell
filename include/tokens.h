@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/27 15:31:30 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:05:47 by saraki           ###   ########.fr       */
+/*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
+/*   Updated: 2024/05/06 16:01:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#ifndef TOKENS_H
+# define TOKENS_H
 
-# include "dbllst.h"
-# include "libft.h"
+// init_env.c
+void	*init_env(void);
+void	free_env_data(void *data);
+
+// tokenizer.c
+void	*tokenizer(char **line);
+int		is_blank(int c);
+void	free_token_data(void *data);
+
+int		exec_tokenslst_cmds(void *tokens_lst);
 
 // parser.c
 int		parser(void **tokens_lst);
+// expander.c
+int		expander(void **tokens_lst, void **env_lst);
 
-#endif
+# endif

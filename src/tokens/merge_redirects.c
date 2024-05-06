@@ -6,11 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:04:58 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 15:31:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser_int.h"
+#include "tokens_int.h"
 
 static void	scrape(t_blst **lst, int type);
 static int	is_type(t_blst **lst, int type);
@@ -20,9 +20,9 @@ void	merge_redirects(t_blst **tokens_lst)
 {
 	t_token_data	*data;
 
-	while ((*tokens_lst)->data != NULL)
+	while ((*tokens_lst)->data.t_data != NULL)
 	{
-		data = (*tokens_lst)->data;
+		data = (*tokens_lst)->data.t_data;
 		if (LESS_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
 		{
 			scrape(tokens_lst, data->token_type);
@@ -30,7 +30,7 @@ void	merge_redirects(t_blst **tokens_lst)
 		}
 		(*tokens_lst) = (*tokens_lst)->next;
 	}
-	while ((*tokens_lst)->prev->data != NULL)
+	while ((*tokens_lst)->prev->data.t_data != NULL)
 		(*tokens_lst) = (*tokens_lst)->prev;
 }
 
@@ -39,19 +39,19 @@ static void	scrape(t_blst **lst, int type)
 	void			*purged;
 	t_token_data	*data;
 
-	data = (*lst)->data;
+	data = (*lst)->data.t_data;
 	while ((LESS_FLAG <= data->token_type \
 		&& data->token_type <= APPEND_FLAG) \
 		|| data->token_type == SPACE_FLAG)
 	{
 		purged = doub_lstpurge((void **)lst);
-		doub_lstdelone((void *)purged, free_token_data_tmp);
-		data = (*lst)->data;
+		doub_lstdelone((void *)purged, free_token_data);
+		data = (*lst)->data.t_data;
 	}
 	type = is_type(lst, type);
-	while ((*lst)->data != NULL)
+	while ((*lst)->data.t_data != NULL)
 	{
-		data = (*lst)->data;
+		data = (*lst)->data.t_data;
 		if ((TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG) \
 			|| data->token_type == SPACE_FLAG)
 			break ;
@@ -66,9 +66,9 @@ static int	is_type(t_blst **lst, int type)
 	t_token_data	*data;
 
 	tmp = *lst;
-	while (tmp->data != NULL && type == HEREDOC_FLAG)
+	while (tmp->data.t_data != NULL && type == HEREDOC_FLAG)
 	{
-		data = tmp->data;
+		data = tmp->data.t_data;
 		if (DOUBLE_QUOTE_FLAG <= data->token_type \
 			&& data->token_type <= SINGLE_QUOTE_FLAG)
 			return (HEREDOC_QUOTE_FLAG);
@@ -81,6 +81,6 @@ static void	rewrite_tok(t_blst **lst, int type)
 {
 	t_token_data	*data;
 
-	data = (*lst)->data;
+	data = (*lst)->data.t_data;
 	data->sub_type = type;
 }

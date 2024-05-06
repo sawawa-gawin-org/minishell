@@ -6,17 +6,18 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 14:50:41 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/06 16:11:14 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell_int.h"
+#include "tokens_int.h"
 #include "dbllst.h"
 #include "libft.h"
 
 static int			strlen_eq(char *str);
 static t_blst		*new_env_node(char *str, int flag);
 static t_env_data	*new_env_data(char *str, int flag);
+
 
 void	*init_env(void)
 {
