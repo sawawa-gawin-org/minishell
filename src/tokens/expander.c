@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/06 15:23:33 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:48:14 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ static void	put_tokens_lst(t_blst *tokens_lst)
 
 	tmp = tokens_lst;
 	i = 1;
-	while (tmp->data.t_data != NULL)
+	while (tmp->u_data.t_data != NULL)
 	{
-		data = tmp->data.t_data;
+		data = tmp->u_data.t_data;
 		printf("%d: text:%s, type:%d, sub:%d\n", i, data->token_str, data->token_type, data->sub_type);
 		tmp = tmp->next;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/06 16:13:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:07:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-extern volatile sig_atomic_t g_signal;
+extern volatile sig_atomic_t	g_signal;
+
+typedef int	(*t_cmp_f)(void *, void *);
 
 typedef enum e_tokens
 {
@@ -43,7 +45,7 @@ typedef enum e_tokens
 	OPEN_QUOTE_FLAG = 1 << 11,
 	HEREDOC_QUOTE_FLAG = 1 << 12,
 	COMMAND_FLAG = 1 << 13
-}	t_tokens;
+}			t_tokens;
 
 // # define META_FLAG (LESS_FLAG | GREAT_FLAG | TUBE_FLAG | 
 // 					HEREDOC_FLAG | APPEND_FLAG)
@@ -62,7 +64,7 @@ typedef struct s_token_data
 	t_tokens	token_type;
 	t_tokens	sub_type;
 	char		*token_str;
-}				t_token_data;
+}			t_token_data;
 
 typedef struct s_shval_data
 {
@@ -81,51 +83,50 @@ typedef struct s_env_data
 typedef struct s_node
 {
 	struct s_node	*prev;
-	
-    union {
-        t_token_data	*t_data;
+	union
+	{
+		t_token_data	*t_data;
 		t_env_data		*e_data;
-    }	data;
+	}	u_data;
 	struct s_node	*next;
-}				t_blst;
-
-typedef int		(*t_cmp_f)(void *, void *);
+}			t_blst;
 
 // init_env.c
-void	free_env_data(void *data);
+void		free_env_data(void *data);
 // tokenizer.c
-void	free_token_data(void *data);
-int		is_blank(int c);
+void		free_token_data(void *data);
+int			is_blank(int c);
 // tokenizer_util.c
-char	*allocate_next_token(char **line, int *next_token_type);
-int		is_val(char *str);
+char		*allocate_next_token(char **line, int *next_token_type);
+int			is_val(char *str);
 // heredoc_put.c
-int		heredoc_put(t_blst **tokens_lst);
+int			heredoc_put(t_blst **tokens_lst);
 // heredoc_open.c
-char	*heredoc_open(char *delimiter);
+char		*heredoc_open(char *delimiter);
 // heredoc_get.c
-int		heredoc_get(char *delimiter);
+int			heredoc_get(char *delimiter);
 
 /* parser */
 // syntax_checker.c
-int		syntax_checker(t_blst *lst, t_cmp_f cmp_f);
+int			syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 
-int		cmp_syntax(void *d, void *n);
+int			cmp_syntax(void *d, void *n);
 // delete_quote.c
-void	delete_quote(t_blst **tokens_lst);
+void		delete_quote(t_blst **tokens_lst);
 // merge_redirects.c
-void	merge_redirects(t_blst **tokens_lst);
+void		merge_redirects(t_blst **tokens_lst);
 // delete_blank.c
-void	delete_blank(t_blst **tokens_lst);
+void		delete_blank(t_blst **tokens_lst);
 
 /* expander */
 // expander.c
-int		expander(t_blst **tokens_lst, t_blst **env_lst);
+int			expander(t_blst **tokens_lst, t_blst **env_lst);
 // expand_env.c
-int		expand_env(t_blst **tokens_lst, t_blst *env_lst);
+int			expand_env(t_blst **tokens_lst, t_blst *env_lst);
 // expand_util.c
-char	*add_val_to_str(char *tokstr, char *str, int *now_old, t_blst *envlst);
-int		get_val_len(char *str, int now);
-char	*strjoin_allfree(char *str1, char *str2);
+char		*add_val_to_str(
+				char *tokstr, char *str, int *now_old, t_blst *envlst);
+int			get_val_len(char *str, int now);
+char		*strjoin_allfree(char *str1, char *str2);
 
-# endif
+#endif

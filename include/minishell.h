@@ -23,7 +23,7 @@
 # include <readline/history.h>
 # include <termios.h>
 
-extern volatile sig_atomic_t g_signal;
+extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_sig
 {

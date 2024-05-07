@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/06 15:21:45 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:48:14 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	delete_blank(t_blst **tokens_lst)
 	t_token_data	*data;
 	t_token_data	*next_data;
 
-	while ((*tokens_lst)->data.t_data != NULL)
+	while ((*tokens_lst)->u_data.t_data != NULL)
 	{
-		data = (*tokens_lst)->data.t_data;
-		next_data = (*tokens_lst)->next->data.t_data;
+		data = (*tokens_lst)->u_data.t_data;
+		next_data = (*tokens_lst)->next->u_data.t_data;
 		if (data->token_type == SPACE_FLAG \
 			&& (next_data == NULL || next_data->token_type == TUBE_FLAG))
 			purge(tokens_lst);
@@ -38,7 +38,7 @@ void	delete_blank(t_blst **tokens_lst)
 		else
 			(*tokens_lst) = (*tokens_lst)->next;
 	}
-	while ((*tokens_lst)->prev->data.t_data != NULL)
+	while ((*tokens_lst)->prev->u_data.t_data != NULL)
 		(*tokens_lst) = (*tokens_lst)->prev;
 }
 

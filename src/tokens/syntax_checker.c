@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 16:50:29 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/06 15:35:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/07 16:49:21 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	syntax_checker(t_blst *lst, t_cmp_f cmp_f)
 		return (0);
 	i = 0;
 	ret_node = lst;
-	while (ret_node->data.t_data != NULL)
+	while (ret_node->u_data.t_data != NULL)
 	{
-		if (cmp_f(ret_node->data.t_data, ret_node))
+		if (cmp_f(ret_node->u_data.t_data, ret_node))
 			return (0);
 		ret_node = ret_node->next;
 		i ++;
@@ -49,9 +49,9 @@ int	cmp_syntax(void *d, void *n)
 
 	data = d;
 	node = n;
-	if (node->prev->data.t_data == NULL && data->token_type == TUBE_FLAG)
+	if (node->prev->u_data.t_data == NULL && data->token_type == TUBE_FLAG)
 		return (printf("A\n"), 1);
-	if ((t_token_data *)node->next->data.t_data != NULL)
+	if ((t_token_data *)node->next->u_data.t_data != NULL)
 	{
 		if (data->token_type == TUBE_FLAG)
 			if (find_contd_tube(node->next))
@@ -72,9 +72,9 @@ static int	find_contd_tube(t_blst *node)
 {
 	t_token_data	*data;
 
-	while (node->data.t_data != NULL)
+	while (node->u_data.t_data != NULL)
 	{
-		data = node->data.t_data;
+		data = node->u_data.t_data;
 		if (data->token_type == TUBE_FLAG)
 			return (1);
 		else if (data->token_type == SPACE_FLAG)
@@ -82,7 +82,7 @@ static int	find_contd_tube(t_blst *node)
 		else
 			break ;
 	}
-	if (node->data.t_data == NULL)
+	if (node->u_data.t_data == NULL)
 		return (1);
 	return (0);
 }
@@ -91,9 +91,9 @@ static int	find_contd_redirect(t_blst *node)
 {
 	t_token_data	*data;
 
-	while (node->data.t_data != NULL)
+	while (node->u_data.t_data != NULL)
 	{
-		data = node->data.t_data;
+		data = node->u_data.t_data;
 		if (TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
 			return (1);
 		else if (data->token_type == SPACE_FLAG)
@@ -101,7 +101,7 @@ static int	find_contd_redirect(t_blst *node)
 		else
 			break ;
 	}
-	if (node->data.t_data == NULL)
+	if (node->u_data.t_data == NULL)
 		return (1);
 	return (0);
 }
