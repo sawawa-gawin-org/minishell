@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/07 16:48:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/07 19:18:20 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ static void	scrape(t_blst **lst, int type);
 static int	is_type(t_blst **lst, int type);
 static void	rewrite_tok(t_blst **lst, int type);
 
+// # Description
+// This function merges the redirection tokens into one token.
+// remove ">", ">>", "<", "<<" 
 void	merge_redirects(t_blst **tokens_lst)
 {
 	t_token_data	*data;

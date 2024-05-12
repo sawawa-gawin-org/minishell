@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/06 04:55:38 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:33:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,5 @@ char			*find_cmd(char *path);
 void			do_first_process(char **cmd, char *path, t_pipex *pipe);
 void			do_middle_process(char **cmd, char *path, t_pipex *pipe);
 void			do_last_process(char **cmd, char *path, t_pipex *pipe);
-
-int				ft_strcmp(const char *s1, const char *s2);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:34:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/12 12:40:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static size_t	detect_token_len(char *line, int target_type)
 		len = 2;
 	else if (target_type == QUOTE_FLAG)
 	{
-		while (line[0] != '\0' && line[0] != line[len])
+		while (line[len] != '\0' && line[0] != '\0' && line[0] != line[len])
 			len++;
 		if (line[len] == '\'' || line[len] == '"')
 			len += 1;

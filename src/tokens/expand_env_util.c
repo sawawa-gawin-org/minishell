@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:15:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/07 17:10:46 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/12 06:52:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,29 @@
 static char	*get_value_from_env(char *tokenstr, int now, t_blst *envlst);
 static char	*get_env_for_key(char *val_name, t_blst *env_lst);
 
-char	*add_val_to_str(char *tokstr, char *str, int *now_old, t_blst *envlst)
+// concat not_env_part string and env_part string
+char	*add_val_to_str(
+			char *tokstr, char *buff, t_indexes *index, t_blst *envlst)
 {
-	char	*str1;
-	char	*str2;
-	char	*str3;
-	char	*str4;
+	char	*not_env_part;
+	char	*env_part;
+	char	*expanded;
 
-	str1 = ft_substr(tokstr, now_old[1], now_old[0] - now_old[1]);
-	if (!str1)
+	not_env_part = ft_substr(tokstr, index->old, index->now - index->old);
+	if (!not_env_part)
 		return (NULL);
-	str2 = get_value_from_env(tokstr, now_old[0], envlst);
-	if (!str2)
+	env_part = get_value_from_env(tokstr, index->now, envlst);
+	if (!env_part)
 	{
-		free(str1);
+		free(not_env_part);
 		return (NULL);
 	}
-	str3 = strjoin_allfree(str1, str2);
-	str4 = strjoin_allfree(str, str3);
-	return (str4);
+	expanded = strjoin_allfree(not_env_part, env_part);
+	return (strjoin_allfree(buff, expanded));
 }
 
+// get the env value key from the token string
+// ex) $PWD -> PWD
 static char	*get_value_from_env(char *tokenstr, int now, t_blst *envlst)
 {
 	int		val_len;
@@ -51,6 +53,8 @@ static char	*get_value_from_env(char *tokenstr, int now, t_blst *envlst)
 	return (ret);
 }
 
+// get the length of the value
+// ex) $PWD -> 3
 int	get_val_len(char *str, int now)
 {
 	int	i;
@@ -63,6 +67,7 @@ int	get_val_len(char *str, int now)
 	return (i);
 }
 
+// get the env value where `val_name == env_lst->u_data.e_data->key`
 static char	*get_env_for_key(char *val_name, t_blst *env_lst)
 {
 	t_blst		*tmp;
@@ -88,7 +93,7 @@ static char	*get_env_for_key(char *val_name, t_blst *env_lst)
 	return (ret);
 }
 
-//str1, str2を結合してそれらをfree
+// join two strings and free each string: str1, str2
 char	*strjoin_allfree(char *str1, char *str2)
 {
 	char	*str;

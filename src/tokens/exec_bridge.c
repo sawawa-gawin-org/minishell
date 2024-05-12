@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:24:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/01 15:57:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/12 09:13:08 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ static void	*ret_token_str(void *data);
 
 int	exec_tokenslst_cmds(t_blst *tokens_lst)
 {
-	t_blst	*converted_lst;
+	void	*converted_lst;
 	int		err;
 
-	converted_lst = (t_blst *)doub_lstdup(tokens_lst, ret_token_str, NULL);
+	converted_lst = doub_lstdup((void *)tokens_lst, ret_token_str, NULL);
 	if (converted_lst == NULL)
 		return (-1);
 	err = exec((void *)converted_lst);

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/07 17:07:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/11 19:26:13 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,12 @@ typedef struct s_node
 	struct s_node	*next;
 }			t_blst;
 
+typedef struct s_indexes
+{
+	int		now;
+	int		old;
+}			t_indexes;
+
 // init_env.c
 void		free_env_data(void *data);
 // tokenizer.c
@@ -125,7 +131,7 @@ int			expander(t_blst **tokens_lst, t_blst **env_lst);
 int			expand_env(t_blst **tokens_lst, t_blst *env_lst);
 // expand_util.c
 char		*add_val_to_str(
-				char *tokstr, char *str, int *now_old, t_blst *envlst);
+				char *tokstr, char *str, t_indexes *index, t_blst *envlst);
 int			get_val_len(char *str, int now);
 char		*strjoin_allfree(char *str1, char *str2);
 

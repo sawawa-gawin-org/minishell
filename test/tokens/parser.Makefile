@@ -8,8 +8,10 @@ REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 include $(REPOSITORY_ROOT)/src/$(BASE_DIRNAME)/Makefile
 
 # Parameters
-NAME := minishell.out
-TEST_SRCS := main.c
+NAME := parser.test.out
+TEST_SRCS := parser.test.c
+
+TEST_SRCS += converter.c
 
 # *****************************************************************************
 # From here onward is the same

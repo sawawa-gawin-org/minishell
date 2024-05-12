@@ -1,5 +1,14 @@
 {
 	"version": "0.2.0",
+	"compounds": [
+		{
+			"name": "tokens",
+			"configurations": [
+				"tokens(parser)",
+				"tokens(expander)",
+			]
+		}
+	],
 	"configurations": [
 		{
 			"name": "minishell",
@@ -75,6 +84,44 @@
 			"cwd": "${workspaceFolder}",
 			"MIMode": "gdb",
 			"preLaunchTask": "exec-make",
+			"linux": {
+				"MIMode": "gdb",
+				"miDebuggerPath": "/usr/bin/gdb"
+			},
+			"osx": {
+				"MIMode": "lldb",
+			},
+		},
+		{
+			"name": "tokens(parser)",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/test/tokens/parser.test_debug.out",
+			"args": [
+			],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"MIMode": "gdb",
+			"preLaunchTask": "tokens(parser)-make",
+			"linux": {
+				"MIMode": "gdb",
+				"miDebuggerPath": "/usr/bin/gdb"
+			},
+			"osx": {
+				"MIMode": "lldb",
+			},
+		},
+		{
+			"name": "tokens(expander)",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/test/tokens/expander.test_debug.out",
+			"args": [
+			],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"MIMode": "gdb",
+			"preLaunchTask": "tokens(expander)-make",
 			"linux": {
 				"MIMode": "gdb",
 				"miDebuggerPath": "/usr/bin/gdb"

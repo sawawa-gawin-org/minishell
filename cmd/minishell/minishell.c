@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/06 16:00:31 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/12 12:56:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int	main(void)
 			free(line);
 			continue ;
 		}
-		tokens_lst = tokenizer(&line);
-		if (parser(&tokens_lst))
+		tokens_lst = tokenizer(&line); // NULL check
+		if (parser(&tokens_lst, &env_lst))
 		{
-			if (!expander(&tokens_lst, &env_lst))
-				exit(1);
+			// if (!expander(&tokens_lst, &env_lst))
+			// 	exit(1);
 			exec_tokenslst_cmds(tokens_lst);
 		}
 		// exec_tokenslst_cmds(tokens_lst);

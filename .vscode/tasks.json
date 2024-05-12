@@ -66,6 +66,40 @@
             ],
 			"group": "build",
 		},
+		{
+			"type": "cppbuild",
+			"label": "tokens(parser)-make",
+			"command": "make",
+			"args": [
+				"test", "DEBUG_MODE=1",
+				"-C", "${workspaceFolder}/test/tokens",
+				"-f", "parser.Makefile"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+            "problemMatcher": [
+                "$gcc"
+            ],
+			"group": "build",
+		},
+		{
+			"type": "cppbuild",
+			"label": "tokens(expander)-make",
+			"command": "make",
+			"args": [
+				"test", "DEBUG_MODE=1",
+				"-C", "${workspaceFolder}/test/tokens",
+				"-f", "expander.Makefile"
+			],
+			"options": {
+				"cwd": "${fileDirname}"
+			},
+            "problemMatcher": [
+                "$gcc"
+            ],
+			"group": "build",
+		},
     ],
     "version": "2.0.0"
 }
