@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/12 08:46:36 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 02:53:43 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	delete_blank(t_blst **tokens_lst)
 {
 	t_blst			*head;
 	t_token_data	*data;
-	t_token_data	*next_data;
 
 	head = *tokens_lst;
 	while ((*tokens_lst)->u_data.t_data != NULL)
@@ -48,18 +47,17 @@ static void	purge(t_blst **lst)
 // 	t_blst			*head;
 // 	t_token_data	*data;
 // 	t_token_data	*next_data;
-
 // 	head = *tokens_lst;
 // 	while ((*tokens_lst)->u_data.t_data != NULL)
 // 	{
 // 		data = (*tokens_lst)->u_data.t_data;
 // 		next_data = (*tokens_lst)->next->u_data.t_data;
-// 		if (data->token_type == SPACE_FLAG \
+// 		if (data->token_type == SPACE_FLAG
 // 			&& (next_data == NULL || next_data->token_type == TUBE_FLAG))
 // 			purge(tokens_lst);
-// 		else if ((data->token_type == TUBE_FLAG \
-// 			|| data->sub_type == HEREDOC_QUOTE_FLAG \
-// 			|| (LESS_FLAG <= data->sub_type && data->sub_type <= APPEND_FLAG)) \
+// 		else if ((data->token_type == TUBE_FLAG
+// 			|| data->sub_type == HEREDOC_QUOTE_FLAG
+// 			|| (LESS_FLAG <= data->sub_type && data->sub_type <= APPEND_FLAG))
 // 			&& next_data->token_type == SPACE_FLAG)
 // 		{
 // 			(*tokens_lst) = (*tokens_lst)->next;
