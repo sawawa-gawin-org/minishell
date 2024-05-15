@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/15 15:09:06 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 15:18:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	open_out_files(char *dist, t_pipex *pipex, int appendflag);
 
 // # Description
 // This function merges the redirection tokens into one token.
-// remove ">", ">>", "<", "<<" 
+// remove ">", ">>", "<", "<<"
 int	parse_redirects(t_tokenlst **now_node, t_pipex *pipe)
 {
 	char		*token;
@@ -89,7 +89,7 @@ static int	open_out_files(char *dist, t_pipex *pipex, int appendflag)
 				dist, O_CREAT | O_WRONLY | O_APPEND, S_IREAD | S_IWRITE);
 	else if (dist && access(dist, F_OK) == -1 && appendflag)
 		pipex->file_out_fd = open(dist, O_WRONLY | O_APPEND);
-	if (pipex->file_in_fd == -1)
+	if (pipex->file_out_fd == -1)
 	{
 		close(pipex->file_in_fd);
 		close(pipex->file_out_fd);
