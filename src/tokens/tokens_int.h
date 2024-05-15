@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/15 04:33:56 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 06:48:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,7 @@ int			get_val_len(char *str, int now);
 char		*strjoin_allfree(char *str1, char *str2);
 
 // error_print.c
-void		error_println(char *str);
-void		fatal_println(char *str);
+int			error_println(char *str);
 int			syntax_error(char *token);
 
 #endif

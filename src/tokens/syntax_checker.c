@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 16:50:29 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/15 05:28:35 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 06:44:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	cmp_syntax(void *d, void *n)
 	else if (data->token_type & (META_FLAG & (~TUBE_FLAG)))
 		return (syntax_error("newline")); // case 4
 	if (data->token_type & OPEN_QUOTE_FLAG)
-		return (printf("case 5\n"), 1);
+		return (error_println("not interpret unclosed quotes"));
 	return (OK);
 }
 
