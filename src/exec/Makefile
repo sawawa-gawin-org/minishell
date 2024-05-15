@@ -15,6 +15,8 @@ SRCS += find_cmd.c
 SRCS += make_processes.c
 SRCS += make_processes_util.c
 SRCS += process_callback.c
+SRCS += parse_cmd.c
+SRCS += parse_redirects.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
