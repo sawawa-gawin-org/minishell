@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 16:50:29 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/12 09:20:36 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 05:28:35 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // static int	find_contd_tube(t_blst *node);
 // static int	find_contd_redirect(t_blst *node);
 static int	next_token_is_specific_flag(int flag, t_blst *node);
+static char	*get_next_token_str(t_blst *node);
 
 // # Description
 // This function checks the syntax of the tokens list.
@@ -31,7 +32,7 @@ int	syntax_checker(t_blst *lst, t_cmp_f cmp_f)
 	ret_node = lst;
 	while (ret_node->u_data.t_data != NULL)
 	{
-		if (cmp_f(ret_node->u_data.t_data, ret_node))
+		if (cmp_f(ret_node->u_data.t_data, ret_node) != OK)
 			return (0);
 		ret_node = ret_node->next;
 		i ++;
@@ -51,14 +52,34 @@ int	syntax_checker(t_blst *lst, t_cmp_f cmp_f)
 // - be.
 // {..., >, |, ...}, {..., >, >, ...}, {..., >, |, ...},...etc
 //
-// Case 4: Type is a redirection or TUBE at the current position, an
-// 	-d next is NULL
+// Case 4: Type is a redirection at the current position, and next is
+//  NULL
 // {..., >}, {..., >>}, {..., <}, {..., <<}
 //
 // Case 5: Type is OPEN_QUOTE at the current position
-// {..., "}
+// {..., \", ...}
 // TODO: ADD ERR MSG
-// minishell: syntax error near unexpected token `{"|", "<", ">", ">>", "<<"}'
+// TOKEN = {"|", "<", ">", ">>", "<<", "newline"}
+// minishell: syntax error near unexpected token `TOKEN'
+// 
+// TEST Cases
+// $ >|
+// bash: syntax error near unexpected token `newline'
+// $ >>|
+// bash: syntax error near unexpected token `|'
+// $ <|
+// bash: syntax error near unexpected token `|'
+// $ <<|
+// bash: syntax error near unexpected token `|'
+// $ > |
+// bash: syntax error near unexpected token `|'
+// $ >> |
+// bash: syntax error near unexpected token `|'
+// $ < |
+// bash: syntax error near unexpected token `|'
+// $ << |
+// bash: syntax error near unexpected token `|'
+
 int	cmp_syntax(void *d, void *n)
 {
 	t_token_data	*data;
@@ -67,21 +88,24 @@ int	cmp_syntax(void *d, void *n)
 	data = d;
 	node = n;
 	if (node->prev->u_data.t_data == NULL && (data->token_type & TUBE_FLAG))
-		return (printf("case 1\n"), 1);
+		return (syntax_error("|")); // case 1
 	if (node->next->u_data.t_data != NULL)
 	{
 		if ((data->token_type & TUBE_FLAG)
 			&& next_token_is_specific_flag(TUBE_FLAG, node->next))
-			return (printf("case 2\n"), 1);
+			return (syntax_error("|")); // case 2
+		else if (data->token_type & GREAT_FLAG
+			&& node->next->u_data.t_data->token_type & TUBE_FLAG)
+			return (syntax_error("newline")); // case 3
 		else if ((data->token_type & (META_FLAG & (~TUBE_FLAG)))
 			&& next_token_is_specific_flag(META_FLAG, node->next))
-			return (printf("case 3\n"), 1);
+			return (syntax_error(get_next_token_str(node->next))); // case 3
 	}
 	else if (data->token_type & (META_FLAG & (~TUBE_FLAG)))
-		return (printf("case 4\n"), 1);
+		return (syntax_error("newline")); // case 4
 	if (data->token_type & OPEN_QUOTE_FLAG)
 		return (printf("case 5\n"), 1);
-	return (0);
+	return (OK);
 }
 
 static int	next_token_is_specific_flag(int flag, t_blst *node)
@@ -98,9 +122,15 @@ static int	next_token_is_specific_flag(int flag, t_blst *node)
 		else
 			break ;
 	}
-	if (node->u_data.t_data == NULL)
-		return (1);
 	return (0);
+}
+
+static char	*get_next_token_str(t_blst *node)
+{
+	while (node->u_data.t_data != NULL
+		&& node->u_data.t_data->token_type & SPACE_FLAG)
+		node = node->next;
+	return (node->u_data.t_data->token_str);
 }
 
 // static int	find_contd_tube(t_blst *node)
