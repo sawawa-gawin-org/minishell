@@ -20,7 +20,6 @@ SRCS += heredoc_get.c
 SRCS += heredoc_open.c
 SRCS += heredoc_put.c
 SRCS += init_env.c
-SRCS += merge_redirects.c
 SRCS += parser.c
 SRCS += syntax_checker.c
 SRCS += tokenizer.c
