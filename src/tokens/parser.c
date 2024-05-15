@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/27 15:43:43 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/01 15:56:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "parser.h"
-#include "libft.h"
-#include "minishell.h"
+#include "tokens_int.h"
 
 // static void	put_tokens_lst(t_blst *tokens_lst);
 

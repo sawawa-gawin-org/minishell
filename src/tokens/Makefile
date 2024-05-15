@@ -4,11 +4,27 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := libexpander.a
-HEADERS := expander.h
-INT_HEADERS :=
+LIB_NAME := libtokens.a
+HEADERS := tokens.h
+INT_HEADERS := tokens_int.h
 
-SRCS := expander.c expand_env.c expand_env_util.c
+SRCS :=
+
+SRCS += delete_blank.c
+SRCS += delete_quote.c
+SRCS += exec_bridge.c
+SRCS += expand_env.c
+SRCS += expand_env_util.c
+SRCS += expander.c
+SRCS += heredoc_get.c
+SRCS += heredoc_open.c
+SRCS += heredoc_put.c
+SRCS += init_env.c
+SRCS += merge_redirects.c
+SRCS += parser.c
+SRCS += syntax_checker.c
+SRCS += tokenizer.c
+SRCS += tokenizer_util.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -22,8 +38,8 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lexec -ldbllst -lft -lreadline
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lexec_debug -ldbllst_debug -lft_debug -lreadline
+LFLAGS := -L$(LIB_EXPORT_DIR) -lparser -lexpander -lexec -ldbllst -lft -lreadline 
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lparser_debug -lexpander_debug -lexec_debug -ldbllst_debug -lft_debug -lreadline 
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 

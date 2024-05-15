@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/27 20:39:18 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:23:33 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "expander.h"
-#include "minishell.h"
-#include "libft.h"
+#include "tokens_int.h"
 
 static void	put_tokens_lst(t_blst *tokens_lst);
 
@@ -35,9 +32,9 @@ static void	put_tokens_lst(t_blst *tokens_lst)
 
 	tmp = tokens_lst;
 	i = 1;
-	while (tmp->data != NULL)
+	while (tmp->data.t_data != NULL)
 	{
-		data = tmp->data;
+		data = tmp->data.t_data;
 		printf("%d: text:%s, type:%d, sub:%d\n", i, data->token_str, data->token_type, data->sub_type);
 		tmp = tmp->next;
 		i++;

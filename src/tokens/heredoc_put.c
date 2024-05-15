@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_put.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/21 17:49:25 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:29:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dbllst.h"
-#include "libft.h"
-#include "minishell.h"
+#include "tokens_int.h"
 
 static int	process_tokens(t_blst **tmp, t_token_data *data);
 static int	rewrite_tok(t_blst **lst, char *str, int type);
@@ -25,9 +23,9 @@ int	heredoc_put(t_blst **tokens_lst)
 	t_token_data	*data;
 
 	tmp = *tokens_lst;
-	while (tmp->data != NULL)
+	while (tmp->data.t_data != NULL)
 	{
-		data = tmp->data;
+		data = tmp->data.t_data;
 		if (data->token_type == HEREDOC_FLAG)
 		{
 			if (!process_tokens(&tmp, data))
@@ -49,9 +47,9 @@ static int	process_tokens(t_blst **tmp, t_token_data *data)
 	{
 		purged = doub_lstpurge((void **)&(*tmp));
 		doub_lstdelone(purged, free_token_data);
-		data = (*tmp)->data;
+		data = (*tmp)->data.t_data;
 	}
-	if (*tmp != NULL && (*tmp)->data != NULL)
+	if (*tmp != NULL && (*tmp)->data.t_data != NULL)
 	{
 		flag = 0;
 		heredoc_str = heredoc_open(data->token_str);
@@ -66,7 +64,7 @@ static int	rewrite_tok(t_blst **lst, char *str, int type)
 {
 	t_token_data	*data;
 
-	data = (*lst)->data;
+	data = (*lst)->data.t_data;
 	if (data->token_str)
 		free(data->token_str);
 	data->token_str = ft_strdup(str);

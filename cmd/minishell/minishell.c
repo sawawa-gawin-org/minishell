@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 14:56:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/26 18:38:26 by saraki           ###   ########.fr       */
+/*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/05/06 16:00:31 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "tokens.h"
+#include "dbllst.h"
 
 // void	end(void)__attribute__((destructor));
 
@@ -19,10 +21,59 @@
 // 	system("leaks minishell");
 // }
 
-int	main(int argc, char *argv[], char *envp[])
+volatile sig_atomic_t	g_signal = 0;
+
+static int	is_blank_str(char *str);
+
+int	main(void)
 {
-	(void) argc;
-	(void) argv;
-	minishell(envp);
+	char			*line;
+	void			*tokens_lst;
+	void			*env_lst;
+
+	env_lst = init_env();
+	if (env_lst == NULL)
+		return (1);
+	init_signal();
+	line = NULL;
+	while (1)
+	{
+		tokens_lst = NULL;
+		line = readline("minishell$ ");
+		if (g_signal != 0)
+			g_signal = 0;
+		if (line == NULL)
+			break ;
+		if (*line)
+			add_history(line);
+		if (is_blank_str(line))
+		{
+			free(line);
+			continue ;
+		}
+		tokens_lst = tokenizer(&line);
+		if (parser(&tokens_lst))
+		{
+			if (!expander(&tokens_lst, &env_lst))
+				exit(1);
+			exec_tokenslst_cmds(tokens_lst);
+		}
+		// exec_tokenslst_cmds(tokens_lst);
+		free(line);
+		doub_lstdelall(&tokens_lst, free_token_data);
+	}
+	doub_lstdelall(&env_lst, free_env_data);
+	return (0);
+}
+
+static int	is_blank_str(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (is_blank(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return (1);
 	return (0);
 }

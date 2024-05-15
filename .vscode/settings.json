@@ -9,7 +9,14 @@
 		"readline.h": "c",
 		"fcntl.h": "c",
 		"signal.h": "c",
-		"dbllst.h": "c"
+		"dbllst.h": "c",
+		"expander_int.h": "c",
+		"parser.h": "c",
+		"parser_int.h": "c",
+		"minishell_int.h": "c",
+		"tokens.h": "c",
+		"tokens_int.h": "c",
+		"types.h": "c"
 	},
 	"C_Cpp.errorSquiggles": "disabled"
 }

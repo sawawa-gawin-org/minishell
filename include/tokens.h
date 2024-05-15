@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tokens.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 14:56:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/01 14:39:33 by saraki           ###   ########.fr       */
+/*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
+/*   Updated: 2024/05/06 16:01:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef TOKENS_H
+# define TOKENS_H
 
-// void	end(void)__attribute__((destructor));
+// init_env.c
+void	*init_env(void);
+void	free_env_data(void *data);
 
-// void	end(void)
-// {
-// 	system("leaks minishell.out");
-// }
+// tokenizer.c
+void	*tokenizer(char **line);
+int		is_blank(int c);
+void	free_token_data(void *data);
 
-int	main(void)
-{
-	minishell();
-	return (0);
-}
+int		exec_tokenslst_cmds(void *tokens_lst);
+
+// parser.c
+int		parser(void **tokens_lst);
+// expander.c
+int		expander(void **tokens_lst, void **env_lst);
+
+# endif

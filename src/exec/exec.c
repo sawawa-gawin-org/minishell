@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/06 06:07:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/01 14:41:41 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 static t_pipelst	*init_pipe_lst(t_tokenlst	*token_head_node);
 static t_pipelst	*init_pipe_node(int index);
 static void			close_fds_all(t_pipelst *pipe_head_node);
-
-volatile sig_atomic_t	g_signal;
 
 // # about token_head_node
 // `token_head_node` is a linked list that stores the command line.
