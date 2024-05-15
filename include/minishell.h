@@ -23,21 +23,7 @@
 # include <readline/history.h>
 # include <termios.h>
 
-extern volatile sig_atomic_t g_signal;
-
-typedef struct s_env_data
-{
-	char	*key;
-	char	*val;
-	int		exported;
-}			t_env_data;
-
-typedef struct s_node
-{
-	struct s_node	*prev;
-	t_env_data		*data;
-	struct s_node	*next;
-}				t_blst;
+extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_sig
 {

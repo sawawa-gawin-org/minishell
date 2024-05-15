@@ -8,7 +8,13 @@ LIB_NAME := libexec.a
 HEADERS := exec.h
 INT_HEADERS := exec_int.h
 
-SRCS := exec.c find_cmd.c make_processes.c make_processes_util.c process_callback.c utils.c
+SRCS :=
+
+SRCS += exec.c
+SRCS += find_cmd.c
+SRCS += make_processes.c
+SRCS += make_processes_util.c
+SRCS += process_callback.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

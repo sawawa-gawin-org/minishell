@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/01 15:56:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/11 17:43:53 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,35 @@
 
 // static void	put_tokens_lst(t_blst *tokens_lst);
 
-int	parser(t_blst **tokens_lst)
+// # Description
+// This function is the main parser function.
+//
+// exapmle:
+// before
+// ```c
+// lst->data = "ls"
+// lst->next->data = " "
+// ...->next->data = "-la"
+// ...->next->data = " "
+// ...->next->data = " "
+// ...->next->data = "|"
+// ...->next->data = " "
+// ...->next->data = "wc"
+// ...->next->data = " "
+// ...->next->data = "-l"
+// ```
+// after
+// ```c
+// lst->data = "ls"
+// lst->next->data = " "
+// ...->next->data = "-la"
+// ...->next->data = "|"
+// ...->next->data = "wc"
+// ...->next->data = " "
+// ...->next->data = "-l"
+// ```
+
+int	parser(t_blst **tokens_lst, t_blst **env_lst)
 {
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
@@ -22,6 +50,8 @@ int	parser(t_blst **tokens_lst)
 	delete_quote(tokens_lst);
 	delete_blank(tokens_lst);
 	// put_tokens_lst(*tokens_lst);
+	if (!expander(tokens_lst, env_lst))
+		return (0);
 	return (1);
 }
 

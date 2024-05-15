@@ -38,8 +38,8 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lparser -lexpander -lexec -ldbllst -lft -lreadline 
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lparser_debug -lexpander_debug -lexec_debug -ldbllst_debug -lft_debug -lreadline 
+LFLAGS := -L$(LIB_EXPORT_DIR) -lexec -ldbllst -lft -lreadline 
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lexec_debug -ldbllst_debug -lft_debug -lreadline 
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 

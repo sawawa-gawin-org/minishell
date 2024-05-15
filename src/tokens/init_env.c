@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/06 16:11:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:08:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 static int			strlen_eq(char *str);
 static t_blst		*new_env_node(char *str, int flag);
 static t_env_data	*new_env_data(char *str, int flag);
-
 
 void	*init_env(void)
 {

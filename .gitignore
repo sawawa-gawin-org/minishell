@@ -56,5 +56,5 @@ minishell
 minishell_debug
 !minishell/
 lib
-
+.vscode/settings.json
 .DS_Store
