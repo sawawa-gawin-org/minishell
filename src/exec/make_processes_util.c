@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/06 05:08:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 07:24:03 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ int	make_process(
 	t_pipex		*pipe;
 	t_tokenlst	*section_start_node;
 
-	pipe = (t_pipex *)pipe_head_node->data;
+	pipe = (t_pipex *)pipe_head_node->u_data.pipe_data;
 	section_start_node = shift_token_section(token_head_node, pipe->index);
 	cmd = convert_tokenlst_to_char_array(section_start_node);
 	if (cmd == NULL)
 		return (ERR);
-	path = find_cmd(section_start_node->data);
+	path = find_cmd(section_start_node->u_data.str);
 	if (!path)
 	{
 		free(cmd);
@@ -58,7 +58,8 @@ static char	**convert_tokenlst_to_char_array(
 
 	size = 0;
 	now_node = section_start_node;
-	while (now_node->data != NULL && ft_strcmp((char *)now_node->data, "|"))
+	while (now_node->u_data.str != NULL
+		&& ft_strcmp(now_node->u_data.str, "|"))
 	{
 		size ++;
 		now_node = now_node->next;
@@ -68,9 +69,9 @@ static char	**convert_tokenlst_to_char_array(
 		return (NULL);
 	i = 0;
 	now_node = section_start_node;
-	while (i < size && now_node->data != NULL)
+	while (i < size && now_node->u_data.str != NULL)
 	{
-		cmd[i] = (char *)now_node->data;
+		cmd[i] = now_node->u_data.str;
 		now_node = now_node->next;
 		i++;
 	}
@@ -86,10 +87,10 @@ static t_tokenlst	*shift_token_section(
 
 	i = 0;
 	section_start_node = token_head_node;
-	while (i < index && section_start_node->data != NULL)
+	while (i < index && section_start_node->u_data.str != NULL)
 	{
 		section_start_node = section_start_node->next;
-		if (ft_strcmp((char *)section_start_node->data, "|") == 0)
+		if (ft_strcmp(section_start_node->u_data.str, "|") == 0)
 		{
 			i++;
 			section_start_node = section_start_node->next;

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 03:43:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/06 04:51:21 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 07:24:21 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	close_fds_in_processes(t_blst *pipe_head_node, int index)
 	int		i;
 
 	i = 0;
-	while (pipe_head_node->data != NULL)
+	while (pipe_head_node->u_data.pipe_data != NULL)
 	{
 		if (i == index)
 		{
@@ -50,7 +50,7 @@ static void	close_fds_in_processes(t_blst *pipe_head_node, int index)
 			pipe_head_node = pipe_head_node->next;
 			continue ;
 		}
-		pipe = (t_pipex *) pipe_head_node->data;
+		pipe = (t_pipex *) pipe_head_node->u_data.pipe_data;
 		if (pipe->pipe_in_fd >= 0)
 			close(pipe->pipe_in_fd);
 		if (pipe->pipe_out_fd >= 0)
