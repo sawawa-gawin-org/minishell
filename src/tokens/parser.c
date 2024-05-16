@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/16 02:56:03 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/16 14:35:41 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,11 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst)
 {
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
 		return (0);
-	merge_redirects(tokens_lst);
+	// merge_redirects(tokens_lst);
 	delete_quote(tokens_lst);
 	delete_blank(tokens_lst);
 	// put_tokens_lst(*tokens_lst);
+	heredoc_put(tokens_lst);
 	if (!expander(tokens_lst, env_lst))
 		return (0);
 	return (1);
