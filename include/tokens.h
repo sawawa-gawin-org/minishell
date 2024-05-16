@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/11 17:41:01 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/16 02:55:36 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ int		parser(void **tokens_lst, void **env_lst);
 
 // expander.c
 int		expander(void **tokens_lst, void **env_lst);
+
+// error_print.c
+int		error_println(char *str);
 
 #endif

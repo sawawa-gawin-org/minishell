@@ -11,7 +11,7 @@ include $(REPOSITORY_ROOT)/src/$(BASE_DIRNAME)/Makefile
 NAME := expander.test.out
 TEST_SRCS := expander.test.c
 
-TEST_SRCS += converter.c
+TEST_SRCS += 
 
 # *****************************************************************************
 # From here onward is the same

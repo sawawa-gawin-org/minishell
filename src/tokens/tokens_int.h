@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/11 19:26:13 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 06:48:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,13 @@
 # include <sys/wait.h> // Linux
 # include <sys/stat.h> // Linux
 
+# include <errno.h>
+
 # include <readline/readline.h>
 # include <readline/history.h>
+
+# define OK 0
+# define ERR -1
 
 extern volatile sig_atomic_t	g_signal;
 
@@ -134,5 +139,9 @@ char		*add_val_to_str(
 				char *tokstr, char *str, t_indexes *index, t_blst *envlst);
 int			get_val_len(char *str, int now);
 char		*strjoin_allfree(char *str1, char *str2);
+
+// error_print.c
+int			error_println(char *str);
+int			syntax_error(char *token);
 
 #endif

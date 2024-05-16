@@ -25,6 +25,7 @@ SRCS += parser.c
 SRCS += syntax_checker.c
 SRCS += tokenizer.c
 SRCS += tokenizer_util.c
+SRCS += error_print.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
