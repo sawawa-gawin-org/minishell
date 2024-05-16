@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/15 08:55:29 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 06:48:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ int			syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 int			cmp_syntax(void *d, void *n);
 // delete_quote.c
 void		delete_quote(t_blst **tokens_lst);
+// merge_redirects.c
+void		merge_redirects(t_blst **tokens_lst);
 // delete_blank.c
 void		delete_blank(t_blst **tokens_lst);
 
