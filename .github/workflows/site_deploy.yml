@@ -2,7 +2,7 @@ name: run Doxygen and deploy Firebase Hosting
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "add-CI" ]
 
 jobs:
   run_doxygen:
