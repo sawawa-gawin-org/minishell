@@ -1,0 +1,26 @@
+name: run Doxygen and deploy Firebase Hosting
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  run_doxygen:
+    runs-on: ubuntu-latest
+    container:
+      image: hrektts/doxygen:latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Run Doxygen from Doxyfile
+        run: |
+          cd build
+          doxygen Doxyfile
+          cd html
+          ls -la
+      # - uses: FirebaseExtended/action-hosting-deploy@v0
+      #   with:
+      #     repoToken: '${{ secrets.GITHUB_TOKEN }}'
+      #     firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+      #     projectId: minishell-site
+      #     channelId: live
