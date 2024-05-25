@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:24:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/12 09:13:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/16 18:30:31 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ int	exec_tokenslst_cmds(t_blst *tokens_lst)
 
 	converted_lst = doub_lstdup((void *)tokens_lst, ret_token_str, NULL);
 	if (converted_lst == NULL)
-		return (-1);
+		return (ERR);
 	err = exec((void *)converted_lst);
 	doub_lstdelall((void **) &converted_lst, NULL);
 	if (err)
-		return (-1);
-	return (0);
+		return (ERR);
+	return (OK);
 }
 
 // this function does not allocate memory for the new token.

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/15 15:18:39 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/20 12:06:21 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static int	redirection(t_tokenlst **now_node, t_pipex *pipe)
 	symbol = (t_tokenlst *)doub_lstpurge((void **)now_node);
 	dist = (t_tokenlst *)doub_lstpurge((void **)now_node);
 	if (ft_strcmp(symbol->u_data.str, ">") == 0)
-		open_in_files(dist->u_data.str, pipe, 0);
-	else if (ft_strcmp(symbol->u_data.str, ">>") == 0)
-		open_in_files(dist->u_data.str, pipe, 1);
-	else if (ft_strcmp(symbol->u_data.str, "<") == 0)
 		open_out_files(dist->u_data.str, pipe, 0);
-	else if (ft_strcmp(symbol->u_data.str, "<<") == 0)
+	else if (ft_strcmp(symbol->u_data.str, ">>") == 0)
 		open_out_files(dist->u_data.str, pipe, 1);
+	else if (ft_strcmp(symbol->u_data.str, "<") == 0)
+		open_in_files(dist->u_data.str, pipe, 0);
+	else if (ft_strcmp(symbol->u_data.str, "<<") == 0)
+		open_in_files(dist->u_data.str, pipe, 1);
 	doub_lstdelone((void *)symbol, NULL);
 	doub_lstdelone((void *)dist, NULL);
 	return (OK);

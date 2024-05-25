@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/07 16:48:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/16 17:37:20 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	delete_quote(t_blst **tokens_lst)
 
 static void	process_token_length(t_blst **lst)
 {
-	int				len;
+	size_t			len;
 	void			*purged;
 	t_token_data	*data;
 
@@ -53,6 +53,8 @@ static void	process_token_length(t_blst **lst)
 		replace_noquote(data->token_str, len);
 		*lst = (*lst)->next;
 	}
+	else
+		*lst = (*lst)->next;
 }
 
 static void	replace_noquote(char *str, int len)
