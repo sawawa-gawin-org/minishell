@@ -6,14 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/25 21:35:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/26 08:58:55 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
 static char	*get_delimiter(char *delimiter_str);
-static char	*replace_delimiter_as_token(t_blst **delimiter_node);
+static int	replace_delimiter_as_token(char *delimiter, t_blst **delimiter_node);
 static int	is_flag(char *heredoc_str, int type);
 static char	*append_current_heredoc(
 				char *source, t_blst *gain_node, char *delim_str);
@@ -35,7 +35,7 @@ char	*parse_heredoc(t_blst **tokens_lst)
 		if (data->token_type == HEREDOC_FLAG)
 		{
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
-			if (replace_delimiter_as_token(&(now_node->next)) == NULL || delim_str == NULL)
+			if (replace_delimiter_as_token(delim_str, &(now_node->next)) == ERR)
 			{
 				free(history);
 				free(delim_str);
@@ -46,7 +46,8 @@ char	*parse_heredoc(t_blst **tokens_lst)
 		}
 		now_node = now_node->next;
 	}
-	return (history);
+	return (history);  // ここがNULLならadd_historyに普通のlineが渡される。
+	// historyはデリミタつき
 }
 
 static char	*append_current_heredoc(
@@ -74,33 +75,28 @@ static char	*append_current_heredoc(
 	return (ret);
 }
 
-static char	*replace_delimiter_as_token(t_blst **delimiter_node)
+static int	replace_delimiter_as_token(char *delimiter_str, t_blst **delimiter_node)
 {
 	t_token_data	*delimiter_data;
 	char			*heredoc_str;
 	int				type;
-	char			*delimiter_substr;
 
-	if (delimiter_node == NULL || *delimiter_node == NULL)
-		return (NULL);
+	if (delimiter_str == NULL ||delimiter_node == NULL || *delimiter_node == NULL)
+		return (ERR);
 	delimiter_data = (*delimiter_node)->u_data.t_data;
-	delimiter_substr = get_delimiter(delimiter_data->token_str);
-	if (delimiter_data != NULL && delimiter_substr != NULL)
+	if (delimiter_data != NULL)
 	{
-		heredoc_str = get_heredoc_input(delimiter_substr);
+		heredoc_str = get_heredoc_input(delimiter_str, (*delimiter_node)->u_data.t_data->token_str);
 		if (heredoc_str == NULL)
-		{
-			free(delimiter_substr);
-			return (NULL);
-		}
+			return (ERR);
 		type = is_flag(heredoc_str, delimiter_data->token_type);
 		free(delimiter_data->token_str);
 		delimiter_data->token_str = heredoc_str;
 		delimiter_data->token_type = type;
 	}
 	else
-		return (NULL);
-	return (heredoc_str);
+		return (ERR);
+	return (OK);
 }
 
 static char	*get_delimiter(char *delimiter_str)

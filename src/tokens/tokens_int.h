@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/16 18:25:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/26 08:58:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int			syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 // heredoc.c
 char		*parse_heredoc(t_blst **tokens_lst);
 // heredoc_utils.c
-char		*get_heredoc_input(char *delimiter);
+char		*get_heredoc_input(char *delimiter, char *token_str);
 
 
 int			cmp_syntax(void *d, void *n);

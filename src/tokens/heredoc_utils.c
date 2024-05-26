@@ -6,19 +6,22 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/25 21:23:53 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/26 09:03:04 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
 static char	*append_newline(char *history_str, char *line);
+static char	*get_inline_heredoc_input(char *delimiter, char *token_str);
 
-char	*get_heredoc_input(char *delimiter) // FIX: #81
+char	*get_heredoc_input(char *delimiter, char *token_str)
 {
 	char	*line;
 	char	*all_line;
 
+	if (ft_strcmp(delimiter, token_str) != 0)
+		return (get_inline_heredoc_input(delimiter, token_str));
 	all_line = (char *)ft_calloc(1, sizeof(char));
 	if (all_line == NULL)
 		return (NULL);
@@ -39,6 +42,25 @@ char	*get_heredoc_input(char *delimiter) // FIX: #81
 		if (all_line == NULL)
 			break ;
 	}
+	return (all_line);
+}
+
+static char	*get_inline_heredoc_input(char *delimiter, char *token_str)
+{
+	char	*token_str_without_dekimiter;
+	char	*all_line;
+	char	*little;
+
+	little = ft_strjoin(delimiter, "\n");
+	if (little == NULL)
+		return (NULL);
+	token_str_without_dekimiter = ft_strnstr(token_str, little, INT_MAX) + ft_strlen(little);
+	free(little);
+	if (token_str_without_dekimiter == NULL)
+		return (NULL);
+	all_line = ft_strdup(token_str_without_dekimiter);
+	if (all_line == NULL)
+		return (NULL);
 	return (all_line);
 }
 
