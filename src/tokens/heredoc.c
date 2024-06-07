@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/29 13:44:01 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/07 03:33:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*parse_heredoc(t_blst **tokens_lst)
 				free(delim_str);
 				return (NULL);
 			}
-			history = append_current_heredoc(history, now_node->next, delim_str, );
+			history = append_current_heredoc(history, now_node->next, delim_str);
 			free(delim_str);
 		}
 		now_node = now_node->next;
@@ -59,7 +59,7 @@ static char	*append_current_heredoc(
 	size_t	total_len;
 
 	gain_str = gain_node->u_data.t_data->token_str;
-	ret = ft_strjoin(ft_strjoin(ft_strjoin(source, gain_str), delim_str), "\n");
+	ret = ft_strjoin(ft_strjoin(ft_strjoin(source, gain_str), delim_str), "\n");//2, 3段階目で失敗した時にfree出来ない
 	free(source);
 	if (ret == NULL)
 		return (NULL);
