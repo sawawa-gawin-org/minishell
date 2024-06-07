@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/26 08:58:55 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/29 13:44:01 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*parse_heredoc(t_blst **tokens_lst)
 	t_token_data	*data;
 	char			*history;
 	char			*delim_str;
+	int				flag;
 
 	now_node = *tokens_lst;
 	history = ft_calloc(1, sizeof(char));
@@ -35,19 +36,19 @@ char	*parse_heredoc(t_blst **tokens_lst)
 		if (data->token_type == HEREDOC_FLAG)
 		{
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
-			if (replace_delimiter_as_token(delim_str, &(now_node->next)) == ERR)
+			flag = replace_delimiter_as_token(delim_str, &(now_node->next));
+			if (flag == ERR)
 			{
 				free(history);
 				free(delim_str);
 				return (NULL);
 			}
-			history = append_current_heredoc(history, now_node->next, delim_str);
+			history = append_current_heredoc(history, now_node->next, delim_str, );
 			free(delim_str);
 		}
 		now_node = now_node->next;
 	}
-	return (history);  // ここがNULLならadd_historyに普通のlineが渡される。
-	// historyはデリミタつき
+	return (history);
 }
 
 static char	*append_current_heredoc(
@@ -58,20 +59,10 @@ static char	*append_current_heredoc(
 	size_t	total_len;
 
 	gain_str = gain_node->u_data.t_data->token_str;
-	total_len = ft_strlen(source); // << 付きの文章
-	total_len += ft_strlen(gain_str); // << 付きの文章 + 得られた入力
-	total_len += ft_strlen(delim_str) + 1; // << 付きの文章 + 得られた入力 + デリミタ + (改行)
-	ret = ft_calloc(total_len + 1, sizeof(char));
-	if (ret == NULL)
-	{
-		free(source);
-		return (NULL);
-	}
-	ft_strlcat(ret, source, ft_strlen(source) + 1);
+	ret = ft_strjoin(ft_strjoin(ft_strjoin(source, gain_str), delim_str), "\n");
 	free(source);
-	ft_strlcat(ret, gain_str, ft_strlen(ret) + ft_strlen(gain_str) + 1);
-	ft_strlcat(ret, delim_str, ft_strlen(ret) + ft_strlen(delim_str) + 1);
-	ft_strlcat(ret, "\n", ft_strlen(ret) + 1 + 1);
+	if (ret == NULL)
+		return (NULL);
 	return (ret);
 }
 
@@ -79,13 +70,17 @@ static int	replace_delimiter_as_token(char *delimiter_str, t_blst **delimiter_no
 {
 	t_token_data	*delimiter_data;
 	char			*heredoc_str;
+	int				flag;
 	int				type;
 
+	flag = OK;
 	if (delimiter_str == NULL ||delimiter_node == NULL || *delimiter_node == NULL)
 		return (ERR);
 	delimiter_data = (*delimiter_node)->u_data.t_data;
 	if (delimiter_data != NULL)
 	{
+		if (ft_strcmp(delimiter_str, delimiter_data->token_str) != 0)
+			flag = 1;
 		heredoc_str = get_heredoc_input(delimiter_str, (*delimiter_node)->u_data.t_data->token_str);
 		if (heredoc_str == NULL)
 			return (ERR);
@@ -96,7 +91,7 @@ static int	replace_delimiter_as_token(char *delimiter_str, t_blst **delimiter_no
 	}
 	else
 		return (ERR);
-	return (OK);
+	return (flag);
 }
 
 static char	*get_delimiter(char *delimiter_str)
