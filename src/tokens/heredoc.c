@@ -6,17 +6,16 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/07 03:33:23 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/08 04:25:43 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
 static char	*get_delimiter(char *delimiter_str);
-static int	replace_delimiter_as_token(char *delimiter, t_blst **delimiter_node);
+static char	*replace_delimiter_as_token(
+				char *delimiter, t_blst **delimiter_node);
 static int	is_flag(char *heredoc_str, int type);
-static char	*append_current_heredoc(
-				char *source, t_blst *gain_node, char *delim_str);
 
 // #Description
 // Update the token string to the heredoc string.
@@ -26,7 +25,6 @@ char	*parse_heredoc(t_blst **tokens_lst)
 	t_token_data	*data;
 	char			*history;
 	char			*delim_str;
-	int				flag;
 
 	now_node = *tokens_lst;
 	history = ft_calloc(1, sizeof(char));
@@ -36,14 +34,13 @@ char	*parse_heredoc(t_blst **tokens_lst)
 		if (data->token_type == HEREDOC_FLAG)
 		{
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
-			flag = replace_delimiter_as_token(delim_str, &(now_node->next));
-			if (flag == ERR)
+			history = replace_delimiter_as_token(delim_str, &(now_node->next));
+			if (history == NULL)
 			{
 				free(history);
 				free(delim_str);
 				return (NULL);
 			}
-			history = append_current_heredoc(history, now_node->next, delim_str);
 			free(delim_str);
 		}
 		now_node = now_node->next;
@@ -51,22 +48,8 @@ char	*parse_heredoc(t_blst **tokens_lst)
 	return (history);
 }
 
-static char	*append_current_heredoc(
-				char *source, t_blst *gain_node, char *delim_str)
-{
-	char	*ret;
-	char	*gain_str;
-	size_t	total_len;
-
-	gain_str = gain_node->u_data.t_data->token_str;
-	ret = ft_strjoin(ft_strjoin(ft_strjoin(source, gain_str), delim_str), "\n");//2, 3段階目で失敗した時にfree出来ない
-	free(source);
-	if (ret == NULL)
-		return (NULL);
-	return (ret);
-}
-
-static int	replace_delimiter_as_token(char *delimiter_str, t_blst **delimiter_node)
+static char	*replace_delimiter_as_token(
+				char *delimiter_str, t_blst **delimiter_node)
 {
 	t_token_data	*delimiter_data;
 	char			*heredoc_str;

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/26 09:03:04 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/08 04:24:14 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static char	*append_newline(char *history_str, char *line);
 static char	*get_inline_heredoc_input(char *delimiter, char *token_str);
+static char	*append_current_heredoc(
+				char *source, t_blst *gain_node, char *delim_str);
 
 char	*get_heredoc_input(char *delimiter, char *token_str)
 {
@@ -78,4 +80,19 @@ static char	*append_newline(char *all_line, char *line)
 	if (ret_with_nl == NULL)
 		return (NULL);	
 	return (ret_with_nl);
+}
+
+static char	*append_current_heredoc(
+				char *source, t_blst *gain_node, char *delim_str)
+{
+	char	*ret;
+	char	*gain_str;
+	size_t	total_len;
+
+	gain_str = gain_node->u_data.t_data->token_str;
+	ret = ft_strjoin(ft_strjoin(ft_strjoin(source, gain_str), delim_str), "\n");//2, 3段階目で失敗した時にfree出来ない
+	free(source);
+	if (ret == NULL)
+		return (NULL);
+	return (ret);
 }
