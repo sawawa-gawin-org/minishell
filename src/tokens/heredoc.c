@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/08 04:25:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/08 04:44:15 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,33 +19,31 @@ static int	is_flag(char *heredoc_str, int type);
 
 // #Description
 // Update the token string to the heredoc string.
-char	*parse_heredoc(t_blst **tokens_lst)
+// allocate the input string used `add_history`.
+int	parse_heredoc(t_blst **tokens_lst, char **history)
 {
 	t_blst			*now_node;
 	t_token_data	*data;
-	char			*history;
 	char			*delim_str;
+	int				is_inclued_heredoc;
 
 	now_node = *tokens_lst;
-	history = ft_calloc(1, sizeof(char));
-	while (history != NULL && now_node->u_data.t_data != NULL)
+	is_inclued_heredoc = 0;
+	while (now_node->u_data.t_data != NULL)
 	{
 		data = now_node->u_data.t_data;
 		if (data->token_type == HEREDOC_FLAG)
 		{
+			is_inclued_heredoc = 1;
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
-			history = replace_delimiter_as_token(delim_str, &(now_node->next));
-			if (history == NULL)
-			{
-				free(history);
-				free(delim_str);
-				return (NULL);
-			}
+			*history = replace_delimiter_as_token(delim_str, &(now_node->next)); // allocation
 			free(delim_str);
+			if (*history == NULL)
+				return (NULL);
 		}
 		now_node = now_node->next;
 	}
-	return (history);
+	return (is_inclued_heredoc);
 }
 
 static char	*replace_delimiter_as_token(
