@@ -6,64 +6,94 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/08 04:24:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/09 11:51:48 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
+static char	*read_heredoc_lines(char *delimiter);
 static char	*append_newline(char *history_str, char *line);
-static char	*get_inline_heredoc_input(char *delimiter, char *token_str);
-static char	*append_current_heredoc(
-				char *source, t_blst *gain_node, char *delim_str);
+static int	is_flag(char *heredoc_str, int type);
 
-char	*get_heredoc_input(char *delimiter, char *token_str)
+char	*allocate_heredoc_string_from_input(
+			char *delimiter, t_token_data *target_node)
+{
+	char	*history;
+	char	*new_token_str;
+
+	history = read_heredoc_lines(delimiter);
+	if (history == NULL)
+		return (NULL);
+	new_token_str = ft_strdup(history);
+	if (new_token_str == NULL)
+	{
+		free(history);
+		return (NULL);
+	}
+	update_token_str_data(target_node, new_token_str);
+	return (history);
+}
+
+static char	*read_heredoc_lines(char *delimiter)
 {
 	char	*line;
-	char	*all_line;
+	char	*all_lines;
 
-	if (ft_strcmp(delimiter, token_str) != 0)
-		return (get_inline_heredoc_input(delimiter, token_str));
-	all_line = (char *)ft_calloc(1, sizeof(char));
-	if (all_line == NULL)
+	all_lines = ft_strdup("");
+	if (all_lines == NULL)
 		return (NULL);
 	while (1)
 	{
 		line = readline("> ");
 		if (line == NULL || g_signal != 0)
-		{
 			break ;
-		}
 		else if (ft_strcmp(line, delimiter) == 0)
 		{
 			free(line);
 			break ;
 		}
-		all_line = append_newline(all_line, line);
+		all_lines = append_newline(all_lines, line);
 		free(line);
-		if (all_line == NULL)
+		if (all_lines == NULL)
 			break ;
 	}
-	return (all_line);
+	return (all_lines);
 }
 
-static char	*get_inline_heredoc_input(char *delimiter, char *token_str)
+char	*allocate_heredoc_string_from_history(
+			char *delimiter, t_token_data *target_node)
 {
-	char	*token_str_without_dekimiter;
-	char	*all_line;
-	char	*little;
+	char	*history;
+	char	*new_token_str;
+	size_t	new_token_len;
+	char	*last_input;
 
-	little = ft_strjoin(delimiter, "\n");
-	if (little == NULL)
+	last_input = target_node->token_str + ft_strlen(delimiter) + 1;
+	new_token_len = ft_strlen(last_input) - (ft_strlen(delimiter) + 1);
+	new_token_str = ft_substr(target_node->token_str,
+			ft_strlen(delimiter) + 1, new_token_len);
+	if (new_token_str == NULL)
 		return (NULL);
-	token_str_without_dekimiter = ft_strnstr(token_str, little, INT_MAX) + ft_strlen(little);
-	free(little);
-	if (token_str_without_dekimiter == NULL)
+	history = ft_strdup(target_node->token_str + ft_strlen(delimiter) + 1);
+	if (history == NULL)
+	{
+		free(new_token_str);
 		return (NULL);
-	all_line = ft_strdup(token_str_without_dekimiter);
-	if (all_line == NULL)
-		return (NULL);
-	return (all_line);
+	}
+	update_token_str_data(target_node, new_token_str);
+	return (history);
+}
+
+static void	update_token_str_data(
+				t_token_data *target_data, char *new_token_str)
+{
+	int		type;	
+
+	type = is_flag(new_token_str, target_data->token_type); // TMP
+	free(target_data->token_str);
+	target_data->token_str = new_token_str;
+	target_data->token_type = type;
 }
 
 static char	*append_newline(char *all_line, char *line)
@@ -78,21 +108,6 @@ static char	*append_newline(char *all_line, char *line)
 	ret_with_nl = ft_strjoin(ret, "\n");
 	free(ret);
 	if (ret_with_nl == NULL)
-		return (NULL);	
-	return (ret_with_nl);
-}
-
-static char	*append_current_heredoc(
-				char *source, t_blst *gain_node, char *delim_str)
-{
-	char	*ret;
-	char	*gain_str;
-	size_t	total_len;
-
-	gain_str = gain_node->u_data.t_data->token_str;
-	ret = ft_strjoin(ft_strjoin(ft_strjoin(source, gain_str), delim_str), "\n");//2, 3段階目で失敗した時にfree出来ない
-	free(source);
-	if (ret == NULL)
 		return (NULL);
-	return (ret);
+	return (ret_with_nl);
 }
