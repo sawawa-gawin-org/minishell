@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/09 07:08:50 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:32:13 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*parser(t_blst **tokens_lst, t_blst **env_lst)
 	delete_blank(tokens_lst);
 	delete_quote(tokens_lst);
 	err = parse_heredoc(tokens_lst, &history);
-	if (err == NULL)
+	if (err == ERR)
 		return (NULL);
 	if (!expander(tokens_lst, env_lst))
 		return (NULL);

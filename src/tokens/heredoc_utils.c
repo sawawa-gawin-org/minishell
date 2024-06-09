@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/09 11:51:48 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:27:41 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,30 @@
 
 static char	*read_heredoc_lines(char *delimiter);
 static char	*append_newline(char *history_str, char *line);
-static int	is_flag(char *heredoc_str, int type);
+static void	update_token_str_data(
+				t_token_data *target_data, char *new_token_str);
 
 char	*allocate_heredoc_string_from_input(
 			char *delimiter, t_token_data *target_node)
 {
 	char	*history;
+	char	*raw_history;
 	char	*new_token_str;
 
-	history = read_heredoc_lines(delimiter);
-	if (history == NULL)
+	raw_history = read_heredoc_lines(delimiter);
+	if (raw_history == NULL)
 		return (NULL);
-	new_token_str = ft_strdup(history);
+	new_token_str = ft_strdup(raw_history);
 	if (new_token_str == NULL)
 	{
-		free(history);
+		free(raw_history);
+		return (NULL);
+	}
+	history = ft_strjoin(raw_history, delimiter);
+	free(raw_history);
+	if (history == NULL)
+	{
+		free(new_token_str);
 		return (NULL);
 	}
 	update_token_str_data(target_node, new_token_str);

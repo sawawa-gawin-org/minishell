@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/09 11:50:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:31:35 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,25 @@ int	parse_heredoc(t_blst **tokens_lst, char **history)
 	t_blst			*now_node;
 	t_token_data	*data;
 	char			*delim_str;
-	int				is_inclued_heredoc; // これは何に使う？
 
 	now_node = *tokens_lst;
-	is_inclued_heredoc = 0;
 	while (now_node->u_data.t_data != NULL)
 	{
 		data = now_node->u_data.t_data;
 		if (data->token_type == HEREDOC_FLAG)
 		{
-			is_inclued_heredoc = 1;
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
+			if (delim_str == NULL)
+				return (ERR);
 			*history = replace_delimiter_as_token(delim_str, &(now_node->next));
 			free(delim_str);
 			if (*history == NULL)
-				return (NULL);
+				return (ERR);
+			now_node = now_node->next;
 		}
 		now_node = now_node->next;
 	}
-	return (is_inclued_heredoc);
+	return (OK);
 }
 
 static char	*replace_delimiter_as_token(
@@ -54,20 +54,15 @@ static char	*replace_delimiter_as_token(
 
 	if (delimiter_str == NULL
 		|| delimiter_node == NULL || *delimiter_node == NULL)
-		return (ERR);
+		return (NULL);
 	delimiter_data = (*delimiter_node)->u_data.t_data;
-	if (delimiter_data != NULL)
-	{
-		if (ft_strcmp(delimiter_str, delimiter_data->token_str) != 0)
-			history = allocate_heredoc_string_from_history(
-					delimiter_str, &delimiter_data);
-		else
-			history = allocate_heredoc_string_from_input(
-					delimiter_str, &delimiter_data);
-		if (history == NULL)
-			return (NULL);
-	}
+	if (ft_strcmp(delimiter_str, delimiter_data->token_str) != 0)
+		history = allocate_heredoc_string_from_history(
+				delimiter_str, delimiter_data);
 	else
+		history = allocate_heredoc_string_from_input(
+				delimiter_str, delimiter_data);
+	if (history == NULL)
 		return (NULL);
 	return (history);
 }
