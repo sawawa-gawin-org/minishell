@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/16 18:29:13 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:47:19 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	free_token_data(void *data);
 int		exec_tokenslst_cmds(void *tokens_lst);
 
 // parser.c
-char	*parser(void **tokens_lst, void **env_lst);
+int		parser(void **tokens_lst, void **env_lst, char **history);
 
 // expander.c
 int		expander(void **tokens_lst, void **env_lst);

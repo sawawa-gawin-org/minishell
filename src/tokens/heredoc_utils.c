@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/09 14:27:41 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/09 16:02:58 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ char	*allocate_heredoc_string_from_history(
 	char	*last_input;
 
 	last_input = target_node->token_str + ft_strlen(delimiter) + 1;
-	new_token_len = ft_strlen(last_input) - (ft_strlen(delimiter) + 1);
+	new_token_len = ft_strlen(last_input) - (ft_strlen(delimiter) + 1); // 長さ要確認
 	new_token_str = ft_substr(target_node->token_str,
 			ft_strlen(delimiter) + 1, new_token_len);
 	if (new_token_str == NULL)
 		return (NULL);
-	history = ft_strdup(target_node->token_str + ft_strlen(delimiter) + 1);
+	history = ft_strdup("");
 	if (history == NULL)
 	{
 		free(new_token_str);

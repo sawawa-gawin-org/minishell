@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/20 03:33:15 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:57:22 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	main(void)
 		return (1);
 	init_signal();
 	line = NULL;
+	heredoc_gained_str = NULL;
 	while (1)
 	{
 		tokens_lst = NULL;
@@ -53,8 +54,7 @@ int	main(void)
 			continue ;
 		}
 		tokens_lst = tokenizer(&line); // NULL check
-		heredoc_gained_str = parser(&tokens_lst, &env_lst);
-		if (heredoc_gained_str == NULL)
+		if (parser(&tokens_lst, &env_lst, &heredoc_gained_str))
 			return (1); // err handling
 		exec_tokenslst_cmds(tokens_lst); // err handling
 		if (add_history_with_heredoc(line, heredoc_gained_str))

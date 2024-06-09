@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/09 14:32:13 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/09 14:48:05 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,21 @@
 // ...->next->data = "-l"
 // ```
 
-char	*parser(t_blst **tokens_lst, t_blst **env_lst)
+int	parser(t_blst **tokens_lst, t_blst **env_lst, char **history)
 {
-	char	*history;
 	int		err;
 
-	history = NULL;
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
-		return (NULL);
+		return (ERR);
 	// merge_redirects(tokens_lst);
 	delete_blank(tokens_lst);
 	delete_quote(tokens_lst);
-	err = parse_heredoc(tokens_lst, &history);
+	err = parse_heredoc(tokens_lst, history);
 	if (err == ERR)
-		return (NULL);
+		return (ERR);
 	if (!expander(tokens_lst, env_lst))
-		return (NULL);
-	return (history);
+		return (ERR);
+	return (OK);
 }
 
 // static void	put_tokens_lst(t_blst *tokens_lst)
