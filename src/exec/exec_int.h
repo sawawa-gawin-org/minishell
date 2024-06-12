@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/15 08:26:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 10:44:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ extern char		**environ;
 
 typedef struct s_pipex
 {
-	int		in_fd;
-	int		out_fd;
 	int		pipe_in_fd;
 	int		pipe_out_fd;
 	int		file_in_fd;

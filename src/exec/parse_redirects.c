@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 13:38:13 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 14:39:06 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	redirection(t_tokenlst **now_node, t_pipex *pipe);
 static int	open_in_files(char *dist, t_pipex *pipex, int heredocflag);
 static int	open_out_files(char *dist, t_pipex *pipex, int appendflag);
+static int	open_and_send_string_to_fd(char *str);
 
 // # Description
 // This function merges the redirection tokens into one token.
@@ -26,17 +27,19 @@ int	parse_redirects(t_tokenlst **now_node, t_pipex *pipe)
 	int			err;
 
 	init_node = *now_node;
-	token = (*now_node)->u_data.str;
 	err = 0;
-	while (token != NULL && ft_strcmp(token, "|") != 0)
+	while ((*now_node)->u_data.str != NULL && ft_strcmp(token, "|") != 0)
 	{
+		token = (*now_node)->u_data.str;
 		if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0
 			|| ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
-			err = redirection(now_node, pipe);
-		if (err != 0)
-			break ;
+		{
+			if (redirection(now_node, pipe)) // bag maybe
+				break ;
+			else
+				continue;
+		}
 		(*now_node) = (*now_node)->next;
-		token = (*now_node)->u_data.str;
 	}
 	*now_node = init_node;
 	return (err);
@@ -64,10 +67,15 @@ static int	redirection(t_tokenlst **now_node, t_pipex *pipe)
 
 static int	open_in_files(char *dist, t_pipex *pipex, int heredocflag)
 {
+	int	fd;
+
 	if (dist && access(dist, R_OK) == 0 && heredocflag == 0)
 		pipex->file_in_fd = open(dist, O_RDONLY);
-	else if (dist && access(dist, R_OK) == 0 && heredocflag)
-		write(1, "#TODO: here document\n", 22);
+	else if (dist && heredocflag)
+	{
+		fd = open_and_send_string_to_fd(dist);
+		pipex->file_in_fd = fd;
+	}
 	if (pipex->file_in_fd == -1)
 	{
 		close(pipex->file_in_fd);
@@ -87,7 +95,7 @@ static int	open_out_files(char *dist, t_pipex *pipex, int appendflag)
 	else if (dist && access(dist, F_OK) == -1 && appendflag)
 		pipex->file_out_fd = open(
 				dist, O_CREAT | O_WRONLY | O_APPEND, S_IREAD | S_IWRITE);
-	else if (dist && access(dist, F_OK) == -1 && appendflag)
+	else if (dist && access(dist, F_OK) == 0 && appendflag)
 		pipex->file_out_fd = open(dist, O_WRONLY | O_APPEND);
 	if (pipex->file_out_fd == -1)
 	{
@@ -96,4 +104,20 @@ static int	open_out_files(char *dist, t_pipex *pipex, int appendflag)
 		return (ERR);
 	}
 	return (OK);
+}
+
+static int	open_and_send_string_to_fd(char *str)
+{
+	int	fd[2];
+
+	if (pipe(fd) == -1)
+		return (ERR);
+	if (write(fd[1], str, ft_strlen(str)) == -1)
+	{
+		close(fd[0]);
+		close(fd[1]);
+		return (ERR);
+	}
+	close(fd[1]);
+	return (fd[0]);
 }

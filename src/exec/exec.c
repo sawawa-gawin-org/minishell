@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/15 07:21:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 10:45:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,6 @@ static t_pipelst	*init_pipe_node(int index)
 	pipedata = (t_pipex *)malloc(sizeof(t_pipex));
 	if (pipedata == NULL)
 		return (NULL);
-	pipedata->in_fd = -1;
-	pipedata->out_fd = -1;
 	pipedata->pipe_in_fd = -1;
 	pipedata->pipe_out_fd = -1;
 	pipedata->file_in_fd = -1;
@@ -109,10 +107,10 @@ static void	close_fds_all(t_pipelst *pipe_head_node)
 	while (now_node->u_data.pipe_data != NULL)
 	{
 		pipe = (t_pipex *)now_node->u_data.pipe_data;
-		if (pipe->in_fd >= 0)
-			close(pipe->in_fd);
-		if (pipe->out_fd >= 0)
-			close(pipe->out_fd);
+		if (pipe->file_in_fd >= 0)
+			close(pipe->file_in_fd);
+		if (pipe->file_out_fd >= 0)
+			close(pipe->file_out_fd);
 		if (pipe->pipe_in_fd >= 0)
 			close(pipe->pipe_in_fd);
 		if (pipe->pipe_out_fd >= 0)
