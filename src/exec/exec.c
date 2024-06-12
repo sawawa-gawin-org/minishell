@@ -6,24 +6,29 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/01 14:41:41 by saraki           ###   ########.fr       */
+/*   Updated: 2024/05/15 07:21:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
 
-static t_pipelst	*init_pipe_lst(t_tokenlst	*token_head_node);
+static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node);
 static t_pipelst	*init_pipe_node(int index);
 static void			close_fds_all(t_pipelst *pipe_head_node);
 
 // # about token_head_node
 // `token_head_node` is a linked list that stores the command line.
-// exapmle:
+// exapmle1:
 // token_head_node->data = "ls"
 // token_head_node->next->data = "-l"
 // token_head_node->next->next->data = "|"
 // token_head_node->next->next->next->data = "wc"
 // token_head_node->next->next->next->next->data = "-l"
+// exapmle2:
+// token_head_node->data = "ls"
+// token_head_node->next->data = "-l"
+// token_head_node->next->next->data = ">"
+// token_head_node->next->next->next->data = "out.txt"
 
 int	exec(t_tokenlst *token_head_node)
 {
@@ -49,7 +54,7 @@ static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
 
 	index = 0;
 	pipe_head_node = doub_lstnew(NULL);
-	while (pipe_head_node != NULL && token_head_node->data != NULL)
+	while (pipe_head_node != NULL && token_head_node->u_data.str != NULL)
 	{
 		new_node = init_pipe_node(index);
 		if (new_node == NULL)
@@ -59,11 +64,11 @@ static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
 		}
 		index ++;
 		doub_lstappend((void **)&pipe_head_node, new_node);
-		((t_pipex *)(new_node->data))->head_node = pipe_head_node;
-		while (token_head_node->data != NULL
-			&& ft_strcmp((char *)token_head_node->data, "|"))
+		new_node->u_data.pipe_data->head_node = pipe_head_node;
+		while (token_head_node->u_data.str != NULL
+			&& ft_strcmp((char *)token_head_node->u_data.str, "|"))
 			token_head_node = token_head_node->next;
-		if (token_head_node->data == NULL)
+		if (token_head_node->u_data.str == NULL)
 			break ;
 		token_head_node = token_head_node->next;
 	}
@@ -82,6 +87,8 @@ static t_pipelst	*init_pipe_node(int index)
 	pipedata->out_fd = -1;
 	pipedata->pipe_in_fd = -1;
 	pipedata->pipe_out_fd = -1;
+	pipedata->file_in_fd = -1;
+	pipedata->file_out_fd = -1;
 	pipedata->index = index;
 	pipedata->pids = 0;
 	node = (t_pipelst *)doub_lstnew((void *)pipedata);
@@ -99,9 +106,9 @@ static void	close_fds_all(t_pipelst *pipe_head_node)
 	t_pipelst	*now_node;
 
 	now_node = pipe_head_node;
-	while (now_node->data != NULL)
+	while (now_node->u_data.pipe_data != NULL)
 	{
-		pipe = (t_pipex *)now_node->data;
+		pipe = (t_pipex *)now_node->u_data.pipe_data;
 		if (pipe->in_fd >= 0)
 			close(pipe->in_fd);
 		if (pipe->out_fd >= 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/23 21:41:31 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/05/15 08:26:22 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	main(void)
 {
 	t_blst	*token_head_node;
 	
-	char *cmd1[] = {"ls", "", "-la", NULL};
+	char *cmd1[] = {"ls", "-la", ">", "a.txt", NULL};
 	token_head_node = debug_parselst((char **)cmd1);
 	if (token_head_node == NULL)
 		return (1);

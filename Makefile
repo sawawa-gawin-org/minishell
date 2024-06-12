@@ -15,6 +15,7 @@ SRCS :=
 
 SRCS += minishell.c
 SRCS += signal_util.c
+SRCS += history.c
 
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)

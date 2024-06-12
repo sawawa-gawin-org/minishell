@@ -25,10 +25,17 @@
 
 extern volatile sig_atomic_t	g_signal;
 
+# define OK 0
+# define CONTINUE 1
+# define ERR -1
+
 typedef struct s_sig
 {
 	int	interrupt;
 }		t_sig;
+
+int		add_history_wraper(
+			char *line, char *heredoc_gained_str);
 
 void	init_signal(void);
 void	set_signal(int signum);
