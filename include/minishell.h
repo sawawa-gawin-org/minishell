@@ -30,6 +30,9 @@ typedef struct s_sig
 	int	interrupt;
 }		t_sig;
 
+int		add_history_wraper(
+			char *line, char *heredoc_gained_str);
+
 void	init_signal(void);
 void	set_signal(int signum);
 void	ign_signal(int signum);
