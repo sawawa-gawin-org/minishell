@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 14:39:06 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 17:33:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ int	parse_redirects(t_tokenlst **now_node, t_pipex *pipe)
 
 	init_node = *now_node;
 	err = 0;
+	token = (*now_node)->u_data.str;
 	while ((*now_node)->u_data.str != NULL && ft_strcmp(token, "|") != 0)
 	{
 		token = (*now_node)->u_data.str;
 		if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0
 			|| ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
 		{
-			if (redirection(now_node, pipe)) // bag maybe
+			if (redirection(now_node, pipe))
 				break ;
 			else
 				continue;
