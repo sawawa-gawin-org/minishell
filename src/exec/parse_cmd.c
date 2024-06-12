@@ -6,16 +6,16 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 07:27:21 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/15 16:04:29 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 09:08:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
 
-static char			**convert_tokenlst_to_char_array(
-						t_tokenlst *section_start_node);
-static int			count_tokenlst_section_size(
-						t_tokenlst *section_start_node);
+static char	**convert_tokenlst_to_char_array(
+				t_tokenlst *section_start_node);
+static int	count_tokenlst_section_size(
+				t_tokenlst *section_start_node);
 
 char	**parse_cmd(t_tokenlst *head_node, t_pipex *pipe)
 {
@@ -23,10 +23,11 @@ char	**parse_cmd(t_tokenlst *head_node, t_pipex *pipe)
 	int		err;
 
 	err = parse_redirects(&head_node, pipe);
+	if (err)
+		return (NULL);
 	cmd = convert_tokenlst_to_char_array(head_node);
 	if (cmd == NULL)
 		return (NULL);
-	(void) err;
 	return (cmd);
 }
 

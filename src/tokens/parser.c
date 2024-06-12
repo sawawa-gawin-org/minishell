@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 12:32:33 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 10:29:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,9 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst, char **history)
 {
 	int		err;
 
-	// merge_redirects(tokens_lst);
 	delete_blank(tokens_lst);
 	delete_quote(tokens_lst);
-	err = parse_heredoc(tokens_lst, history);
+	err = parse_heredoc(tokens_lst, history); // FIX: heredocの変数展開が非実装
 	if (err == ERR)
 		return (ERR);
 	if (!expander(tokens_lst, env_lst))
