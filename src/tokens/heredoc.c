@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 13:34:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 13:40:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parse_heredoc(t_blst **tokens_lst, char **history)
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
 			if (delim_str == NULL)
 				return (ERR);
-			*history = replace_delimiter_as_token(delim_str, &(now_node->next)); // historyにappendする必要がある
+			*history = replace_delimiter_as_token(delim_str, &(now_node->next)); // FIX: heredocがパイプを使用し、複数出現した時、historyにappendする必要がある
 			free(delim_str);
 			if (*history == NULL)
 				return (ERR);
