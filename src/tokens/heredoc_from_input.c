@@ -6,21 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 11:42:12 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/11 11:44:26 by saraki           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "tokens_int.h"
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   heredoc_utils.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/11 11:43:25 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 11:45:46 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,15 +84,4 @@ static char	*append_newline(char *all_line, char *line)
 	if (ret_with_nl == NULL)
 		return (NULL);
 	return (ret_with_nl);
-}
-
-static void	update_token_str_data(
-				t_token_data *target_data, char *new_token_str)
-{
-	int		type;	
-
-	type = is_flag(new_token_str, target_data->token_type); // TMP
-	free(target_data->token_str);
-	target_data->token_str = new_token_str;
-	target_data->token_type = type;
 }

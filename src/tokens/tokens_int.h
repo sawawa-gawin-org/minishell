@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/09 14:45:50 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 11:45:13 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,8 @@ int			is_val(char *str);
 int			syntax_checker(t_blst *lst, t_cmp_f cmp_f);
 // heredoc.c
 int			parse_heredoc(t_blst **tokens_lst, char **history);
+void		update_token_str_data(
+				t_token_data *target_data, char *new_token_str);
 int			is_flag(char *heredoc_str, int type);
 // heredoc_utils.c
 char		*allocate_heredoc_string_from_input(

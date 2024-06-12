@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/11 11:32:18 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 11:43:55 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,17 @@ static char	*get_delimiter(char *delimiter_str)
 	if (ret == NULL)
 		return (NULL);
 	return (ret);
+}
+
+void	update_token_str_data(
+				t_token_data *target_data, char *new_token_str)
+{
+	int		type;	
+
+	type = is_flag(new_token_str, target_data->token_type); // TMP
+	free(target_data->token_str);
+	target_data->token_str = new_token_str;
+	target_data->token_type = type;
 }
 
 //data->token_typeとheredoc_strから、"$VAL"か'VAL'か"VAL"かを判断して、FLAGを割り当てる
