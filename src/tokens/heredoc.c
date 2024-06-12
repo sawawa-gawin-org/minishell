@@ -6,101 +6,64 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/25 21:35:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 13:40:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
 static char	*get_delimiter(char *delimiter_str);
-static char	*replace_delimiter_as_token(t_blst **delimiter_node);
-static int	is_flag(char *heredoc_str, int type);
-static char	*append_current_heredoc(
-				char *source, t_blst *gain_node, char *delim_str);
+static char	*replace_delimiter_as_token(
+				char *delimiter, t_blst **delimiter_node);
 
 // #Description
 // Update the token string to the heredoc string.
-char	*parse_heredoc(t_blst **tokens_lst)
+// allocate the input string used `add_history`.
+int	parse_heredoc(t_blst **tokens_lst, char **history)
 {
 	t_blst			*now_node;
 	t_token_data	*data;
-	char			*history;
 	char			*delim_str;
 
 	now_node = *tokens_lst;
-	history = ft_calloc(1, sizeof(char));
-	while (history != NULL && now_node->u_data.t_data != NULL)
+	while (now_node->u_data.t_data != NULL)
 	{
 		data = now_node->u_data.t_data;
 		if (data->token_type == HEREDOC_FLAG)
 		{
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
-			if (replace_delimiter_as_token(&(now_node->next)) == NULL || delim_str == NULL)
-			{
-				free(history);
-				free(delim_str);
-				return (NULL);
-			}
-			history = append_current_heredoc(history, now_node->next, delim_str);
+			if (delim_str == NULL)
+				return (ERR);
+			*history = replace_delimiter_as_token(delim_str, &(now_node->next)); // FIX: heredocがパイプを使用し、複数出現した時、historyにappendする必要がある
 			free(delim_str);
+			if (*history == NULL)
+				return (ERR);
+			now_node = now_node->next;
 		}
 		now_node = now_node->next;
 	}
-	return (history);
+	return (OK);
 }
 
-static char	*append_current_heredoc(
-				char *source, t_blst *gain_node, char *delim_str)
-{
-	char	*ret;
-	char	*gain_str;
-	size_t	total_len;
-
-	gain_str = gain_node->u_data.t_data->token_str;
-	total_len = ft_strlen(source); // << 付きの文章
-	total_len += ft_strlen(gain_str); // << 付きの文章 + 得られた入力
-	total_len += ft_strlen(delim_str) + 1; // << 付きの文章 + 得られた入力 + デリミタ + (改行)
-	ret = ft_calloc(total_len + 1, sizeof(char));
-	if (ret == NULL)
-	{
-		free(source);
-		return (NULL);
-	}
-	ft_strlcat(ret, source, ft_strlen(source) + 1);
-	free(source);
-	ft_strlcat(ret, gain_str, ft_strlen(ret) + ft_strlen(gain_str) + 1);
-	ft_strlcat(ret, delim_str, ft_strlen(ret) + ft_strlen(delim_str) + 1);
-	ft_strlcat(ret, "\n", ft_strlen(ret) + 1 + 1);
-	return (ret);
-}
-
-static char	*replace_delimiter_as_token(t_blst **delimiter_node)
+static char	*replace_delimiter_as_token(
+				char *delimiter_str, t_blst **delimiter_node)
 {
 	t_token_data	*delimiter_data;
-	char			*heredoc_str;
-	int				type;
-	char			*delimiter_substr;
+	char			*history;
 
-	if (delimiter_node == NULL || *delimiter_node == NULL)
+	if (delimiter_str == NULL
+		|| delimiter_node == NULL || *delimiter_node == NULL)
 		return (NULL);
 	delimiter_data = (*delimiter_node)->u_data.t_data;
-	delimiter_substr = get_delimiter(delimiter_data->token_str);
-	if (delimiter_data != NULL && delimiter_substr != NULL)
-	{
-		heredoc_str = get_heredoc_input(delimiter_substr);
-		if (heredoc_str == NULL)
-		{
-			free(delimiter_substr);
-			return (NULL);
-		}
-		type = is_flag(heredoc_str, delimiter_data->token_type);
-		free(delimiter_data->token_str);
-		delimiter_data->token_str = heredoc_str;
-		delimiter_data->token_type = type;
-	}
+	if (ft_strcmp(delimiter_str, delimiter_data->token_str) != 0)
+		history = allocate_heredoc_string_from_history(
+				delimiter_str, delimiter_data);
 	else
+		history = allocate_heredoc_string_from_input(
+				delimiter_str, delimiter_data);
+	if (history == NULL)
 		return (NULL);
-	return (heredoc_str);
+	return (history);
 }
 
 static char	*get_delimiter(char *delimiter_str)
@@ -117,9 +80,20 @@ static char	*get_delimiter(char *delimiter_str)
 	return (ret);
 }
 
+void	update_token_str_data(
+				t_token_data *target_data, char *new_token_str)
+{
+	int		type;	
+
+	type = is_flag(new_token_str, target_data->token_type); // TMP
+	free(target_data->token_str);
+	target_data->token_str = new_token_str;
+	target_data->token_type = type;
+}
+
 //data->token_typeとheredoc_strから、"$VAL"か'VAL'か"VAL"かを判断して、FLAGを割り当てる
 // Need fix
-static int	is_flag(char *heredoc_str, int type)
+int	is_flag(char *heredoc_str, int type)
 {
 	if (type == SINGLE_QUOTE_FLAG)
 		return (SINGLE_QUOTE_FLAG);
