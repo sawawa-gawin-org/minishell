@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/09 14:47:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 12:35:59 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ int		is_blank(int c);
 void	free_token_data(void *data);
 
 int		exec_tokenslst_cmds(void *tokens_lst);
+
+// syntax_checker.c
+int		syntax_checker(void *lst, void *cmp_f);
+int		cmp_syntax(void *d, void *n);
 
 // parser.c
 int		parser(void **tokens_lst, void **env_lst, char **history);

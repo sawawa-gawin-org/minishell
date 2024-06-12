@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 11:57:50 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/12 12:15:33 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 13:28:34 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,13 @@ int	add_history_wraper(char *line, char *heredoc_gained)
 	if (heredoc_gained == NULL || *heredoc_gained == '\0')
 	{
 		add_history(line);
-		free(line);
-		return (0);
+		return (OK);
 	}
 	else
 		err = with_heredoc_history(line, heredoc_gained);
-	free(heredoc_gained);
 	if (err)
-		return (-1);
-	return (0);
+		return (ERR);
+	return (OK);
 }
 
 static int	with_heredoc_history(char *line, char *heredoc_gained_str)
@@ -40,14 +38,13 @@ static int	with_heredoc_history(char *line, char *heredoc_gained_str)
 	char	*joined_str;
 
 	line_with_nl = ft_strjoin(line, "\n");
-	free(line);
 	if (line_with_nl == NULL)
-		return (-1);
+		return (ERR);
 	joined_str = ft_strjoin(line_with_nl, heredoc_gained_str);
 	free(line_with_nl);
-	if (line_with_nl == NULL)
-		return (-1);
+	if (joined_str == NULL)
+		return (ERR);
 	add_history(joined_str);
 	free(joined_str);
-	return (0);
+	return (OK);
 }

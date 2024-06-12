@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 11:43:55 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/12 13:34:52 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	parse_heredoc(t_blst **tokens_lst, char **history)
 		data = now_node->u_data.t_data;
 		if (data->token_type == HEREDOC_FLAG)
 		{
-			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str); // もし、echo << ならセグフォ
+			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
 			if (delim_str == NULL)
 				return (ERR);
 			*history = replace_delimiter_as_token(delim_str, &(now_node->next)); // historyにappendする必要がある
@@ -49,7 +49,6 @@ static char	*replace_delimiter_as_token(
 				char *delimiter_str, t_blst **delimiter_node)
 {
 	t_token_data	*delimiter_data;
-	int				type;
 	char			*history;
 
 	if (delimiter_str == NULL
