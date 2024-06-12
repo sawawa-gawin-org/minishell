@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/09 15:30:01 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/11 11:32:18 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	parse_heredoc(t_blst **tokens_lst, char **history)
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str); // もし、echo << ならセグフォ
 			if (delim_str == NULL)
 				return (ERR);
-			*history = replace_delimiter_as_token(delim_str, &(now_node->next)); // history にappendする必要がある
+			*history = replace_delimiter_as_token(delim_str, &(now_node->next)); // historyにappendする必要がある
 			free(delim_str);
 			if (*history == NULL)
 				return (ERR);

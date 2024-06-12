@@ -1,6 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
+/*   heredoc_from_input.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/11 11:42:12 by saraki            #+#    #+#             */
+/*   Updated: 2024/06/11 11:44:26 by saraki           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "tokens_int.h"
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
@@ -12,6 +26,7 @@
 
 #include "tokens_int.h"
 
+static char	*append_newline(char *history_str, char *line);
 static char	*read_heredoc_lines(char *delimiter);
 static void	update_token_str_data(
 				t_token_data *target_data, char *new_token_str);
@@ -42,8 +57,6 @@ char	*allocate_heredoc_string_from_input(
 	update_token_str_data(target_node, new_token_str);
 	return (history);
 }
-
-static char	*append_newline(char *history_str, char *line);
 
 static char	*read_heredoc_lines(char *delimiter)
 {
@@ -85,30 +98,6 @@ static char	*append_newline(char *all_line, char *line)
 	if (ret_with_nl == NULL)
 		return (NULL);
 	return (ret_with_nl);
-}
-
-char	*allocate_heredoc_string_from_history(
-			char *delimiter, t_token_data *target_node)
-{
-	char	*history;
-	char	*new_token_str;
-	size_t	new_token_len;
-	char	*last_input;
-
-	last_input = target_node->token_str + ft_strlen(delimiter) + 1;
-	new_token_len = ft_strlen(last_input) - (ft_strlen(delimiter) + 1);
-	new_token_str = ft_substr(target_node->token_str,
-			ft_strlen(delimiter) + 1, new_token_len);
-	if (new_token_str == NULL)
-		return (NULL);
-	history = ft_strdup("");
-	if (history == NULL)
-	{
-		free(new_token_str);
-		return (NULL);
-	}
-	update_token_str_data(target_node, new_token_str);
-	return (history);
 }
 
 static void	update_token_str_data(
