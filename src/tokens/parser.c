@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 10:29:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/13 17:37:58 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@
 // ...->next->data = "-l"
 // ```
 
-int	parser(t_blst **tokens_lst, t_blst **env_lst, char **history)
+int	parser(t_blst **tokens_lst, t_blst **env_lst)
 {
 	int		err;
 
 	delete_blank(tokens_lst);
 	delete_quote(tokens_lst);
-	err = parse_heredoc(tokens_lst, history); // FIX: heredocの変数展開が非実装
+	err = parse_heredoc(tokens_lst);
 	if (err == ERR)
 		return (ERR);
 	if (!expander(tokens_lst, env_lst))
@@ -67,7 +67,8 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst, char **history)
 // 	while (tmp->data != NULL)
 // 	{
 // 		data = tmp->data;
-// 		printf("%d: text:%s, type:%d, sub:%d\n", i, data->token_str, data->token_type, data->sub_type);
+// 		printf("%d: text:%s, type:%d, sub:%d\n",
+// 			i, data->token_str, data->token_type, data->sub_type);
 // 		tmp = tmp->next;
 // 		i++;
 // 	}

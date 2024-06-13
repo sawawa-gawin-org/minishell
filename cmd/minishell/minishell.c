@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 13:35:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/13 17:13:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,23 +78,13 @@ static int	main_loop(void *env_lst)
 
 static int	execute(char *line, void *env_lst, void *tokens_lst)
 {
-	char	*heredoc_gained;
-	int		err;
-
-	heredoc_gained = NULL;
 	if (!syntax_checker(tokens_lst, cmp_syntax))
 		return (CONTINUE);
-	if (parser(&tokens_lst, &env_lst, &heredoc_gained))
+	if (parser(&tokens_lst, &env_lst))
 		return (ERR);
 	if (exec_tokenslst_cmds(tokens_lst))
-	{
-		free(heredoc_gained);
 		return (ERR);
-	}
-	err = add_history_wraper(line, heredoc_gained);
-	free(heredoc_gained);
-	if (err)
-		return (ERR);
+	add_history(line);
 	return (OK);
 }
 
