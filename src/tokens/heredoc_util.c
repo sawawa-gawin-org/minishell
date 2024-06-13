@@ -6,56 +6,33 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 11:42:12 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/12 12:21:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/13 17:24:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-static char *allocate_history(char *lines, char *delimiter);
 static char	*append_newline(char *history_str, char *line);
 static char	*read_heredoc_lines(char *delimiter);
 
-char	*allocate_heredoc_string_from_input(
-			char *delimiter, t_token_data *target_node)
+int	set_heredoc_string_to_node(
+		char *delimiter, t_token_data *target_node)
 {
-	char	*history;
 	char	*lines;
 	char	*new_token_str;
 
 	lines = read_heredoc_lines(delimiter);
 	if (lines == NULL)
-		return (NULL);
+		return (ERR);
 	new_token_str = ft_strdup(lines);
 	if (new_token_str == NULL)
 	{
 		free(lines);
-		return (NULL);
+		return (ERR);
 	}
-	history = allocate_history(lines, delimiter);
 	free(lines);
-	if (history == NULL)
-	{
-		free(new_token_str);
-		return (NULL);
-	}
 	update_token_str_data(target_node, new_token_str);
-	return (history);
-}
-
-static char *allocate_history(char *lines, char *delimiter)
-{
-	char	*history;
-	char	*history_with_nl;
-
-	history = ft_strjoin(lines, delimiter);
-	if (history == NULL)
-		return (NULL);
-	history_with_nl = ft_strjoin(history, "\n");
-	free(history);
-	if (history_with_nl == NULL)
-		return (NULL);
-	return (history_with_nl);
+	return (OK);
 }
 
 static char	*read_heredoc_lines(char *delimiter)

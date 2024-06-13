@@ -6,24 +6,25 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 13:40:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/13 17:30:15 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
 static char	*get_delimiter(char *delimiter_str);
-static char	*replace_delimiter_as_token(
-				char *delimiter, t_blst **delimiter_node);
+static int	replace_delimiter_as_token(
+				char *delimiter_str, t_blst **delimiter_node);
 
 // #Description
 // Update the token string to the heredoc string.
 // allocate the input string used `add_history`.
-int	parse_heredoc(t_blst **tokens_lst, char **history)
+int	parse_heredoc(t_blst **tokens_lst)
 {
 	t_blst			*now_node;
 	t_token_data	*data;
 	char			*delim_str;
+	int				err;
 
 	now_node = *tokens_lst;
 	while (now_node->u_data.t_data != NULL)
@@ -34,9 +35,9 @@ int	parse_heredoc(t_blst **tokens_lst, char **history)
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
 			if (delim_str == NULL)
 				return (ERR);
-			*history = replace_delimiter_as_token(delim_str, &(now_node->next)); // FIX: heredocがパイプを使用し、複数出現した時、historyにappendする必要がある
+			err = replace_delimiter_as_token(delim_str, &(now_node->next)); // FIX: heredocがパイプを使用し、複数出現した時、historyにappendする必要がある
 			free(delim_str);
-			if (*history == NULL)
+			if (err == ERR)
 				return (ERR);
 			now_node = now_node->next;
 		}
@@ -45,25 +46,19 @@ int	parse_heredoc(t_blst **tokens_lst, char **history)
 	return (OK);
 }
 
-static char	*replace_delimiter_as_token(
+static int replace_delimiter_as_token(
 				char *delimiter_str, t_blst **delimiter_node)
 {
 	t_token_data	*delimiter_data;
-	char			*history;
+	int 			err;
 
 	if (delimiter_str == NULL
 		|| delimiter_node == NULL || *delimiter_node == NULL)
-		return (NULL);
+		return (ERR);
 	delimiter_data = (*delimiter_node)->u_data.t_data;
-	if (ft_strcmp(delimiter_str, delimiter_data->token_str) != 0)
-		history = allocate_heredoc_string_from_history(
-				delimiter_str, delimiter_data);
-	else
-		history = allocate_heredoc_string_from_input(
-				delimiter_str, delimiter_data);
-	if (history == NULL)
-		return (NULL);
-	return (history);
+	err = set_heredoc_string_to_node(
+			delimiter_str, delimiter_data);
+	return (err);
 }
 
 static char	*get_delimiter(char *delimiter_str)
