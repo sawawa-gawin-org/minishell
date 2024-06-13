@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/13 17:14:23 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/13 17:37:58 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst)
 // 	while (tmp->data != NULL)
 // 	{
 // 		data = tmp->data;
-// 		printf("%d: text:%s, type:%d, sub:%d\n", i, data->token_str, data->token_type, data->sub_type);
+// 		printf("%d: text:%s, type:%d, sub:%d\n",
+// 			i, data->token_str, data->token_type, data->sub_type);
 // 		tmp = tmp->next;
 // 		i++;
 // 	}

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/13 17:33:50 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/13 17:39:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 extern volatile sig_atomic_t	g_signal;
 
-typedef int	(*t_cmp_f)(void *, void *);
+typedef int		(*t_cmp_f)(void *, void *);
 
 typedef enum e_tokens
 {
@@ -126,8 +126,6 @@ int			set_heredoc_string_to_node(
 int			cmp_syntax(void *d, void *n);
 // delete_quote.c
 void		delete_quote(t_blst **tokens_lst);
-// merge_redirects.c
-void		merge_redirects(t_blst **tokens_lst);
 // delete_blank.c
 void		delete_blank(t_blst **tokens_lst);
 

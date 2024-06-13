@@ -17,7 +17,6 @@ SRCS += expand_env.c
 SRCS += expand_env_util.c
 SRCS += expander.c
 SRCS += init_env.c
-SRCS += merge_redirects.c
 SRCS += parser.c
 SRCS += syntax_checker.c
 SRCS += tokenizer.c

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/13 17:30:15 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/13 17:42:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	parse_heredoc(t_blst **tokens_lst)
 			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
 			if (delim_str == NULL)
 				return (ERR);
-			err = replace_delimiter_as_token(delim_str, &(now_node->next)); // FIX: heredocがパイプを使用し、複数出現した時、historyにappendする必要がある
+			err = replace_delimiter_as_token(delim_str, &(now_node->next));
 			free(delim_str);
 			if (err == ERR)
 				return (ERR);
@@ -46,11 +46,11 @@ int	parse_heredoc(t_blst **tokens_lst)
 	return (OK);
 }
 
-static int replace_delimiter_as_token(
+static int	replace_delimiter_as_token(
 				char *delimiter_str, t_blst **delimiter_node)
 {
 	t_token_data	*delimiter_data;
-	int 			err;
+	int				err;
 
 	if (delimiter_str == NULL
 		|| delimiter_node == NULL || *delimiter_node == NULL)
@@ -80,7 +80,7 @@ void	update_token_str_data(
 {
 	int		type;	
 
-	type = is_flag(new_token_str, target_data->token_type); // TMP
+	type = is_flag(new_token_str, target_data->token_type);
 	free(target_data->token_str);
 	target_data->token_str = new_token_str;
 	target_data->token_type = type;
@@ -88,7 +88,7 @@ void	update_token_str_data(
 
 //data->token_typeとheredoc_strから、"$VAL"か'VAL'か"VAL"かを判断して、FLAGを割り当てる
 // Need fix
-int	is_flag(char *heredoc_str, int type)
+int	is_flag(char *heredoc_str, int type) // Check later
 {
 	if (type == SINGLE_QUOTE_FLAG)
 		return (SINGLE_QUOTE_FLAG);
