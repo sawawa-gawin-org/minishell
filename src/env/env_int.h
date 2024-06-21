@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:26:55 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 05:44:57 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 06:50:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ typedef struct s_node
 }			t_blst;
 
 // init_env.c
-t_blst		*new_env_node(char *str, int flag);
 t_env_data	*new_env_data(char *str, int flag);
 void		free_env_data(void *data);
 
@@ -42,7 +41,7 @@ int			add_exit_status_as_env(void **env_lst, int status);
 int			add_shell_env(char *key, char *val, void **env_lst);
 char		*join_keyval(char *key, char *val);
 
+// convert_envlst.c
 char		**convert_envlst_to_arr(void *env_lst);
-
 
 #endif

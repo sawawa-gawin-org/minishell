@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:03:56 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/19 13:27:18 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 06:57:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ char	**convert_envlst_to_arr(void *env_lst)
 		i ++;
 	}
 	return (env_arr);
+}
+
+void	free_environment_array(char **env)
+{
+	size_t	array_size;
+
+	array_size = 0;
+	while(env[array_size] != NULL)
+		array_size ++;
+	free_until_index(env, array_size + 1);
+	return ;
 }
 
 static void	free_until_index(char **result, size_t index)

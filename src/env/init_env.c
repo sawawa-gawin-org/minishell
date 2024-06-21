@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/14 07:47:30 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 06:51:32 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,19 @@
 #include "libft.h"
 
 static size_t		strlen_eq(char *str);
-static t_blst		*new_env_node(char *str, int flag);
-static t_env_data	*new_env_data(char *str, int flag);
+static	t_blst		*new_env_node(char *str, int flag);
 
-void	*init_env(void)
+void	*init_env(char	**env)
 {
 	t_blst		*ret;
 	t_blst		*new_node;
-	extern char	**environ;
 	int			i;
 
 	i = 0;
 	ret = doub_lstnew(NULL);
-	while (ret != NULL && environ[i] != NULL)
+	while (ret != NULL && env[i] != NULL)
 	{
-		new_node = new_env_node(environ[i], NOT_EXPORTED);
+		new_node = new_env_node(env[i], NOT_EXPORTED);
 		if (new_node == NULL)
 		{
 			doub_lstdelall((void **)&ret, free_env_data);
@@ -41,7 +39,7 @@ void	*init_env(void)
 	return ((void *)ret);
 }
 
-static t_blst	*new_env_node(char *str, int flag)
+static	t_blst	*new_env_node(char *str, int flag)
 {
 	t_blst		*node;
 	t_env_data	*data;

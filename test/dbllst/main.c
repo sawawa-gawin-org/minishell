@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/22 21:34:56 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/06/21 06:57:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	end(void)
 {
 	system("leaks dbllst.out");
 }
+
 typedef struct s_node
 {
 	struct s_node	*prev;

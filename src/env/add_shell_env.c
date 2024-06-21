@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 07:20:08 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 05:43:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 06:38:03 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ int	add_exit_status_as_env(void **env_lst, int status)
 	if (err == ERR)
 		return (ERR);
 	return (OK);
-}
-
-static int cmp_key(void *data, void *query_pt)
-{
-	t_env_data	*env_data;
-
-	env_data = (t_env_data *)data;
-	if (ft_strcmp(env_data->key, (char *)query_pt) == 0)
-		return (1);
-	return (0);
 }
 
 int	add_shell_env(char *key, char *val, void **env_lst)
@@ -89,4 +79,14 @@ char	*join_keyval(char *key, char *val)
 	ret[key_len] = '=';
 	ft_strlcpy(ret + key_len + 1, val, val_len + 1);
 	return (ret);
+}
+
+static int cmp_key(void *data, void *query_pt)
+{
+	t_env_data	*env_data;
+
+	env_data = (t_env_data *)data;
+	if (ft_strcmp(env_data->key, (char *)query_pt) == 0)
+		return (1);
+	return (0);
 }

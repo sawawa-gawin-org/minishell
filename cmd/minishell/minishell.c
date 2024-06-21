@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/14 06:31:00 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 06:52:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ static int	main_loop(void *env_lst);
 static int	execute(char *line, void *env_lst, void *tokens_lst);
 static int	is_blank_str(char *str);
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	void	*env_lst;
 	int		status;
 
-	env_lst = init_env();
+	(void)argc;
+	(void)argv;
+	env_lst = init_env(envp);
 	if (env_lst == NULL)
 		return (1);
 	init_signal();
