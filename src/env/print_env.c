@@ -6,14 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:15:41 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 07:23:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 07:32:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_int.h"
 # include <stdio.h>
 
-void	print_env(t_blst *env_lst)
+void	print_env(t_blst *env_lst) // ENVコマンドに近づけるのなら、envコマンドを実行ファイルとして作成させ、forkして実行する必要がある。
 {
 	t_blst	*node;
 

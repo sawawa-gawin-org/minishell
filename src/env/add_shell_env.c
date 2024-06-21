@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 07:20:08 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 06:38:03 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 13:31:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	add_exit_status_as_env(void **env_lst, int status)
 		return (ERR);
 	key = "?";
 	old_node = (t_blst *)doub_lstsearch(*env_lst, key, cmp_key);
-	if (old_node != NULL)
+	if (old_node->e_data != NULL)
 	{
 		free(old_node->e_data->val);
 		old_node->e_data->val = new_status;

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:03:56 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 06:57:16 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:07:32 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,29 @@
 
 static void	free_until_index(char **result, size_t index);
 
-char	**convert_envlst_to_arr(void *env_lst)
+char	**convert_envlst_to_arr(t_blst *env_lst)
 {
-	t_blst	*node;
-	size_t	list_size;
 	char	**env_arr;
 	char	*keyvalue;
 	size_t	i;
 
-	list_size = doub_lstcnt(env_lst);
-	env_arr = (char **) ft_calloc(list_size + 1, sizeof(char *));
-	node = (t_blst *)env_lst;
+	env_arr = (char **) ft_calloc(doub_lstcnt(env_lst) + 1, sizeof(char *));
 	i = 0;
-	while (node->e_data != NULL)
+	while (env_lst->e_data != NULL)
 	{
-		keyvalue = join_keyval(node->e_data->key, node->e_data->val);
+		if (!ft_strcmp(env_lst->e_data->key, "?"))
+		{
+			env_lst = env_lst->next;
+			continue ;
+		}
+		keyvalue = join_keyval(env_lst->e_data->key, env_lst->e_data->val);
 		if (keyvalue == NULL)
 		{
 			free_until_index(env_arr, i);
 			return (NULL);
 		}
 		env_arr[i] = keyvalue;
-		node = node->next;
+		env_lst = env_lst->next;
 		i ++;
 	}
 	return (env_arr);
@@ -48,7 +49,7 @@ void	free_environment_array(char **env)
 	size_t	array_size;
 
 	array_size = 0;
-	while(env[array_size] != NULL)
+	while (env[array_size] != NULL)
 		array_size ++;
 	free_until_index(env, array_size + 1);
 	return ;
