@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:26:55 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 06:50:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/21 07:21:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # define ERR -1
 # define IS_EXPORTED 1
 # define NOT_EXPORTED 0
+
+# include "libft.h"
 
 typedef struct s_env_data
 {

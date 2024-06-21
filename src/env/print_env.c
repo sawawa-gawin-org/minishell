@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 06:27:17 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 07:18:41 by saraki           ###   ########.fr       */
+/*   Created: 2024/06/21 07:15:41 by saraki            #+#    #+#             */
+/*   Updated: 2024/06/21 07:23:59 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
-// init_env.c
-void	*init_env(char	**env);
-void	free_env_data(void *data);
+#include "env_int.h"
+# include <stdio.h>
 
-// convert_envlst.c
-char	**convert_envlst_to_arr(void *env_lst);
-void	free_environment_array(char **env);
+void	print_env(t_blst *env_lst)
+{
+	t_blst	*node;
 
-// add_shell_env.c
-int	add_exit_status_as_env(void **env_lst, int status);
-int	add_shell_env(char *key, char *val, void **env_lst);
-
-//print_env.c
-void	print_env(void *env_lst);
-
-#endif
+	if (env_lst == NULL)
+		return ;
+	node = env_lst;
+	while (node->e_data != NULL)
+	{
+		if (!ft_strcmp(node->e_data->key, "?"))
+		{
+			node = node->next;
+			continue ;
+		}
+		printf("%s=%s\n", node->e_data->key, node->e_data->val);
+		node = node->next;
+	}
+	return ;
+}

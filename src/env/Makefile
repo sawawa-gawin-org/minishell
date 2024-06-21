@@ -13,6 +13,7 @@ SRCS :=
 SRCS += init_env.c
 SRCS += convert_envlst.c
 SRCS += add_shell_env.c
+SRCS += print_env.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
