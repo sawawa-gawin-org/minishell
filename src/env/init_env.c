@@ -6,15 +6,15 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/07 17:08:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/14 07:47:30 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokens_int.h"
+#include "env_int.h"
 #include "dbllst.h"
 #include "libft.h"
 
-static int			strlen_eq(char *str);
+static size_t		strlen_eq(char *str);
 static t_blst		*new_env_node(char *str, int flag);
 static t_env_data	*new_env_data(char *str, int flag);
 
@@ -29,7 +29,7 @@ void	*init_env(void)
 	ret = doub_lstnew(NULL);
 	while (ret != NULL && environ[i] != NULL)
 	{
-		new_node = new_env_node(environ[i], 1);
+		new_node = new_env_node(environ[i], NOT_EXPORTED);
 		if (new_node == NULL)
 		{
 			doub_lstdelall((void **)&ret, free_env_data);
@@ -58,10 +58,10 @@ static t_blst	*new_env_node(char *str, int flag)
 	return (node);
 }
 
-static t_env_data	*new_env_data(char *str, int flag)
+t_env_data	*new_env_data(char *str, int flag)
 {
 	t_env_data	*ret;
-	int			len;
+	size_t		len;
 
 	ret = (t_env_data *)malloc(sizeof(t_env_data));
 	if (ret == NULL)
@@ -84,9 +84,9 @@ static t_env_data	*new_env_data(char *str, int flag)
 	return (ret);
 }
 
-static int	strlen_eq(char *str)
+static size_t	strlen_eq(char *str)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0' && str[i] != '=')

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 02:57:02 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 05:35:31 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/19 13:19:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ t_blst			*doub_lstdup(t_blst *src, t_dup_f dup_f, t_del_f del_f);
 // search and return the specified `node` pointer from the `lst`
 // `int (cmp_f)(void *, void *)`: return 1 if match
 t_blst			*doub_lstsearch(t_blst *lst, void *query_pt, t_cmp_f cmp_f);
+
+// return the number of nodes in the `lst`
+size_t			doub_lstcnt(t_blst *lst);
 
 #endif

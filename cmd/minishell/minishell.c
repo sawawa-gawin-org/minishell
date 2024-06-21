@@ -6,11 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/13 17:13:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/14 06:31:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
 #include "tokens.h"
 #include "dbllst.h"
 

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/13 17:39:39 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/14 06:26:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,6 @@ typedef struct s_indexes
 	int		old;
 }			t_indexes;
 
-// init_env.c
-void		free_env_data(void *data);
 // tokenizer.c
 void		free_token_data(void *data);
 int			is_blank(int c);

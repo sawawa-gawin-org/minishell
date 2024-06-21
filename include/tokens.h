@@ -6,16 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/13 17:13:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/14 06:27:14 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TOKENS_H
 # define TOKENS_H
-
-// init_env.c
-void	*init_env(void);
-void	free_env_data(void *data);
 
 // tokenizer.c
 void	*tokenizer(char **line);

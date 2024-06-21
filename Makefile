@@ -23,13 +23,13 @@ SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/cmd/$(BASE_DIRNAME)/)
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -ltokens -lexec -ldbllst -lft -lreadline 
-DLFLAGS := -L$(LIB_EXPORT_DIR) -ltokens_debug -lexec_debug -ldbllst_debug -lft_debug -lreadline
+LFLAGS := -L$(LIB_EXPORT_DIR) -ltokens -lenv -lexec -ldbllst -lft -lreadline
+DLFLAGS := -L$(LIB_EXPORT_DIR) -ltokens_debug -lenv_debug -lexec_debug -ldbllst_debug -lft_debug -lreadline
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst exec tokens
-DEPENDENCY_LIB := libft.a libdbllst.a libexec.a libtokens.a
+DEPENDENCY := libft dbllst exec tokens env
+DEPENDENCY_LIB := libft.a libdbllst.a libexec.a libtokens.a libenv.a
 
 # *****************************************************************************
 # From here onward is the same
