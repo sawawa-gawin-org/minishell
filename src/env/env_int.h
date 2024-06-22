@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:26:55 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 07:21:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/22 08:06:59 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,6 @@ int			add_shell_env(char *key, char *val, void **env_lst);
 char		*join_keyval(char *key, char *val);
 
 // convert_envlst.c
-char		**convert_envlst_to_arr(void *env_lst);
+char		**convert_envlst_to_arr(t_blst *env_lst);
 
 #endif

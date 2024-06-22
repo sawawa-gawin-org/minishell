@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/15 08:30:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/22 08:06:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	make_process(
 	executable_path = find_cmd(cmd[0]);
 	if (!executable_path)
 	{
+		cmdnotfound_error(cmd[0]);
 		free(cmd);
 		return (ERR);
 	}

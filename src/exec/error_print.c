@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   error_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/14 06:27:17 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/22 08:07:16 by saraki           ###   ########.fr       */
+/*   Created: 2024/05/15 03:31:04 by saraki            #+#    #+#             */
+/*   Updated: 2024/06/22 08:04:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
-// init_env.c
-void	*init_env(char	**env);
-void	free_env_data(void *data);
+#include "exec_int.h"
 
-// convert_envlst.c
-char	**convert_envlst_to_arr(void *env_lst);
-void	free_environment_array(char **env);
+int	cmdnotfound_error(char *cmd)
+{
+	char	*prefix;
+	char	*suffix;
 
-// add_shell_env.c
-int		add_exit_status_as_env(void **env_lst, int status);
-int		add_shell_env(char *key, char *val, void **env_lst);
-
-//print_env.c
-void	print_env(void *env_lst);
-
-#endif
+	prefix = "minishell: ";
+	suffix = ": command not found\n";
+	if (write(STDERR_FILENO, prefix, ft_strlen(prefix)) == -1)
+		perror("write");
+	if (write(STDERR_FILENO, cmd, ft_strlen(cmd)) == -1)
+		perror("write");
+	if (write(STDERR_FILENO, suffix, ft_strlen(suffix)) == -1)
+		perror("write");
+	return (ERR);
+}
