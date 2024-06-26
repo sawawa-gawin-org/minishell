@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/21 13:24:34 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 02:12:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ static int	main_loop(void *env_lst)
 
 static int	execute(char *line, void *env_lst, void *tokens_lst)
 {
+	int	status;
+
+	add_history(line);
 	if (!syntax_checker(tokens_lst, cmp_syntax))
 	{
 		if (add_exit_status_as_env(&env_lst, 2))
@@ -89,9 +92,10 @@ static int	execute(char *line, void *env_lst, void *tokens_lst)
 	}
 	if (parser(&tokens_lst, &env_lst))
 		return (ERR);
-	if (exec_tokenslst_cmds(tokens_lst))
+	if (exec_tokenslst_cmds(tokens_lst, env_lst, &status))
 		return (ERR);
-	add_history(line);
+	if (add_exit_status_as_env(&env_lst, 2))
+		return (ERR);
 	return (OK);
 }
 

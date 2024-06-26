@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/04/05 03:54:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/23 07:14:15 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 static char	*find_path(char *path, char *envs);
 static int	path_length_checker(char *env_path, int i);
 
-char	*find_cmd(char *path)
+char	*find_cmd(char *path, char **env)
 {
 	int		i;
 
 	i = 0;
-	while (environ[i])
+	while (env[i])
 	{
-		if (ft_strncmp(environ[i], "PATH=", 5) == 0)
-			return (find_path(path, environ[i]));
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+			return (find_path(path, env[i]));
 		i ++;
 	}
 	return (NULL);

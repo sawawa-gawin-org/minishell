@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/22 08:06:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/23 07:15:06 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ static t_tokenlst	*shift_token_section(
 						t_tokenlst *token_head_node, int index);
 
 int	make_process(
-	t_tokenlst *token_head_node,
-	t_pipelst *pipe_head_node,
-	t_callback callback)
+		t_tokenlst *token_head_node,
+		t_pipelst *pipe_head_node,
+		t_callback callback,
+		char **env)
 {
 	char		**cmd;
 	char		*executable_path;
@@ -30,7 +31,7 @@ int	make_process(
 	cmd = parse_cmd(start_node, pipe);
 	if (cmd == NULL)
 		return (ERR);
-	executable_path = find_cmd(cmd[0]);
+	executable_path = find_cmd(cmd[0], env);
 	if (!executable_path)
 	{
 		cmdnotfound_error(cmd[0]);
@@ -39,7 +40,7 @@ int	make_process(
 	}
 	pipe->pids = fork();
 	if (pipe->pids == 0)
-		callback(cmd, executable_path, pipe);
+		callback(cmd, executable_path, pipe, env);
 	free(cmd);
 	free(executable_path);
 	if (pipe->pids < 0)

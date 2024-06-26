@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/22 08:28:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 02:07:18 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void			close_fds_all(t_pipelst *pipe_head_node);
 // token_head_node->next->next->data = ">"
 // token_head_node->next->next->next->data = "out.txt"
 
-int	exec(t_tokenlst *token_head_node)
+int	exec(t_tokenlst *token_head_node, char **env, int *status)
 {
 	t_pipelst	*pipe_head_node;
 	int			err;
@@ -41,7 +41,7 @@ int	exec(t_tokenlst *token_head_node)
 	pipe_head_node = init_pipe_lst(token_head_node);
 	if (pipe_head_node == NULL)
 		return (1);
-	if (make_processes(token_head_node, pipe_head_node))
+	if (make_processes(token_head_node, pipe_head_node, env, status))
 		err = 1;
 	close_fds_all(pipe_head_node);
 	doub_lstdelall((void **)&pipe_head_node, free);

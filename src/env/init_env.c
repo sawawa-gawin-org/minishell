@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/21 06:51:32 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/23 07:20:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@ void	*init_env(char	**env)
 
 	i = 0;
 	ret = doub_lstnew(NULL);
+	if (add_exit_status_as_env((void **)&ret, 0))
+	{
+		doub_lstdelall((void **)&ret, free_env_data);
+		return (NULL);
+	}
 	while (ret != NULL && env[i] != NULL)
 	{
 		new_node = new_env_node(env[i], NOT_EXPORTED);
@@ -36,6 +41,7 @@ void	*init_env(char	**env)
 		doub_lstappend((void **)&ret, new_node);
 		i ++;
 	}
+	
 	return ((void *)ret);
 }
 
