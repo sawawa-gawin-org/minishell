@@ -26,8 +26,8 @@
 extern volatile sig_atomic_t	g_signal;
 
 # define OK 0
-# define CONTINUE 1
-# define ERR -1
+# define CONTINUE -1
+# define ERR -2
 
 typedef struct s_sig
 {

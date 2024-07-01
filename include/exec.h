@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:30:28 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/26 02:08:00 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/01 05:44:49 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/wait.h> // Linux
 # include <sys/stat.h> // Linux
 
-int	exec(void *token_head_node, char **env, int *status);
+int	exec(void *token_head_node, char **env);
+int	exec_tokenslst_cmds(void *tokens_lst, void *env_lst, int *status);
 
 #endif

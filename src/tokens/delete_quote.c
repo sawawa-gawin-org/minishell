@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/07 07:33:25 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/16 17:37:20 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:52:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	delete_quote(t_blst **tokens_lst)
 {
 	t_token_data	*data;
 
-	data = (*tokens_lst)->u_data.t_data;
-	while ((*tokens_lst)->u_data.t_data != NULL)
+	data = (*tokens_lst)->u_data.token_data;
+	while ((*tokens_lst)->u_data.token_data != NULL)
 	{
-		data = (*tokens_lst)->u_data.t_data;
+		data = (*tokens_lst)->u_data.token_data;
 		if (DOUBLE_QUOTE_FLAG <= data->token_type
 			&& data->token_type <= SINGLE_QUOTE_FLAG)
 		{
@@ -31,7 +31,7 @@ void	delete_quote(t_blst **tokens_lst)
 		}
 		*tokens_lst = (*tokens_lst)->next;
 	}
-	while ((*tokens_lst)->prev->u_data.t_data != NULL)
+	while ((*tokens_lst)->prev->u_data.token_data != NULL)
 		*tokens_lst = (*tokens_lst)->prev;
 }
 
@@ -41,7 +41,7 @@ static void	process_token_length(t_blst **lst)
 	void			*purged;
 	t_token_data	*data;
 
-	data = (*lst)->u_data.t_data;
+	data = (*lst)->u_data.token_data;
 	len = ft_strlen(data->token_str);
 	if (len == 2)
 	{

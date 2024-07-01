@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:03:56 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 14:07:32 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:55:25 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,15 @@ char	**convert_envlst_to_arr(t_blst *env_lst)
 
 	env_arr = (char **) ft_calloc(doub_lstcnt(env_lst) + 1, sizeof(char *));
 	i = 0;
-	while (env_lst->e_data != NULL)
+	while (env_lst->u_data.env_data != NULL)
 	{
-		if (!ft_strcmp(env_lst->e_data->key, "?"))
+		if (!ft_strcmp(env_lst->u_data.env_data->key, "?"))
 		{
 			env_lst = env_lst->next;
 			continue ;
 		}
-		keyvalue = join_keyval(env_lst->e_data->key, env_lst->e_data->val);
+		keyvalue = join_keyval(env_lst->u_data.env_data->key,
+				env_lst->u_data.env_data->val);
 		if (keyvalue == NULL)
 		{
 			free_until_index(env_arr, i);

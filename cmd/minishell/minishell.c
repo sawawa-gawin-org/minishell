@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/26 02:12:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/30 01:21:40 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	execute(char *line, void *env_lst, void *tokens_lst)
 		return (ERR);
 	if (exec_tokenslst_cmds(tokens_lst, env_lst, &status))
 		return (ERR);
-	if (add_exit_status_as_env(&env_lst, 2))
+	if (add_exit_status_as_env(&env_lst, status))
 		return (ERR);
 	return (OK);
 }

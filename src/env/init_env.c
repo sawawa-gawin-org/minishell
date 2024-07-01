@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/23 07:20:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:56:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	*init_env(char	**env)
 		doub_lstappend((void **)&ret, new_node);
 		i ++;
 	}
-	
 	return ((void *)ret);
 }
 

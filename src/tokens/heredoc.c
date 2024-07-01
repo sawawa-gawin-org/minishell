@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/13 17:42:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:58:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ int	parse_heredoc(t_blst **tokens_lst)
 	int				err;
 
 	now_node = *tokens_lst;
-	while (now_node->u_data.t_data != NULL)
+	while (now_node->u_data.token_data != NULL)
 	{
-		data = now_node->u_data.t_data;
+		data = now_node->u_data.token_data;
 		if (data->token_type == HEREDOC_FLAG)
 		{
-			delim_str = get_delimiter(now_node->next->u_data.t_data->token_str);
+			delim_str = get_delimiter(
+					now_node->next->u_data.token_data->token_str);
 			if (delim_str == NULL)
 				return (ERR);
 			err = replace_delimiter_as_token(delim_str, &(now_node->next));
@@ -55,7 +56,7 @@ static int	replace_delimiter_as_token(
 	if (delimiter_str == NULL
 		|| delimiter_node == NULL || *delimiter_node == NULL)
 		return (ERR);
-	delimiter_data = (*delimiter_node)->u_data.t_data;
+	delimiter_data = (*delimiter_node)->u_data.token_data;
 	err = set_heredoc_string_to_node(
 			delimiter_str, delimiter_data);
 	return (err);

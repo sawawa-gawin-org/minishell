@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/15 02:53:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:51:51 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	delete_blank(t_blst **tokens_lst)
 	t_token_data	*data;
 
 	head = *tokens_lst;
-	while ((*tokens_lst)->u_data.t_data != NULL)
+	while ((*tokens_lst)->u_data.token_data != NULL)
 	{
-		data = (*tokens_lst)->u_data.t_data;
+		data = (*tokens_lst)->u_data.token_data;
 		if (data->token_type == SPACE_FLAG)
 			purge(tokens_lst);
 		else
@@ -40,31 +40,3 @@ static void	purge(t_blst **lst)
 	purged = doub_lstpurge((void **)lst);
 	doub_lstdelone(purged, free_token_data);
 }
-
-// パイプ前後のスペースの削除と終端前のスペースの削除
-// void	delete_blank(t_blst **tokens_lst)
-// {
-// 	t_blst			*head;
-// 	t_token_data	*data;
-// 	t_token_data	*next_data;
-// 	head = *tokens_lst;
-// 	while ((*tokens_lst)->u_data.t_data != NULL)
-// 	{
-// 		data = (*tokens_lst)->u_data.t_data;
-// 		next_data = (*tokens_lst)->next->u_data.t_data;
-// 		if (data->token_type == SPACE_FLAG
-// 			&& (next_data == NULL || next_data->token_type == TUBE_FLAG))
-// 			purge(tokens_lst);
-// 		else if ((data->token_type == TUBE_FLAG
-// 			|| data->sub_type == HEREDOC_QUOTE_FLAG
-// 			|| (LESS_FLAG <= data->sub_type && data->sub_type <= APPEND_FLAG))
-// 			&& next_data->token_type == SPACE_FLAG)
-// 		{
-// 			(*tokens_lst) = (*tokens_lst)->next;
-// 			purge(tokens_lst);
-// 		}
-// 		else
-// 			(*tokens_lst) = (*tokens_lst)->next;
-// 	}
-// 	*tokens_lst = head;
-// }

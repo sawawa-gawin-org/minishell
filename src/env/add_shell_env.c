@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 07:20:08 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 13:31:24 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:55:50 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "dbllst.h"
 #include "libft.h"
 
-static int cmp_key(void *data, void *query_pt);
+static int	cmp_key(void *data, void *query_pt);
 
 int	add_exit_status_as_env(void **env_lst, int status)
 {
@@ -28,10 +28,10 @@ int	add_exit_status_as_env(void **env_lst, int status)
 		return (ERR);
 	key = "?";
 	old_node = (t_blst *)doub_lstsearch(*env_lst, key, cmp_key);
-	if (old_node->e_data != NULL)
+	if (old_node->u_data.env_data != NULL)
 	{
-		free(old_node->e_data->val);
-		old_node->e_data->val = new_status;
+		free(old_node->u_data.env_data->val);
+		old_node->u_data.env_data->val = new_status;
 		return (OK);
 	}
 	err = add_shell_env(key, new_status, env_lst);
@@ -81,7 +81,7 @@ char	*join_keyval(char *key, char *val)
 	return (ret);
 }
 
-static int cmp_key(void *data, void *query_pt)
+static int	cmp_key(void *data, void *query_pt)
 {
 	t_env_data	*env_data;
 

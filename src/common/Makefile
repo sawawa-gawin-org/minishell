@@ -4,20 +4,15 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := libexec.a
-HEADERS := exec.h
-INT_HEADERS := exec_int.h
+LIB_NAME := libcommon.a
+HEADERS := common.h
+INT_HEADERS := 
 
 SRCS :=
 
-SRCS += exec.c
-SRCS += find_cmd.c
-SRCS += make_processes.c
-SRCS += make_processes_util.c
-SRCS += process_callback.c
-SRCS += parse_cmd.c
-SRCS += parse_redirects.c
-SRCS += exec_bridge.c
+SRCS += err_cmd.c
+SRCS += err_syntax.c
+SRCS += 
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -31,13 +26,13 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lenv -lft -ldbllst -lcommon
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lenv_debug -lft_debug -ldbllst_debug -lcommon_debug
+LFLAGS :=
+DLFLAGS := 
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst common env
-DEPENDENCY_LIB := libft.a libdbllst.a libcommon.a libenv.a
+DEPENDENCY := 
+DEPENDENCY_LIB :=
 
 # *****************************************************************************
 # From here onward is the same
@@ -73,7 +68,7 @@ $(OBJ_DIR):
 	mkdir -p $(addprefix $(OBJ_DIR), $(SUB_OBJ_DIR))
 	mkdir -p $(LIB_EXPORT_DIR)
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(INT_HEADERS)
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(LIB_NAME): $(OBJS)

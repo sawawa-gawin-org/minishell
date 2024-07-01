@@ -1,29 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_print.c                                      :+:      :+:    :+:   */
+/*   err_syntax.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 03:31:04 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/26 14:01:10 by saraki           ###   ########.fr       */
+/*   Created: 2024/06/26 13:55:37 by root              #+#    #+#             */
+/*   Updated: 2024/06/26 14:19:28 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tokens_int.h"
+#include "common.h"
 
-int	error_println(char *str)
+int	syntax_unexpected_error(char *token)
 {
 	char	*prefix;
 	char	*suffix;
+	char	*msg;
 
-	prefix = "minishell: ";
-	suffix = "\n";
+	prefix = MSG_PREFIX;
+	msg = "syntax error near unexpected token `";
+	suffix = "'\n";
 	if (write(STDERR_FILENO, prefix, ft_strlen(prefix)) == -1)
 		perror("write");
-	if (write(STDERR_FILENO, str, ft_strlen(str)) == -1)
+	if (write(STDERR_FILENO, msg, ft_strlen(msg)) == -1)
+		perror("write");
+	if (write(STDERR_FILENO, token, ft_strlen(token)) == -1)
 		perror("write");
 	if (write(STDERR_FILENO, suffix, ft_strlen(suffix)) == -1)
+		perror("write");
+	return (ERR);
+}
+
+int	syntax_unclose_quote_error(void)
+{
+	char	*prefix;
+	char	*msg;
+
+	prefix = MSG_PREFIX;
+	msg = "not interpret unclosed quotes\n";
+	if (write(STDERR_FILENO, prefix, ft_strlen(prefix)) == -1)
+		perror("write");
+	if (write(STDERR_FILENO, msg, ft_strlen(msg)) == -1)
 		perror("write");
 	return (ERR);
 }

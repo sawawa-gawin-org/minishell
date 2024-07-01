@@ -6,33 +6,18 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:26:55 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/22 08:06:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/01 05:54:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_INT_H
 # define ENV_INT_H
 
-# define OK 0
-# define ERR -1
 # define IS_EXPORTED 1
 # define NOT_EXPORTED 0
 
+# include "common.h"
 # include "libft.h"
-
-typedef struct s_env_data
-{
-	char	*key;
-	char	*val;
-	int		exported;
-}			t_env_data;
-
-typedef struct s_node
-{
-	struct s_node	*prev;
-	t_env_data		*e_data;
-	struct s_node	*next;
-}			t_blst;
 
 // init_env.c
 t_env_data	*new_env_data(char *str, int flag);
@@ -45,5 +30,6 @@ char		*join_keyval(char *key, char *val);
 
 // convert_envlst.c
 char		**convert_envlst_to_arr(t_blst *env_lst);
+void		free_environment_array(char **env);
 
 #endif

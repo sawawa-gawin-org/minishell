@@ -6,14 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:27:17 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/22 08:07:16 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 03:50:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
 // init_env.c
-void	*init_env(char	**env);
+void	*init_env(char **env);
 void	free_env_data(void *data);
 
 // convert_envlst.c

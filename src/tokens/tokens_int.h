@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/14 06:26:47 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:20:40 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "libft.h"
 # include "dbllst.h"
+# include "common.h"
 
 # include <stdio.h>
 # include <stddef.h>
@@ -27,80 +28,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-# define OK 0
-# define ERR -1
-
 extern volatile sig_atomic_t	g_signal;
-
-typedef int		(*t_cmp_f)(void *, void *);
-
-typedef enum e_tokens
-{
-	TOKEN_FLAG = 1,
-	TUBE_FLAG = 1 << 1,
-	LESS_FLAG = 1 << 2,
-	GREAT_FLAG = 1 << 3,
-	HEREDOC_FLAG = 1 << 4,
-	APPEND_FLAG = 1 << 5,
-	DOUBLE_QUOTE_FLAG = 1 << 6,
-	DOUBLE_QUOTE_VAL_FLAG = 1 << 7,
-	SINGLE_QUOTE_FLAG = 1 << 8,
-	VAL_FLAG = 1 << 9,
-	SPACE_FLAG = 1 << 10,
-	OPEN_QUOTE_FLAG = 1 << 11,
-	HEREDOC_QUOTE_FLAG = 1 << 12,
-	COMMAND_FLAG = 1 << 13
-}			t_tokens;
-
-// # define META_FLAG (LESS_FLAG | GREAT_FLAG | TUBE_FLAG | 
-// 					HEREDOC_FLAG | APPEND_FLAG)
-// # define QUOTE_FLAG (OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | 
-// 					DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG)
-// # define WORD_FLAG (VAL_FLAG | TOKEN_FLAG)
-// # define BLANK_FLAG (SPACE_FLAG)
-
-# define META_FLAG 62
-# define QUOTE_FLAG 2496
-# define WORD_FLAG 513
-# define BLANK_FLAG 1024
-
-typedef struct s_token_data
-{
-	t_tokens	token_type;
-	t_tokens	sub_type;
-	char		*token_str;
-}			t_token_data;
-
-typedef struct s_shval_data
-{
-	char	*key;
-	char	*val;
-	int		exported;
-}			t_shval_data;
-
-typedef struct s_env_data
-{
-	char	*key;
-	char	*val;
-	int		exported;
-}			t_env_data;
-
-typedef struct s_node
-{
-	struct s_node	*prev;
-	union
-	{
-		t_token_data	*t_data;
-		t_env_data		*e_data;
-	}	u_data;
-	struct s_node	*next;
-}			t_blst;
-
-typedef struct s_indexes
-{
-	int		now;
-	int		old;
-}			t_indexes;
 
 // tokenizer.c
 void		free_token_data(void *data);
@@ -138,8 +66,5 @@ char		*add_val_to_str(
 int			get_val_len(char *str, int now);
 char		*strjoin_allfree(char *str1, char *str2);
 
-// error_print.c
-int			error_println(char *str);
-int			syntax_error(char *token);
 
 #endif
