@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/01 05:46:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/01 09:00:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/wait.h> // Linux
 # include <sys/stat.h> // Linux
 
-typedef struct	s_exec_parametors
+typedef struct s_exec_parametors
 {
 	t_tokenlst	*token_list;
 	t_pipelst	*pipe_list;
@@ -34,7 +34,7 @@ typedef struct	s_exec_parametors
 	int			status;
 }				t_exec_parametors;
 
-typedef struct	s_callback_parametors
+typedef struct s_callback_parametors
 {
 	char		**cmd;
 	char		*path;
