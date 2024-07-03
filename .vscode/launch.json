@@ -1,14 +1,5 @@
 {
 	"version": "0.2.0",
-	"compounds": [
-		{
-			"name": "tokens",
-			"configurations": [
-				"tokens(parser)",
-				"tokens(expander)",
-			]
-		}
-	],
 	"configurations": [
 		{
 			"name": "minishell",
@@ -130,5 +121,23 @@
 				"MIMode": "lldb",
 			},
 		},
-	]
+		{
+			"name": "env",
+			"type": "cppdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/test/env/env_debug.out",
+			"args": [
+			],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"MIMode": "gdb",
+			"preLaunchTask": "env-make",
+			"linux": {
+				"MIMode": "gdb",
+				"miDebuggerPath": "/usr/bin/gdb"
+			},
+			"osx": {
+				"MIMode": "lldb",
+			},
+		},	]
 }

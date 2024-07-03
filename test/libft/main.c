@@ -24,13 +24,16 @@ void	print_is_NULL(char *input)
 
 int	main()
 {
-	char *a = NULL;
-	char *b = '\0';
-	char *c = 0;
-
-	print_is_NULL(a);
-	print_is_NULL(b);
-	print_is_NULL(c);
+    void *mem;
+    mem = malloc(9223372036854775807);
+    if (mem == NULL) {
+        perror(NULL);
+		printf("malloc failed\n");
+        return (1);
+    }
+	printf("malloc success\n");
+    free(mem);
+    return (0);
 	// char	*result = ft_itoa(2147483647);
 	// printf("%s\n", result);
 	// free(result);

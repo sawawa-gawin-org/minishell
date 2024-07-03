@@ -6,11 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/13 17:13:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/30 01:21:40 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "env.h"
 #include "tokens.h"
 #include "dbllst.h"
 
@@ -27,12 +28,14 @@ static int	main_loop(void *env_lst);
 static int	execute(char *line, void *env_lst, void *tokens_lst);
 static int	is_blank_str(char *str);
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	void	*env_lst;
 	int		status;
 
-	env_lst = init_env();
+	(void)argc;
+	(void)argv;
+	env_lst = init_env(envp);
 	if (env_lst == NULL)
 		return (1);
 	init_signal();
@@ -78,13 +81,21 @@ static int	main_loop(void *env_lst)
 
 static int	execute(char *line, void *env_lst, void *tokens_lst)
 {
+	int	status;
+
+	add_history(line);
 	if (!syntax_checker(tokens_lst, cmp_syntax))
+	{
+		if (add_exit_status_as_env(&env_lst, 2))
+			return (ERR);
 		return (CONTINUE);
+	}
 	if (parser(&tokens_lst, &env_lst))
 		return (ERR);
-	if (exec_tokenslst_cmds(tokens_lst))
+	if (exec_tokenslst_cmds(tokens_lst, env_lst, &status))
 		return (ERR);
-	add_history(line);
+	if (add_exit_status_as_env(&env_lst, status))
+		return (ERR);
 	return (OK);
 }
 

@@ -9,7 +9,7 @@ HEADERS := dbllst.h
 INT_HEADERS := dbllst_int.h
 
 SRCS := doub_lstappend.c doub_lstdelall.c doub_lstdelone.c doub_lstdup.c \
-	doub_lstnew.c doub_lstprepend.c doub_lstpurge.c doub_lstsearch.c
+	doub_lstnew.c doub_lstprepend.c doub_lstpurge.c doub_lstsearch.c doub_lstcnt.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

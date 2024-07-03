@@ -6,11 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/12 15:41:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/12 14:29:15 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/01 06:44:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "common.h"
 
 #include <unistd.h>
 
@@ -21,49 +22,53 @@
 // 	system("leaks exec.out");
 // }
 
-typedef struct s_node
-{
-	struct s_node	*prev;
-	char			*data;
-	struct s_node	*next;
-}				t_blst;
-
 static t_blst *debug_parselst(char **cmd);
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	t_blst	*token_head_node;
+	int		status;
 	
-	char *cmd1[] = {"ls", "-la", ">", "./test/exec/test1.txt", NULL};
-	token_head_node = debug_parselst((char **)cmd1);
-	if (token_head_node == NULL)
-		return (1);
-	exec((void *)token_head_node);
-	doub_lstdelall((void **)&token_head_node, NULL);
-	
-	write(STDOUT_FILENO, "- - - - - -\n", 12);
-	char *cmd2[] = {"cat", "<", "subject.md", NULL};
-	token_head_node = debug_parselst((char **)cmd2);
-	if (token_head_node == NULL)
-		return (1);
-	exec((void *)token_head_node);
-	doub_lstdelall((void **)&token_head_node, NULL);
-	
-	write(STDOUT_FILENO, "- - - - - -\n", 12);
-	char *cmd3[] = {"cat", "<", "subject.md", "|", "wc", "-l", NULL};
-	token_head_node = debug_parselst((char **)cmd3);
-	if (token_head_node == NULL)
-		return (1);
-	exec((void *)token_head_node);
-	doub_lstdelall((void **)&token_head_node, NULL);
-
-	// write(STDOUT_FILENO, "- - - - - -\n", 12);
-	// char *cmd4[] = {"ls", "-la", "|", "wc", "-l", "|", "wc", "-l", "|", "wc", "-l", NULL};
-	// token_head_node = debug_parselst((char **)cmd4);
+	// char *cmd1[] = {"ls", "-la", NULL};
+	// token_head_node = debug_parselst((char **)cmd1);
 	// if (token_head_node == NULL)
 	// 	return (1);
 	// exec((void *)token_head_node);
 	// doub_lstdelall((void **)&token_head_node, NULL);
+	
+	// write(STDOUT_FILENO, "- - - - - -\n", 12);
+	// char *cmd2[] = {"cat", "<", "subject.md", NULL};
+	// token_head_node = debug_parselst((char **)cmd2);
+	// if (token_head_node == NULL)
+	// 	return (1);
+	// exec((void *)token_head_node);
+	// doub_lstdelall((void **)&token_head_node, NULL);
+	
+	// write(STDOUT_FILENO, "- - - - - -\n", 12);
+	// char *cmd3[] = {"cat", "<", "subject.md", "|", "wc", "-l", NULL};
+	// token_head_node = debug_parselst((char **)cmd3);
+	// if (token_head_node == NULL)
+	// 	return (1);
+	// exec((void *)token_head_node);
+	// doub_lstdelall((void **)&token_head_node, NULL);
+
+	write(STDOUT_FILENO, "- - - - - -\n", 12);
+	char *cmd4[] = {"asdfasdf", NULL};
+	token_head_node = debug_parselst((char **)cmd4);
+	if (token_head_node == NULL)
+		return (1);
+	status = exec((void *)token_head_node, envp);
+	printf("status: %d\n", status); // exit status 127
+	doub_lstdelall((void **)&token_head_node, NULL);
+
+	write(STDOUT_FILENO, "- - - - - -\n", 12);
+	char *cmd5[] = {"/dev/null", NULL};
+	token_head_node = debug_parselst((char **)cmd5);
+	if (token_head_node == NULL)
+		return (1);
+	status = exec((void *)token_head_node, envp);
+	printf("status: %d\n", status); // exit status 126
+	doub_lstdelall((void **)&token_head_node, NULL);
 	return (0);
 }
 

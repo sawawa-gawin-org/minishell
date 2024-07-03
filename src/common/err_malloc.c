@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   err_malloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 17:30:28 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/01 05:44:49 by saraki           ###   ########.fr       */
+/*   Created: 2024/06/26 14:08:56 by saraki            #+#    #+#             */
+/*   Updated: 2024/06/26 14:11:52 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-# define EXEC_H
+#include "common.h"
 
-# include "dbllst.h"
-# include "libft.h"
+int	malloc_error(void)
+{
+	char	*prefix;
+	char	*middle;
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <sys/types.h>
-# include <stdio.h>
-
-# include <sys/wait.h> // Linux
-# include <sys/stat.h> // Linux
-
-int	exec(void *token_head_node, char **env);
-int	exec_tokenslst_cmds(void *tokens_lst, void *env_lst, int *status);
-
-#endif
+	prefix = MSG_PREFIX;
+	middle = "malloc";
+	if (write(STDERR_FILENO, prefix, ft_strlen(prefix)) == -1)
+		perror("write");
+	if (write(STDERR_FILENO, middle, ft_strlen(middle)) == -1)
+		perror("write");
+	perror(NULL);
+	return (ERR);
+}

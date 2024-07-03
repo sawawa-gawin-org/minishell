@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 19:59:00 by saraki            #+#    #+#             */
-/*   Updated: 2024/05/15 06:52:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 14:08:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,5 @@ volatile sig_atomic_t	g_signal = 0;
  
 int main(void)
 {
-   error_println("This is err msg");
+   return (0);
 }

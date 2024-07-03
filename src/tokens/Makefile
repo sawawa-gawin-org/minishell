@@ -12,11 +12,9 @@ SRCS :=
 
 SRCS += delete_blank.c
 SRCS += delete_quote.c
-SRCS += exec_bridge.c
 SRCS += expand_env.c
 SRCS += expand_env_util.c
 SRCS += expander.c
-SRCS += init_env.c
 SRCS += parser.c
 SRCS += syntax_checker.c
 SRCS += tokenizer.c
@@ -37,13 +35,13 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lexec -ldbllst -lft -lreadline 
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lexec_debug -ldbllst_debug -lft_debug -lreadline 
+LFLAGS := -L$(LIB_EXPORT_DIR) -lexec -ldbllst -lft -lcommon -lreadline 
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lexec_debug -ldbllst_debug -lft_debug -lcommon_debug -lreadline 
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst exec
-DEPENDENCY_LIB := libft.a libdbllst.a libexec.a
+DEPENDENCY := libft dbllst exec env common
+DEPENDENCY_LIB := libft.a libdbllst.a libexec.a libenv.a libcommon.a
 
 # *****************************************************************************
 # From here onward is the same

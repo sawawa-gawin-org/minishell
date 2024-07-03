@@ -6,12 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 02:57:02 by saraki            #+#    #+#             */
-/*   Updated: 2024/04/05 04:27:36 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/19 13:19:18 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DBLLST_H
 # define DBLLST_H
+
+# include <stdlib.h>
 
 // create a new list with `data`
 void			*doub_lstnew(void *data);
@@ -41,5 +43,8 @@ void			*doub_lstdup(void *src, void *dup_f, void *del_f);
 // search and return the specified `node` pointer from the `lst`
 // `int (cmp_f)(void *, void *)`: return 1 if match
 void			*doub_lstsearch(void *lst, void *query_pt, void *cmp_f);
+
+// return the number of nodes in the `lst`
+size_t			doub_lstcnt(void *lst);
 
 #endif

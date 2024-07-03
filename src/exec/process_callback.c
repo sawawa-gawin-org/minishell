@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 03:43:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/12 12:27:03 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/30 02:00:56 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,50 +17,56 @@ static void	close_fds_in_processes(t_blst *pipe_head_node, int index);
 //  pre-process  ______________  next-process
 //  pipe_in_fd ->     pipe     -> pipe_out_fd
 //               ‾‾‾‾‾‾‾‾‾‾‾‾‾‾
-void	do_first_process(char **cmd, char *path, t_pipex *pipe)
+void	do_first_process(t_callback_parametors *params)
 {
-	close_fds_in_processes(pipe->head_node, pipe->index);
-	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
-	if (pipe->file_in_fd >= 0)
-		dup2(pipe->file_in_fd, STDIN_FILENO);
-	if (pipe->file_out_fd >= 0)
+	close_fds_in_processes(params->pipe->head_node, params->pipe->index);
+	if (params->status != 0)
+		exit(params->status);
+	dup2(params->pipe->pipe_in_fd, STDOUT_FILENO);
+	if (params->pipe->file_in_fd >= 0)
+		dup2(params->pipe->file_in_fd, STDIN_FILENO);
+	if (params->pipe->file_out_fd >= 0)
 	{
-		close(pipe->pipe_in_fd);
-		dup2(pipe->file_out_fd, STDOUT_FILENO);
+		close(params->pipe->pipe_in_fd);
+		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
 	}
-	execve(path, cmd, environ);
+	execve(params->path, params->cmd, params->env);
 }
 
-void	do_middle_process(char **cmd, char *path, t_pipex *pipe)
+void	do_middle_process(t_callback_parametors *params)
 {
-	dup2(pipe->pipe_out_fd, STDIN_FILENO);
-	if (pipe->file_in_fd >= 0)
+	if (params->status != 0)
+		exit(params->status);
+	dup2(params->pipe->pipe_out_fd, STDIN_FILENO);
+	if (params->pipe->file_in_fd >= 0)
 	{
-		close(pipe->pipe_out_fd);
-		dup2(pipe->file_in_fd, STDIN_FILENO);
+		close(params->pipe->pipe_out_fd);
+		dup2(params->pipe->file_in_fd, STDIN_FILENO);
 	}
-	close_fds_in_processes(pipe->head_node, pipe->index);
-	dup2(pipe->pipe_in_fd, STDOUT_FILENO);
-	if (pipe->file_out_fd >= 0)
+	close_fds_in_processes(params->pipe->head_node, params->pipe->index);
+	dup2(params->pipe->pipe_in_fd, STDOUT_FILENO);
+	if (params->pipe->file_out_fd >= 0)
 	{
-		close(pipe->pipe_in_fd);
-		dup2(pipe->file_out_fd, STDOUT_FILENO);
+		close(params->pipe->pipe_in_fd);
+		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
 	}
-	execve(path, cmd, environ);
+	execve(params->path, params->cmd, params->env);
 }
 
-void	do_last_process(char **cmd, char *path, t_pipex *pipe)
+void	do_last_process(t_callback_parametors *params)
 {
-	close_fds_in_processes(pipe->head_node, pipe->index);
-	dup2(pipe->pipe_out_fd, STDIN_FILENO);
-	if (pipe->file_in_fd >= 0)
+	close_fds_in_processes(params->pipe->head_node, params->pipe->index);
+	if (params->status != 0)
+		exit(params->status);
+	dup2(params->pipe->pipe_out_fd, STDIN_FILENO);
+	if (params->pipe->file_in_fd >= 0)
 	{
-		close(pipe->pipe_out_fd);
-		dup2(pipe->file_in_fd, STDIN_FILENO);
+		close(params->pipe->pipe_out_fd);
+		dup2(params->pipe->file_in_fd, STDIN_FILENO);
 	}
-	if (pipe->file_out_fd >= 0)
-		dup2(pipe->file_out_fd, STDOUT_FILENO);
-	execve(path, cmd, environ);
+	if (params->pipe->file_out_fd >= 0)
+		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
+	execve(params->path, params->cmd, params->env);
 }
 
 static void	close_fds_in_processes(t_blst *pipe_head_node, int index)

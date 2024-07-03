@@ -1,0 +1,52 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/21 06:35:09 by saraki            #+#    #+#             */
+/*   Updated: 2024/06/21 07:22:49 by saraki           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "env.h"
+#include "dbllst.h"
+#include "libft.h"
+
+#include <stdio.h>
+
+void	end(void)__attribute__((destructor));
+
+void	end(void)
+{
+	system("leaks env.out");
+}
+
+void	print_env_arr(char **env);
+
+int main(int argc, char **argv, char **envp)
+{
+	void	*env_lst;
+	char	**env_arr;
+
+	(void)argc;
+	(void)argv;
+	env_lst = init_env(envp);
+	env_arr = convert_envlst_to_arr(env_lst);
+	print_env_arr(env_arr);
+	printf("-------------------\n");
+	print_env(env_lst);
+	free_environment_array(env_arr);
+	doub_lstdelall(&env_lst, free_env_data);
+	return (0);
+}
+
+void	print_env_arr(char **env)
+{
+	while (*env)
+	{
+		printf("%s\n", *env);
+		env++;
+	}
+}

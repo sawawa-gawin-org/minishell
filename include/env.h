@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec.h                                             :+:      :+:    :+:   */
+/*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/03 17:30:28 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/01 05:44:49 by saraki           ###   ########.fr       */
+/*   Created: 2024/06/14 06:27:17 by saraki            #+#    #+#             */
+/*   Updated: 2024/06/26 03:50:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXEC_H
-# define EXEC_H
+#ifndef ENV_H
+# define ENV_H
+// init_env.c
+void	*init_env(char **env);
+void	free_env_data(void *data);
 
-# include "dbllst.h"
-# include "libft.h"
+// convert_envlst.c
+char	**convert_envlst_to_arr(void *env_lst);
+void	free_environment_array(char **env);
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <fcntl.h>
-# include <sys/types.h>
-# include <stdio.h>
+// add_shell_env.c
+int		add_exit_status_as_env(void **env_lst, int status);
+int		add_shell_env(char *key, char *val, void **env_lst);
 
-# include <sys/wait.h> // Linux
-# include <sys/stat.h> // Linux
-
-int	exec(void *token_head_node, char **env);
-int	exec_tokenslst_cmds(void *tokens_lst, void *env_lst, int *status);
+//print_env.c
+void	print_env(void *env_lst);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 16:50:29 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/15 06:44:07 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/26 15:57:30 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	syntax_checker(t_blst *lst, t_cmp_f cmp_f)
 		return (0);
 	i = 0;
 	ret_node = lst;
-	while (ret_node->u_data.t_data != NULL)
+	while (ret_node->u_data.token_data != NULL)
 	{
-		if (cmp_f(ret_node->u_data.t_data, ret_node) != OK)
+		if (cmp_f(ret_node->u_data.token_data, ret_node) != OK)
 			return (0);
 		ret_node = ret_node->next;
 		i ++;
@@ -87,24 +87,24 @@ int	cmp_syntax(void *d, void *n)
 
 	data = d;
 	node = n;
-	if (node->prev->u_data.t_data == NULL && (data->token_type & TUBE_FLAG))
-		return (syntax_error("|")); // case 1
-	if (node->next->u_data.t_data != NULL)
+	if (node->prev->u_data.token_data == NULL && (data->token_type & TUBE_FLAG))
+		return (syntax_unexpected_error("|")); // case 1
+	if (node->next->u_data.token_data != NULL)
 	{
 		if ((data->token_type & TUBE_FLAG)
 			&& next_token_is_specific_flag(TUBE_FLAG, node->next))
-			return (syntax_error("|")); // case 2
+			return (syntax_unexpected_error("|")); // case 2
 		else if (data->token_type & GREAT_FLAG
-			&& node->next->u_data.t_data->token_type & TUBE_FLAG)
-			return (syntax_error("newline")); // case 3
+			&& node->next->u_data.token_data->token_type & TUBE_FLAG)
+			return (syntax_unexpected_error("newline")); // case 3
 		else if ((data->token_type & (META_FLAG & (~TUBE_FLAG)))
 			&& next_token_is_specific_flag(META_FLAG, node->next))
-			return (syntax_error(get_next_token_str(node->next))); // case 3
+			return (syntax_unexpected_error(get_next_token_str(node->next))); // case 3
 	}
 	else if (data->token_type & (META_FLAG & (~TUBE_FLAG)))
-		return (syntax_error("newline")); // case 4
+		return (syntax_unexpected_error("newline")); // case 4
 	if (data->token_type & OPEN_QUOTE_FLAG)
-		return (error_println("not interpret unclosed quotes"));
+		return (syntax_unclose_quote_error());
 	return (OK);
 }
 
@@ -112,9 +112,9 @@ static int	next_token_is_specific_flag(int flag, t_blst *node)
 {
 	t_token_data	*data;
 
-	while (node->u_data.t_data != NULL)
+	while (node->u_data.token_data != NULL)
 	{
-		data = node->u_data.t_data;
+		data = node->u_data.token_data;
 		if (data->token_type & flag)
 			return (1);
 		else if (data->token_type & SPACE_FLAG)
@@ -127,46 +127,8 @@ static int	next_token_is_specific_flag(int flag, t_blst *node)
 
 static char	*get_next_token_str(t_blst *node)
 {
-	while (node->u_data.t_data != NULL
-		&& node->u_data.t_data->token_type & SPACE_FLAG)
+	while (node->u_data.token_data != NULL
+		&& node->u_data.token_data->token_type & SPACE_FLAG)
 		node = node->next;
-	return (node->u_data.t_data->token_str);
+	return (node->u_data.token_data->token_str);
 }
-
-// static int	find_contd_tube(t_blst *node)
-// {
-// 	t_token_data	*data;
-
-// 	while (node->u_data.t_data != NULL)
-// 	{
-// 		data = node->u_data.t_data;
-// 		if (data->token_type == TUBE_FLAG)
-// 			return (1);
-// 		else if (data->token_type == SPACE_FLAG)
-// 			node = node->next;
-// 		else
-// 			break ;
-// 	}
-// 	if (node->u_data.t_data == NULL)
-// 		return (1);
-// 	return (0);
-// }
-
-// static int	find_contd_redirect(t_blst *node)
-// {
-// 	t_token_data	*data;
-
-// 	while (node->u_data.t_data != NULL)
-// 	{
-// 		data = node->u_data.t_data;
-// 		if (TUBE_FLAG <= data->token_type && data->token_type <= APPEND_FLAG)
-// 			return (1);
-// 		else if (data->token_type == SPACE_FLAG)
-// 			node = node->next;
-// 		else
-// 			break ;
-// 	}
-// 	if (node->u_data.t_data == NULL)
-// 		return (1);
-// 	return (0);
-// }

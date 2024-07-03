@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/12 10:45:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/30 01:15:01 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,20 +30,24 @@ static void			close_fds_all(t_pipelst *pipe_head_node);
 // token_head_node->next->next->data = ">"
 // token_head_node->next->next->next->data = "out.txt"
 
-int	exec(t_tokenlst *token_head_node)
+/// @brief 
+/// @param token_head_node 
+/// @param env 
+/// @return exit status code
+int	exec(t_tokenlst *token_head_node, char **env)
 {
-	t_pipelst	*pipe_head_node;
+	t_exec_parametors	param;
+	int					status;
 
-	if (token_head_node == NULL)
-		return (1);
-	pipe_head_node = init_pipe_lst(token_head_node);
-	if (pipe_head_node == NULL)
-		return (1);
-	if (make_processes(token_head_node, pipe_head_node))
-		write(2, "Error\n", 6);
-	close_fds_all(pipe_head_node);
-	doub_lstdelall((void **)&pipe_head_node, free);
-	return (0);
+	param.token_list = token_head_node;
+	param.env = env;
+	param.pipe_list = init_pipe_lst(param.token_list);
+	if (param.pipe_list == NULL)
+		return (ERR_ALLOCATE_MEMORY);
+	status = make_processes(&param);
+	close_fds_all(param.pipe_list);
+	doub_lstdelall((void **)&param.pipe_list, free);
+	return (status);
 }
 
 static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)

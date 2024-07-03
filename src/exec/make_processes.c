@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/12 13:56:49 by saraki           ###   ########.fr       */
+/*   Updated: 2024/06/30 02:00:44 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,30 @@
 
 static int	init_pipeline(t_blst *pipe_node);
 static int	pipe_fds(int *out_fd, int *in_fd);
-static int	wait_processes(t_blst *pipe_node);
+static int	wait_processes(t_pipelst *pipe_node);
 
-int	make_processes(t_tokenlst *token_node, t_pipelst *pipe_node)
+int	make_processes(t_exec_parametors *param)
 {
 	int			err;
 	t_pipelst	*pipe_head_node;
+	t_pipelst	*current_pipe_node;
 
 	err = 0;
-	if (init_pipeline(pipe_node))
-		return (ERR);
-	pipe_head_node = pipe_node;
-	while (pipe_node->u_data.pipe_data != NULL)
+	if (init_pipeline(param->pipe_list))
+		return (GENERAL_ERR);
+	pipe_head_node = param->pipe_list;
+	current_pipe_node = param->pipe_list;
+	while (current_pipe_node->u_data.pipe_data != NULL)
 	{
-		if (pipe_node->prev->u_data.pipe_data == NULL)
-			err = make_process(token_node, pipe_node, do_first_process);
-		else if (pipe_node->next->u_data.pipe_data == NULL)
-			err = make_process(token_node, pipe_node, do_last_process);
+		if (current_pipe_node->prev->u_data.pipe_data == NULL)
+			err = make_process(param, do_first_process);
+		else if (current_pipe_node->next->u_data.pipe_data == NULL)
+			err = make_process(param, do_last_process);
 		else
-			err = make_process(token_node, pipe_node, do_middle_process);
+			err = make_process(param, do_middle_process);
 		if (err != 0)
 			return (wait_processes(pipe_head_node));
-		pipe_node = pipe_node->next;
+		current_pipe_node = current_pipe_node->next;
 	}
 	return (wait_processes(pipe_head_node));
 }
@@ -77,7 +79,11 @@ static int	wait_processes(t_pipelst *pipe_node)
 {
 	t_pipex	*now_pipe;
 	t_pipex	*pre_pipe;
+	int		status;
+	int		err;
 
+	status = OK;
+	err = 0;
 	while (pipe_node->u_data.pipe_data != NULL)
 	{
 		if (pipe_node->prev->u_data.pipe_data != NULL)
@@ -88,9 +94,11 @@ static int	wait_processes(t_pipelst *pipe_node)
 			pre_pipe->pipe_in_fd = -1;
 		}
 		now_pipe = (t_pipex *)pipe_node->u_data.pipe_data;
-		if (waitpid(now_pipe->pids, NULL, 0) == -1)
-			return (ERR);
+		if (waitpid(now_pipe->pids, &status, 0) == -1)
+			err = GENERAL_ERR;
 		pipe_node = pipe_node->next;
 	}
-	return (OK);
+	if (err != 0)
+		return (err);
+	return (WEXITSTATUS(status));
 }
