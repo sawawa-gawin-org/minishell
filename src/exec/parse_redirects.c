@@ -17,6 +17,8 @@ static int	open_in_files(char *dist, t_pipex *pipex, int heredocflag);
 static int	open_out_files(char *dist, t_pipex *pipex, int appendflag);
 static int	open_and_send_string_to_fd(char *str);
 
+static int	redirection_for_leftend(t_tokenlst **now_node, t_pipex *pipe);
+
 // # Description
 // This function merges the redirection tokens into one token.
 // remove ">", ">>", "<", "<<"
@@ -33,10 +35,17 @@ void	parse_redirects(t_tokenlst **now_node, t_pipex *pipe)
 		if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0
 			|| ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
 		{
-			if (redirection(now_node, pipe))
+			if ((*now_node)->prev->u_data.token_data == NULL)
+			{
+				if (redirection_for_leftend(now_node, pipe))
+					break ;
+				token = (*now_node)->u_data.str;
+			}
+			else if (redirection(now_node, pipe))
 				break ;
-			else
-				continue ;
+			if ((*now_node)->prev->u_data.token_data == NULL)
+				init_node = *now_node;
+			continue ;
 		}
 		(*now_node) = (*now_node)->next;
 	}
@@ -61,6 +70,44 @@ static int	redirection(t_tokenlst **now_node, t_pipex *pipe)
 		open_in_files(dist->u_data.str, pipe, 1);
 	doub_lstdelone((void *)symbol, NULL);
 	doub_lstdelone((void *)dist, NULL);
+	return (OK);
+}
+
+// リダイレクトが一番左の場合だけ、先頭をパージせずに、先頭以外をパージして情報部分を先頭へ移動させる
+// < infile echo a
+// <をechoに変える、infileとechoをパージ
+// < infile |
+// <を|に変える、infileと|をパージ
+// < infile の場合、<をNULLに変える
+static int	redirection_for_leftend(t_tokenlst **now_node, t_pipex *pipe)
+{
+	char		*symbol;
+	t_tokenlst	*dist;
+
+	symbol = (*now_node)->u_data.str;
+	(*now_node) = (*now_node)->next;
+	dist = (t_tokenlst *)doub_lstpurge((void **)now_node);
+	(*now_node) = (*now_node)->prev;
+	if (ft_strcmp(symbol, ">") == 0)
+		open_out_files(dist->u_data.str, pipe, 0);
+	else if (ft_strcmp(symbol, ">>") == 0)
+		open_out_files(dist->u_data.str, pipe, 1);
+	else if (ft_strcmp(symbol, "<") == 0)
+		open_in_files(dist->u_data.str, pipe, 0);
+	else if (ft_strcmp(symbol, "<<") == 0)
+		open_in_files(dist->u_data.str, pipe, 1);
+	doub_lstdelone((void *)dist, NULL);
+	if ((*now_node)->next != NULL)
+	{
+		(*now_node)->u_data.str = (*now_node)->next->u_data.str;
+		(*now_node)->u_data.env_data = (*now_node)->next->u_data.env_data;
+		(*now_node)->u_data.token_data = (*now_node)->next->u_data.token_data;
+		(*now_node)->u_data.pipe_data = (*now_node)->next->u_data.pipe_data;
+		(*now_node) = (*now_node)->next;
+		doub_lstdelone(doub_lstpurge((void **)now_node), NULL);
+	}
+	else
+		(*now_node)->u_data.str = NULL;
 	return (OK);
 }
 
