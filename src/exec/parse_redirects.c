@@ -43,8 +43,6 @@ void	parse_redirects(t_tokenlst **now_node, t_pipex *pipe)
 			}
 			else if (redirection(now_node, pipe))
 				break ;
-			if ((*now_node)->prev->u_data.token_data == NULL)
-				init_node = *now_node;
 			continue ;
 		}
 		(*now_node) = (*now_node)->next;
