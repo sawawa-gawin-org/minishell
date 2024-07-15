@@ -12,9 +12,6 @@
 
 #include "exec_int.h"
 
-static t_tokenlst	*shift_token_section(
-						t_tokenlst *token_head_node, int index);
-
 int	make_process(t_exec_parametors *param, t_callback callback)
 {
 	t_callback_parametors	callback_args;
@@ -44,7 +41,7 @@ int	make_process(t_exec_parametors *param, t_callback callback)
 	return (OK);
 }
 
-static t_tokenlst	*shift_token_section(
+t_tokenlst	*shift_token_section(
 						t_tokenlst *token_head_node, int index)
 {
 	int			i;

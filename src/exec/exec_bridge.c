@@ -17,12 +17,12 @@
 
 static void	*ret_token_str(void *data);
 
-int	exec_tokenslst_cmds(t_blst *tokens_lst, t_blst *env_lst, int *status)
+int	exec_tokenslst_cmds(t_blst *tokens_lst, t_blst **env_lst, int *status)
 {
 	void	*converted_lst;
 	char	**env;
 
-	env = convert_envlst_to_arr(env_lst);
+	env = convert_envlst_to_arr(*env_lst);
 	if (env == NULL)
 		return (ERR);
 	converted_lst = doub_lstdup((void *)tokens_lst, ret_token_str, NULL);
@@ -31,7 +31,7 @@ int	exec_tokenslst_cmds(t_blst *tokens_lst, t_blst *env_lst, int *status)
 		free_environment_array(env);
 		return (ERR);
 	}
-	*status = exec((void *)converted_lst, env);
+	*status = exec((void *)converted_lst, env, env_lst);
 	doub_lstdelall((void **) &converted_lst, NULL);
 	free_environment_array(env);
 	return (OK);

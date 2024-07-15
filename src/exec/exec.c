@@ -34,7 +34,7 @@ static void			close_fds_all(t_pipelst *pipe_head_node);
 /// @param token_head_node 
 /// @param env 
 /// @return exit status code
-int	exec(t_tokenlst *token_head_node, char **env)
+int	exec(t_tokenlst *token_head_node, char **env, t_blst **env_lst)
 {
 	t_exec_parametors	param;
 	int					status;
@@ -44,7 +44,15 @@ int	exec(t_tokenlst *token_head_node, char **env)
 	param.pipe_list = init_pipe_lst(param.token_list);
 	if (param.pipe_list == NULL)
 		return (ERR_ALLOCATE_MEMORY);
-	status = make_processes(&param);
+	if (param.pipe_list->prev->u_data.pipe_data == NULL
+		&& param.pipe_list->next->u_data.pipe_data == NULL)
+	{
+		status = exec_builtin_no_pipe(&param, env_lst);
+		if (status != OK)
+			status = make_processes(&param);
+	}
+	else
+		status = make_processes(&param);
 	close_fds_all(param.pipe_list);
 	doub_lstdelall((void **)&param.pipe_list, free);
 	return (status);
