@@ -20,6 +20,7 @@ SRCS += parse_redirects.c
 SRCS += exec_bridge.c
 SRCS += exec_builtin.c
 SRCS += builtin_export.c
+SRCS += builtin_export_qsort_env.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
