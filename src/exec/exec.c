@@ -40,6 +40,7 @@ int	exec(t_tokenlst *token_head_node, char **env, t_blst **env_lst)
 	int					status;
 
 	param.token_list = token_head_node;
+	param.env_lst = env_lst;
 	param.env = env;
 	param.pipe_list = init_pipe_lst(param.token_list);
 	if (param.pipe_list == NULL)
