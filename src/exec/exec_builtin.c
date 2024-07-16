@@ -33,5 +33,5 @@ int	exec_builtin(char **cmd, t_blst **envlst)
 {
 	if (ft_strcmp(cmd[0], "export") == 0)
 		return (builtin_export(cmd, envlst));
-	return (GENERAL_ERR);
+	return (CMD_NOT_FOUND);
 }

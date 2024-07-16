@@ -49,7 +49,7 @@ int	exec(t_tokenlst *token_head_node, char **env, t_blst **env_lst)
 		&& param.pipe_list->next->u_data.pipe_data == NULL)
 	{
 		status = exec_builtin_no_pipe(&param, env_lst);
-		if (status != OK)
+		if (status == CMD_NOT_FOUND)
 			status = make_processes(&param);
 	}
 	else

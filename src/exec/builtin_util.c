@@ -12,8 +12,6 @@
 
 #include "exec_int.h"
 
-static int	valid_format(char *cmd);
-
 int	is_builtin(char *cmd)
 {
 	// if (ft_strcmp(cmd, "echo") == 0)
@@ -33,20 +31,19 @@ int	is_builtin(char *cmd)
 	return (0);
 }
 
-char	**get_key_val(char *cmd)
+char	**get_key_val(char *cmd, int pos)
 {
 	char	**key_val;
-	int		pos;
 
-	pos = valid_format(cmd);
-	if (pos == -1)
-		return (NULL);
 	key_val = (char **)ft_calloc(2, sizeof(char *));
 	if (key_val == NULL)
 		return (NULL);
 	key_val[0] = ft_substr(cmd, 0, pos);
 	if (key_val[0] == NULL)
+	{
+		free(key_val);
 		return (NULL);
+	}
 	if (cmd[pos] == '\0')
 		key_val[1] = ft_strdup("");
 	else
@@ -54,12 +51,13 @@ char	**get_key_val(char *cmd)
 	if (key_val[1] == NULL)
 	{
 		free(key_val[0]);
+		free(key_val);
 		return (NULL);
 	}
 	return (key_val);
 }
 
-static int	valid_format(char *cmd)
+int	valid_format_key(char *cmd)
 {
 	int	pos;
 

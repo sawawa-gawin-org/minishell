@@ -16,18 +16,17 @@
 static int	export_all(t_blst *envlst);
 static int	export_env(char **cmd, t_blst **envlst);
 static int	overwrite_env(char *key, char *val, t_blst **envlst);
+static int	valid_option(char **cmd);
 
 int	builtin_export(char **cmd, t_blst **envlst)
 {
-	if (!cmd[1])
+	int		status;
+
+	status = valid_option(cmd);
+	if (status > 0)
+		return (status);
+	if (!cmd[1] || (ft_strcmp(cmd[1], "--") == 0 && !cmd[2]))
 		return (export_all(*envlst));
-	if (cmd[1][0] == '-')
-	{
-		ft_putstr_fd("minishell: export: ", 2);
-		ft_putstr_fd(cmd[1], 2);
-		ft_putstr_fd(": not a valid identifier\n", 2);
-		return (GENERAL_ERR);
-	}
 	return (export_env(cmd, envlst));
 }
 
@@ -38,7 +37,7 @@ static int	export_all(t_blst *envlst)
 
 	env = convert_envlst_to_arr(envlst);
 	if (env == NULL)
-		return (GENERAL_ERR);
+		return (ERR_ALLOCATE_MEMORY);
 	i = 0;
 	while (env[i] != NULL)
 		i++;
@@ -49,7 +48,7 @@ static int	export_all(t_blst *envlst)
 		if (print_export(env[i]) == GENERAL_ERR)
 		{
 			free_environment_array(env);
-			return (GENERAL_ERR);
+			return (ERR_ALLOCATE_MEMORY);
 		}
 		i++;
 	}
@@ -60,23 +59,40 @@ static int	export_all(t_blst *envlst)
 static int	export_env(char **cmd, t_blst **envlst)
 {
 	int		i;
+	int		pos;
+	int		status;
 	char	**key_val;
 
 	i = 1;
+	status = 0;
+	if (ft_strcmp(cmd[1], "--") == 0)
+		i++;
 	while (cmd[i] != NULL)
 	{
 		// KEYに予約語が含まれる場合はエラーにする
-		key_val = get_key_val(cmd[i]);
+		pos = valid_format_key(cmd[i]);
+		if (pos == -1)
+		{
+			status = 1;
+			ft_putstr_fd(MSG_PREFIX, 2);
+			ft_putstr_fd("export: `", 2);
+			ft_putstr_fd(cmd[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			i++;
+			continue ;
+		}
+		key_val = get_key_val(cmd[i], pos);
 		if (key_val == NULL)
-			return (GENERAL_ERR);
+			return (ERR_ALLOCATE_MEMORY);
 		if (overwrite_env(key_val[0], key_val[1], envlst) == 1)
-			add_shell_env(key_val[0], key_val[1], (void **)envlst);
+			if (add_shell_env(key_val[0], key_val[1], (void **)envlst) == ERR)
+				return (ERR_ALLOCATE_MEMORY);
 		free(key_val[0]);
 		free(key_val[1]);
 		free(key_val);
 		i++;
 	}
-	return (OK);
+	return (status);
 }
 
 static int	overwrite_env(char *key, char *val, t_blst **envlst)
@@ -102,4 +118,29 @@ static int	overwrite_env(char *key, char *val, t_blst **envlst)
 	}
 	*envlst = head;
 	return (1);
+}
+
+static int	valid_option(char **cmd)
+{
+	if (!cmd[1])
+		return (0);
+	if (cmd[1][0] == '-')
+	{
+		if (cmd[1][1] == '\0')
+		{
+			ft_putstr_fd(MSG_PREFIX, 2);
+			ft_putstr_fd("export: `-' not a valid identifier\n", 2);
+			return (1);
+		}
+		if (cmd[1][1] != '-' || (cmd[1][1] == '-' && cmd[1][2] != '\0'))
+		{
+			ft_putstr_fd(MSG_PREFIX, 2);
+			ft_putstr_fd("export: ", 2);
+			ft_putchar_fd(cmd[1][0], 2);
+			ft_putchar_fd(cmd[1][1], 2);
+			ft_putstr_fd(": invalid option\n", 2);
+			return (2);
+		}
+	}
+	return (0);
 }

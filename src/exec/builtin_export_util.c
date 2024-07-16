@@ -18,10 +18,14 @@ static int	partition(char **env, int low, int high);
 int	print_export(char *env)
 {
 	char	**key_val;
+	int		pos;
 
-	key_val = get_key_val(env);
-	if (key_val == NULL)
+	pos = valid_format_key(env);
+	if (pos == -1)
 		return (GENERAL_ERR);
+	key_val = get_key_val(env, pos);
+	if (key_val == NULL)
+		return (ERR_ALLOCATE_MEMORY);
 	ft_putstr_fd("declare -x ", 1);
 	ft_putstr_fd(key_val[0], 1);
 	if (ft_strcmp(key_val[1], "") != 0)
