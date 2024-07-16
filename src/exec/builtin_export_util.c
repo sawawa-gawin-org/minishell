@@ -15,6 +15,29 @@
 static void	swap(char **a, char **b);
 static int	partition(char **env, int low, int high);
 
+int	print_export(char *env)
+{
+	char	**key_val;
+
+	key_val = get_key_val(env);
+	if (key_val == NULL)
+		return (GENERAL_ERR);
+	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd(key_val[0], 1);
+	if (ft_strcmp(key_val[1], "") != 0)
+	{
+		ft_putstr_fd("=\"", 1);
+		ft_putstr_fd(key_val[1], 1);
+		ft_putendl_fd("\"", 1);
+	}
+	else
+		ft_putchar_fd('\n', 1);
+	free(key_val[0]);
+	free(key_val[1]);
+	free(key_val);
+	return (OK);
+}
+
 void	qsort_env(char **env, int low, int high)
 {
 	int	p;

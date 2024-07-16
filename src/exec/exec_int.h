@@ -55,6 +55,8 @@ int	builtin_export(char **cmd, t_blst **envlst);
 t_tokenlst	*shift_token_section(t_tokenlst *token_head_node, int index);
 void	qsort_env(char **env, int low, int high);
 int	is_builtin(char *cmd);
+int	print_export(char *env);
+char	**get_key_val(char *cmd);
 
 int				make_processes(t_exec_parametors *param);
 int				make_process(t_exec_parametors *param, t_callback callback);
