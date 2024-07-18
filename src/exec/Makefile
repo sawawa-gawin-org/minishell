@@ -17,6 +17,7 @@ SRCS += make_processes_util.c
 SRCS += process_callback.c
 SRCS += parse_cmd.c
 SRCS += parse_redirects.c
+SRCS += parse_redirects_util.c
 SRCS += exec_bridge.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)

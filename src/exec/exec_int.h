@@ -53,6 +53,8 @@ int				make_process(t_exec_parametors *param, t_callback callback);
 char			**parse_cmd(t_tokenlst *head_node, t_pipex *pipe);
 char			*find_cmd(char *path, char **env, int *status);
 void			parse_redirects(t_tokenlst **now_node, t_pipex *pipe);
+int				open_in_files(char *dist, t_pipex *pipex, int heredocflag);
+int				open_out_files(char *dist, t_pipex *pipex, int appendflag);
 void			do_first_process(t_callback_parametors *params);
 void			do_middle_process(t_callback_parametors *params);
 void			do_last_process(t_callback_parametors *params);
