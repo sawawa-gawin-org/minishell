@@ -42,6 +42,26 @@ int	print_export(char *env)
 	return (OK);
 }
 
+int	valid_option(char **cmd)
+{
+	if (!cmd[1])
+		return (0);
+	if (cmd[1][0] == '-')
+	{
+		if (cmd[1][1] == '\0')
+		{
+			export_err("-", 1);
+			return (1);
+		}
+		if (cmd[1][1] != '-' || (cmd[1][1] == '-' && cmd[1][2] != '\0'))
+		{
+			export_err(cmd[1], 2);
+			return (2);
+		}
+	}
+	return (0);
+}
+
 void	qsort_env(char **env, int low, int high)
 {
 	int	p;

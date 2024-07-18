@@ -16,7 +16,7 @@
 static int	export_all(t_blst *envlst);
 static int	export_env(char **cmd, t_blst **envlst);
 static int	overwrite_env(char *key, char *val, t_blst **envlst);
-static int	valid_option(char **cmd);
+static int	add_env_to_envlst(char *cmd, t_blst **envlst);
 
 int	builtin_export(char **cmd, t_blst **envlst)
 {
@@ -56,12 +56,12 @@ static int	export_all(t_blst *envlst)
 	return (OK);
 }
 
+// KEYに予約語が含まれる場合はエラーにする
 static int	export_env(char **cmd, t_blst **envlst)
 {
 	int		i;
-	int		pos;
 	int		status;
-	char	**key_val;
+	int		err;
 
 	i = 1;
 	status = 0;
@@ -69,30 +69,39 @@ static int	export_env(char **cmd, t_blst **envlst)
 		i++;
 	while (cmd[i] != NULL)
 	{
-		// KEYに予約語が含まれる場合はエラーにする
-		pos = valid_format_key(cmd[i]);
-		if (pos == -1)
+		err = add_env_to_envlst(cmd[i], envlst);
+		if (err == -1)
 		{
 			status = 1;
-			ft_putstr_fd(MSG_PREFIX, 2);
-			ft_putstr_fd("export: `", 2);
-			ft_putstr_fd(cmd[i], 2);
-			ft_putstr_fd("': not a valid identifier\n", 2);
+			export_err(cmd[i], 1);
 			i++;
 			continue ;
 		}
-		key_val = get_key_val(cmd[i], pos);
-		if (key_val == NULL)
+		else if (err == ERR_ALLOCATE_MEMORY)
 			return (ERR_ALLOCATE_MEMORY);
-		if (overwrite_env(key_val[0], key_val[1], envlst) == 1)
-			if (add_shell_env(key_val[0], key_val[1], (void **)envlst) == ERR)
-				return (ERR_ALLOCATE_MEMORY);
-		free(key_val[0]);
-		free(key_val[1]);
-		free(key_val);
 		i++;
 	}
 	return (status);
+}
+
+static int	add_env_to_envlst(char *cmd, t_blst **envlst)
+{
+	char	**key_val;
+	int		pos;
+
+	pos = valid_format_key(cmd);
+	if (pos == -1)
+		return (-1);
+	key_val = get_key_val(cmd, pos);
+	if (key_val == NULL)
+		return (ERR_ALLOCATE_MEMORY);
+	if (overwrite_env(key_val[0], key_val[1], envlst) == 1)
+		if (add_shell_env(key_val[0], key_val[1], (void **)envlst) == ERR)
+			return (ERR_ALLOCATE_MEMORY);
+	free(key_val[0]);
+	free(key_val[1]);
+	free(key_val);
+	return (0);
 }
 
 static int	overwrite_env(char *key, char *val, t_blst **envlst)
@@ -118,29 +127,4 @@ static int	overwrite_env(char *key, char *val, t_blst **envlst)
 	}
 	*envlst = head;
 	return (1);
-}
-
-static int	valid_option(char **cmd)
-{
-	if (!cmd[1])
-		return (0);
-	if (cmd[1][0] == '-')
-	{
-		if (cmd[1][1] == '\0')
-		{
-			ft_putstr_fd(MSG_PREFIX, 2);
-			ft_putstr_fd("export: `-' not a valid identifier\n", 2);
-			return (1);
-		}
-		if (cmd[1][1] != '-' || (cmd[1][1] == '-' && cmd[1][2] != '\0'))
-		{
-			ft_putstr_fd(MSG_PREFIX, 2);
-			ft_putstr_fd("export: ", 2);
-			ft_putchar_fd(cmd[1][0], 2);
-			ft_putchar_fd(cmd[1][1], 2);
-			ft_putstr_fd(": invalid option\n", 2);
-			return (2);
-		}
-	}
-	return (0);
 }

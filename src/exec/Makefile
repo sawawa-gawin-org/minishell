@@ -22,6 +22,7 @@ SRCS += exec_builtin.c
 SRCS += builtin_export.c
 SRCS += builtin_export_util.c
 SRCS += builtin_util.c
+SRCS += builtin_export_err.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
