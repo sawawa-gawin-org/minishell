@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/30 01:15:01 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/18 13:03:04 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ static void			close_fds_all(t_pipelst *pipe_head_node);
 /// @param token_head_node 
 /// @param env 
 /// @return exit status code
-int	exec(t_tokenlst *token_head_node, char **env)
+int	exec(t_tokenlst **token_head_node, char **env)
 {
 	t_exec_parametors	param;
 	int					status;
 
-	param.token_list = token_head_node;
+	param.token_list = *token_head_node;
 	param.env = env;
 	param.pipe_list = init_pipe_lst(param.token_list);
 	if (param.pipe_list == NULL)
@@ -47,6 +47,7 @@ int	exec(t_tokenlst *token_head_node, char **env)
 	status = make_processes(&param);
 	close_fds_all(param.pipe_list);
 	doub_lstdelall((void **)&param.pipe_list, free);
+	*token_head_node = param.token_list;
 	return (status);
 }
 
@@ -55,26 +56,26 @@ static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
 	int			index;
 	t_pipelst	*pipe_head_node;
 	t_pipelst	*new_node;
+	t_tokenlst	*token_node;
 
 	index = 0;
+	token_node = token_head_node;
 	pipe_head_node = doub_lstnew(NULL);
-	while (pipe_head_node != NULL && token_head_node->u_data.str != NULL)
+	while (pipe_head_node != NULL && token_node->u_data.str != NULL)
 	{
-		new_node = init_pipe_node(index);
+		new_node = init_pipe_node(index ++);
 		if (new_node == NULL)
 		{
 			doub_lstdelall((void **)&pipe_head_node, free);
 			return (NULL);
 		}
-		index ++;
 		doub_lstappend((void **)&pipe_head_node, new_node);
 		new_node->u_data.pipe_data->head_node = pipe_head_node;
-		while (token_head_node->u_data.str != NULL
-			&& ft_strcmp((char *)token_head_node->u_data.str, "|"))
-			token_head_node = token_head_node->next;
-		if (token_head_node->u_data.str == NULL)
-			break ;
-		token_head_node = token_head_node->next;
+		while (token_node->u_data.str != NULL
+			&& ft_strcmp((char *)token_node->u_data.str, "|"))
+			token_node = token_node->next;
+		if (token_node->u_data.str != NULL)
+			token_node = token_node->next;
 	}
 	return (pipe_head_node);
 }

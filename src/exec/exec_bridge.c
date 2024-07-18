@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:24:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/01 05:46:49 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/18 12:42:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	exec_tokenslst_cmds(t_blst *tokens_lst, t_blst *env_lst, int *status)
 		free_environment_array(env);
 		return (ERR);
 	}
-	*status = exec((void *)converted_lst, env);
+	*status = exec((t_tokenlst **) &converted_lst, env);
 	doub_lstdelall((void **) &converted_lst, NULL);
 	free_environment_array(env);
 	return (OK);
