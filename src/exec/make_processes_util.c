@@ -14,6 +14,8 @@
 
 static int	make_process_builtin(t_exec_parametors *param, t_callback callback,
 				t_callback_parametors *callback_args);
+static int	make_process_nonbuiltin(t_callback_parametors *callback_args,
+				t_callback callback);
 
 int	make_process(t_exec_parametors *param, t_callback callback)
 {
@@ -36,12 +38,18 @@ int	make_process(t_exec_parametors *param, t_callback callback)
 	else if (!callback_args.path && callback_args.status == CMD_CNT_EXECUTE)
 		cmdnotexecutable_error(callback_args.cmd[0]);
 	callback_args.env = param->env;
-	callback_args.pipe->pids = fork();
-	if (callback_args.pipe->pids == 0)
-		callback(&callback_args);
-	free(callback_args.cmd);
-	free(callback_args.path);
-	if (callback_args.pipe->pids < 0)
+	return (make_process_nonbuiltin(&callback_args, callback));
+}
+
+static int	make_process_nonbuiltin(t_callback_parametors *callback_args,
+		t_callback callback)
+{
+	callback_args->pipe->pids = fork();
+	if (callback_args->pipe->pids == 0)
+		callback(callback_args);
+	free(callback_args->cmd);
+	free(callback_args->path);
+	if (callback_args->pipe->pids < 0)
 		return (GENERAL_ERR);
 	return (OK);
 }
