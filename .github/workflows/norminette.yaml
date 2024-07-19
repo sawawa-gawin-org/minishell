@@ -25,13 +25,13 @@ jobs:
           pip install norminette
       - name : Run norminette
         run: |
-          echo "```sh" > norminette.md
+          echo "\`\`\`sh" > norminette.md
           norminette -d >> norminette.md || echo "status=$?" >> $GITHUB_OUTPUT
-          echo "```" >> norminette.md
+          echo "\`\`\`" >> norminette.md
       - name: Create PR comment
         if: ${{ steps.test.outputs.status != 0 }}
         run: |
-          gh pr comment ${{ github.event.number }} --body-file norminette.log
+          gh pr comment ${{ github.event.number }} --body-file norminette.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
