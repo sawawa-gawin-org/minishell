@@ -13,7 +13,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: latest
+          node-version: 20
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Run Doxygen from Doxyfile
