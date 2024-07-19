@@ -21,7 +21,7 @@ int	exec_builtin_no_pipe(t_exec_parametors *param, t_blst **envlst)
 
 	pipe = param->pipe_list->u_data.pipe_data;
 	node = shift_token_section(param->token_list, pipe->index);
-	cmd = parse_cmd(node, pipe);
+	cmd = parse_cmd(param, &node, pipe);
 	if (cmd == NULL)
 		return (ERR_ALLOCATE_MEMORY);
 	result = exec_builtin(cmd, envlst);
