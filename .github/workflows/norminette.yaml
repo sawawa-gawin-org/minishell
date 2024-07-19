@@ -25,7 +25,7 @@ jobs:
           pip install norminette
       - name : Run norminette
         id: norm
-        continue-on-error: true
+        # continue-on-error: true
         run: |
           echo "\`\`\`sh" > norminette.md
           norminette -d >> norminette.md || echo "status=$?" >> $GITHUB_OUTPUT
