@@ -3,13 +3,6 @@ name: run Norminette
 on:
   pull_request:
     branches: [ "main", "103-commented-ci" ]
-  workflow_call:
-    inputs:
-      enable_pr_comment:
-        description: 'Enable PR comment'
-        required: false
-        default: true
-        type: 'boolean'
 
 jobs:
   run_norminette:
@@ -31,7 +24,7 @@ jobs:
           norminette -d >> norminette.md || echo "status=$?" >> $GITHUB_OUTPUT
           echo "\`\`\`" >> norminette.md
       - name: Create PR comment
-        if: ${{ steps.norm.outputs.status != 0 && inputs.enable_pr_comment == true }}
+        if: ${{ steps.norm.outputs.status != 0 }}
         run: |
           gh pr comment ${{ github.event.number }} --body-file norminette.md
         env:
