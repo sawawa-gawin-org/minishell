@@ -2,7 +2,14 @@ name: run Norminette
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "main", "103-commented-ci" ]
+  workflow_call:
+    inputs:
+      enable_pr_comment:
+        description: 'Enable PR comment'
+        required: false
+        default: true
+        type: 'boolean'
 
 jobs:
   run_norminette:
