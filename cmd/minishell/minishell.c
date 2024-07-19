@@ -92,7 +92,7 @@ static int	execute(char *line, void *env_lst, void *tokens_lst)
 	}
 	if (parser(&tokens_lst, &env_lst))
 		return (ERR);
-	if (exec_tokenslst_cmds(tokens_lst, env_lst, &status))
+	if (exec_tokenslst_cmds(tokens_lst, &env_lst, &status))
 		return (ERR);
 	if (add_exit_status_as_env(&env_lst, status))
 		return (ERR);

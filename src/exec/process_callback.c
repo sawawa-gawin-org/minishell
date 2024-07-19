@@ -30,6 +30,8 @@ void	do_first_process(t_callback_parametors *params)
 		close(params->pipe->pipe_in_fd);
 		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
 	}
+	if (is_builtin(params->cmd[0]))
+		exit(exec_builtin(params->cmd, params->env_lst));
 	execve(params->path, params->cmd, params->env);
 }
 
@@ -50,6 +52,8 @@ void	do_middle_process(t_callback_parametors *params)
 		close(params->pipe->pipe_in_fd);
 		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
 	}
+	if (is_builtin(params->cmd[0]))
+		exit(exec_builtin(params->cmd, params->env_lst));
 	execve(params->path, params->cmd, params->env);
 }
 
@@ -66,6 +70,8 @@ void	do_last_process(t_callback_parametors *params)
 	}
 	if (params->pipe->file_out_fd >= 0)
 		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
+	if (is_builtin(params->cmd[0]))
+		exit(exec_builtin(params->cmd, params->env_lst));
 	execve(params->path, params->cmd, params->env);
 }
 
