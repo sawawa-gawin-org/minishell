@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/17 15:42:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/19 14:46:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ typedef struct s_callback_parametors
 
 typedef void	(*t_callback)(t_callback_parametors *);
 
-int				exec(t_tokenlst **token_head_node, char **env, t_blst **env_lst);
+int				exec(
+					t_tokenlst **token_head_node,
+					char **env,
+					t_blst **env_lst);
 int				exec_builtin_no_pipe(t_exec_parametors *param, t_blst **envlst);
 int				exec_builtin(char **cmd, t_blst **envlst);
 int				builtin_export(char **cmd, t_blst **envlst);
