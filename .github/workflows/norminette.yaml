@@ -2,7 +2,7 @@ name: run Norminette
 
 on:
   pull_request:
-    branches: [ "main", "103-commented-ci" ]
+    branches: [ "main" ]
 
 jobs:
   run_norminette:
@@ -22,9 +22,18 @@ jobs:
       - name : Run norminette
         id: norm
         run: |
-          echo "\`\`\`sh" > norminette.md
+          cat  << EOF > norminette.md
+          <details><summary>Norminette</summary>
+          <p>
+
+          ```sh
+          EOF
           norminette -d >> norminette.md || echo "status=$?" >> $GITHUB_OUTPUT
-          echo "\`\`\`" >> norminette.md
+          cat  << EOF >> norminette.md
+          ```
+          </p>
+          </details>
+          EOF
       - name: Create PR comment
         if: ${{ steps.norm.outputs.status != 0 }}
         run: |
