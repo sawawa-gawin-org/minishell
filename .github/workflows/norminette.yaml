@@ -6,6 +6,9 @@ on:
 
 jobs:
   run_norminette:
+    permissions:
+      contents: read
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,4 +19,25 @@ jobs:
         run: |
           python -m pip install --upgrade pip setuptools
           pip install norminette
-      - run: norminette -d || true
+      - name : Run norminette
+        id: norm
+        run: |
+          cat  << EOF > norminette.md
+          <details><summary>Norminette Result</summary>
+          <p>
+
+          \`\`\`sh
+          EOF
+          norminette -d >> norminette.md || echo "status=$?" >> $GITHUB_OUTPUT
+          cat  << EOF >> norminette.md
+          \`\`\`
+          </p>
+          </details>
+          EOF
+      - name: Create PR comment
+        if: ${{ steps.norm.outputs.status != 0 }}
+        run: |
+          gh pr comment ${{ github.event.number }} --body-file norminette.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
