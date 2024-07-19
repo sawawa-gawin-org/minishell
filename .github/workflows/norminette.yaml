@@ -23,14 +23,14 @@ jobs:
         id: norm
         run: |
           cat  << EOF > norminette.md
-          <details><summary>Norminette</summary>
+          <details><summary>Norminette Result</summary>
           <p>
 
-          ```sh
+          \`\`\`sh
           EOF
           norminette -d >> norminette.md || echo "status=$?" >> $GITHUB_OUTPUT
           cat  << EOF >> norminette.md
-          ```
+          \`\`\`
           </p>
           </details>
           EOF
