@@ -62,6 +62,7 @@ char			**get_key_val(char *cmd, int pos);
 int				valid_format_key(char *cmd);
 int				export_err(char *str, int status);
 int				valid_option(char **cmd);
+int				valid_identifier(char *cmd);
 
 int				make_processes(t_exec_parametors *param);
 int				make_process(t_exec_parametors *param, t_callback callback);
