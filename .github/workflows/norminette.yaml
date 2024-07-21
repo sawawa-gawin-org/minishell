@@ -55,6 +55,7 @@ jobs:
           </details>
           EOF
       - name: Create PR comment
+        if: ${{ steps.norm.outputs.status != 0 }}
         run: |
           gh pr comment ${{ github.event.number }} --body-file norminette.md
         env:
