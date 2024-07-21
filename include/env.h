@@ -6,14 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:27:17 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/26 03:50:07 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 07:23:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
-// init_env.c
-void	*init_env(char **env);
+// create_envlist.c
+void	*create_envlist(char **env);
 void	free_env_data(void *data);
 
 // convert_envlst.c
@@ -26,5 +26,8 @@ int		add_shell_env(char *key, char *val, void **env_lst);
 
 //print_env.c
 void	print_env(void *env_lst);
+
+// sort_env.c
+void	qsort_env(char **env, int low, int high);
 
 #endif

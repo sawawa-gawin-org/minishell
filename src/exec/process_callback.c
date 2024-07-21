@@ -6,11 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 03:43:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/30 02:00:56 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/20 18:33:57 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
+#include "builtin.h"
 
 static void	close_fds_in_processes(t_blst *pipe_head_node, int index);
 
@@ -31,7 +32,8 @@ void	do_first_process(t_callback_parametors *params)
 		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
 	}
 	if (is_builtin(params->cmd[0]))
-		exit(exec_builtin(params->cmd, params->env_lst));
+		exit(call_builtin(params->cmd, (void **) params->env_lst,
+				IS_CHILD_PROCESS));
 	execve(params->path, params->cmd, params->env);
 }
 
@@ -53,7 +55,8 @@ void	do_middle_process(t_callback_parametors *params)
 		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
 	}
 	if (is_builtin(params->cmd[0]))
-		exit(exec_builtin(params->cmd, params->env_lst));
+		exit(call_builtin(params->cmd, (void **) params->env_lst,
+				IS_CHILD_PROCESS));
 	execve(params->path, params->cmd, params->env);
 }
 
@@ -71,7 +74,8 @@ void	do_last_process(t_callback_parametors *params)
 	if (params->pipe->file_out_fd >= 0)
 		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
 	if (is_builtin(params->cmd[0]))
-		exit(exec_builtin(params->cmd, params->env_lst));
+		exit(call_builtin(params->cmd, (void **) params->env_lst,
+				IS_CHILD_PROCESS));
 	execve(params->path, params->cmd, params->env);
 }
 

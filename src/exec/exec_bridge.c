@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:24:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/18 12:42:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/20 06:50:28 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,14 @@
 
 static void	*ret_token_str(void *data);
 
+/**
+ * Executes the commands in the given tokens list.
+ *
+ * @param tokens_lst The list of tokens representing the commands.
+ * @param env_lst    The list of environment variables.
+ * @param status     A pointer to the status variable.
+ * @return           Returns an integer indicating the execution status.
+ */
 int	exec_tokenslst_cmds(t_blst *tokens_lst, t_blst **env_lst, int *status)
 {
 	void	*converted_lst;
@@ -37,7 +45,7 @@ int	exec_tokenslst_cmds(t_blst *tokens_lst, t_blst **env_lst, int *status)
 	return (OK);
 }
 
-// this function does not allocate memory for the new token.
+/// @brief this function does not allocate memory for the new token.
 static void	*ret_token_str(void *node_data)
 {
 	t_token_data	*token_data;

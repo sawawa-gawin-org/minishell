@@ -1,70 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_export.c                                   :+:      :+:    :+:   */
+/*   builtin_export_setenv.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          #+#  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-15 02:43:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024-07-15 02:43:28 by syamasaw         ###   ########.fr       */
+/*   Created: 2024/07/21 08:19:27 by saraki            #+#    #+#             */
+/*   Updated: 2024/07/21 19:20:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec_int.h"
+#include "builtin_int.h"
 #include "env.h"
 
-static int	export_all(t_blst *envlst);
-static int	export_env(char **cmd, t_blst **envlst);
-static int	overwrite_env(char *key, char *val, t_blst **envlst);
 static int	add_env_to_envlst(char *cmd, t_blst **envlst);
-
-int	builtin_export(char **cmd, t_blst **envlst)
-{
-	int		status;
-
-	status = valid_option(cmd);
-	if (status > 0)
-		return (status);
-	if (!cmd[1] || (ft_strcmp(cmd[1], "--") == 0 && !cmd[2]))
-		return (export_all(*envlst));
-	return (export_env(cmd, envlst));
-}
-
-static int	export_all(t_blst *envlst)
-{
-	char	**env;
-	int		i;
-
-	env = convert_envlst_to_arr(envlst);
-	if (env == NULL)
-		return (ERR_ALLOCATE_MEMORY);
-	i = 0;
-	while (env[i] != NULL)
-		i++;
-	qsort_env(env, 0, i - 1);
-	i = 0;
-	while (env[i] != NULL)
-	{
-		if (print_export(env[i]) == GENERAL_ERR)
-		{
-			free_environment_array(env);
-			return (ERR_ALLOCATE_MEMORY);
-		}
-		i++;
-	}
-	free_environment_array(env);
-	return (OK);
-}
+static int	overwrite_env(char *key, char *val, t_blst **envlst);
 
 // KEYに予約語が含まれる場合はエラーにする
-static int	export_env(char **cmd, t_blst **envlst)
+int	export_env(char **cmd, t_blst **envlst, int mode)
 {
 	int		i;
-	int		status;
 	int		err;
 
 	i = 1;
-	status = 0;
+	if (mode == IS_CHILD_PROCESS)
+	{
+		printf("\n");
+		return (OK);
+	}
 	if (ft_strcmp(cmd[1], "--") == 0)
 		i++;
 	while (cmd[i] != NULL)
@@ -72,8 +35,7 @@ static int	export_env(char **cmd, t_blst **envlst)
 		err = add_env_to_envlst(cmd[i], envlst);
 		if (err == -1)
 		{
-			status = 1;
-			export_err(cmd[i], 1);
+			export_identifier_err(cmd[i]);
 			i++;
 			continue ;
 		}
@@ -81,7 +43,7 @@ static int	export_env(char **cmd, t_blst **envlst)
 			return (ERR_ALLOCATE_MEMORY);
 		i++;
 	}
-	return (status);
+	return (OK);
 }
 
 static int	add_env_to_envlst(char *cmd, t_blst **envlst)

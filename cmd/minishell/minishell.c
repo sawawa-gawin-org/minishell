@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/30 01:21:40 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 07:23:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	env_lst = init_env(envp);
+	env_lst = create_envlist(envp);
 	if (env_lst == NULL)
 		return (1);
 	init_signal();

@@ -4,17 +4,15 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := libenv.a
-HEADERS := env.h
-INT_HEADERS := env_int.h
+LIB_NAME := libbuiltin.a
+HEADERS := builtin.h
+INT_HEADERS := builtin_int.h
 
 SRCS :=
-
-SRCS += create_envlist.c
-SRCS += convert_envlst.c
-SRCS += add_shell_env.c
-SRCS += print_env.c
-SRCS += sort_env.c
+SRCS += core.c
+SRCS += builtin_export.c
+SRCS += builtin_export_print.c
+SRCS += builtin_export_setenv.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -28,13 +26,13 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -ldbllst -lft -lcommon
-DLFLAGS := -L$(LIB_EXPORT_DIR) -ldbllst_debug -lft_debug -lcommon_debug
+LFLAGS := -L$(LIB_EXPORT_DIR) -lenv -ldbllst -lcommon
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lenv_debug -ldbllst_debug -lcommon_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst common
-DEPENDENCY_LIB := libft.a libdbllst.a libcommon.a
+DEPENDENCY := env dbllst common 
+DEPENDENCY_LIB := libenv.a libdbllst.a libcommon.a
 
 # *****************************************************************************
 # From here onward is the same

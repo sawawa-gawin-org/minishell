@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/07/01 06:41:24 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 10:08:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@
 # include "libft.h"
 
 # define MSG_PREFIX "minishell: "
+# define IS_MAIN_PROCESS 0
+# define IS_CHILD_PROCESS 1
 
 enum	e_STATUS_CODE
 {
+	UNDEFINED = -2,
 	OK = 0,
 	ERR = -1,
 	GENERAL_ERR = 1,
@@ -29,6 +32,7 @@ enum	e_STATUS_CODE
 	CMD_CNT_EXECUTE = 126,
 	CMD_NOT_FOUND = 127,
 };
+
 
 typedef int		(*t_cmp_f)(void *, void *);
 
@@ -115,6 +119,9 @@ typedef struct s_node
 
 typedef t_blst	t_tokenlst;
 typedef t_blst	t_pipelst;
+
+int		export_option_err(char *str);
+int		export_identifier_err(char *str);
 
 int		cmdnotfound_error(char *cmd);
 int		cmdnotexecutable_error(char *cmd);

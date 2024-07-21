@@ -6,34 +6,32 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/18 13:03:04 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 18:48:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
+#include "builtin.h"
 
 static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node);
 static t_pipelst	*init_pipe_node(int index);
 static void			close_fds_all(t_pipelst *pipe_head_node);
 
-// # about token_head_node
-// `token_head_node` is a linked list that stores the command line.
-// exapmle1:
-// token_head_node->data = "ls"
-// token_head_node->next->data = "-l"
-// token_head_node->next->next->data = "|"
-// token_head_node->next->next->next->data = "wc"
-// token_head_node->next->next->next->next->data = "-l"
-// exapmle2:
-// token_head_node->data = "ls"
-// token_head_node->next->data = "-l"
-// token_head_node->next->next->data = ">"
-// token_head_node->next->next->next->data = "out.txt"
-
-/// @brief 
-/// @param token_head_node 
-/// @param env 
-/// @return exit status code
+/**
+ * Executes a command by parsing the token list and executing the
+ * appropriate actions.
+ * 
+ * @param token_head_node A pointer to the head node of the token list.
+ * @param env An array of strings representing the environment variables.
+ * @param env_lst A pointer to the head node of the environment
+ *  variable linked list.
+ * @return An integer representing the exit status of the executed command.
+ * @details `token_head_node` is a linked list that stores the command line.
+ * @example
+ * 	`ls -l | wc -l`
+ * 	`token_head_node` is a linked list that stores the following data:
+ * 	`[ls] -> [-l] -> [|] -> [wc] -> [-l]`
+ */
 int	exec(t_tokenlst **token_head_node, char **env, t_blst **env_lst)
 {
 	t_exec_parametors	param;
@@ -45,21 +43,28 @@ int	exec(t_tokenlst **token_head_node, char **env, t_blst **env_lst)
 	param.pipe_list = init_pipe_lst(param.token_list);
 	if (param.pipe_list == NULL)
 		return (ERR_ALLOCATE_MEMORY);
-	if (param.pipe_list->prev->u_data.pipe_data == NULL
-		&& param.pipe_list->next->u_data.pipe_data == NULL)
-	{
-		status = exec_builtin_no_pipe(&param, env_lst);
-		if (status == CMD_NOT_FOUND)
-			status = make_processes(&param);
-	}
-	else
-		status = make_processes(&param);
+	status = make_processes(&param);
+	env_lst = param.env_lst;
 	close_fds_all(param.pipe_list);
 	doub_lstdelall((void **)&param.pipe_list, free);
 	*token_head_node = param.token_list;
 	return (status);
 }
 
+/**
+ * Initializes a pipe list for executing commands.
+ *
+ * This function takes a token list as input and initializes a pipe list
+ * structure for executing commands. The pipe list is used to store the
+ * commands and their corresponding arguments that will be executed in
+ * separate processes connected by pipes.
+ * @example The following token list:
+ * 	ls -l | wc -l
+ * will be converted to the following pipe list:
+ * 	[ls -l] -> [wc -l]
+ * @param token_head_node The head node of the token list.
+ * @return A pointer to the initialized pipe list.
+ */
 static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
 {
 	int			index;
@@ -89,6 +94,12 @@ static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
 	return (pipe_head_node);
 }
 
+/**
+ * Initializes a new pipe node for the given index.
+ *
+ * @param index The index of the pipe node.
+ * @return A pointer to the newly initialized pipe node.
+ */
 static t_pipelst	*init_pipe_node(int index)
 {
 	t_pipelst	*node;
