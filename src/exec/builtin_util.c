@@ -61,18 +61,34 @@ int	valid_format_key(char *cmd)
 {
 	int	pos;
 
+	if (!cmd || cmd[0] == '\0' || ft_isdigit(cmd[0]))
+		return (-1);
 	pos = 0;
-	if (cmd[0] == '\0')
-		return (-1);
-	if (('0' <= cmd[0] && cmd[0] <= '9') || cmd[0] == '=')
-		return (-1);
 	while (cmd[pos] != '\0')
 	{
-		if (ft_strchr("!@#-* ", cmd[pos]))
-			return (-1);
-		if (cmd[pos] == '=')
-			break ;
+		if (!(ft_isalnum(cmd[pos]) || cmd[pos] == '_'))
+		{
+			if (pos != 0 && cmd[pos] == '=')
+				break ;
+			else
+				return (-1);
+		}
 		pos++;
 	}
 	return (pos);
+}
+
+int	valid_identifier(char *cmd)
+{
+	int	i;
+
+	if (!cmd || !cmd[0])
+		return (-1);
+	if (ft_isdigit(cmd[0]))
+		return (-1);
+	i = -1;
+	while (cmd[++i] != '\0')
+		if (!(ft_isalnum(cmd[i]) || cmd[i] == '_'))
+			return (-1);
+	return (0);
 }
