@@ -18,11 +18,6 @@ SRCS += process_callback.c
 SRCS += parse_cmd.c
 SRCS += parse_redirects.c
 SRCS += exec_bridge.c
-SRCS += exec_builtin.c
-SRCS += builtin_export.c
-SRCS += builtin_export_util.c
-SRCS += builtin_util.c
-SRCS += builtin_export_err.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -36,13 +31,13 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lenv -lft -ldbllst -lcommon
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lenv_debug -lft_debug -ldbllst_debug -lcommon_debug
+LFLAGS := -L$(LIB_EXPORT_DIR) -lbuiltin -lenv -lft -ldbllst -lcommon
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lbuiltin_debug -lenv_debug -lft_debug -ldbllst_debug -lcommon_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst common env
-DEPENDENCY_LIB := libft.a libdbllst.a libcommon.a libenv.a
+DEPENDENCY := libft dbllst common env builtin
+DEPENDENCY_LIB := libft.a libdbllst.a libcommon.a libenv.a libbuiltin.a
 
 # *****************************************************************************
 # From here onward is the same

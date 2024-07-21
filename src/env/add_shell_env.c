@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 07:20:08 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/26 15:55:50 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 08:30:15 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@
 
 static int	cmp_key(void *data, void *query_pt);
 
+/**
+ * Adds the exit status as an environment variable.
+ *
+ * This function takes a pointer to a list of environment variables
+ * and an exit status as input. It adds the exit status as a new environment
+ * variable to the list.
+ *
+ * @param env_lst A pointer to a list of environment variables.
+ * @param status The exit status to be added as an environment variable.
+ * @return Returns 0 on success, -1 on failure.
+ */
 int	add_exit_status_as_env(void **env_lst, int status)
 {
 	t_blst		*old_node;
@@ -41,6 +52,24 @@ int	add_exit_status_as_env(void **env_lst, int status)
 	return (OK);
 }
 
+static int	cmp_key(void *data, void *query_pt)
+{
+	t_env_data	*env_data;
+
+	env_data = (t_env_data *)data;
+	if (ft_strcmp(env_data->key, (char *)query_pt) == 0)
+		return (1);
+	return (0);
+}
+
+/**
+ * Adds a new environment variable to the shell environment list.
+ *
+ * @param key The key of the environment variable.
+ * @param val The value of the environment variable.
+ * @param env_lst A pointer to the shell environment list.
+ * @return Returns 0 on success, ERR on failure.
+ */
 int	add_shell_env(char *key, char *val, void **env_lst)
 {
 	t_blst		*new_node;
@@ -64,6 +93,17 @@ int	add_shell_env(char *key, char *val, void **env_lst)
 	return (OK);
 }
 
+/**
+ * Joins a key and a value together.
+ *
+ * This function takes two strings, `key` and `val`, and concatenates
+ * them together, separating them with a delimiter. The resulting
+ * string is returned.
+ *
+ * @param key The key string.
+ * @param val The value string.
+ * @return The joined string.
+ */
 char	*join_keyval(char *key, char *val)
 {
 	char	*ret;
@@ -79,14 +119,4 @@ char	*join_keyval(char *key, char *val)
 	ret[key_len] = '=';
 	ft_strlcpy(ret + key_len + 1, val, val_len + 1);
 	return (ret);
-}
-
-static int	cmp_key(void *data, void *query_pt)
-{
-	t_env_data	*env_data;
-
-	env_data = (t_env_data *)data;
-	if (ft_strcmp(env_data->key, (char *)query_pt) == 0)
-		return (1);
-	return (0);
 }

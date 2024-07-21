@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:26:55 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/01 05:54:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 07:23:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "common.h"
 # include "libft.h"
 
-// init_env.c
+// create_envlist.c
 t_env_data	*new_env_data(char *str, int flag);
 void		free_env_data(void *data);
 

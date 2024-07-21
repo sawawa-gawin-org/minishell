@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 06:35:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/21 07:22:49 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 07:23:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	env_lst = init_env(envp);
+	env_lst = create_envlist(envp);
 	env_arr = convert_envlst_to_arr(env_lst);
 	print_env_arr(env_arr);
 	printf("-------------------\n");

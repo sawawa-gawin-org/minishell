@@ -6,14 +6,18 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:15:41 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/26 15:56:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 07:31:12 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_int.h"
 #include <stdio.h>
 
-// ENVコマンドに近づけるのなら、envコマンドを実行ファイルとして作成させ、forkして実行する必要がある。
+/**
+ * Prints the environment variables stored in the given linked list.
+ *
+ * @param env_lst The linked list containing the environment variables.
+ */
 void	print_env(t_blst *env_lst)
 {
 	t_blst	*node;
@@ -28,7 +32,8 @@ void	print_env(t_blst *env_lst)
 			node = node->next;
 			continue ;
 		}
-		printf("%s=%s\n", node->u_data.env_data->key, node->u_data.env_data->val);
+		printf("%s=%s\n",
+			node->u_data.env_data->key, node->u_data.env_data->val);
 		node = node->next;
 	}
 	return ;

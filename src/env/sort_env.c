@@ -1,66 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_export_qsort_env.c                         :+:      :+:    :+:   */
+/*   sort_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          #+#  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-07-16 03:32:54 by syamasaw          #+#    #+#             */
-/*   Updated: 2024-07-16 03:32:54 by syamasaw         ###   ########.fr       */
+/*   Created: 2024/07/21 06:32:17 by saraki            #+#    #+#             */
+/*   Updated: 2024/07/21 06:33:30 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec_int.h"
+#include "libft.h"
 
 static void	swap(char **a, char **b);
 static int	partition(char **env, int low, int high);
-
-int	print_export(char *env)
-{
-	char	**key_val;
-	int		pos;
-
-	pos = valid_format_key(env);
-	if (pos == -1)
-		return (GENERAL_ERR);
-	key_val = get_key_val(env, pos);
-	if (key_val == NULL)
-		return (ERR_ALLOCATE_MEMORY);
-	ft_putstr_fd("declare -x ", 1);
-	ft_putstr_fd(key_val[0], 1);
-	if (ft_strcmp(key_val[1], "") != 0)
-	{
-		ft_putstr_fd("=\"", 1);
-		ft_putstr_fd(key_val[1], 1);
-		ft_putendl_fd("\"", 1);
-	}
-	else
-		ft_putchar_fd('\n', 1);
-	free(key_val[0]);
-	free(key_val[1]);
-	free(key_val);
-	return (OK);
-}
-
-int	valid_option(char **cmd)
-{
-	if (!cmd[1])
-		return (0);
-	if (cmd[1][0] == '-')
-	{
-		if (cmd[1][1] == '\0')
-		{
-			export_err("-", 1);
-			return (1);
-		}
-		if (cmd[1][1] != '-' || (cmd[1][1] == '-' && cmd[1][2] != '\0'))
-		{
-			export_err(cmd[1], 2);
-			return (2);
-		}
-	}
-	return (0);
-}
 
 void	qsort_env(char **env, int low, int high)
 {
