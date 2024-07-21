@@ -15,14 +15,16 @@
 size_t	doub_lstcnt(t_blst *lst)
 {
 	size_t	cnt;
+	t_blst	*current_node;
 
 	if (lst == NULL)
 		return (0);
+	current_node = lst;
 	cnt = 0;
-	while (lst->data != NULL)
+	while (current_node->data != NULL)
 	{
 		cnt++;
-		lst = lst->next;
+		current_node = current_node->next;
 	}
 	return (cnt);
 }
