@@ -29,8 +29,13 @@ jobs:
       - name : Run norminette
         id: norm
         run: |
-          norminette -d $(cat changed_files.txt) >> result.txt || true
-          echo "status=$(wc -l changed_files.txt)" >> $GITHUB_OUTPUT
+          if [ ! -s changed_files.txt ]; then
+            echo "status=0" >> $GITHUB_OUTPUT
+            echo > result.txt
+          else
+            norminette -d $(cat changed_files.txt) > result.txt || true
+            echo "status=1" >> $GITHUB_OUTPUT
+          fi
 
       - name : Generate comment
         if: ${{ steps.norm.outputs.status != 0 }}
