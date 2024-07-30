@@ -37,7 +37,7 @@ jobs:
             echo "status=1" >> $GITHUB_OUTPUT
           fi
 
-      - name : Generate comment
+      - name : Generate comment with norminette result
         if: ${{ steps.norm.outputs.status != 0 }}
         run: |
           cat << EOF > norminette.md
@@ -54,10 +54,16 @@ jobs:
           </p>
           </details>
           EOF
-      - name: Create PR comment
-        if: ${{ steps.norm.outputs.status != 0 }}
+      - name : Generate comment without norminette result
+        if: ${{ steps.norm.outputs.status == 0 }}
         run: |
-          gh pr comment ${{ github.event.number }} --body-file norminette.md
+          cat << EOF > norminette.md
+          *.c and *.h files are not changed
+          EOF
+      - name: Create PR comment
+        run: |
+          gh pr comment ${{ github.event.number }} --edit-last --body-file norminette.md \
+          || gh pr comment ${{ github.event.number }} --body-file norminette.md
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
