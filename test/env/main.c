@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 06:35:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 07:23:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/30 06:02:32 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	end(void)
 
 void	print_env_arr(char **env);
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	void	*env_lst;
 	char	**env_arr;

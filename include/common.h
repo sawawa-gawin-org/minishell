@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/07/21 10:08:00 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/30 06:02:14 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ enum	e_STATUS_CODE
 	CMD_CNT_EXECUTE = 126,
 	CMD_NOT_FOUND = 127,
 };
-
 
 typedef int		(*t_cmp_f)(void *, void *);
 
