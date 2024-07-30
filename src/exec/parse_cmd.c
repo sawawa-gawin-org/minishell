@@ -6,14 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 07:27:21 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/17 15:39:57 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/20 17:21:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
 
-static char	**convert_tokenlst_to_char_array(
-				t_tokenlst *section_start_node);
 static int	count_tokenlst_section_size(
 				t_tokenlst *section_start_node);
 
@@ -30,8 +28,7 @@ char	**parse_cmd(
 	return (cmd);
 }
 
-static char	**convert_tokenlst_to_char_array(
-				t_tokenlst *head_node)
+char	**convert_tokenlst_to_char_array(t_tokenlst *head_node)
 {
 	int			i;
 	int			size;

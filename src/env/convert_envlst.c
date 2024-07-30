@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:03:56 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/26 15:55:25 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 07:18:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 
 static void	free_until_index(char **result, size_t index);
 
+/**
+ * Converts a linked list of environment variables to an array.
+ *
+ * @param env_lst The linked list of environment variables.
+ * @return The array representation of the environment variables.
+ */
 char	**convert_envlst_to_arr(t_blst *env_lst)
 {
 	char	**env_arr;

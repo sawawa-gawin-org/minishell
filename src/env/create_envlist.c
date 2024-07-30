@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_env.c                                         :+:      :+:    :+:   */
+/*   create_envlist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/24 17:48:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/26 15:56:24 by saraki           ###   ########.fr       */
+/*   Created: 2024/07/21 07:23:57 by saraki            #+#    #+#             */
+/*   Updated: 2024/07/21 07:23:59 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,13 @@
 static size_t		strlen_eq(char *str);
 static	t_blst		*new_env_node(char *str, int flag);
 
-void	*init_env(char	**env)
+/**
+ * Create env_list from the environment variables array.
+ *
+ * @param env An array of strings representing the environment variables.
+ * @return A pointer to the initialized environment list.
+ */
+t_blst	*create_envlist(char **env)
 {
 	t_blst		*ret;
 	t_blst		*new_node;

@@ -6,16 +6,15 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/17 15:39:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/07/21 19:13:58 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
+#include "builtin.h"
 
-static int	make_process_builtin(t_exec_parametors *param, t_callback callback,
-				t_callback_parametors *callback_args);
-static int	make_process_nonbuiltin(t_callback_parametors *callback_args,
-				t_callback callback);
+static int	run_command(t_callback_parametors *callback_args,
+				t_exec_parametors *param, t_callback callback);
 
 int	make_process(t_exec_parametors *param, t_callback callback)
 {
@@ -23,46 +22,44 @@ int	make_process(t_exec_parametors *param, t_callback callback)
 	t_tokenlst				*start_node;
 
 	callback_args.pipe = param->pipe_list->u_data.pipe_data;
-	callback_args.status = 0;
 	start_node = shift_token_section(
 			param->token_list, callback_args.pipe->index);
 	callback_args.cmd = parse_cmd(param, &start_node, callback_args.pipe);
 	if (callback_args.cmd == NULL)
 		return (ERR_ALLOCATE_MEMORY);
-	if (is_builtin(callback_args.cmd[0]))
-		return (make_process_builtin(param, callback, &callback_args));
-	callback_args.path = find_cmd(callback_args.cmd[0], param->env,
-			&(callback_args.status));
-	if (!callback_args.path && callback_args.status == CMD_NOT_FOUND)
-		cmdnotfound_error(callback_args.cmd[0]);
-	else if (!callback_args.path && callback_args.status == CMD_CNT_EXECUTE)
-		cmdnotexecutable_error(callback_args.cmd[0]);
+	callback_args.status = 0;
+	callback_args.path = NULL;
 	callback_args.env = param->env;
-	return (make_process_nonbuiltin(&callback_args, callback));
+	callback_args.env_lst = param->env_lst;
+	if (!is_builtin(callback_args.cmd[0]))
+	{
+		callback_args.path = find_cmd(callback_args.cmd[0], param->env,
+				&(callback_args.status));
+		if (!callback_args.path && callback_args.status == CMD_NOT_FOUND)
+			cmdnotfound_error(callback_args.cmd[0]);
+		else if (!callback_args.path && callback_args.status == CMD_CNT_EXECUTE)
+			cmdnotexecutable_error(callback_args.cmd[0]);
+	}
+	return (run_command(&callback_args, param, callback));
 }
 
-static int	make_process_nonbuiltin(t_callback_parametors *callback_args,
-		t_callback callback)
+static int	run_command(t_callback_parametors *callback_args,
+				t_exec_parametors *param, t_callback callback)
 {
+	size_t		pipe_cnt;
+	char		**cmd;
+
+	cmd = callback_args->cmd;
+	pipe_cnt = doub_lstcnt(param->pipe_list);
+	if (is_builtin(cmd[0]) && pipe_cnt == 1)
+		callback_args->status = call_builtin(
+				cmd, (void **) param->env_lst, IS_MAIN_PROCESS);
 	callback_args->pipe->pids = fork();
 	if (callback_args->pipe->pids == 0)
 		callback(callback_args);
 	free(callback_args->cmd);
-	free(callback_args->path);
-	if (callback_args->pipe->pids < 0)
-		return (GENERAL_ERR);
-	return (OK);
-}
-
-static int	make_process_builtin(t_exec_parametors *param, t_callback callback,
-		t_callback_parametors *callback_args)
-{
-	callback_args->status = 0;
-	callback_args->env_lst = param->env_lst;
-	callback_args->pipe->pids = fork();
-	if (callback_args->pipe->pids == 0)
-		callback(callback_args);
-	free(callback_args->cmd);
+	if (callback_args->path != NULL)
+		free(callback_args->path);
 	if (callback_args->pipe->pids < 0)
 		return (GENERAL_ERR);
 	return (OK);
