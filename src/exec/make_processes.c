@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/30 05:47:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 17:45:29 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,28 @@ static int	wait_processes(t_pipelst *pipe_node);
 int	make_processes(t_exec_parametors *param)
 {
 	int			err;
-	t_pipelst	*pipe_now_node;
+	t_pipelst	*initial_node;
 
 	err = 0;
 	if (init_pipeline(param->pipe_list))
 		return (GENERAL_ERR);
-	pipe_now_node = param->pipe_list;
-	while (pipe_now_node->u_data.pipe_data != NULL)
+	initial_node = param->pipe_list;
+	while (param->pipe_list->u_data.pipe_data != NULL)
 	{
-		if (pipe_now_node->prev->u_data.pipe_data == NULL)
+		if (param->pipe_list->prev->u_data.pipe_data == NULL)
 			err = make_process(param, do_first_process);
-		else if (pipe_now_node->next->u_data.pipe_data == NULL)
+		else if (param->pipe_list->next->u_data.pipe_data == NULL)
 			err = make_process(param, do_last_process);
 		else
 			err = make_process(param, do_middle_process);
 		if (err != 0)
+		{
+			param->pipe_list = initial_node;
 			return (wait_processes(param->pipe_list));
-		pipe_now_node = pipe_now_node->next;
+		}
+		param->pipe_list = param->pipe_list->next;
 	}
+	param->pipe_list = initial_node;
 	return (wait_processes(param->pipe_list));
 }
 
