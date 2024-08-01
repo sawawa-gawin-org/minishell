@@ -14,6 +14,7 @@ SRCS += err_cmd.c
 SRCS += err_syntax.c
 SRCS += err_malloc.c
 SRCS += bin_err_export.c
+SRCS += bin_err_env.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
