@@ -6,15 +6,13 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 07:20:08 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 08:30:15 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 15:00:34 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "env_int.h"
 #include "dbllst.h"
 #include "libft.h"
-
-static int	cmp_key(void *data, void *query_pt);
 
 /**
  * Adds the exit status as an environment variable.
@@ -52,7 +50,7 @@ int	add_exit_status_as_env(void **env_lst, int status)
 	return (OK);
 }
 
-static int	cmp_key(void *data, void *query_pt)
+int	cmp_key(void *data, void *query_pt)
 {
 	t_env_data	*env_data;
 

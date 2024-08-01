@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:27:17 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 07:23:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 15:01:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	free_environment_array(char **env);
 // add_shell_env.c
 int		add_exit_status_as_env(void **env_lst, int status);
 int		add_shell_env(char *key, char *val, void **env_lst);
+int		cmp_key(void *data, void *query_pt);
 
 //print_env.c
 void	print_env(void *env_lst);
