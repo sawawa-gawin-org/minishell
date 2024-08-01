@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 07:27:21 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/01 18:17:56 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 18:37:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 static int	count_tokenlst_section_size(
 				t_tokenlst *section_start_node);
 
-char	**parse_cmd(
-			t_exec_parametors *param, t_tokenlst **head_node, t_pipex *pipe)
+char	**parse_cmd(t_tokenlst **head_node, t_pipex *pipe)
 {
 	char	**cmd;
 

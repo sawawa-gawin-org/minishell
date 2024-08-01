@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 19:13:58 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 18:38:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	make_process(t_exec_parametors *param, t_callback callback)
 	callback_args.pipe = param->pipe_list->u_data.pipe_data;
 	start_node = shift_token_section(
 			param->token_list, callback_args.pipe->index);
-	callback_args.cmd = parse_cmd(param, &start_node, callback_args.pipe);
+	callback_args.cmd = parse_cmd(&start_node, callback_args.pipe);
 	if (callback_args.cmd == NULL)
 		return (ERR_ALLOCATE_MEMORY);
 	callback_args.status = 0;
