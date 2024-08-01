@@ -13,6 +13,7 @@ SRCS += core.c
 SRCS += builtin_export.c
 SRCS += builtin_export_print.c
 SRCS += builtin_export_setenv.c
+SRCS += builtin_env.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

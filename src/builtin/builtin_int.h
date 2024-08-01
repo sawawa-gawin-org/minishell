@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:38:35 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 08:43:04 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:10:13 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define BUILTIN_INT_H
 
 # include "common.h"
+
+// builtin_env.c
+int		builtin_env(char **cmd, t_blst **envlst, int mode);
 
 // builtin_export.c
 int		builtin_export(char **cmd, t_blst **envlst, int mode);

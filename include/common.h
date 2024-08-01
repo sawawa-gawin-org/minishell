@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/07/30 06:02:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 14:07:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ enum	e_STATUS_CODE
 	ERR = -1,
 	GENERAL_ERR = 1,
 	ERR_ALLOCATE_MEMORY = 1,
+	MISUSE_OF_SHELL_BUILTINS = 2,
 	CMD_CNT_EXECUTE = 126,
 	CMD_NOT_FOUND = 127,
 };
@@ -121,6 +122,8 @@ typedef t_blst	t_pipelst;
 
 int		export_option_err(char *str);
 int		export_identifier_err(char *str);
+
+int		env_err(void);
 
 int		cmdnotfound_error(char *cmd);
 int		cmdnotexecutable_error(char *cmd);
