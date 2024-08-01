@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/08/01 14:43:29 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 16:54:03 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,12 +120,16 @@ typedef struct s_node
 typedef t_blst	t_tokenlst;
 typedef t_blst	t_pipelst;
 
+// builtin command errs
 int		export_option_err(char *str);
 int		export_identifier_err(char *str);
 
 int		env_err(void);
 
 int		pwd_err(char *str);
+
+int		exit_numeric_err(char *str);
+int		exit_argc_err(void);
 
 int		cmdnotfound_error(char *cmd);
 int		cmdnotexecutable_error(char *cmd);
