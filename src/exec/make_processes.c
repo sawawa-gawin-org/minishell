@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/30 05:47:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 17:23:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	make_processes(t_exec_parametors *param)
 	err = 0;
 	if (init_pipeline(param->pipe_list))
 		return (GENERAL_ERR);
-	pipe_now_node = param->pipe_list;
+	pipe_now_node = param->pipe_list; // bug here
 	while (pipe_now_node->u_data.pipe_data != NULL)
 	{
 		if (pipe_now_node->prev->u_data.pipe_data == NULL)
