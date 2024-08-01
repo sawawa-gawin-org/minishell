@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 07:27:21 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/20 17:21:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 18:17:56 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	**parse_cmd(
 	cmd = convert_tokenlst_to_char_array(*head_node);
 	if (cmd == NULL)
 		return (NULL);
-	param->token_list = (*head_node);
 	return (cmd);
 }
 
