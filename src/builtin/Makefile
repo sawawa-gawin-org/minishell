@@ -18,6 +18,7 @@ SRCS += builtin_pwd.c
 SRCS += builtin_exit.c
 SRCS += builtin_exit_utils.c
 SRCS += builtin_unset.c
+SRCS += builtin_echo.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

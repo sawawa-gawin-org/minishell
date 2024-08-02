@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:38:35 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/02 21:37:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/02 22:25:05 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "common.h"
 
 # define PATHNAME_SIZE 1023
+
+// builtin_echo.c
+int		builtin_echo(char **cmd, t_blst **envlst, int mode);
 
 // builtin_env.c
 int		builtin_env(char **cmd, t_blst **envlst, int mode);

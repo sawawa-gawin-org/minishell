@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/13 17:37:58 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/02 22:41:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 // ...->next->data = "-l"
 // ```
 
-int	parser(t_blst **tokens_lst, t_blst **env_lst)
+int	parser(t_blst **tokens_lst, t_blst **env_lst) // change here
 {
 	int		err;
 
