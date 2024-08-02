@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:38:35 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/01 15:19:57 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/01 16:56:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@ int		export_env(char **cmd, t_blst **envlst, int mode);
 
 // builtin_pwd.c
 int		builtin_pwd(char **cmd, t_blst **envlst, int mode);
+
+// builtin_exit.c
+int		builtin_exit(char **cmd, t_blst **envlst, int mode);
+
+// builtin_exit_utils.c
+int		parse_str_to_numeric(char *argv, size_t *value);
 
 #endif

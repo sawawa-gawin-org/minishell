@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/07/21 07:23:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/02 05:32:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "env.h"
 #include "tokens.h"
 #include "dbllst.h"
+#include "libft.h"
 
 // void	end(void)__attribute__((destructor));
 
@@ -43,6 +44,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		status = main_loop(env_lst);
 		if (status == ERR)
+			break ;
+		else if (status == EXIT_CALLED)
 			break ;
 		else if (status == CONTINUE)
 			continue ;
@@ -94,6 +97,8 @@ static int	execute(char *line, void *env_lst, void *tokens_lst)
 		return (ERR);
 	if (exec_tokenslst_cmds(tokens_lst, &env_lst, &status))
 		return (ERR);
+	if (status == EXIT_CALLED)
+		return (EXIT_CALLED);
 	if (add_exit_status_as_env(&env_lst, status))
 		return (ERR);
 	return (OK);
