@@ -49,7 +49,7 @@ int	exec(t_tokenlst **token_head_node, char **env, t_blst **env_lst)
 	close_fds_all(param.pipe_list);
 	doub_lstdelall((void **)&param.pipe_list, free);
 	*token_head_node = param.token_list;
-	if (param.is_exit_called)
+	if (param.is_exit_called && status != GENERAL_ERR)
 		return (EXIT_CALLED);
 	return (status);
 }

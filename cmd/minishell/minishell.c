@@ -64,10 +64,7 @@ static int	main_loop(void *env_lst)
 	if (g_signal != 0)
 		g_signal = 0;
 	if (line == NULL)
-	{
-		ft_putstr_fd("exit\n", 2);
 		return (ERR);
-	}
 	if (is_blank_str(line))
 	{
 		free(line);
