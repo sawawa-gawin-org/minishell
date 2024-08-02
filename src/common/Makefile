@@ -17,6 +17,7 @@ SRCS += bin_err_export.c
 SRCS += bin_err_env.c
 SRCS += bin_err_pwd.c
 SRCS += bin_err_exit.c
+SRCS += bin_err_unset.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

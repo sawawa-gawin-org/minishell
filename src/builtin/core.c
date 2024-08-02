@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 03:56:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/01 16:47:25 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/02 21:37:50 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ int	is_builtin(char *cmd)
 		return (1);
 	if (ft_strcmp(cmd, "export") == 0)
 		return (1);
-	// if (ft_strcmp(cmd, "unset") == 0)
-	// 	return (1);
+	if (ft_strcmp(cmd, "unset") == 0)
+		return (1);
 	if (ft_strcmp(cmd, "env") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "exit") == 0)
@@ -60,8 +60,8 @@ int	call_builtin(char **cmd, t_blst **envlst, int mode)
 		return (builtin_pwd(cmd, envlst, mode));
 	if (ft_strcmp(cmd[0], "export") == 0)
 		return (builtin_export(cmd, envlst, mode));
-	// if (ft_strcmp(cmd[0], "unset") == 0)
-	// 	return (builtin_unset(cmd, envlst));
+	if (ft_strcmp(cmd[0], "unset") == 0)
+		return (builtin_unset(cmd, envlst, mode));
 	if (ft_strcmp(cmd[0], "env") == 0)
 		return (builtin_env(cmd, envlst, mode));
 	if (ft_strcmp(cmd[0], "exit") == 0)
