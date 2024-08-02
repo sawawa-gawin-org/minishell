@@ -67,7 +67,7 @@ static int	run_command(t_callback_parametors *callback_args,
 	char		**cmd;
 
 	cmd = callback_args->cmd;
-	pipe_cnt = doub_lstcnt(param->pipe_list);
+	pipe_cnt = doub_lstcnt(param->pipe_list->u_data.pipe_data->head_node);
 	if (is_builtin(cmd[0]) && pipe_cnt == 1)
 		callback_args->status = call_builtin(
 				cmd, (void **) param->env_lst, IS_MAIN_PROCESS);
