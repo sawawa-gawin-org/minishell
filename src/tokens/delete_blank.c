@@ -6,13 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/26 14:51:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/02 19:41:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
-
-static void	purge(t_blst **lst);
 
 // Description:
 // Drop all the spaces token in the tokens list.
@@ -26,14 +24,14 @@ void	delete_blank(t_blst **tokens_lst)
 	{
 		data = (*tokens_lst)->u_data.token_data;
 		if (data->token_type == SPACE_FLAG)
-			purge(tokens_lst);
+			purge_token_node(tokens_lst);
 		else
 			(*tokens_lst) = (*tokens_lst)->next;
 	}
 	*tokens_lst = head;
 }
 
-static void	purge(t_blst **lst)
+void	purge_token_node(t_blst **lst)
 {
 	void	*purged;
 
