@@ -33,6 +33,7 @@ typedef struct s_exec_parametors
 	t_blst		**env_lst;
 	char		**env;
 	int			status;
+	int			is_exit_called;
 }				t_exec_parametors;
 
 typedef struct s_callback_parametors

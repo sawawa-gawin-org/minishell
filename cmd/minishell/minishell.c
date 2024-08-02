@@ -45,6 +45,8 @@ int	main(int argc, char **argv, char **envp)
 		status = main_loop(env_lst);
 		if (status == ERR)
 			break ;
+		else if (status == EXIT_CALLED)
+			break ;
 		else if (status == CONTINUE)
 			continue ;
 	}
@@ -98,6 +100,8 @@ static int	execute(char *line, void *env_lst, void *tokens_lst)
 		return (ERR);
 	if (exec_tokenslst_cmds(tokens_lst, &env_lst, &status))
 		return (ERR);
+	if (status == EXIT_CALLED)
+		return (EXIT_CALLED);
 	if (add_exit_status_as_env(&env_lst, status))
 		return (ERR);
 	return (OK);

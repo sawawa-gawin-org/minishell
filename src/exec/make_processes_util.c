@@ -52,7 +52,6 @@ int	make_process(t_exec_parametors *param, t_callback callback)
 	return (run_command(&callback_args, param, callback));
 }
 
-
 /**
  * Executes a command.
  *
@@ -78,23 +77,13 @@ static int	run_command(t_callback_parametors *callback_args,
 	// ここでwaitpidを行いたい
 	if (callback_args->path != NULL)
 		free(callback_args->path); // 動くが、子プロセスでfreeされたメモリが使用されることになるので危険
-	// if (ft_strcmp(cmd[0], "exit") == 0 && pipe_cnt == 1)
-	// 	safety_termination(callback_args, param);
+	if (ft_strcmp(cmd[0], "exit") == 0 && pipe_cnt == 1)
+		param->is_exit_called = 1;
 	free(callback_args->cmd); // 動くが、子プロセスでfreeされたメモリが使用されることになるので危険
 	if (callback_args->pipe->pids < 0)
 		return (GENERAL_ERR);
 	return (OK);
 }
-
-// void	safety_termination(
-// 			t_callback_parametors *callback_args,
-// 			t_exec_parametors *param)
-// {
-// 	// make_process free
-// 	free(callback_args->cmd);
-
-// 	exit(OK);
-// }
 
 t_tokenlst	*shift_token_section(t_tokenlst *token_head_node, int index)
 {

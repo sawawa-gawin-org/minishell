@@ -40,6 +40,7 @@ int	exec(t_tokenlst **token_head_node, char **env, t_blst **env_lst)
 	param.env_lst = env_lst;
 	param.token_list = *token_head_node;
 	param.env = env;
+	param.is_exit_called = 0;
 	param.pipe_list = init_pipe_lst(param.token_list);
 	if (param.pipe_list == NULL)
 		return (ERR_ALLOCATE_MEMORY);
@@ -48,6 +49,8 @@ int	exec(t_tokenlst **token_head_node, char **env, t_blst **env_lst)
 	close_fds_all(param.pipe_list);
 	doub_lstdelall((void **)&param.pipe_list, free);
 	*token_head_node = param.token_list;
+	if (param.is_exit_called)
+		return (EXIT_CALLED);
 	return (status);
 }
 

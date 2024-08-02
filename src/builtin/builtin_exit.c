@@ -18,7 +18,7 @@ int	builtin_exit(char **cmd, t_blst **envlst, int mode)
 {
 	(void) envlst;
 	if (mode == IS_MAIN_PROCESS)
-		ft_putstr_fd("exit\n", 2); // 文字列"exit"はもっと上位の関数で出力する
+		ft_putstr_fd("exit\n", 2);
 	return (exit_status_handling(cmd));
 }
 
