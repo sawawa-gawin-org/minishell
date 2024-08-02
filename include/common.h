@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/08/01 16:54:03 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/02 21:51:04 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,8 @@ int		pwd_err(char *str);
 
 int		exit_numeric_err(char *str);
 int		exit_argc_err(void);
+
+int		unset_arg_err(void);
 
 int		cmdnotfound_error(char *cmd);
 int		cmdnotexecutable_error(char *cmd);
