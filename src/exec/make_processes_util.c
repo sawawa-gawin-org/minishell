@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/01 18:38:17 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/02 10:29:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,15 @@
 static int	run_command(t_callback_parametors *callback_args,
 				t_exec_parametors *param, t_callback callback);
 
+/**
+ * Executes a process using the given parameters.
+ *
+ * @param param The execution parameters for the process.
+ * @param callback The callback function to be called after the process
+ * execution.
+ * @return Returns an integer indicating the success or failure of the
+ * process execution.
+ */
 int	make_process(t_exec_parametors *param, t_callback callback)
 {
 	t_callback_parametors	callback_args;
@@ -43,6 +52,15 @@ int	make_process(t_exec_parametors *param, t_callback callback)
 	return (run_command(&callback_args, param, callback));
 }
 
+
+/**
+ * Executes a command.
+ *
+ * @param callback_args The callback parameters.
+ * @return The exit status of the command.
+ * @note The reason why `callback_args->cmd` free on the parent process is that
+ * the each element of array is allocated as a elements of token_list node. 
+ */
 static int	run_command(t_callback_parametors *callback_args,
 				t_exec_parametors *param, t_callback callback)
 {
@@ -57,13 +75,26 @@ static int	run_command(t_callback_parametors *callback_args,
 	callback_args->pipe->pids = fork();
 	if (callback_args->pipe->pids == 0)
 		callback(callback_args);
-	free(callback_args->cmd);
+	// ここでwaitpidを行いたい
 	if (callback_args->path != NULL)
-		free(callback_args->path);
+		free(callback_args->path); // 動くが、子プロセスでfreeされたメモリが使用されることになるので危険
+	// if (ft_strcmp(cmd[0], "exit") == 0 && pipe_cnt == 1)
+	// 	safety_termination(callback_args, param);
+	free(callback_args->cmd); // 動くが、子プロセスでfreeされたメモリが使用されることになるので危険
 	if (callback_args->pipe->pids < 0)
 		return (GENERAL_ERR);
 	return (OK);
 }
+
+// void	safety_termination(
+// 			t_callback_parametors *callback_args,
+// 			t_exec_parametors *param)
+// {
+// 	// make_process free
+// 	free(callback_args->cmd);
+
+// 	exit(OK);
+// }
 
 t_tokenlst	*shift_token_section(t_tokenlst *token_head_node, int index)
 {
