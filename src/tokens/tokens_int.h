@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/26 14:20:40 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/03 07:24:21 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int			cmp_syntax(void *d, void *n);
 void		delete_quote(t_blst **tokens_lst);
 // delete_blank.c
 void		delete_blank(t_blst **tokens_lst);
+void		purge_token_node(t_blst **lst);
 
 /* expander */
 // expander.c
@@ -65,6 +66,5 @@ char		*add_val_to_str(
 				char *tokstr, char *str, t_indexes *index, t_blst *envlst);
 int			get_val_len(char *str, int now);
 char		*strjoin_allfree(char *str1, char *str2);
-
 
 #endif

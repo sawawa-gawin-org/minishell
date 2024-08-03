@@ -6,13 +6,15 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/13 17:37:58 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/03 07:23:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-// static void	put_tokens_lst(t_blst *tokens_lst);
+static int	is_echo(t_blst *tokens_lst);
+static int	echo_parser(t_blst **tokens_lst);
+static int	concat_token_str(t_blst *token_node);
 
 // # Description
 // This function is the main parser function.
@@ -46,30 +48,85 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst)
 {
 	int		err;
 
+	err = OK;
+	if (is_echo(*tokens_lst))
+		err = echo_parser(&((*tokens_lst)->next));
+	if (err != OK)
+		return (err);
 	delete_blank(tokens_lst);
 	delete_quote(tokens_lst);
 	err = parse_heredoc(tokens_lst);
-	if (err == ERR)
+	if (err != OK)
 		return (ERR);
 	if (!expander(tokens_lst, env_lst))
 		return (ERR);
 	return (OK);
 }
 
-// static void	put_tokens_lst(t_blst *tokens_lst)
-// {
-// 	t_blst			*tmp;
-// 	t_token_data	*data;
-// 	int				i;
+static int	echo_parser(t_blst **tokens_lst)
+{
+	int				err;
+	t_blst			*now_node;
+	t_token_data	*data;
 
-// 	tmp = tokens_lst;
-// 	i = 1;
-// 	while (tmp->data != NULL)
-// 	{
-// 		data = tmp->data;
-// 		printf("%d: text:%s, type:%d, sub:%d\n",
-// 			i, data->token_str, data->token_type, data->sub_type);
-// 		tmp = tmp->next;
-// 		i++;
-// 	}
-// }
+	err = OK;
+	now_node = *tokens_lst;
+	data = now_node->u_data.token_data;
+	while (data != NULL && (data->token_type == SPACE_FLAG
+			|| ft_strcmp(data->token_str, "-n") == 0))
+	{
+		now_node = now_node->next;
+		data = now_node->u_data.token_data;
+	}
+	while (data != NULL)
+	{
+		if (data->token_type == TOKEN_FLAG)
+			err = concat_token_str(now_node);
+		if (err != OK)
+			break ;
+		now_node = now_node->next;
+		data = now_node->u_data.token_data;
+	}
+	return (err);
+}
+
+// echo| |(-n)| |hello| |world|"quote"|name| |is| |'42'|NULL
+//                now (rewrited_node)
+static int	concat_token_str(t_blst *rewrited_node)
+{
+	t_blst			*now_node;
+	t_token_data	*data;
+	char			*new_str;
+
+	new_str = ft_strdup(rewrited_node->u_data.token_data->token_str);
+	if (new_str == NULL)
+		return (ERR_ALLOCATE_MEMORY);
+	now_node = rewrited_node->next;
+	data = now_node->u_data.token_data;
+	while (data != NULL && (data->token_type == SPACE_FLAG
+			|| data->token_type == TOKEN_FLAG))
+	{
+		new_str = strjoin_allfree(new_str, data->token_str);
+		if (new_str == NULL)
+			return (ERR_ALLOCATE_MEMORY);
+		data->token_str = NULL;
+		purge_token_node(&now_node);
+		data = now_node->u_data.token_data;
+	}
+	free(rewrited_node->u_data.token_data->token_str);
+	rewrited_node->u_data.token_data->token_str = new_str;
+	rewrited_node->u_data.token_data->token_type = TOKEN_FLAG;
+	rewrited_node->u_data.token_data->sub_type = TOKEN_FLAG;
+	return (OK);
+}
+
+static int	is_echo(t_blst *tokens_lst)
+{
+	t_token_data	*data;
+
+	data = tokens_lst->u_data.token_data;
+	if (data->token_type == TOKEN_FLAG
+		&& ft_strcmp(data->token_str, "echo") == 0)
+		return (1);
+	return (0);
+}
