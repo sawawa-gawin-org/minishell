@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/03 07:06:07 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/03 07:23:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static int	concat_token_str(t_blst *rewrited_node)
 	now_node = rewrited_node->next;
 	data = now_node->u_data.token_data;
 	while (data != NULL && (data->token_type == SPACE_FLAG
-		|| data->token_type == TOKEN_FLAG))
+			|| data->token_type == TOKEN_FLAG))
 	{
 		new_str = strjoin_allfree(new_str, data->token_str);
 		if (new_str == NULL)
