@@ -1,32 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bin_err_env.c                                      :+:      :+:    :+:   */
+/*   bin_err_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/20 08:24:32 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/04 10:51:58 by saraki           ###   ########.fr       */
+/*   Created: 2024/08/04 10:47:21 by saraki            #+#    #+#             */
+/*   Updated: 2024/08/04 10:50:22 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	env_argc_err(void)
+int	cd_err(void)
 {
 	ft_putstr_fd(MSG_PREFIX, 2);
-	ft_putstr_fd("env: ", 2);
-	ft_putstr_fd("option is undefined\n", 2);
-	return (GENERAL_ERR);
-}
-
-int	env_option_err(char *cmd)
-{
-	ft_putstr_fd(MSG_PREFIX, 2);
-	ft_putstr_fd("env: ", 2);
-	ft_putstr_fd("illegal option -- ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("usage: env [-i] [name=value]... [utility [argument...]]\n", 2);
+	ft_putstr_fd("cd: ", 2);
+	ft_putstr_fd("too many arguments\n", 2); // tmp
 	return (GENERAL_ERR);
 }

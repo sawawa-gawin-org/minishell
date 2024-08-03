@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:38:35 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/02 22:25:05 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/04 11:45:46 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,13 @@
 # include "common.h"
 
 # define PATHNAME_SIZE 1023
+
+// builtin_cd.c
+int		builtin_cd(char **cmd, t_blst **envlst, int mode);
+char	*allocate_cwd_path(t_blst *envlst);
+char	*create_abspath(char *relpath, t_blst **envlst);
+int		update_pwd_and_oldpwd_env(
+			char *old_pwd, char *new_pwd, t_blst **envlst);
 
 // builtin_echo.c
 int		builtin_echo(char **cmd, t_blst **envlst, int mode);

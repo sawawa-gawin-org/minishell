@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 03:56:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/02 22:24:20 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/03 09:13:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	is_builtin(char *cmd)
 {
 	if (ft_strcmp(cmd, "echo") == 0)
 		return (1);
-	// if (ft_strcmp(cmd, "cd") == 0)
-	// 	return (1);
+	if (ft_strcmp(cmd, "cd") == 0)
+		return (1);
 	if (ft_strcmp(cmd, "pwd") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "export") == 0)
@@ -54,8 +54,8 @@ int	call_builtin(char **cmd, t_blst **envlst, int mode)
 {
 	if (ft_strcmp(cmd[0], "echo") == 0)
 		return (builtin_echo(cmd, envlst, mode));
-	// if (ft_strcmp(cmd[0], "cd") == 0)
-	// 	return (builtin_cd(cmd, envlst));
+	if (ft_strcmp(cmd[0], "cd") == 0)
+		return (builtin_cd(cmd, envlst, mode));
 	if (ft_strcmp(cmd[0], "pwd") == 0)
 		return (builtin_pwd(cmd, envlst, mode));
 	if (ft_strcmp(cmd[0], "export") == 0)
