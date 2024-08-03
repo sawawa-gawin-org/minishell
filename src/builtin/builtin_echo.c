@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 22:22:59 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/02 16:54:01 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/03 07:08:13 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	builtin_echo(char **cmd, t_blst **envlst, int mode)
 	status = valid_option(cmd, &n_flag);
 	if (status > 0)
 		return (status);
+	if (n_flag == 1)
+		i ++;
 	while (cmd[i] != NULL)
 	{
 		ft_putstr_fd(cmd[i], STDOUT_FILENO);
