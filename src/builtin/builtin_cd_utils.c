@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 01:16:05 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:11:14 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,28 @@ static int	update_or_create_env(char *key, char *value, t_blst **envlst)
 		free(target_node->u_data.env_data->val);
 		target_node->u_data.env_data->val = new_value;
 	}
+	return (OK);
+}
+
+/**
+ * @brief Get the home path.
+ *
+ * This function retrieves the home path from the environment list
+ * and stores it in the `path` variable.
+ *
+ * @param path The pointer to the variable where the home path will be stored.
+ * @param envlst The environment list.
+ *
+ * @return The status code indicating the success or failure of the operation.
+ * @note This function does not allocate memory for the `path` variable.
+ */
+int	get_home_path(char **path, t_blst *envlst)
+{
+	t_blst	*target_node;
+
+	target_node = (t_blst *)doub_lstsearch(envlst, "HOME", cmp_key);
+	if (target_node->u_data.env_data == NULL)
+		return (cd_home_not_set_err());
+	*path = target_node->u_data.env_data->val;
 	return (OK);
 }

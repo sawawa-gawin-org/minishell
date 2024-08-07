@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/08/04 10:52:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:21:20 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,10 @@ typedef t_blst	t_tokenlst;
 typedef t_blst	t_pipelst;
 
 // builtin command errs
+int		cd_argc_err(void);
+int		cd_home_not_set_err(void);
+int		cd_option_err(char *cmd);
+
 int		env_argc_err(void);
 int		env_option_err(char *cmd);
 
