@@ -38,6 +38,7 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 		return (ERR_ALLOCATE_MEMORY);
 	if (chdir(routing.dist) == -1)
 	{
+		cd_move_err(path);
 		free_all_params(&routing);
 		return (GENERAL_ERR);
 	}
