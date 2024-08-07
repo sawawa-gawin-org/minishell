@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 10:44:28 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 00:34:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 03:15:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,29 @@ static void		*free_path_arr(char **path_arr, size_t arr_size);
 char	*path_resolving(char *abspath)
 {
 	t_blst	*path_node;
-	t_blst	*now_node;
 	char	*resolved_path;
 
 	path_node = split_path_elements(abspath);
 	if (path_node == NULL)
 		return (NULL);
-	now_node = path_node;
-	while (now_node->u_data.str != NULL)
+	while (path_node->u_data.str != NULL)
 	{
-		if (ft_strcmp(now_node->u_data.str, ".") == 0)
-			doub_lstdelone(doub_lstpurge((void **)&now_node), free);
-		else if (ft_strcmp(now_node->u_data.str, "..") == 0)
+		if (ft_strcmp(path_node->u_data.str, ".") == 0)
+			doub_lstdelone(doub_lstpurge((void **)&path_node), free);
+		else if (ft_strcmp(path_node->u_data.str, "..") == 0)
 		{
-			doub_lstdelone(doub_lstpurge((void **)&(now_node->prev)), free);
-			doub_lstdelone(doub_lstpurge((void **)&now_node), free);
+			path_node = path_node->prev;
+			if (path_node->u_data.str != NULL)
+				doub_lstdelone(doub_lstpurge((void **)&path_node), free);
+			else
+				path_node = path_node->next;
+			doub_lstdelone(doub_lstpurge((void **)&path_node), free);
 		}
-		now_node = now_node->next;
+		else
+			path_node = path_node->next;
 	}
-	resolved_path = join_path_nodes(path_node);
-	doub_lstdelall((void **)&path_node, free);
+	resolved_path = join_path_nodes(path_node->next);
+	doub_lstdelall((void **)&(path_node->next), free);
 	return (resolved_path);
 }
 
@@ -77,30 +80,30 @@ static t_blst	*split_path_elements(char *abspath)
 
 static char	*join_path_nodes(t_blst *path_node)
 {
+	char	*final_path;
 	char	*joined_path;
 	char	*tmp_path;
-	size_t	len;
 
 	joined_path = ft_strdup("");
 	if (joined_path == NULL)
 		return (NULL);
 	while (path_node->u_data.str != NULL)
 	{
-		len = ft_strlen(joined_path) + ft_strlen(path_node->u_data.str) + 2;
-		tmp_path = ft_calloc(sizeof(char), len);
+		tmp_path = strjoin_with_sep(joined_path, path_node->u_data.str, '/');
 		if (tmp_path == NULL)
 		{
 			free(joined_path);
 			return (NULL);
 		}
-		ft_strlcat(tmp_path, joined_path, ft_strlen(joined_path) + 1);
-		ft_strlcat(tmp_path, "/", ft_strlen(joined_path) + 1 + 1);
-		ft_strlcat(tmp_path, path_node->u_data.str, len);
 		free(joined_path);
 		joined_path = tmp_path;
 		path_node = path_node->next;
 	}
-	return (joined_path);
+	if (ft_strlen(joined_path) != 0)
+		return (joined_path);
+	final_path = ft_strjoin(joined_path, "/");
+	free(joined_path);
+	return (final_path);
 }
 
 static void	*free_path_arr(char **path_arr, size_t arr_size)

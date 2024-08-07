@@ -6,11 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 02:11:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:31:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_int.h"
+#include "dbllst.h"
 #include "env.h"
 #include "libft.h"
 
@@ -60,15 +61,11 @@ char	*allocate_cwd_path(t_blst *envlst)
  */
 int	update_pwd_and_oldpwd_env(char *old_pwd, char *new_pwd, t_blst **envlst)
 {
-	t_blst	*old_pwd_node;
-	t_blst	*pwd_node;
 	int		status;
 
 	if (old_pwd == NULL || new_pwd == NULL)
 		return (GENERAL_ERR);
 	status = OK;
-	old_pwd_node = (t_blst *)doub_lstsearch(*envlst, "OLDPWD", cmp_key);
-	pwd_node = (t_blst *)doub_lstsearch(*envlst, "PWD", cmp_key);
 	status = update_or_create_env("OLDPWD", old_pwd, envlst);
 	if (status == OK)
 		status = update_or_create_env("PWD", new_pwd, envlst);

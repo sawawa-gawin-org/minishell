@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 09:13:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 02:24:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:29:35 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 static int	normalize_path(
 				char *path, t_blst *envlst, t_cd_path_routing *routing)
 {
-	char	*normalized_path;
 	char	*abspath;
 
 	routing->src = allocate_cwd_path(envlst);
