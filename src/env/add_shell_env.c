@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 07:20:08 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 03:00:15 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 03:36:22 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,16 @@ int	add_shell_env(char *key, char *val, void **env_lst)
 char	*strjoin_with_sep(char *str1, char *str2, char sep)
 {
 	char	*ret;
-	size_t	key_len;
-	size_t	val_len;
+	size_t	str1_len;
+	size_t	str2_len;
 
-	key_len = ft_strlen(str1);
-	val_len = ft_strlen(str2);
-	ret = (char *)malloc(sizeof(char) * (key_len + val_len + 2));
+	str1_len = ft_strlen(str1);
+	str2_len = ft_strlen(str2);
+	ret = (char *)malloc(sizeof(char) * (str1_len + str2_len + 2));
 	if (ret == NULL)
 		return (NULL);
-	ft_strlcpy(ret, str1, key_len + 1);
-	ret[key_len] = sep;
-	ft_strlcpy(ret + key_len + 1, str2, val_len + 1);
+	ft_strlcpy(ret, str1, str1_len + 1);
+	ret[str1_len] = sep;
+	ft_strlcpy(ret + str1_len + 1, str2, str2_len + 1);
 	return (ret);
 }

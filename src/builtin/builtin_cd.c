@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 09:13:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 02:29:35 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 03:39:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ static int	valid_option(
 static int	flag_parser(char *flag_str);
 static void	free_all_params(t_cd_path_routing *param);
 
+/**
+ * @brief Executes the built-in command "cd".
+ *
+ * This function is responsible for changing the current working directory.
+ *
+ * @param cmd The command and its arguments.
+ * @param envlst The list of environment variables.
+ * @param mode The mode of execution.
+ * @return Returns 0 on success, -1 on failure.
+ */
 int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 {
 	t_cd_path_routing	routing;
@@ -49,6 +59,16 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 	return (OK);
 }
 
+/**
+ * @brief Normalize the given path.
+ *
+ * This function takes a path as input and normalizes it by removing any
+ * redundant slashes and resolving any relative path components.
+ * The normalized path is then returned.
+ *
+ * @param path The path to be normalized.
+ * @return The normalized path.
+ */
 static int	normalize_path(
 				char *path, t_blst *envlst, t_cd_path_routing *routing)
 {
@@ -58,7 +78,7 @@ static int	normalize_path(
 	if (routing->src == NULL)
 		return (ERR);
 	if (path[0] != '/')
-		abspath = create_abspath(routing->src, path);
+		abspath = strjoin_with_sep(routing->src, path, '/');
 	else
 		abspath = ft_strdup(path);
 	if (abspath == NULL)

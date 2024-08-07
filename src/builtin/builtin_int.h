@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:38:35 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 02:11:33 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 03:36:50 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ enum			e_CD_MODE
 // builtin_cd.c
 int		builtin_cd(char **cmd, t_blst **envlst, int mode);
 // builtin_cd_utils.c
-char	*create_abspath(char *pwdpath, char *relpath);
 char	*allocate_cwd_path(t_blst *envlst);
 int		update_pwd_and_oldpwd_env(
 			char *old_pwd, char *new_pwd, t_blst **envlst);

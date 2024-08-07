@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 02:31:23 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 03:36:43 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,6 @@
 #include "libft.h"
 
 static int	update_or_create_env(char *key, char *value, t_blst **envlst);
-
-char	*create_abspath(char *pwdpath, char *relpath)
-{
-	char	*joined_path;
-	size_t	len;
-
-	len = ft_strlen(pwdpath) + 1 + ft_strlen(relpath) + 1;
-	joined_path = (char *)ft_calloc(sizeof(char), len);
-	if (joined_path == NULL)
-		return (NULL);
-	ft_strlcat(joined_path, pwdpath, len);
-	ft_strlcat(joined_path, "/", len);
-	ft_strlcat(joined_path, relpath, len);
-	return (joined_path);
-}
 
 char	*allocate_cwd_path(t_blst *envlst)
 {
