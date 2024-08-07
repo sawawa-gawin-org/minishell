@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/04 11:45:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 01:16:05 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,20 @@
 #include "env.h"
 #include "libft.h"
 
-char	*create_abspath(char *relpath, t_blst **envlst)
-{
-	char	*cwd_path;
-	char	*joined_path;
+static int	update_or_create_env(char *key, char *value, t_blst **envlst);
 
-	cwd_path = allocate_cwd_path(envlst);
-	if (cwd_path == NULL)
-		return (NULL);
-	joined_path = ft_strjoin(cwd_path, relpath);
-	free(cwd_path);
+char	*create_abspath(char *pwdpath, char *relpath)
+{
+	char	*joined_path;
+	size_t	len;
+
+	len = ft_strlen(pwdpath) + 1 + ft_strlen(relpath) + 1;
+	joined_path = (char *)ft_calloc(sizeof(char), len);
 	if (joined_path == NULL)
-		return (NULL);	
+		return (NULL);
+	ft_strlcat(joined_path, pwdpath, len);
+	ft_strlcat(joined_path, "/", len);
+	ft_strlcat(joined_path, relpath, len);
 	return (joined_path);
 }
 
@@ -42,7 +44,7 @@ char	*allocate_cwd_path(t_blst *envlst)
 		cwd_path = getcwd(NULL, 0);
 		if (cwd_path == NULL)
 			return (NULL);
-		return (cwd_path);		
+		return (cwd_path);
 	}
 	return (ft_strdup(target_node->u_data.env_data->val));
 }
@@ -54,7 +56,7 @@ char	*allocate_cwd_path(t_blst *envlst)
  * @param new_pwd The new working directory path.
  * @param envlst  A pointer to the linked list of environment variables.
  * @return        Returns OK on success, ERR on failure.
- * @note the both of old_pwd and new_pwd must be allocated memory.
+ * @note          It doesn't matter if the both parameters are allocated or not.
  */
 int	update_pwd_and_oldpwd_env(char *old_pwd, char *new_pwd, t_blst **envlst)
 {
@@ -67,19 +69,35 @@ int	update_pwd_and_oldpwd_env(char *old_pwd, char *new_pwd, t_blst **envlst)
 	status = OK;
 	old_pwd_node = (t_blst *)doub_lstsearch(*envlst, "OLDPWD", cmp_key);
 	pwd_node = (t_blst *)doub_lstsearch(*envlst, "PWD", cmp_key);
-	if (old_pwd_node->u_data.env_data->val == NULL)
-		status = add_shell_env("OLDPWD", old_pwd, (void **)envlst);
-	else 
-	{
-		free(old_pwd_node->u_data.env_data->val);
-		old_pwd_node->u_data.env_data->val = old_pwd;
-	}
-	if (pwd_node->u_data.env_data->val == NULL && status == OK)
-		status = add_shell_env("PWD", new_pwd, (void **)envlst);
-	else if (status == OK)
-	{
-		free(pwd_node->u_data.env_data->val);
-		pwd_node->u_data.env_data->val = new_pwd;
-	}
+	status = update_or_create_env("OLDPWD", old_pwd, envlst);
+	if (status == OK)
+		status = update_or_create_env("PWD", new_pwd, envlst);
 	return (status);
+}
+
+static int	update_or_create_env(char *key, char *value, t_blst **envlst)
+{
+	t_blst	*target_node;
+	int		status;
+	char	*new_value;
+
+	new_value = ft_strdup(value);
+	if (new_value == NULL)
+		return (ERR);
+	target_node = (t_blst *)doub_lstsearch(*envlst, key, cmp_key);
+	if (target_node->u_data.env_data == NULL)
+	{
+		status = add_shell_env(key, new_value, (void **)envlst);
+		if (status == ERR)
+		{
+			free(new_value);
+			return (ERR);
+		}
+	}
+	else
+	{
+		free(target_node->u_data.env_data->val);
+		target_node->u_data.env_data->val = new_value;
+	}
+	return (OK);
 }

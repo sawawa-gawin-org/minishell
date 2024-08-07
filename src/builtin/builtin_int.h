@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:38:35 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/04 11:45:46 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 01:19:01 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,22 @@
 
 # define PATHNAME_SIZE 1023
 
+typedef struct s_cd_path_routing
+{
+	char		*src;
+	char		*dist;
+}				t_cd_path_routing;
+
 // builtin_cd.c
 int		builtin_cd(char **cmd, t_blst **envlst, int mode);
+// builtin_cd_utils.c
+char	*create_abspath(char *pwdpath, char *relpath);
 char	*allocate_cwd_path(t_blst *envlst);
-char	*create_abspath(char *relpath, t_blst **envlst);
 int		update_pwd_and_oldpwd_env(
 			char *old_pwd, char *new_pwd, t_blst **envlst);
+
+// builtin_cd_path_utils.c
+char	*path_resolving(char *abspath);
 
 // builtin_echo.c
 int		builtin_echo(char **cmd, t_blst **envlst, int mode);
