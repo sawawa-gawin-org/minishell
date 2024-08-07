@@ -6,27 +6,16 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 08:24:32 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/04 10:51:58 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:26:46 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "common.h"
 
-int	env_argc_err(void)
+int	env_err(void)
 {
 	ft_putstr_fd(MSG_PREFIX, 2);
 	ft_putstr_fd("env: ", 2);
 	ft_putstr_fd("option is undefined\n", 2);
-	return (GENERAL_ERR);
-}
-
-int	env_option_err(char *cmd)
-{
-	ft_putstr_fd(MSG_PREFIX, 2);
-	ft_putstr_fd("env: ", 2);
-	ft_putstr_fd("illegal option -- ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("usage: env [-i] [name=value]... [utility [argument...]]\n", 2);
 	return (GENERAL_ERR);
 }
