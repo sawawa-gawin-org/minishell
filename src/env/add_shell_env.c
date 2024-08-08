@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 07:20:08 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/01 15:00:34 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 03:36:22 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	add_shell_env(char *key, char *val, void **env_lst)
 	t_env_data	*new_data;
 	char		*key_value;
 
-	key_value = join_keyval(key, val);
+	key_value = strjoin_with_sep(key, val, '=');
 	if (key_value == NULL)
 		return (ERR);
 	new_data = new_env_data(key_value, 0);
@@ -92,29 +92,30 @@ int	add_shell_env(char *key, char *val, void **env_lst)
 }
 
 /**
- * Joins a key and a value together.
+ * @brief Joins two strings with a specified separator.
  *
- * This function takes two strings, `key` and `val`, and concatenates
- * them together, separating them with a delimiter. The resulting
- * string is returned.
+ * This function takes two strings, `str1` and `str2`, and concatenates them
+ * together with the specified separator `sep`.
+ * The resulting string is returned.
  *
- * @param key The key string.
- * @param val The value string.
+ * @param str1 The first string to be joined.
+ * @param str2 The second string to be joined.
+ * @param sep The separator character to be used.
  * @return The joined string.
  */
-char	*join_keyval(char *key, char *val)
+char	*strjoin_with_sep(char *str1, char *str2, char sep)
 {
 	char	*ret;
-	size_t	key_len;
-	size_t	val_len;
+	size_t	str1_len;
+	size_t	str2_len;
 
-	key_len = ft_strlen(key);
-	val_len = ft_strlen(val);
-	ret = (char *)malloc(sizeof(char) * (key_len + val_len + 2));
+	str1_len = ft_strlen(str1);
+	str2_len = ft_strlen(str2);
+	ret = (char *)malloc(sizeof(char) * (str1_len + str2_len + 2));
 	if (ret == NULL)
 		return (NULL);
-	ft_strlcpy(ret, key, key_len + 1);
-	ret[key_len] = '=';
-	ft_strlcpy(ret + key_len + 1, val, val_len + 1);
+	ft_strlcpy(ret, str1, str1_len + 1);
+	ret[str1_len] = sep;
+	ft_strlcpy(ret + str1_len + 1, str2, str2_len + 1);
 	return (ret);
 }

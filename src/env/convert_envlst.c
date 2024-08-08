@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:03:56 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 07:18:16 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/07 02:59:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ char	**convert_envlst_to_arr(t_blst *env_lst)
 			env_lst = env_lst->next;
 			continue ;
 		}
-		keyvalue = join_keyval(env_lst->u_data.env_data->key,
-				env_lst->u_data.env_data->val);
+		keyvalue = strjoin_with_sep(env_lst->u_data.env_data->key,
+				env_lst->u_data.env_data->val, '=');
 		if (keyvalue == NULL)
 		{
 			free_until_index(env_arr, i);
