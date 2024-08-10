@@ -6,13 +6,13 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/07/18 12:51:45 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/10 10:46:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
 
-static int	redirection(t_tokenlst **now_node, t_pipex *pipe);
+static int	redirection(t_tokenlst *now_node, t_pipex *pipe);
 static int	open_in_files(char *dist, t_pipex *pipex, int heredocflag);
 static int	open_out_files(char *dist, t_pipex *pipex, int appendflag);
 static int	open_and_send_string_to_fd(char *str);
@@ -20,37 +20,32 @@ static int	open_and_send_string_to_fd(char *str);
 // # Description
 // This function merges the redirection tokens into one token.
 // remove ">", ">>", "<", "<<"
-void	parse_redirects(t_tokenlst **now_node, t_pipex *pipe)
+void	parse_redirects(t_tokenlst *now_node, t_pipex *pipe)
 {
 	char		*token;
-	t_tokenlst	*init_node;
 
-	init_node = (*now_node)->prev;
-	token = (*now_node)->u_data.str;
-	while ((*now_node)->u_data.str != NULL && ft_strcmp(token, "|") != 0)
+	token = now_node->u_data.str;
+	while (now_node->u_data.str != NULL && ft_strcmp(token, "|") != 0)
 	{
-		token = (*now_node)->u_data.str;
+		token = now_node->u_data.str;
 		if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0
 			|| ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
 		{
 			if (redirection(now_node, pipe))
 				break ;
-			else
-				continue ;
 		}
-		(*now_node) = (*now_node)->next;
+		now_node = now_node->next;
 	}
-	*now_node = init_node->next;
 	return ;
 }
 
-static int	redirection(t_tokenlst **now_node, t_pipex *pipe)
+static int	redirection(t_tokenlst *now_node, t_pipex *pipe)
 {
 	t_tokenlst	*symbol;
 	t_tokenlst	*dist;
 
-	symbol = (t_tokenlst *)doub_lstpurge((void **)now_node);
-	dist = (t_tokenlst *)doub_lstpurge((void **)now_node);
+	symbol = now_node;
+	dist = now_node->next;
 	if (ft_strcmp(symbol->u_data.str, ">") == 0)
 		open_out_files(dist->u_data.str, pipe, 0);
 	else if (ft_strcmp(symbol->u_data.str, ">>") == 0)
@@ -59,8 +54,6 @@ static int	redirection(t_tokenlst **now_node, t_pipex *pipe)
 		open_in_files(dist->u_data.str, pipe, 0);
 	else if (ft_strcmp(symbol->u_data.str, "<<") == 0)
 		open_in_files(dist->u_data.str, pipe, 1);
-	doub_lstdelone((void *)symbol, NULL);
-	doub_lstdelone((void *)dist, NULL);
 	return (OK);
 }
 

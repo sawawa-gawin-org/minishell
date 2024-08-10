@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/02 10:29:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/10 10:37:29 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,9 @@ static int	run_command(t_callback_parametors *callback_args,
 int	make_process(t_exec_parametors *param, t_callback callback)
 {
 	t_callback_parametors	callback_args;
-	t_tokenlst				*start_node;
 
 	callback_args.pipe = param->pipe_list->u_data.pipe_data;
-	start_node = shift_token_section(
-			param->token_list, callback_args.pipe->index);
-	callback_args.cmd = parse_cmd(&start_node, callback_args.pipe);
+	callback_args.cmd = parse_cmd(param->token_list, callback_args.pipe);
 	if (callback_args.cmd == NULL)
 		return (ERR_ALLOCATE_MEMORY);
 	callback_args.status = 0;
@@ -86,23 +83,4 @@ static int	run_command(t_callback_parametors *callback_args,
 	if (callback_args->pipe->pids < 0)
 		return (GENERAL_ERR);
 	return (OK);
-}
-
-t_tokenlst	*shift_token_section(t_tokenlst *token_head_node, int index)
-{
-	int			i;
-	t_tokenlst	*node;
-
-	i = 0;
-	node = token_head_node;
-	while (i < index && node->u_data.str != NULL)
-	{
-		node = node->next;
-		if (ft_strcmp(node->u_data.str, "|") == 0)
-		{
-			i++;
-			node = node->next;
-		}
-	}
-	return (node);
 }
