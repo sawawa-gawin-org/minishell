@@ -42,6 +42,6 @@ void	init_readline(void);
 void	init_signal(void (*handler_for_sigint)(int), \
 	void (*handler_for_sigquit)(int));
 void	set_signal(int signum, void (*handler)(int), int flags);
-void	handler_normal(int signum);
+void	handler_for_outer_readline(int signum);
 
 #endif

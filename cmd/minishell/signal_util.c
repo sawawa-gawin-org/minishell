@@ -29,7 +29,7 @@ void	set_signal(int signum, void (*handler)(int), int flags)
 	sigaction(signum, &sa, NULL);
 }
 
-void	handler_normal(int signum)
+void	handler_for_outer_readline(int signum)
 {
 	g_signal = signum;
 }

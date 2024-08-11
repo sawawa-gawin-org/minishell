@@ -40,7 +40,7 @@ int	main(int argc, char **argv, char **envp)
 	if (env_lst == NULL)
 		return (1);
 	init_readline();
-	init_signal(handler_normal, SIG_IGN);
+	init_signal(handler_for_outer_readline, SIG_IGN);
 	while (CONTINUE)
 	{
 		status = main_loop(env_lst);
