@@ -6,27 +6,26 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/26 15:58:19 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/11 11:00:50 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-// static void	put_tokens_lst(t_blst *tokens_lst);
-
-/* 
-# Expansion
--> confirm `man bash` ("EXPANSION")
-
-Quote Removal
-	After the preceding expansions, all unquoted occurrences of the
-	characters \, ', and "  that did not result from one of the above
-	expansions are removed.
-*/
-
-int	expander(t_blst **tokens_lst, t_blst **env_lst)
+/**
+ * Expands tokens in the given list using the environment variables.
+ *
+ * @param tokens_lst A pointer to the list of tokens to be expanded.
+ * @param env_lst A pointer to the list of environment variables.
+ * @return The number of tokens expanded.
+ * @details confirm `man bash` ("EXPANSION")
+ * @note Quote Removal:	After the preceding expansions,
+ * all unquoted occurrences of the characters \, ', and "  that
+ * did not result from one of the above	expansions are removed.
+ */
+int	expander(t_blst **tokens_lst, t_blst *env_lst)
 {
-	if (!expand_env(tokens_lst, *env_lst))
+	if (!expand_env(tokens_lst, env_lst))
 		return (0);
 	return (1);
 }
