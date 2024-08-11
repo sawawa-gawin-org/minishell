@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/10 10:46:16 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/11 08:45:34 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	open_out_files(char *dist, t_pipex *pipex, int appendflag)
 		pipex->file_out_fd = open(
 				dist, O_CREAT | O_WRONLY, S_IREAD | S_IWRITE);
 	else if (dist && access(dist, F_OK) == 0 && appendflag == 0)
-		pipex->file_out_fd = open(dist, O_WRONLY);
+		pipex->file_out_fd = open(dist, O_WRONLY | O_TRUNC);
 	else if (dist && access(dist, F_OK) == -1 && appendflag)
 		pipex->file_out_fd = open(
 				dist, O_CREAT | O_WRONLY | O_APPEND, S_IREAD | S_IWRITE);
