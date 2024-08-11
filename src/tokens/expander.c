@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/11 11:00:50 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/11 11:53:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int	expander(t_blst **tokens_lst, t_blst *env_lst)
 {
 	if (!expand_env(tokens_lst, env_lst))
 		return (0);
+	printf("home:%s\n", getenv("HOME")); // uss this value for `~`
 	return (1);
 }
