@@ -12,54 +12,23 @@
 
 #include "minishell.h"
 
-static void	handler(int signum);
-static int	check_signum(void);
-
 void	init_signal(void)
 {
-	extern int	_rl_echo_control_chars;
-
-	_rl_echo_control_chars = 0;
-	rl_outstream = stderr;
-	rl_event_hook = check_signum;
-	set_signal(SIGINT);
-	ign_signal(SIGQUIT);
+	set_signal(SIGINT, handler_normal, 0);
+	set_signal(SIGQUIT, SIG_IGN, SA_RESTART);
 }
 
-void	set_signal(int signum)
+void	set_signal(int signum, void (*handler)(int), int flags)
 {
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
+	sa.sa_flags = flags;
 	sa.sa_handler = handler;
 	sigaction(signum, &sa, NULL);
 }
 
-void	ign_signal(int signum)
-{
-	struct sigaction	sa;
-
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = SIG_IGN;
-	sigaction(signum, &sa, NULL);
-}
-
-static void	handler(int signum)
+void	handler_normal(int signum)
 {
 	g_signal = signum;
-}
-
-static int	check_signum(void)
-{
-	if (g_signal == 0)
-		return (0);
-	else if (g_signal == SIGINT)
-	{
-		rl_replace_line("", 0);
-		rl_done = 1;
-		return (0);
-	}
-	return (0);
 }

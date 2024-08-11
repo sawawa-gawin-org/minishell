@@ -38,8 +38,9 @@ typedef struct s_sig
 int		add_history_wraper(
 			char *line, char *heredoc_gained_str);
 
+void	init_readline(void);
 void	init_signal(void);
-void	set_signal(int signum);
-void	ign_signal(int signum);
+void	set_signal(int signum, void (*handler)(int), int flags);
+void	handler_normal(int signum);
 
 #endif

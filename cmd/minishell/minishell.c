@@ -39,6 +39,7 @@ int	main(int argc, char **argv, char **envp)
 	env_lst = create_envlist(envp);
 	if (env_lst == NULL)
 		return (1);
+	init_readline();
 	init_signal();
 	while (CONTINUE)
 	{
