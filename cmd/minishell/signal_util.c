@@ -12,10 +12,11 @@
 
 #include "minishell.h"
 
-void	init_signal(void)
+void	init_signal(void (*handler_for_sigint)(int), \
+	void (*handler_for_sigquit)(int))
 {
-	set_signal(SIGINT, handler_normal, 0);
-	set_signal(SIGQUIT, SIG_IGN, SA_RESTART);
+	set_signal(SIGINT, handler_for_sigint, 0);
+	set_signal(SIGQUIT, handler_for_sigquit, 0);
 }
 
 void	set_signal(int signum, void (*handler)(int), int flags)
