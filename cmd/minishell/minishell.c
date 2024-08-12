@@ -39,9 +39,10 @@ int	main(int argc, char **argv, char **envp)
 	env_lst = create_envlist(envp);
 	if (env_lst == NULL)
 		return (1);
-	init_signal();
 	while (CONTINUE)
 	{
+		init_signal(handler_for_outer_readline, SIG_IGN);
+		init_rl_for_prompt();
 		status = main_loop(env_lst);
 		if (status == ERR)
 			break ;

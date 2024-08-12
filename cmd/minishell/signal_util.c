@@ -12,54 +12,34 @@
 
 #include "minishell.h"
 
-static void	handler(int signum);
-static int	check_signum(void);
-
-void	init_signal(void)
+void	init_signal(void (*handler_for_sigint)(int), \
+	void (*handler_for_sigquit)(int))
 {
-	extern int	_rl_echo_control_chars;
-
-	_rl_echo_control_chars = 0;
-	rl_outstream = stderr;
-	rl_event_hook = check_signum;
-	set_signal(SIGINT);
-	ign_signal(SIGQUIT);
+	set_signal(SIGINT, handler_for_sigint, 0);
+	set_signal(SIGQUIT, handler_for_sigquit, 0);
 }
 
-void	set_signal(int signum)
+void	set_signal(int signum, void (*handler)(int), int flags)
 {
 	struct sigaction	sa;
 
 	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = 0;
+	sa.sa_flags = flags;
 	sa.sa_handler = handler;
 	sigaction(signum, &sa, NULL);
 }
 
-void	ign_signal(int signum)
+void	handler_for_outer_readline(int signum)
 {
-	struct sigaction	sa;
-
-	sigemptyset(&sa.sa_mask);
-	sa.sa_flags = SA_RESTART;
-	sa.sa_handler = SIG_IGN;
-	sigaction(signum, &sa, NULL);
+	if (signum == SIGINT)
+		g_signal = SIGINT;
 }
 
-static void	handler(int signum)
+void	handler_for_heredoc_readline(int signum)
 {
-	g_signal = signum;
-}
-
-static int	check_signum(void)
-{
-	if (g_signal == 0)
-		return (0);
-	else if (g_signal == SIGINT)
+	if (signum == SIGINT)
 	{
-		rl_replace_line("", 0);
+		g_signal = SIGINT;
 		rl_done = 1;
-		return (0);
 	}
-	return (0);
 }
