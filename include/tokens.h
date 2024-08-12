@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/06/26 14:08:06 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/12 08:17:58 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int		cmp_syntax(void *d, void *n);
 int		parser(void **tokens_lst, void **env_lst);
 
 // expander.c
-int		expander(void **tokens_lst, void **env_lst);
+int		expander(void **tokens_lst, void *env_lst);
 
 #endif

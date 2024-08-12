@@ -6,52 +6,20 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/26 14:52:33 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/12 05:12:47 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-static int	update_token_str(t_blst **tokens_lst, t_blst *env_lst);
 static int	overwite_token_str(
 				t_token_data *token, char *buff, int now, int old);
 
-// Expandable token type
-// - VAL_FLAG
-// - DOUBLE_QUOTE_VAL_FLAG
-// - !HEREDOC_FLAG
-// - !HEREDOC_QUOTE_FLAG
-int	expand_env(t_blst **tokens_lst, t_blst *env_lst)
+int	expand_env_as_str(t_token_data	*tokendata, t_blst *env_lst)
 {
-	t_token_data	*data;
-	t_blst			*head;
-
-	data = (*tokens_lst)->u_data.token_data;
-	head = *tokens_lst;
-	while ((*tokens_lst)->u_data.token_data != NULL)
-	{
-		data = (*tokens_lst)->u_data.token_data;
-		if ((data->token_type == VAL_FLAG
-				|| data->token_type == DOUBLE_QUOTE_VAL_FLAG)
-			&& (data->sub_type != HEREDOC_FLAG
-				&& data->sub_type != HEREDOC_QUOTE_FLAG))
-		{
-			if (!update_token_str(tokens_lst, env_lst))
-				return (0);
-		}
-		*tokens_lst = (*tokens_lst)->next;
-	}
-	*tokens_lst = head;
-	return (1);
-}
-
-static int	update_token_str(t_blst **tokens_lst, t_blst *env_lst)
-{
-	t_token_data	*tokendata;
 	t_indexes		index;
 	char			*buff;
 
-	tokendata = (*tokens_lst)->u_data.token_data;
 	index.now = 0;
 	index.old = 0;
 	buff = (char *)ft_calloc(1, sizeof(char));

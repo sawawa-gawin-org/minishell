@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/03 07:24:21 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/12 05:13:52 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ void		purge_token_node(t_blst **lst);
 
 /* expander */
 // expander.c
-int			expander(t_blst **tokens_lst, t_blst **env_lst);
+int			expander(t_blst **tokens_lst, t_blst *env_lst);
 // expand_env.c
-int			expand_env(t_blst **tokens_lst, t_blst *env_lst);
+int			expand_env_as_str(t_token_data	*tokendata, t_blst *env_lst);
 // expand_util.c
 char		*add_val_to_str(
 				char *tokstr, char *str, t_indexes *index, t_blst *envlst);
