@@ -60,6 +60,10 @@ static char	*read_heredoc_lines(char *delimiter)
 	}
 	if (line != NULL)
 		free(line);
+	if (g_signal != 0)
+	{
+		g_signal = 0;
+	}
 	return (all_lines);
 }
 
