@@ -31,5 +31,15 @@ void	set_signal(int signum, void (*handler)(int), int flags)
 
 void	handler_for_outer_readline(int signum)
 {
-	g_signal = signum;
+	if (signum == SIGINT)
+		g_signal = SIGINT;
+}
+
+void	handler_for_heredoc_readline(int signum)
+{
+	if (signum == SIGINT)
+	{
+		g_signal = SIGINT;
+		rl_done = 1;
+	}
 }

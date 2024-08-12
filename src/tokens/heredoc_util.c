@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "tokens_int.h"
+#include "minishell.h"
 
 static char	*append_newline(char *history_str, char *line);
 static char	*read_heredoc_lines(char *delimiter);
@@ -21,6 +22,8 @@ int	set_heredoc_string_to_node(
 	char	*lines;
 	char	*new_token_str;
 
+	init_signal(handler_for_heredoc_readline, SIG_IGN);
+	init_rl_for_heredoc();
 	lines = read_heredoc_lines(delimiter);
 	if (lines == NULL)
 		return (ERR);
@@ -48,16 +51,15 @@ static char	*read_heredoc_lines(char *delimiter)
 		line = readline("> ");
 		if (line == NULL || g_signal != 0)
 			break ;
-		else if (ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
+		if (ft_strcmp(line, delimiter) == 0)
 			break ;
-		}
 		all_lines = append_newline(all_lines, line);
 		free(line);
 		if (all_lines == NULL)
 			break ;
 	}
+	if (line != NULL)
+		free(line);
 	return (all_lines);
 }
 
