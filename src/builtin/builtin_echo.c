@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 22:22:59 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/12 13:50:33 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/12 14:15:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,20 @@ int	builtin_echo(char **cmd, t_blst **envlst, int mode)
 	char	**put_strings;
 	int		status;
 	int		option;
-	int		i;
 
 	(void)envlst;
 	if (mode == IS_MAIN_PROCESS)
 		return (OK);
 	option = 0;
-	i = 0;
 	status = valid_option(cmd, &option, &put_strings);
 	if (status > 0)
 		return (status);
-	while (put_strings[i] != NULL)
+	while (*put_strings != NULL)
 	{
-		ft_putstr_fd(put_strings[i], STDOUT_FILENO);
-		i ++;
+		ft_putstr_fd(*put_strings, STDOUT_FILENO);
+		if (*(put_strings + 1) != NULL)
+			ft_putstr_fd(" ", STDOUT_FILENO);
+		put_strings ++;
 	}
 	if (option == 0)
 		ft_putstr_fd("\n", STDOUT_FILENO);
