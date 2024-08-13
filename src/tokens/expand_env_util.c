@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:15:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/26 14:52:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/13 13:23:32 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	get_val_len(char *str, int now)
 	int	i;
 
 	i = 0;
-	while (str[i + now] != '\0' && str[i + now] != ' ' && str[i + now] != '$')
+	while (str[i + now] != '\0' && str[i + now] != ' '
+		&& str[i + now] != '$' && str[i + now] != '=')
 	{
 		i++;
 	}
