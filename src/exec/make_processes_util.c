@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/10 10:37:29 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/13 11:36:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	run_command(t_callback_parametors *callback_args,
 	callback_args->pipe->pids = fork();
 	if (callback_args->pipe->pids == 0)
 		callback(callback_args);
-	if (ft_strcmp(cmd[0], "exit") == 0
+	if (cmd[0] != NULL && ft_strcmp(cmd[0], "exit") == 0
 		&& pipe_cnt - 1 == (size_t) param->pipe_list->u_data.pipe_data->index)
 		param->is_exit_called = 1;
 	if (callback_args->path != NULL)
