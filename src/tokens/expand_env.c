@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/12 05:12:47 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/14 13:24:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	overwite_token_str(
 				t_token_data *token, char *buff, int now, int old);
 
-int	expand_env_as_str(t_token_data	*tokendata, t_blst *env_lst)
+int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst)
 {
 	t_indexes		index;
 	char			*buff;
