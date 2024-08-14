@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 03:56:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/14 08:58:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/14 09:38:12 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int	call_builtin(char **cmd, t_blst **envlst, int mode)
 	return (CMD_NOT_FOUND);
 }
 
-
 /**
  * This is a core function which is sometimes used in other functions.
  * @brief Updates or creates an environment variable.
@@ -88,21 +87,18 @@ int	update_or_create_env(char *key, char *value, t_blst **envlst)
 	int		status;
 	char	*new_value;
 
-	new_value = ft_strdup(value);
-	if (new_value == NULL)
-		return (ERR);
 	target_node = (t_blst *)doub_lstsearch((void *)*envlst, key, cmp_key);
 	if (target_node->u_data.env_data == NULL)
 	{
-		status = add_shell_env(key, new_value, (void **)envlst);
+		status = add_shell_env(key, value, (void **)envlst);
 		if (status == ERR)
-		{
-			free(new_value);
 			return (ERR);
-		}
 	}
 	else
 	{
+		new_value = ft_strdup(value);
+		if (new_value == NULL)
+			return (ERR);
 		free(target_node->u_data.env_data->val);
 		target_node->u_data.env_data->val = new_value;
 	}
