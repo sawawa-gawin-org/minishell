@@ -6,11 +6,13 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 03:56:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/13 11:31:06 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/14 08:58:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_int.h"
+#include "env.h"
+#include "dbllst.h"
 
 /**
  * Checks if a command is a built-in command.
@@ -69,4 +71,40 @@ int	call_builtin(char **cmd, t_blst **envlst, int mode)
 	if (ft_strcmp(cmd[0], "exit") == 0)
 		return (builtin_exit(cmd, envlst, mode));
 	return (CMD_NOT_FOUND);
+}
+
+
+/**
+ * This is a core function which is sometimes used in other functions.
+ * @brief Updates or creates an environment variable.
+ * @param key The key of the environment variable.
+ * @param value The value of the environment variable.
+ * @param envlst A pointer to the list of environment variables.
+ * @return The status of the update or creation operation.
+ */
+int	update_or_create_env(char *key, char *value, t_blst **envlst)
+{
+	t_blst	*target_node;
+	int		status;
+	char	*new_value;
+
+	new_value = ft_strdup(value);
+	if (new_value == NULL)
+		return (ERR);
+	target_node = (t_blst *)doub_lstsearch((void *)*envlst, key, cmp_key);
+	if (target_node->u_data.env_data == NULL)
+	{
+		status = add_shell_env(key, new_value, (void **)envlst);
+		if (status == ERR)
+		{
+			free(new_value);
+			return (ERR);
+		}
+	}
+	else
+	{
+		free(target_node->u_data.env_data->val);
+		target_node->u_data.env_data->val = new_value;
+	}
+	return (OK);
 }

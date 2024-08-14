@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 02:43:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/07/21 10:41:41 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/14 09:14:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 #include "dbllst.h"
 #include "env.h"
 
-static int	valid_option(char **cmd);
+static int	valid_option(char **cmd, int *options, char ***name_words);
+static int	flag_parser(char *flag_str);
 
 /**
  * Executes the built-in export command.
@@ -35,101 +36,81 @@ static int	valid_option(char **cmd);
 int	builtin_export(char **cmd, t_blst **envlst, int mode)
 {
 	int		status;
+	int		options;
+	char	**name_words;
 
-	status = valid_option(cmd);
+	status = valid_option(cmd, &options, &name_words);
 	if (status > 0)
 		return (status);
-	if ((!cmd[1] || (ft_strcmp(cmd[1], "--") == 0 && !cmd[2])))
+	if (!name_words[0])
 		return (export_print(*envlst, mode));
-	return (export_env(cmd, envlst, mode));
-}
-
-static int	valid_option(char **cmd)
-{
-	if (!cmd[1])
-		return (0);
-	if (cmd[1][0] == '-')
-	{
-		if (cmd[1][1] == '\0')
-		{
-			export_identifier_err("-");
-			return (1);
-		}
-		if (cmd[1][1] != '-' || (cmd[1][1] == '-' && cmd[1][2] != '\0'))
-		{
-			export_option_err(cmd[1]);
-			return (2);
-		}
-	}
-	return (0);
-}
-
-int	valid_format_key(char *cmd)
-{
-	int	pos;
-
-	if (!cmd || cmd[0] == '\0' || ft_isdigit(cmd[0]))
-		return (-1);
-	pos = 0;
-	while (cmd[pos] != '\0')
-	{
-		if (!(ft_isalnum(cmd[pos]) || cmd[pos] == '_'))
-		{
-			if (pos != 0 && cmd[pos] == '=')
-				break ;
-			else
-				return (-1);
-		}
-		pos++;
-	}
-	return (pos);
+	return (export_env(name_words, envlst, mode));
 }
 
 /**
- * Retrieves the key-value pair from the given command string
- * at the specified position.
+ * @brief Validates the options and extracts the name words from the command.
  *
- * @param cmd The command string to extract the key-value pair from.
- * @param pos The position of the key-value pair in the command string.
- * @return A pointer to a string array containing the key-value pair.
+ * This function takes a command, options, and name_words as parameters and
+ * validates the options. It also extracts the name words from the command
+ * and stores them in the name_words array.
+ *
+ * @param cmd The command to validate options and extract name words from.
+ * @param options A pointer to an integer to store the validated options.
+ * However, this value is not used in this function.
+ * @param name_words A pointer to a pointer to store
+ * the extracted name words.
+ *
+ * @return Returns an integer indicating the success
+ * or failure of the operation.
  */
-char	**get_key_val(char *cmd, int pos)
+static int	valid_option(char **cmd, int *options, char ***name_words)
 {
-	char	**key_val;
+	int		flag_value;
 
-	key_val = (char **)ft_calloc(2, sizeof(char *));
-	if (key_val == NULL)
-		return (NULL);
-	key_val[0] = ft_substr(cmd, 0, pos);
-	if (key_val[0] == NULL)
+	*name_words = cmd + 1;
+	while (**name_words != NULL
+		&& ft_strncmp(**name_words, "-", 1) == 0)
 	{
-		free(key_val);
-		return (NULL);
+		if (ft_strcmp(**name_words, "--") == 0)
+		{
+			(*name_words)++;
+			break ;
+		}
+		flag_value = flag_parser(**name_words);
+		if (flag_value == ERR)
+			return (MISUSE_OF_SHELL_BUILTINS);
+		*options |= flag_value;
+		(*name_words)++;
 	}
-	if (cmd[pos] == '\0')
-		key_val[1] = ft_strdup("");
-	else
-		key_val[1] = ft_strdup(cmd + pos + 1);
-	if (key_val[1] == NULL)
-	{
-		free(key_val[0]);
-		free(key_val);
-		return (NULL);
-	}
-	return (key_val);
+	return (OK);
 }
 
-int	valid_identifier(char *cmd)
+/**
+ * @brief Parses the flag string.
+ *
+ * This function takes a flag string as input and parses it to determine the appropriate flag value.
+ *
+ * @param flag_str The flag string to be parsed.
+ * @return The parsed flag value.
+ * @note The flag value is not be used.
+ */
+static int	flag_parser(char *flag_str)
 {
-	int	i;
+	int		flag;
 
-	if (!cmd || !cmd[0])
-		return (-1);
-	if (ft_isdigit(cmd[0]))
-		return (-1);
-	i = -1;
-	while (cmd[++i] != '\0')
-		if (!(ft_isalnum(cmd[i]) || cmd[i] == '_'))
-			return (-1);
-	return (0);
+	flag_str ++;
+	flag = 0;
+	while (*flag_str)
+	{
+		if (*flag_str == 'n' || *flag_str == 'f'
+			|| *flag_str == 'p')
+			flag |= 1;
+		else
+		{
+			export_option_err(*flag_str);
+			return (ERR);
+		}
+		flag_str++;
+	}
+	return (flag);
 }
