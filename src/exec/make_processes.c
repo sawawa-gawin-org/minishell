@@ -16,6 +16,7 @@
 static int	init_pipeline(t_blst *pipe_node);
 static int	pipe_fds(int *out_fd, int *in_fd);
 static int	wait_processes(t_pipelst *pipe_node);
+static int	check_status(int status);
 
 int	make_processes(t_exec_parametors *param)
 {
@@ -103,5 +104,14 @@ static int	wait_processes(t_pipelst *pipe_node)
 	}
 	if (err != 0)
 		return (err);
-	return (WEXITSTATUS(status));
+	return (check_status(status));
+}
+
+static int	check_status(int status)
+{
+	if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSIGNALED(status))
+		return (WTERMSIG(status) + 128);
+	return (GENERAL_ERR);
 }
