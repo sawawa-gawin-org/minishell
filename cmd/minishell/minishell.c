@@ -104,7 +104,8 @@ static int	execute(char *line, void *env_lst, void *tokens_lst)
 			return (EXIT_CALLED);
 	}
 	else
-		status = 130;
+		status = g_signal + 128;
+	g_signal = 0;
 	if (add_exit_status_as_env(&env_lst, status))
 		return (ERR);
 	return (OK);
