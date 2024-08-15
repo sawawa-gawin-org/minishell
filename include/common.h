@@ -33,6 +33,7 @@ enum	e_STATUS_CODE
 	MISUSE_OF_SHELL_BUILTINS = 2,
 	CMD_CNT_EXECUTE = 126,
 	CMD_NOT_FOUND = 127,
+	ERR_SIGINT = 130,
 };
 
 typedef int		(*t_cmp_f)(void *, void *);

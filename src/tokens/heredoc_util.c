@@ -27,6 +27,12 @@ int	set_heredoc_string_to_node(
 	lines = read_heredoc_lines(delimiter);
 	if (lines == NULL)
 		return (ERR);
+	if (g_signal != 0)
+	{
+		if (lines != NULL)
+			free(lines);
+		return (ERR_SIGINT);
+	}
 	new_token_str = ft_strdup(lines);
 	if (new_token_str == NULL)
 	{
