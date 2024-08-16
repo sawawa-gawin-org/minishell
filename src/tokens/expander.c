@@ -6,13 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 08:37:40 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 08:51:12 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-static int	expand_env(t_blst **tokens_lst, t_blst *env_lst);
 static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes);
 static int	re_tokenize(t_blst **tokens_lst);
 static int	is_expandable_token_type(t_token_data *data);
@@ -27,24 +26,10 @@ static int	is_expandable_token_type(t_token_data *data);
  * @note Quote Removal:	After the preceding expansions,
  * all unquoted occurrences of the characters \, ', and "  that
  * did not result from one of the above	expansions are removed.
- */
-int	expander(t_blst **tokens_lst, t_blst *env_lst)
-{
-	if (expand_env(tokens_lst, env_lst))
-		return (ERR);
-	return (OK);
-}
-
-/**
- * Expands environment variables in the given token list.
- *
- * @param tokens_lst The list of tokens to expand.
- * @param env_lst The list of environment variables.
- * @return The number of expanded tokens.
- * @note expandable token type: VAL_FLAG, DOUBLE_QUOTE_VAL_FLAG,
+ * @note Expandable token type: VAL_FLAG, DOUBLE_QUOTE_VAL_FLAG,
  * !HEREDOC_FLAG, !HEREDOC_QUOTE_FLAG
  */
-static int	expand_env(t_blst **tokens_lst, t_blst *env_lst)
+int	expander(t_blst **tokens_lst, t_blst *env_lst)
 {
 	while ((*tokens_lst)->u_data.token_data != NULL)
 	{
