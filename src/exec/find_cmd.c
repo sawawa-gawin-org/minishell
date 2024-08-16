@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/07/01 06:48:13 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 10:03:31 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ static char	*cmd_is_accessable(char *path, char *cmd, int *status)
 	char	*full;
 
 	*status = 1;
+	if (cmd == NULL || ft_strlen(cmd) == 0
+		|| ft_strcmp(cmd, "..") == 0 || ft_strcmp(cmd, ".") == 0)
+	{
+		*status = CMD_NOT_FOUND;
+		return (NULL);
+	}
 	full = join_path_cmd(path, cmd);
 	if (full == NULL)
 		return (NULL);
