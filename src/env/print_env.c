@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:15:41 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 07:31:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 13:30:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void	print_env(t_blst *env_lst)
 			node = node->next;
 			continue ;
 		}
-		printf("%s=%s\n",
-			node->u_data.env_data->key, node->u_data.env_data->val);
+		if (ft_strcmp(node->u_data.env_data->val, "") != 0)
+			printf("%s=%s\n", node->u_data.env_data->key,
+				node->u_data.env_data->val);
 		node = node->next;
 	}
 	return ;
