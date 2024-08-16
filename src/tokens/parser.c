@@ -56,7 +56,7 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst)
 	if (concat_consecutive_tokens_node(tokens_lst))
 		return (ERR);
 	err = parse_heredoc(tokens_lst);
-	if (err != OK)
+	if (err == ERR)
 		return (ERR);
 	if (expander(tokens_lst, *env_lst))
 		return (ERR);
