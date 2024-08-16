@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 08:21:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 08:37:40 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	expand_env(t_blst **tokens_lst, t_blst *env_lst);
 static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes);
-static int	re_tokenize(t_blst **tokens_lst, char *replaced_str);
+static int	re_tokenize(t_blst **tokens_lst);
 static int	is_expandable_token_type(t_token_data *data);
 
 /**
@@ -52,7 +52,7 @@ static int	expand_env(t_blst **tokens_lst, t_blst *env_lst)
 		{
 			if (!expand_env_as_str((*tokens_lst)->u_data.token_data, env_lst))
 				return (ERR);
-			if (re_tokenize(tokens_lst, (*tokens_lst)->u_data.token_data->token_str))
+			if (re_tokenize(tokens_lst))
 				return (ERR);
 		}
 		(*tokens_lst) = (*tokens_lst)->next;
@@ -61,10 +61,12 @@ static int	expand_env(t_blst **tokens_lst, t_blst *env_lst)
 	return (OK);
 }
 
-static	int	re_tokenize(t_blst **tokens_lst, char *replaced_str)
+static	int	re_tokenize(t_blst **tokens_lst)
 {
 	t_blst	*updated_node;
+	char	*replaced_str;
 
+	replaced_str = (*tokens_lst)->u_data.token_data->token_str;
 	updated_node = tokenizer(&replaced_str);
 	if (updated_node == NULL)
 		return (ERR);
@@ -74,11 +76,11 @@ static	int	re_tokenize(t_blst **tokens_lst, char *replaced_str)
 
 static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes)
 {
-	t_blst *inject_tirminator;
-	t_blst *inject_last_node;
-	t_blst *left_connected_node;
-	t_blst *right_connected_node;
-	
+	t_blst	*inject_tirminator;
+	t_blst	*inject_last_node;
+	t_blst	*left_connected_node;
+	t_blst	*right_connected_node;
+
 	inject_tirminator = inject_nodes->prev;
 	purge_token_node(&inject_tirminator);
 	inject_last_node = inject_tirminator->prev;

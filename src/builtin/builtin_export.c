@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/15 02:43:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/14 09:14:39 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 08:34:33 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static int	valid_option(char **cmd, int *options, char ***name_words)
 /**
  * @brief Parses the flag string.
  *
- * This function takes a flag string as input and parses it to determine the appropriate flag value.
+ * This function takes a flag string as input and parses it
+ * to determine the appropriate flag value.
  *
  * @param flag_str The flag string to be parsed.
  * @return The parsed flag value.
