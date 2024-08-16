@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 08:51:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 09:35:03 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static	int	re_tokenize(t_blst **tokens_lst)
 	char	*replaced_str;
 
 	replaced_str = (*tokens_lst)->u_data.token_data->token_str;
+	if (ft_strcmp(replaced_str, "") == 0)
+		return (OK);
 	updated_node = tokenizer(&replaced_str);
 	if (updated_node == NULL)
 		return (ERR);
