@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 09:35:03 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 13:42:36 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,21 @@ static int	is_expandable_token_type(t_token_data *data);
  */
 int	expander(t_blst **tokens_lst, t_blst *env_lst)
 {
+	t_token_data	*data;
+
 	while ((*tokens_lst)->u_data.token_data != NULL)
 	{
-		if (is_expandable_token_type((*tokens_lst)->u_data.token_data))
+		data = (*tokens_lst)->u_data.token_data;
+		if (is_expandable_token_type(data))
 		{
-			if (!expand_env_as_str((*tokens_lst)->u_data.token_data, env_lst))
+			if (!expand_env_as_str(data, env_lst))
 				return (ERR);
+			if (data->token_type != DOUBLE_QUOTE_VAL_FLAG
+				&& ft_strcmp(data->token_str, "") == 0)
+			{
+				purge_token_node(tokens_lst);
+				continue ;
+			}
 			if (re_tokenize(tokens_lst))
 				return (ERR);
 		}
