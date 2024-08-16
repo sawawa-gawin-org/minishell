@@ -12,6 +12,7 @@
 
 #include "exec_int.h"
 #include "libft.h"
+#include "minishell.h"
 
 static int	init_pipeline(t_blst *pipe_node);
 static int	pipe_fds(int *out_fd, int *in_fd);
@@ -112,6 +113,11 @@ static int	check_status(int status)
 	if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_putstr_fd("Quit", 2);
+		ft_putstr_fd("\n", 2);
 		return (WTERMSIG(status) + 128);
+	}
 	return (GENERAL_ERR);
 }
