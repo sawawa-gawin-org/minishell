@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:15:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/14 09:17:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 13:12:30 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	export_env(char **cmd, t_blst **envlst, int mode)
 		return (OK);
 	while (*cmd != NULL)
 	{
+		if (ft_strcmp(*cmd, "") == 0)
+			return (export_identifier_err(*cmd));
 		equal = ft_strchr(*cmd, '=');
 		if (equal == NULL)
 		{
