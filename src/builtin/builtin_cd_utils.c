@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 03:36:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/14 08:20:02 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "dbllst.h"
 #include "env.h"
 #include "libft.h"
-
-static int	update_or_create_env(char *key, char *value, t_blst **envlst);
 
 char	*allocate_cwd_path(t_blst *envlst)
 {
@@ -55,33 +53,6 @@ int	update_pwd_and_oldpwd_env(char *old_pwd, char *new_pwd, t_blst **envlst)
 	if (status == OK)
 		status = update_or_create_env("PWD", new_pwd, envlst);
 	return (status);
-}
-
-static int	update_or_create_env(char *key, char *value, t_blst **envlst)
-{
-	t_blst	*target_node;
-	int		status;
-	char	*new_value;
-
-	new_value = ft_strdup(value);
-	if (new_value == NULL)
-		return (ERR);
-	target_node = (t_blst *)doub_lstsearch(*envlst, key, cmp_key);
-	if (target_node->u_data.env_data == NULL)
-	{
-		status = add_shell_env(key, new_value, (void **)envlst);
-		if (status == ERR)
-		{
-			free(new_value);
-			return (ERR);
-		}
-	}
-	else
-	{
-		free(target_node->u_data.env_data->val);
-		target_node->u_data.env_data->val = new_value;
-	}
-	return (OK);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/07 03:18:45 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/16 08:28:05 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 volatile sig_atomic_t	g_signal = 0;
 
 static int	main_loop(void *env_lst);
-static int	execute(char *line, void *env_lst, void *tokens_lst);
+static int	execute(char *line, void *env_lst, void **tokens_lst);
 static int	is_blank_str(char *str);
 
 int	main(int argc, char **argv, char **envp)
@@ -77,28 +77,28 @@ static int	main_loop(void *env_lst)
 		free(line);
 		return (ERR);
 	}
-	status = execute(line, env_lst, tokens_lst);
+	status = execute(line, env_lst, &tokens_lst);
 	free(line);
 	doub_lstdelall(&tokens_lst, free_token_data);
 	return (status);
 }
 
-static int	execute(char *line, void *env_lst, void *tokens_lst)
+static int	execute(char *line, void *env_lst, void **tokens_lst)
 {
 	int	status;
 
 	add_history(line);
-	if (!syntax_checker(tokens_lst, cmp_syntax))
+	if (!syntax_checker(*tokens_lst, cmp_syntax))
 	{
 		if (add_exit_status_as_env(&env_lst, 2))
 			return (ERR);
 		return (CONTINUE);
 	}
-	if (parser(&tokens_lst, &env_lst))
+	if (parser(tokens_lst, &env_lst))
 		return (ERR);
 	if (g_signal == 0)
 	{
-		if (exec_tokenslst_cmds(tokens_lst, &env_lst, &status))
+		if (exec_tokenslst_cmds(*tokens_lst, &env_lst, &status))
 			return (ERR);
 		if (status == EXIT_CALLED)
 			return (EXIT_CALLED);
@@ -106,6 +106,7 @@ static int	execute(char *line, void *env_lst, void *tokens_lst)
 	else
 		status = g_signal + 128;
 	g_signal = 0;
+
 	if (add_exit_status_as_env(&env_lst, status))
 		return (ERR);
 	return (OK);

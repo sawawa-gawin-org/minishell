@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/12 05:13:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/14 13:47:17 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 extern volatile sig_atomic_t	g_signal;
 
 // tokenizer.c
+void		*tokenizer(char **line);
 void		free_token_data(void *data);
 int			is_blank(int c);
 // tokenizer_util.c
