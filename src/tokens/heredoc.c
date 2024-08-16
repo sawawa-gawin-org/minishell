@@ -38,8 +38,8 @@ int	parse_heredoc(t_blst **tokens_lst)
 				return (ERR);
 			err = replace_delimiter_as_token(delim_str, &(now_node->next));
 			free(delim_str);
-			if (err == ERR)
-				return (ERR);
+			if (err == ERR || err == ERR_SIGINT)
+				return (err);
 			now_node = now_node->next;
 		}
 		now_node = now_node->next;

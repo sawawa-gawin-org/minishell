@@ -12,9 +12,11 @@
 
 #include "exec_int.h"
 #include "builtin.h"
+#include "minishell.h"
 
 static int	run_command(t_callback_parametors *callback_args,
 				t_exec_parametors *param, t_callback callback);
+static void	init_signal_by_pid(pid_t pid);
 
 /**
  * Executes a process using the given parameters.
@@ -72,6 +74,7 @@ static int	run_command(t_callback_parametors *callback_args,
 		callback_args->status = call_builtin(
 				cmd, (void **) param->env_lst, IS_MAIN_PROCESS);
 	callback_args->pipe->pids = fork();
+	init_signal_by_pid(callback_args->pipe->pids);
 	if (callback_args->pipe->pids == 0)
 		callback(callback_args);
 	if (cmd[0] != NULL && ft_strcmp(cmd[0], "exit") == 0
@@ -83,4 +86,12 @@ static int	run_command(t_callback_parametors *callback_args,
 	if (callback_args->pipe->pids < 0)
 		return (GENERAL_ERR);
 	return (OK);
+}
+
+static void	init_signal_by_pid(pid_t pid)
+{
+	if (pid == 0)
+		init_signal(SIG_DFL, SIG_DFL);
+	else
+		init_signal(SIG_IGN, SIG_IGN);
 }

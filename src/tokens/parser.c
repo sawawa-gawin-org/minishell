@@ -54,7 +54,7 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst)
 	delete_blank(tokens_lst);
 	delete_quote(tokens_lst);
 	err = parse_heredoc(tokens_lst);
-	if (err != OK)
+	if (err == ERR)
 		return (ERR);
 	if (!expander(tokens_lst, *env_lst))
 		return (ERR);
