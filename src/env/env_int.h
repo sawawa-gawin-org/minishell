@@ -16,6 +16,9 @@
 # define IS_EXPORTED 1
 # define NOT_EXPORTED 0
 
+# define SHLVL_MAX 1000
+# define SHLVL_MIN 0
+
 # include "common.h"
 # include "libft.h"
 
@@ -32,5 +35,8 @@ int			cmp_key(void *data, void *query_pt);
 // convert_envlst.c
 char		**convert_envlst_to_arr(t_blst *env_lst);
 void		free_environment_array(char **env);
+
+// update_shlvl.c
+int			update_shlvl(void **envlst);
 
 #endif

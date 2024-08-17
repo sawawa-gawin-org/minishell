@@ -25,6 +25,7 @@
 
 volatile sig_atomic_t	g_signal = 0;
 
+static void	*init_envlst(char **envp);
 static int	main_loop(void *env_lst);
 static int	execute(char *line, void *env_lst, void *tokens_lst);
 static int	is_blank_str(char *str);
@@ -36,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	env_lst = create_envlist(envp);
+	env_lst = init_envlst(envp);
 	if (env_lst == NULL)
 		return (1);
 	while (CONTINUE)
@@ -53,6 +54,21 @@ int	main(int argc, char **argv, char **envp)
 	}
 	doub_lstdelall(&env_lst, free_env_data);
 	return (OK);
+}
+
+static void	*init_envlst(char **envp)
+{
+	void	*env_lst;
+
+	env_lst = create_envlist(envp);
+	if (env_lst == NULL)
+		return (NULL);
+	if (update_shlvl(&env_lst))
+	{
+		doub_lstdelall(&env_lst, free_env_data);
+		return (NULL);
+	}
+	return (env_lst);
 }
 
 static int	main_loop(void *env_lst)
