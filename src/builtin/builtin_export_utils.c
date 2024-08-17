@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:15:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/17 17:19:28 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 18:06:44 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,8 @@ int	export_env(char **cmd, t_blst **envlst, int mode)
 static int	identify_key_value(
 				char *cmd, char *equal, char **key, char **value)
 {
-	size_t	len;
-
-	len = ft_strlen(cmd);
 	if (equal == NULL)
-		*value = cmd + len;
+		*value = NULL;
 	else
 		*value = equal + 1;
 	*key = cmd;
@@ -91,18 +88,19 @@ static void	print_each_env(char *env)
 	if (ft_strncmp(env, "_=", 2) == 0)
 		return ;
 	equal = ft_strchr(env, '=');
+	if (equal == NULL)
+	{
+		ft_putstr_fd("declare -x ", 1);
+		ft_putendl_fd(env, 1);
+		return ;
+	}
 	value = equal + 1;
 	key = env;
 	*equal = '\0';
 	ft_putstr_fd("declare -x ", 1);
 	ft_putstr_fd(key, 1);
-	if (value[0] != '\0')
-	{
-		ft_putstr_fd("=\"", 1);
-		ft_putstr_fd(value, 1);
-		ft_putendl_fd("\"", 1);
-	}
-	else
-		ft_putendl_fd("", 1);
+	ft_putstr_fd("=\"", 1);
+	ft_putstr_fd(value, 1);
+	ft_putendl_fd("\"", 1);
 	return ;
 }

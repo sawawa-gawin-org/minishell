@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/16 03:56:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/14 09:38:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 17:32:28 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	update_or_create_env(char *key, char *value, t_blst **envlst)
 		if (status == ERR)
 			return (ERR);
 	}
-	else
+	else if (value != NULL)
 	{
 		new_value = ft_strdup(value);
 		if (new_value == NULL)
