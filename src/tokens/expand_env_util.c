@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:15:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/13 13:23:32 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 18:31:06 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,22 +71,21 @@ int	get_val_len(char *str, int now)
 // get the env value where `val_name == env_lst->u_data.env_data->key`
 static char	*get_env_for_key(char *val_name, t_blst *env_lst)
 {
-	t_blst		*tmp;
 	t_env_data	*data;
 	char		*ret;
 
-	tmp = env_lst;
-	while (tmp->u_data.env_data != NULL)
+	while (env_lst->u_data.env_data != NULL)
 	{
-		data = tmp->u_data.env_data;
-		if (ft_strcmp(val_name, data->key) == 0)
+		data = env_lst->u_data.env_data;
+		if (ft_strcmp(val_name, data->key) == 0
+			&& data->val != NULL)
 		{
 			ret = ft_strdup(data->val);
 			if (ret == NULL)
 				return (NULL);
 			return (ret);
 		}
-		tmp = tmp->next;
+		env_lst = env_lst->next;
 	}
 	ret = ft_strdup("");
 	if (ret == NULL)
