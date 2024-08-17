@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:26:55 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 02:59:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 17:25:19 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char		*strjoin_with_sep(char *str1, char *str2, char sep);
 int			cmp_key(void *data, void *query_pt);
 
 // convert_envlst.c
-char		**convert_envlst_to_arr(t_blst *env_lst);
+char		**create_env_arr_from_lst(t_blst *env_lst, int is_val_is_nullable);
 void		free_environment_array(char **env);
 
 // update_shlvl.c

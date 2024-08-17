@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:03:56 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/17 15:42:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 17:21:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,19 @@
 static void	free_until_index(char **result, size_t index);
 
 /**
- * Converts a linked list of environment variables to an array.
+ * @brief Create an array of environment variables from a linked list.
+ *
+ * This function takes a linked list of environment variables and converts
+ * it into an array of strings. Each string in the array represents
+ * an environment variable in the format "name=value".
+ * The resulting array is null-terminated.
  *
  * @param env_lst The linked list of environment variables.
- * @return The array representation of the environment variables.
+ * @param is_val_is_nullable Flag indicating whether the value of
+ * an environment variable can be nullable.
+ * @return The array of environment variables.
  */
-char	**convert_envlst_to_arr(t_blst *env_lst)
+char	**create_env_arr_from_lst(t_blst *env_lst, int is_val_is_nullable)
 {
 	char	**env_arr;
 	char	*key;
@@ -35,7 +42,7 @@ char	**convert_envlst_to_arr(t_blst *env_lst)
 	{
 		key = env_lst->u_data.env_data->key;
 		val = env_lst->u_data.env_data->val;
-		if (ft_strcmp(key, "?") != 0 && val != NULL)
+		if (ft_strcmp(key, "?") != 0 && (val != NULL || is_val_is_nullable))
 		{
 			env_arr[i] = strjoin_with_sep(key, val, '=');
 			if (env_arr[i] == NULL)

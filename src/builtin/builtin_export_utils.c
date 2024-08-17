@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:15:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/17 15:48:09 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 17:19:28 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	export_print(t_blst *envlst, int mode)
 
 	if (mode == IS_MAIN_PROCESS)
 		return (OK);
-	env = convert_envlst_to_arr(envlst);
+	env = create_env_arr_from_lst(envlst, 1);
 	if (env == NULL)
 		return (ERR_ALLOCATE_MEMORY);
 	i = 0;

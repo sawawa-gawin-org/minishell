@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 05:24:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/20 06:50:28 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 16:49:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	exec_tokenslst_cmds(t_blst *tokens_lst, t_blst **env_lst, int *status)
 	void	*converted_lst;
 	char	**env;
 
-	env = convert_envlst_to_arr(*env_lst);
+	env = create_env_arr_from_lst(*env_lst, 0);
 	if (env == NULL)
 		return (ERR);
 	converted_lst = doub_lstdup((void *)tokens_lst, ret_token_str, NULL);
