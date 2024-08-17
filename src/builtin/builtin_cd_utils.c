@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/14 08:20:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 13:49:52 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*allocate_cwd_path(t_blst *envlst)
 
 	key = "PWD";
 	target_node = (t_blst *)doub_lstsearch(envlst, key, cmp_key);
-	if (target_node->u_data.env_data == NULL)
+	if (target_node->u_data.env_data == NULL
+		|| target_node->u_data.env_data->val == NULL)
 	{
 		cwd_path = getcwd(NULL, 0);
 		if (cwd_path == NULL)
@@ -72,8 +73,14 @@ int	get_home_path(char **path, t_blst *envlst)
 	t_blst	*target_node;
 
 	target_node = (t_blst *)doub_lstsearch(envlst, "HOME", cmp_key);
-	if (target_node->u_data.env_data == NULL)
+	if (target_node->u_data.env_data == NULL
+		|| target_node->u_data.env_data->val == NULL)
 		return (cd_home_not_set_err());
-	*path = target_node->u_data.env_data->val;
+	if (ft_strcmp(target_node->u_data.env_data->val, "") == 0)
+		*path = getenv("HOME");
+	else
+		*path = target_node->u_data.env_data->val;
+	if (*path == NULL)
+		return (cd_home_not_set_err());
 	return (OK);
 }

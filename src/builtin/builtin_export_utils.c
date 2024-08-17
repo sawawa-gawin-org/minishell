@@ -58,7 +58,6 @@ static int	identify_key_value(
 	return (OK);
 }
 
-static void	print_each_env(char *env);
 
 int	export_print(t_blst *envlst, int mode)
 {

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:23:57 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 07:23:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 06:06:33 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ t_env_data	*new_env_data(char *str, int flag)
 	t_env_data	*ret;
 	size_t		len;
 
-	ret = (t_env_data *)malloc(sizeof(t_env_data));
+	ret = (t_env_data *)ft_calloc(sizeof(t_env_data), 1);
 	if (ret == NULL)
 		return (NULL);
 	len = strlen_eq(str);
