@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 07:15:41 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/16 13:30:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 14:42:13 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_env(t_blst *env_lst)
 			node = node->next;
 			continue ;
 		}
-		if (ft_strcmp(node->u_data.env_data->val, "") != 0)
+		if (node->u_data.env_data->val != NULL)
 			printf("%s=%s\n", node->u_data.env_data->key,
 				node->u_data.env_data->val);
 		node = node->next;
