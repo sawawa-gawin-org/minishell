@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:03:56 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 02:59:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 15:42:51 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,28 +25,27 @@ static void	free_until_index(char **result, size_t index);
 char	**convert_envlst_to_arr(t_blst *env_lst)
 {
 	char	**env_arr;
-	char	*keyvalue;
+	char	*key;
+	char	*val;
 	size_t	i;
 
 	env_arr = (char **) ft_calloc(doub_lstcnt(env_lst) + 1, sizeof(char *));
 	i = 0;
 	while (env_lst->u_data.env_data != NULL)
 	{
-		if (!ft_strcmp(env_lst->u_data.env_data->key, "?"))
+		key = env_lst->u_data.env_data->key;
+		val = env_lst->u_data.env_data->val;
+		if (ft_strcmp(key, "?") != 0 && val != NULL)
 		{
-			env_lst = env_lst->next;
-			continue ;
+			env_arr[i] = strjoin_with_sep(key, val, '=');
+			if (env_arr[i] == NULL)
+			{
+				free_until_index(env_arr, i);
+				return (NULL);
+			}
+			i ++;
 		}
-		keyvalue = strjoin_with_sep(env_lst->u_data.env_data->key,
-				env_lst->u_data.env_data->val, '=');
-		if (keyvalue == NULL)
-		{
-			free_until_index(env_arr, i);
-			return (NULL);
-		}
-		env_arr[i] = keyvalue;
 		env_lst = env_lst->next;
-		i ++;
 	}
 	return (env_arr);
 }
