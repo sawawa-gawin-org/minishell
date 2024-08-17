@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:15:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/16 13:27:41 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 15:48:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	identify_key_value(
 		*equal = '\0';
 	return (OK);
 }
-
 
 int	export_print(t_blst *envlst, int mode)
 {
