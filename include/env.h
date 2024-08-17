@@ -32,4 +32,7 @@ void	print_env(void *env_lst);
 // sort_env.c
 void	qsort_env(char **env, int low, int high);
 
+// update_shlvl.c
+int		update_shlvl(void **envlst);
+
 #endif
