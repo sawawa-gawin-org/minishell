@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/21 07:23:57 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 07:23:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 17:54:51 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include "dbllst.h"
 #include "libft.h"
 
-static size_t		strlen_eq(char *str);
 static	t_blst		*new_env_node(char *str, int flag);
+static void			*escape_new_env_data(t_env_data	*ret);
 
 /**
  * Create env_list from the environment variables array.
@@ -70,37 +70,32 @@ static	t_blst	*new_env_node(char *str, int flag)
 t_env_data	*new_env_data(char *str, int flag)
 {
 	t_env_data	*ret;
-	size_t		len;
+	char		*equal;
 
-	ret = (t_env_data *)malloc(sizeof(t_env_data));
+	ret = (t_env_data *)ft_calloc(sizeof(t_env_data), 1);
 	if (ret == NULL)
 		return (NULL);
-	len = strlen_eq(str);
 	ret->exported = flag;
-	ret->key = ft_substr(str, 0, len);
+	equal = ft_strchr(str, '=');
+	if (equal == NULL)
+		ret->val = NULL;
+	else
+	{
+		ret->val = ft_strdup(equal + 1);
+		if (ret->val == NULL)
+			return (escape_new_env_data(ret));
+		*equal = '\0';
+	}
+	ret->key = ft_strdup(str);
 	if (ret->key == NULL)
-	{
-		free(ret);
-		return (NULL);
-	}
-	ret->val = ft_substr(str, len + 1, ft_strlen(str) - (len + 1));
-	if (ret->val == NULL)
-	{
-		free(ret->key);
-		free(ret);
-		return (NULL);
-	}
+		return (escape_new_env_data(ret));
 	return (ret);
 }
 
-static size_t	strlen_eq(char *str)
+static void	*escape_new_env_data(t_env_data	*ret)
 {
-	size_t	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '=')
-		i++;
-	return (i);
+	free_env_data(ret);
+	return (NULL);
 }
 
 void	free_env_data(void *data)

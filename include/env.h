@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 06:27:17 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 03:01:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 17:21:31 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*create_envlist(char **env);
 void	free_env_data(void *data);
 
 // convert_envlst.c
-char	**convert_envlst_to_arr(void *env_lst);
+char	**create_env_arr_from_lst(void *env_lst, int is_val_is_nullable);
 void	free_environment_array(char **env);
 
 // add_shell_env.c

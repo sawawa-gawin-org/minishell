@@ -49,7 +49,8 @@ static int	print_pwd(t_blst *envlst)
 
 	key = "PWD";
 	target_node = (t_blst *)doub_lstsearch(envlst, key, cmp_key);
-	if (target_node->u_data.env_data == NULL)
+	if (target_node->u_data.env_data == NULL
+		|| target_node->u_data.env_data->val == NULL)
 		return (get_cwd_from_cmd());
 	printf("%s\n", target_node->u_data.env_data->val);
 	return (OK);

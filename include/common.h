@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/08/14 07:33:21 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 15:46:55 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,6 @@ typedef struct s_token_data
 	t_tokens	sub_type;
 	char		*token_str;
 }			t_token_data;
-
-typedef struct s_shval_data
-{
-	char	*key;
-	char	*val;
-	int		exported;
-}			t_shval_data;
 
 typedef struct s_env_data
 {

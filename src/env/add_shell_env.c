@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 07:20:08 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 03:36:22 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 17:17:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ char	*strjoin_with_sep(char *str1, char *str2, char sep)
 	size_t	str1_len;
 	size_t	str2_len;
 
+	if (str1 == NULL && str2 == NULL)
+		return (NULL);
+	else if (str1 == NULL && str2 != NULL)
+		return (ft_strdup(str2));
+	else if (str1 != NULL && str2 == NULL)
+		return (ft_strdup(str1));
 	str1_len = ft_strlen(str1);
 	str2_len = ft_strlen(str2);
 	ret = (char *)malloc(sizeof(char) * (str1_len + str2_len + 2));

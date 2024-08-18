@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 06:35:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/30 06:02:32 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/17 17:22:26 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 #include "libft.h"
 
 #include <stdio.h>
-
-void	end(void)__attribute__((destructor));
-
-void	end(void)
-{
-	system("leaks env.out");
-}
 
 void	print_env_arr(char **env);
 
@@ -32,8 +25,31 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	(void)envp;
+
+	char *a;
+
+	a = strjoin_with_sep("key", "value", '=');
+	printf("%s\n", a);
+	free(a);
+	
+	a = strjoin_with_sep("key", NULL, '=');
+	printf("%s\n", a);
+	free(a);
+
+	a = strjoin_with_sep(NULL, "value", '=');
+	printf("%s\n", a);
+	free(a);
+
+	a = strjoin_with_sep(NULL, NULL, '=');
+	if (a == NULL)
+		printf("NULL\n");
+	else
+		printf("%s\n", a);
+	free(a);
+
 	env_lst = create_envlist(envp);
-	env_arr = convert_envlst_to_arr(env_lst);
+	env_arr = create_env_arr_from_lst(env_lst, 0);
 	print_env_arr(env_arr);
 	printf("-------------------\n");
 	print_env(env_lst);
