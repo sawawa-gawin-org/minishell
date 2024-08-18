@@ -52,6 +52,8 @@ int	main(int argc, char **argv, char **envp)
 		else if (status == CONTINUE)
 			continue ;
 	}
+	if (status == ERR && errno == 0)
+		ft_putstr_fd("\nexit\n", 2);
 	doub_lstdelall(&env_lst, free_env_data);
 	return (OK);
 }
