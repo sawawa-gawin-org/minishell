@@ -22,6 +22,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <termios.h>
+# include <errno.h>
 
 extern volatile sig_atomic_t	g_signal;
 
