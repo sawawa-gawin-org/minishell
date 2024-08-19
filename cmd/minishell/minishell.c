@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 08:28:05 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/19 04:41:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,6 @@ static int	execute(char *line, void *env_lst, void **tokens_lst)
 	else
 		status = g_signal + 128;
 	g_signal = 0;
-
 	if (add_exit_status_as_env(&env_lst, status))
 		return (ERR);
 	return (OK);
