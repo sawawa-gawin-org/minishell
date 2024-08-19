@@ -124,7 +124,7 @@ int		cd_move_err(char *path);
 int		export_option_err(char flag_char);
 int		export_identifier_err(char *str);
 
-int		env_err(void);
+int		env_err(char *cmd);
 
 int		pwd_err(char *str);
 

@@ -45,8 +45,9 @@ static int	valid_option(char **cmd)
 {
 	if (cmd[1] != NULL)
 	{
-		env_err();
-		return (MISUSE_OF_SHELL_BUILTINS);
+		if (ft_strcmp(cmd[1], "--") == 0)
+			return (OK);
+		return (env_err(cmd[1]));
 	}
 	return (OK);
 }

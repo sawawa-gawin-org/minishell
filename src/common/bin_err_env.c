@@ -12,10 +12,11 @@
 
 #include "common.h"
 
-int	env_err(void)
+int	env_err(char *cmd)
 {
 	ft_putstr_fd(MSG_PREFIX, 2);
 	ft_putstr_fd("env: ", 2);
-	ft_putstr_fd("option is undefined\n", 2);
-	return (GENERAL_ERR);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": options and arguments are not allowed\n", 2);
+	return (MISUSE_OF_SHELL_BUILTINS);
 }
