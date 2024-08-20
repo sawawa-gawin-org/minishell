@@ -61,7 +61,10 @@ char			**parse_cmd(t_tokenlst *token_list, t_pipex *pipe);
 char			**convert_tokenlst_to_char_array(
 					t_tokenlst *section_start_node);
 char			*find_cmd(char *path, char **env, int *status);
-void			parse_redirects(t_tokenlst *now_node, t_pipex *pipe);
+int				parse_redirects(t_tokenlst *now_node, t_pipex *pipe);
+int				open_existing_file_for_write(char *dist, int appendflag);
+int				open_file_for_read(char *dist);
+
 void			do_first_process(t_callback_parametors *params);
 void			do_middle_process(t_callback_parametors *params);
 void			do_last_process(t_callback_parametors *params);

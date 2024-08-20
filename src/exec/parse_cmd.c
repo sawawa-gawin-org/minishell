@@ -24,7 +24,8 @@ char	**parse_cmd(t_tokenlst *token_list, t_pipex *pipe)
 	t_tokenlst	*start_node;
 
 	start_node = shift_token_section(token_list, pipe->index);
-	parse_redirects(start_node, pipe);
+	if (parse_redirects(start_node, pipe) != OK)
+		return (NULL);
 	cmd = convert_tokenlst_to_char_array(start_node);
 	if (cmd == NULL)
 		return (NULL);
