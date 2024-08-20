@@ -34,7 +34,7 @@ int	make_process(t_exec_parametors *param, t_callback callback)
 	callback_args.pipe = param->pipe_list->u_data.pipe_data;
 	callback_args.cmd = parse_cmd(param->token_list, callback_args.pipe);
 	if (callback_args.cmd == NULL)
-		return (ERR_ALLOCATE_MEMORY);
+		return (GENERAL_ERR);
 	callback_args.status = 0;
 	callback_args.path = NULL;
 	callback_args.env = param->env;
