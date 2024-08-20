@@ -66,7 +66,7 @@ static int	open_in_files(char *dist, t_pipex *pipex, int heredocflag)
 	int	fd;
 
 	if (dist && heredocflag == 0)
-		pipex->file_out_fd = open_file_for_read(dist);
+		pipex->file_in_fd = open_file_for_read(dist);
 	else if (dist && heredocflag)
 	{
 		fd = open_and_send_string_to_fd(dist);
@@ -74,7 +74,6 @@ static int	open_in_files(char *dist, t_pipex *pipex, int heredocflag)
 	}
 	if (pipex->file_in_fd == -1)
 	{
-		close(pipex->file_in_fd);
 		close(pipex->file_out_fd);
 		return (ERR);
 	}
@@ -96,7 +95,6 @@ static int	open_out_files(char *dist, t_pipex *pipex, int appendflag)
 	if (pipex->file_out_fd == -1)
 	{
 		close(pipex->file_in_fd);
-		close(pipex->file_out_fd);
 		return (ERR);
 	}
 	return (OK);
