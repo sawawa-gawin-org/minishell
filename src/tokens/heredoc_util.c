@@ -55,6 +55,8 @@ static char	*read_heredoc_lines(char *delimiter)
 	while (1)
 	{
 		line = readline("> ");
+		if (line == NULL && g_signal == 0)
+			ft_putstr_fd("\n", 2);
 		if (line == NULL || g_signal != 0)
 			break ;
 		if (ft_strcmp(line, delimiter) == 0)
@@ -83,4 +85,30 @@ static char	*append_newline(char *all_line, char *line)
 	if (ret_with_nl == NULL)
 		return (NULL);
 	return (ret_with_nl);
+}
+
+void	update_token_str_data(
+				t_token_data *target_data, char *new_token_str)
+{
+	int		type;	
+
+	type = is_flag(new_token_str, target_data->token_type);
+	free(target_data->token_str);
+	target_data->token_str = new_token_str;
+	target_data->token_type = type;
+}
+
+//data->token_typeとheredoc_strから、"$VAL"か'VAL'か"VAL"かを判断して、FLAGを割り当てる
+// Need fix
+int	is_flag(char *heredoc_str, int type) // Check later
+{
+	if (type == SINGLE_QUOTE_FLAG)
+		return (SINGLE_QUOTE_FLAG);
+	else
+	{
+		if (is_val(heredoc_str))
+			return (DOUBLE_QUOTE_VAL_FLAG);
+		else
+			return (DOUBLE_QUOTE_FLAG);
+	}
 }
