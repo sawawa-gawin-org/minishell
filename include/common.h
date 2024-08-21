@@ -139,4 +139,8 @@ int		cmdnotexecutable_error(char *cmd);
 int		syntax_unexpected_error(char *token);
 int		syntax_unclose_quote_error(void);
 
+int		is_a_directory_error(char *filepath);
+int		permission_denied_error(char *filepath);
+int		no_such_file_or_directory_error(char *filepath);
+
 #endif

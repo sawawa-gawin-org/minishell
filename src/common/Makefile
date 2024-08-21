@@ -13,6 +13,7 @@ SRCS :=
 SRCS += err_cmd.c
 SRCS += err_syntax.c
 SRCS += err_malloc.c
+SRCS += err_file.c
 SRCS += bin_err_export.c
 SRCS += bin_err_env.c
 SRCS += bin_err_pwd.c
