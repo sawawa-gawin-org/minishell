@@ -120,6 +120,7 @@ int		cd_argc_err(void);
 int		cd_home_not_set_err(void);
 int		cd_option_err(char *cmd);
 int		cd_move_err(char *path);
+int		cd_cwd_error(void);
 
 int		export_option_err(char flag_char);
 int		export_identifier_err(char *str);

@@ -20,7 +20,6 @@ static int	normalize_path(
 static int	valid_option(
 				char **cmd, char **path, int *options, t_blst *envlst);
 static int	flag_parser(char *flag_str);
-static void	free_all_params(t_cd_path_routing *param);
 
 /**
  * @brief Executes the built-in command "cd".
@@ -38,6 +37,7 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 	int					status;
 	char				*path;
 	int					options;
+	int					err;
 
 	if (mode == IS_CHILD_PROCESS)
 		return (OK);
@@ -46,12 +46,9 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 		return (status);
 	if (normalize_path(path, *envlst, &routing) > 0)
 		return (ERR_ALLOCATE_MEMORY);
-	if (chdir(routing.dist) == -1)
-	{
-		cd_move_err(path);
-		free_all_params(&routing);
-		return (GENERAL_ERR);
-	}
+	err = cd_check_err(path, &routing);
+	if (err == ERR_ALLOCATE_MEMORY || err == GENERAL_ERR)
+		return (err);
 	status = update_pwd_and_oldpwd_env(routing.src, routing.dist, envlst);
 	free_all_params(&routing);
 	if (status != OK)
@@ -143,7 +140,7 @@ static int	flag_parser(char *flag_str)
 	return (flag);
 }
 
-static void	free_all_params(t_cd_path_routing *param)
+void	free_all_params(t_cd_path_routing *param)
 {
 	if (param->src != NULL)
 		free(param->src);
