@@ -15,6 +15,8 @@
 #include "env.h"
 #include "libft.h"
 
+static int	cwd_check(char *path, t_cd_path_routing *routing);
+
 char	*allocate_cwd_path(t_blst *envlst)
 {
 	t_blst	*target_node;
@@ -82,5 +84,51 @@ int	get_home_path(char **path, t_blst *envlst)
 		*path = target_node->u_data.env_data->val;
 	if (*path == NULL)
 		return (cd_home_not_set_err());
+	return (OK);
+}
+
+int	cd_check_err(char *path, t_cd_path_routing *routing)
+{
+	int	err;
+
+	if (chdir(routing->dist) == -1)
+	{
+		err = cwd_check(path, routing);
+		if (err == ERR_ALLOCATE_MEMORY)
+			return (ERR_ALLOCATE_MEMORY);
+		else if (err == OK)
+		{
+			cd_move_err(path);
+			free_all_params(routing);
+			return (GENERAL_ERR);
+		}
+	}
+	return (OK);
+}
+
+static int	cwd_check(char *path, t_cd_path_routing *routing)
+{
+	char	*cwd;
+	char	*tmp;
+
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+	{
+		cd_cwd_error();
+		tmp = ft_strjoin(routing->src, "/");
+		if (tmp == NULL)
+			return (ERR_ALLOCATE_MEMORY);
+		free(routing->dist);
+		routing->dist = ft_strjoin(tmp, path);
+		if (routing->dist == NULL)
+		{
+			free(tmp);
+			return (ERR_ALLOCATE_MEMORY);
+		}
+		free(tmp);
+		free(cwd);
+		return (ERR);
+	}
+	free(cwd);
 	return (OK);
 }

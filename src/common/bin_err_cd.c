@@ -45,3 +45,13 @@ int	cd_move_err(char *path)
 	ft_putstr_fd(": No such file or directory\n", 2);
 	return (GENERAL_ERR);
 }
+
+int	cd_cwd_error(void)
+{
+	ft_putstr_fd("cd: ", 2);
+	ft_putstr_fd("error retrieving current directory: ", 2);
+	ft_putstr_fd("getcwd: ", 2);
+	ft_putstr_fd("cannot access parent directories: ", 2);
+	ft_putstr_fd("No such file or directory\n", 2);
+	return (GENERAL_ERR);
+}

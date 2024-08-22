@@ -38,11 +38,13 @@ int		update_or_create_env(char *key, char *value, t_blst **envlst);
 
 // builtin_cd.c
 int		builtin_cd(char **cmd, t_blst **envlst, int mode);
+void	free_all_params(t_cd_path_routing *param);
 // builtin_cd_utils.c
 char	*allocate_cwd_path(t_blst *envlst);
 int		update_pwd_and_oldpwd_env(
 			char *old_pwd, char *new_pwd, t_blst **envlst);
 int		get_home_path(char **path, t_blst *envlst);
+int		cd_check_err(char *path, t_cd_path_routing *routing);
 // builtin_cd_path_utils.c
 char	*path_resolving(char *abspath);
 
