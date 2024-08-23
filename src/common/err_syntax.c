@@ -45,3 +45,12 @@ int	syntax_unclose_quote_error(void)
 		perror("write");
 	return (ERR);
 }
+
+int	branching_syntax_err_by_flag(int flag)
+{
+	if (flag & TUBE_FLAG)
+		return (syntax_unexpected_error("|"));
+	else
+		return (syntax_unexpected_error("newline"));
+	return (ERR);
+}
