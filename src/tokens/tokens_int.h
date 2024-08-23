@@ -60,6 +60,9 @@ void		purge_token_node(t_blst **lst);
 /* expander */
 // expander.c
 int			expander(t_blst **tokens_lst, t_blst *env_lst);
+// expander_util.c
+int			expand_and_check_ambiguous(
+				t_blst **tokens_lst, t_blst *env_lst);
 // expand_env.c
 int			expand_env_as_str(t_token_data	*tokendata, t_blst *env_lst);
 // expand_util.c

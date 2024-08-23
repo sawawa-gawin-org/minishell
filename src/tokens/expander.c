@@ -38,7 +38,7 @@ int	expander(t_blst **tokens_lst, t_blst *env_lst)
 		data = (*tokens_lst)->u_data.token_data;
 		if (is_expandable_token_type(data))
 		{
-			if (!expand_env_as_str(data, env_lst))
+			if (expand_and_check_ambiguous(tokens_lst, env_lst))
 				return (ERR);
 			if (data->token_type != DOUBLE_QUOTE_VAL_FLAG
 				&& ft_strcmp(data->token_str, "") == 0)
@@ -55,7 +55,7 @@ int	expander(t_blst **tokens_lst, t_blst *env_lst)
 	return (OK);
 }
 
-static	int	re_tokenize(t_blst **tokens_lst)
+static int	re_tokenize(t_blst **tokens_lst)
 {
 	t_blst	*updated_node;
 	char	*replaced_str;

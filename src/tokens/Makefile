@@ -15,6 +15,7 @@ SRCS += delete_quote.c
 SRCS += expand_env.c
 SRCS += expand_env_util.c
 SRCS += expander.c
+SRCS += expander_util.c
 SRCS += parser.c
 SRCS += syntax_checker.c
 SRCS += tokenizer.c
