@@ -54,3 +54,19 @@ int	branching_syntax_err_by_flag(int flag)
 		return (syntax_unexpected_error("newline"));
 	return (ERR);
 }
+
+int	ambiguous_redir_err(char *token)
+{
+	char	*prefix;
+	char	*msg;
+
+	prefix = MSG_PREFIX;
+	msg = ": ambiguous redirect\n";
+	if (write(STDERR_FILENO, prefix, ft_strlen(prefix)) == -1)
+		perror("write");
+	if (write(STDERR_FILENO, token, ft_strlen(token)) == -1)
+		perror("write");
+	if (write(STDERR_FILENO, msg, ft_strlen(msg)) == -1)
+		perror("write");
+	return (ERR);
+}

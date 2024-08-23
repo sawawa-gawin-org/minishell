@@ -27,14 +27,8 @@ int	expand_and_check_ambiguous(t_blst **tokens_lst, t_blst *env_lst)
 	if (!expand_env_as_str(data, env_lst))
 		return (ERR);
 	if (ft_strcmp(data->token_str, "") == 0)
-	{
 		if (check_ambigious_redir((*tokens_lst)->prev) != OK)
-		{
-			ft_putstr_fd("bash: ", 2);
-			ft_putstr_fd(tmp, 2);
-			ft_putstr_fd(": ambiguous redirect\n", 2);
-		}
-	}
+			ambiguous_redir_err(tmp);
 	free(tmp);
 	return (OK);
 }

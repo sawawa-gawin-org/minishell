@@ -144,5 +144,6 @@ int		branching_syntax_err_by_flag(int flag);
 int		is_a_directory_error(char *filepath);
 int		permission_denied_error(char *filepath);
 int		no_such_file_or_directory_error(char *filepath);
+int		ambiguous_redir_err(char *token);
 
 #endif
