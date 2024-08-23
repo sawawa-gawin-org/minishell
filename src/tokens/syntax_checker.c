@@ -15,6 +15,7 @@
 // static int	find_contd_tube(t_blst *node);
 // static int	find_contd_redirect(t_blst *node);
 static int	next_token_is_specific_flag(int flag, t_blst *node);
+static int	is_token_terminal(t_blst *node);
 static char	*get_next_token_str(t_blst *node);
 
 // # Description
@@ -121,8 +122,8 @@ int	cmp_syntax(void *d, void *n)
 			&& next_token_is_specific_flag(META_FLAG, node->next))
 			return (syntax_unexpected_error(get_next_token_str(node->next)));
 	}
-	else if (data->token_type & (META_FLAG & (~TUBE_FLAG)))
-		return (syntax_unexpected_error("newline"));
+	if ((data->token_type & META_FLAG) && is_token_terminal(node->next))
+		return (branching_syntax_err_by_flag(data->token_type));
 	if (data->token_type & OPEN_QUOTE_FLAG)
 		return (syntax_unclose_quote_error());
 	return (OK);
@@ -143,6 +144,24 @@ static int	next_token_is_specific_flag(int flag, t_blst *node)
 			break ;
 	}
 	return (0);
+}
+
+// Returns 1 if the token is the end
+static int	is_token_terminal(t_blst *node)
+{
+	t_token_data	*data;
+
+	while (node->u_data.token_data != NULL)
+	{
+		data = node->u_data.token_data;
+		if (data->token_type & (~SPACE_FLAG))
+			return (0);
+		else if (data->token_type & SPACE_FLAG)
+			node = node->next;
+		else
+			break ;
+	}
+	return (1);
 }
 
 static char	*get_next_token_str(t_blst *node)
