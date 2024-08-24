@@ -32,14 +32,15 @@ static int	is_expandable_token_type(t_token_data *data);
 int	expander(t_blst **tokens_lst, t_blst *env_lst)
 {
 	t_token_data	*data;
+	int				err;
 
+	err = OK;
 	while ((*tokens_lst)->u_data.token_data != NULL)
 	{
 		data = (*tokens_lst)->u_data.token_data;
-		if (is_expandable_token_type(data))
+		if (is_expandable_token_type(data) && err == OK)
 		{
-			if (expand_and_check_ambiguous(tokens_lst, env_lst))
-				return (ERR);
+			err = expand_and_check_ambiguous(tokens_lst, env_lst);
 			if (data->token_type != DOUBLE_QUOTE_VAL_FLAG
 				&& ft_strcmp(data->token_str, "") == 0)
 			{
@@ -52,6 +53,8 @@ int	expander(t_blst **tokens_lst, t_blst *env_lst)
 		(*tokens_lst) = (*tokens_lst)->next;
 	}
 	(*tokens_lst) = (*tokens_lst)->next;
+	if (err != OK)
+		return (err);
 	return (OK);
 }
 
