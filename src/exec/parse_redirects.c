@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/11 08:45:34 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/24 09:53:35 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,6 @@ static int	open_in_files(char *dist, t_pipex *pipex, int heredocflag)
 
 static int	open_out_files(char *dist, t_pipex *pipex, int appendflag)
 {
-	struct stat	buf;
-
 	if (dist && access(dist, F_OK) == -1 && appendflag == 0)
 		pipex->file_out_fd = open(
 				dist, O_CREAT | O_WRONLY, S_IREAD | S_IWRITE);
