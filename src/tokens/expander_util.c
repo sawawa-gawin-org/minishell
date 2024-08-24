@@ -29,8 +29,7 @@ int	expand_and_check_ambiguous(t_blst **tokens_lst, t_blst *env_lst)
 		return (ERR);
 	if (!expand_env_as_str(data, env_lst))
 		return (ERR);
-	if (ft_strcmp(data->token_str, "") == 0
-		|| find_illegal_blank(data->token_str) != OK)
+	if (find_illegal_blank(data->token_str) != OK)
 	{
 		if (check_ambigious_redir((*tokens_lst)->prev) != OK)
 		{
@@ -75,7 +74,7 @@ static int	find_illegal_blank(char *str)
 	while (str[i] != '\0' && is_blank(str[i]))
 		i++;
 	if (str[i] == '\0')
-		return (OK);
+		return (ERR);
 	while (str[i] != '\0' && !is_blank(str[i]))
 		i++;
 	if (str[i] == '\0')
