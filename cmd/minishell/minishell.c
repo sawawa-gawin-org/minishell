@@ -112,16 +112,17 @@ static int	execute(char *line, void *env_lst, void **tokens_lst)
 			return (ERR);
 		return (CONTINUE);
 	}
-	if (parser(tokens_lst, &env_lst))
+	status = parser(tokens_lst, &env_lst);
+	if (status == ERR)
 		return (ERR);
-	if (g_signal == 0)
+	if (g_signal == 0 && status == OK)
 	{
 		if (exec_tokenslst_cmds(*tokens_lst, &env_lst, &status))
 			return (ERR);
 		if (status == EXIT_CALLED)
 			return (EXIT_CALLED);
 	}
-	else
+	else if (g_signal != 0)
 		status = g_signal + 128;
 	g_signal = 0;
 	if (add_exit_status_as_env(&env_lst, status))
