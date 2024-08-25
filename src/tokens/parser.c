@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/25 14:35:44 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/25 15:32:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	concat_consecutive_tokens_node(t_blst **tokens_lst)
 		if (next->u_data.token_data == NULL)
 			break ;
 		if (is_consecutive_types(now->u_data.token_data->token_type,
-			next->u_data.token_data->token_type))
+				next->u_data.token_data->token_type))
 		{
 			if (join_consecutive_token(now, &next))
 				return (ERR_ALLOCATE_MEMORY);
@@ -108,9 +108,9 @@ static int	join_consecutive_token(t_blst *now, t_blst **next)
 static int	is_consecutive_types(int now, int next)
 {
 	if ((now == TOKEN_FLAG
-		|| (now >= DOUBLE_QUOTE_FLAG && now <= VAL_FLAG)) 
+			|| (now >= DOUBLE_QUOTE_FLAG && now <= VAL_FLAG))
 		&& (next == TOKEN_FLAG
-		|| (next >= DOUBLE_QUOTE_FLAG && next <= VAL_FLAG)))
+			|| (next >= DOUBLE_QUOTE_FLAG && next <= VAL_FLAG)))
 		return (1);
 	return (0);
 }

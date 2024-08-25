@@ -6,12 +6,11 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/25 15:09:22 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/25 15:32:50 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
-
 
 /**
  * @brief Deletes blank tokens from the tokens list.
