@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/01 17:45:29 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/25 19:51:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ static int	wait_processes(t_pipelst *pipe_node)
 			close(pre_pipe->pipe_out_fd);
 			pre_pipe->pipe_in_fd = -1;
 		}
-		if (waitpid(((t_pipex *)now_node->u_data.pipe_data)->pids,
-				&status, 0) == -1)
+		// if (waitpid(-1, &status, 0) == -1) // このように変更して整合性が取れるようにする。
+		if (waitpid(((t_pipex *)now_node->u_data.pipe_data)->pids, &status, 0) == -1)
 			err = GENERAL_ERR;
 		now_node = now_node->next;
 	}
