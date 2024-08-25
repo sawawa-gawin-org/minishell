@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 08:25:21 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/25 14:35:44 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	concat_consecutive_tokens_node(t_blst **tokens_lst);
 static int	join_consecutive_token(t_blst *now, t_blst **next);
-static int	is_consecutive_type(int token_type);
+static int	is_consecutive_types(int now_type, int next_type);
 
 // static int	is_echo(t_blst *tokens_lst);
 // static int	echo_parser(t_blst **tokens_lst);
@@ -53,14 +53,14 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst)
 	int		err;
 
 	delete_quote(tokens_lst);
-	if (concat_consecutive_tokens_node(tokens_lst))
-		return (ERR);
 	err = parse_heredoc(tokens_lst);
 	if (err == ERR)
 		return (ERR);
 	err = expander(tokens_lst, *env_lst);
 	if (err != OK)
 		return (err);
+	if (concat_consecutive_tokens_node(tokens_lst))
+		return (ERR);
 	delete_blank(tokens_lst);
 	return (OK);
 }
@@ -76,8 +76,8 @@ static int	concat_consecutive_tokens_node(t_blst **tokens_lst)
 		next = now->next;
 		if (next->u_data.token_data == NULL)
 			break ;
-		if (is_consecutive_type(now->u_data.token_data->token_type)
-			&& is_consecutive_type(next->u_data.token_data->token_type))
+		if (is_consecutive_types(now->u_data.token_data->token_type,
+			next->u_data.token_data->token_type))
 		{
 			if (join_consecutive_token(now, &next))
 				return (ERR_ALLOCATE_MEMORY);
@@ -105,10 +105,12 @@ static int	join_consecutive_token(t_blst *now, t_blst **next)
 	return (OK);
 }
 
-static int	is_consecutive_type(int token_type)
+static int	is_consecutive_types(int now, int next)
 {
-	if (token_type == TOKEN_FLAG
-		|| (token_type >= DOUBLE_QUOTE_FLAG && token_type <= VAL_FLAG))
+	if ((now == TOKEN_FLAG
+		|| (now >= DOUBLE_QUOTE_FLAG && now <= VAL_FLAG)) 
+		&& (next == TOKEN_FLAG
+		|| (next >= DOUBLE_QUOTE_FLAG && next <= VAL_FLAG)))
 		return (1);
 	return (0);
 }
