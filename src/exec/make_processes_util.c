@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/19 04:39:54 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/25 18:42:29 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	make_process(t_exec_parametors *param, t_callback callback)
 	callback_args.path = NULL;
 	callback_args.env = param->env;
 	callback_args.env_lst = param->env_lst;
+	if (*(callback_args.cmd) == NULL)
+		return (OK);
 	if (!is_builtin(callback_args.cmd[0]))
 	{
 		callback_args.path = find_cmd(callback_args.cmd[0], param->env,
