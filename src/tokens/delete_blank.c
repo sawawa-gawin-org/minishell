@@ -6,20 +6,26 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 21:58:53 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/02 19:41:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/25 15:09:22 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-// Description:
-// Drop all the spaces token in the tokens list.
+
+/**
+ * @brief Deletes blank tokens from the tokens list.
+ *
+ * This function removes any blank tokens from the given tokens list.
+ *
+ * @param tokens_lst The address of the tokens list.
+ */
 void	delete_blank(t_blst **tokens_lst)
 {
-	t_blst			*head;
+	t_blst			*sentinel;
 	t_token_data	*data;
 
-	head = *tokens_lst;
+	sentinel = (*tokens_lst)->prev;
 	while ((*tokens_lst)->u_data.token_data != NULL)
 	{
 		data = (*tokens_lst)->u_data.token_data;
@@ -28,7 +34,8 @@ void	delete_blank(t_blst **tokens_lst)
 		else
 			(*tokens_lst) = (*tokens_lst)->next;
 	}
-	*tokens_lst = head;
+	*tokens_lst = sentinel->next;
+	return ;
 }
 
 void	purge_token_node(t_blst **lst)
