@@ -69,6 +69,9 @@ $(1)_clean:
 endef
 $(foreach lib,$(DEPENDENCY),$(eval $(call LIB_MACRO,$(lib))))
 
+trace: debug 
+	strace -o log/log -f -e trace=pipe,execve,close,wait4,waitpid $(DNAME)
+
 debug:
 	make DEBUG_MODE=1
 
@@ -80,7 +83,7 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all debug clean fclean re
+.PHONY: all debug trace clean fclean re
 
 echo:
 	@echo $(SRCS) 
