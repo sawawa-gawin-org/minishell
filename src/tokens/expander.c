@@ -15,7 +15,6 @@
 static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes);
 static int	re_tokenize(t_blst **tokens_lst);
 static int	is_expandable_token_type(t_token_data *data);
-static int	find_illegal_blank(char *str);
 
 /**
  * Expands tokens in the given list using the environment variables.
@@ -42,17 +41,16 @@ int	expander(t_blst **tokens_lst, t_blst *env_lst)
 		if (is_expandable_token_type(data) && err == OK)
 		{
 			err = expand_and_check_ambiguous(tokens_lst, env_lst);
-			if (data->token_type != DOUBLE_QUOTE_VAL_FLAG
-				&& find_illegal_blank(data->token_str) != OK)
-			{
-				purge_token_node(tokens_lst);
-				continue ;
-			}
-			if (re_tokenize(tokens_lst))
-				return (ERR);
+			if (err != OK)
+				break ;
+			err = re_tokenize(tokens_lst);
+			if (err != OK)
+				break ;
 		}
 		(*tokens_lst) = (*tokens_lst)->next;
 	}
+	while ((*tokens_lst)->u_data.token_data != NULL)
+		(*tokens_lst) = (*tokens_lst)->next;
 	(*tokens_lst) = (*tokens_lst)->next;
 	if (err != OK)
 		return (err);
@@ -103,16 +101,4 @@ static int	is_expandable_token_type(t_token_data *data)
 			&& data->sub_type != HEREDOC_QUOTE_FLAG))
 		return (1);
 	return (0);
-}
-
-static int	find_illegal_blank(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0' && is_blank(str[i]))
-		i++;
-	if (str[i] == '\0')
-		return (ERR);
-	return (OK);
 }
