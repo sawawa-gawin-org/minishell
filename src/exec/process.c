@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/25 19:04:23 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:45:51 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	init_signal_by_pid(pid_t pid);
  * @return Returns an integer indicating the success or failure of the
  * process execution.
  */
-int	make_process(t_exec_parametors *param, t_callback callback)
+int	make_each_process(t_exec_parametors *param, t_callback callback)
 {
 	t_callback_parametors	callback_args;
 

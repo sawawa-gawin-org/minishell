@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_processes.c                                   :+:      :+:    :+:   */
+/*   process_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/25 19:51:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:52:52 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,40 +14,10 @@
 #include "libft.h"
 #include "minishell.h"
 
-static int	init_pipeline(t_blst *pipe_node);
 static int	pipe_fds(int *out_fd, int *in_fd);
-static int	wait_processes(t_pipelst *pipe_node);
 static int	check_status(int status);
 
-int	make_processes(t_exec_parametors *param)
-{
-	int			err;
-	t_pipelst	*initial_node;
-
-	err = 0;
-	if (init_pipeline(param->pipe_list))
-		return (GENERAL_ERR);
-	initial_node = param->pipe_list;
-	while (param->pipe_list->u_data.pipe_data != NULL)
-	{
-		if (param->pipe_list->prev->u_data.pipe_data == NULL)
-			err = make_process(param, do_first_process);
-		else if (param->pipe_list->next->u_data.pipe_data == NULL)
-			err = make_process(param, do_last_process);
-		else
-			err = make_process(param, do_middle_process);
-		if (err != 0)
-		{
-			param->pipe_list = initial_node;
-			return (wait_processes(param->pipe_list));
-		}
-		param->pipe_list = param->pipe_list->next;
-	}
-	param->pipe_list = initial_node;
-	return (wait_processes(param->pipe_list));
-}
-
-static int	init_pipeline(t_pipelst *pipe_node)
+int	init_pipeline(t_pipelst *pipe_node)
 {
 	t_pipex	*pipe;
 	t_pipex	*next_pipe;
@@ -79,11 +49,12 @@ static int	pipe_fds(int *out_fd, int *in_fd)
 	return (OK);
 }
 
-static int	wait_processes(t_pipelst *pipe_node)
+int	wait_processes(t_pipelst *pipe_node)
 {
 	t_pipex		*pre_pipe;
 	t_pipelst	*now_node;
 	int			status;
+	int			last_status;
 	int			err;
 
 	status = OK;
@@ -98,8 +69,7 @@ static int	wait_processes(t_pipelst *pipe_node)
 			close(pre_pipe->pipe_out_fd);
 			pre_pipe->pipe_in_fd = -1;
 		}
-		// if (waitpid(-1, &status, 0) == -1) // このように変更して整合性が取れるようにする。
-		if (waitpid(((t_pipex *)now_node->u_data.pipe_data)->pids, &status, 0) == -1)
+		if (waitpid(-1, &status, 0) == -1)
 			err = GENERAL_ERR;
 		now_node = now_node->next;
 	}

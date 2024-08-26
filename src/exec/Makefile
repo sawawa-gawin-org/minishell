@@ -12,8 +12,8 @@ SRCS :=
 
 SRCS += exec.c
 SRCS += find_cmd.c
-SRCS += make_processes.c
-SRCS += make_processes_util.c
+SRCS += process.c
+SRCS += process_utils.c
 SRCS += process_callback.c
 SRCS += parse_cmd.c
 SRCS += parse_redirects.c
