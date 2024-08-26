@@ -12,8 +12,8 @@
 
 #include "tokens_int.h"
 
-// static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes);
-// static int	re_tokenize(t_blst **tokens_lst);
+static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes);
+static int	re_tokenize(t_blst **tokens_lst);
 static int	is_expandable_token_type(t_token_data *data);
 
 /**
@@ -43,6 +43,9 @@ int	expander(t_blst **tokens_lst, t_blst *env_lst)
 			err = expand_and_check_ambiguous(tokens_lst, env_lst);
 			if (err != OK)
 				break ;
+			err = re_tokenize(tokens_lst);
+			if (err != OK)
+				break ;
 		}
 		(*tokens_lst) = (*tokens_lst)->next;
 	}
@@ -54,41 +57,41 @@ int	expander(t_blst **tokens_lst, t_blst *env_lst)
 	return (OK);
 }
 
-// static int	re_tokenize(t_blst **tokens_lst)
-// {
-// 	t_blst	*updated_node;
-// 	char	*replaced_str;
+static int	re_tokenize(t_blst **tokens_lst)
+{
+	t_blst	*updated_node;
+	char	*replaced_str;
 
-// 	replaced_str = (*tokens_lst)->u_data.token_data->token_str;
-// 	if (ft_strcmp(replaced_str, "") == 0)
-// 		return (OK);
-// 	updated_node = tokenizer(&replaced_str);
-// 	if (updated_node == NULL)
-// 		return (ERR);
-// 	inject_nodes(tokens_lst, updated_node);
-// 	return (OK);
-// }
+	replaced_str = (*tokens_lst)->u_data.token_data->token_str;
+	if (ft_strcmp(replaced_str, "") == 0)
+		return (OK);
+	updated_node = tokenizer(&replaced_str);
+	if (updated_node == NULL)
+		return (ERR);
+	inject_nodes(tokens_lst, updated_node);
+	return (OK);
+}
 
-// static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes)
-// {
-// 	t_blst	*inject_tirminator;
-// 	t_blst	*inject_last_node;
-// 	t_blst	*left_connected_node;
-// 	t_blst	*right_connected_node;
+static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes)
+{
+	t_blst	*inject_tirminator;
+	t_blst	*inject_last_node;
+	t_blst	*left_connected_node;
+	t_blst	*right_connected_node;
 
-// 	inject_tirminator = inject_nodes->prev;
-// 	purge_token_node(&inject_tirminator);
-// 	inject_last_node = inject_tirminator->prev;
-// 	purge_token_node(replaced_node);
-// 	left_connected_node = (*replaced_node)->prev;
-// 	right_connected_node = (*replaced_node);
-// 	left_connected_node->next = inject_nodes;
-// 	inject_nodes->prev = left_connected_node;
-// 	right_connected_node->prev = inject_last_node;
-// 	inject_last_node->next = right_connected_node;
-// 	*replaced_node = inject_last_node;
-// 	return ;
-// }
+	inject_tirminator = inject_nodes->prev;
+	purge_token_node(&inject_tirminator);
+	inject_last_node = inject_tirminator->prev;
+	purge_token_node(replaced_node);
+	left_connected_node = (*replaced_node)->prev;
+	right_connected_node = (*replaced_node);
+	left_connected_node->next = inject_nodes;
+	inject_nodes->prev = left_connected_node;
+	right_connected_node->prev = inject_last_node;
+	inject_last_node->next = right_connected_node;
+	*replaced_node = inject_last_node;
+	return ;
+}
 
 static int	is_expandable_token_type(t_token_data *data)
 {
