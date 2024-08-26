@@ -82,7 +82,9 @@ static int	open_in_files(char *dist, t_pipex *pipex, int heredocflag)
 
 static int	open_out_files(char *dist, t_pipex *pipex, int appendflag)
 {
-	if (dist && access(dist, F_OK) == -1 && appendflag == 0)
+	if (ft_strcmp(dist, "") == 0 && access(dist, F_OK) == -1)
+		pipex->file_out_fd = no_such_file_or_directory_error(dist);
+	else if (dist && access(dist, F_OK) == -1 && appendflag == 0)
 		pipex->file_out_fd = open(
 				dist, O_CREAT | O_WRONLY, S_IREAD | S_IWRITE);
 	else if (dist && access(dist, F_OK) == -1 && appendflag)
