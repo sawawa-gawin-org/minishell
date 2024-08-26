@@ -29,7 +29,8 @@ int	expand_and_check_ambiguous(t_blst **tokens_lst, t_blst *env_lst)
 		return (ERR);
 	if (!expand_env_as_str(data, env_lst))
 		return (ERR);
-	if (find_illegal_blank(data->token_str) != OK)
+	if (find_illegal_blank(data->token_str) != OK \
+		&& data->token_type != DOUBLE_QUOTE_VAL_FLAG)
 	{
 		if (check_ambigious_redir((*tokens_lst)->prev) != OK)
 		{
