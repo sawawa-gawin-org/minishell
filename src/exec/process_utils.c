@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/28 13:33:29 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/28 13:52:55 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "minishell.h"
 
 static void	close_pipe_fds(t_pipelst *pipe_node);
-static int	wait_processes(t_pipelst *pipe_node);
 static int	pipe_fds(int *out_fd, int *in_fd);
 static int	check_status(int status);
 
@@ -51,7 +50,7 @@ static int	pipe_fds(int *out_fd, int *in_fd)
 	return (OK);
 }
 
-static int	wait_processes(t_pipelst *pipe_node)
+int	wait_processes(t_pipelst *pipe_node)
 {
 	int			status;
 	int			err;
