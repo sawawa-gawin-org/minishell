@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_processes_util.c                              :+:      :+:    :+:   */
+/*   process.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/26 13:45:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/28 13:34:44 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	make_each_process(t_exec_parametors *param, t_callback callback)
 	callback_args.env_lst = param->env_lst;
 	if (*(callback_args.cmd) == NULL)
 	{
-		free(callback_args.cmd);	
+		free(callback_args.cmd);
 		return (OK);
 	}
 	if (!is_builtin(callback_args.cmd[0]))

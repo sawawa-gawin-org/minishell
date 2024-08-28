@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/26 13:52:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/28 13:33:29 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include "libft.h"
 #include "minishell.h"
 
+static void	close_pipe_fds(t_pipelst *pipe_node);
+static int	wait_processes(t_pipelst *pipe_node);
 static int	pipe_fds(int *out_fd, int *in_fd);
 static int	check_status(int status);
 
@@ -49,33 +51,45 @@ static int	pipe_fds(int *out_fd, int *in_fd)
 	return (OK);
 }
 
-int	wait_processes(t_pipelst *pipe_node)
+static int	wait_processes(t_pipelst *pipe_node)
 {
-	t_pipex		*pre_pipe;
-	t_pipelst	*now_node;
 	int			status;
-	int			last_status;
 	int			err;
 
 	status = OK;
 	err = 0;
-	now_node = pipe_node;
-	while (now_node->u_data.pipe_data != NULL)
+	close_pipe_fds(pipe_node);
+	while (pipe_node->u_data.pipe_data != NULL)
 	{
-		if (now_node->prev->u_data.pipe_data != NULL)
-		{
-			pre_pipe = (t_pipex *)now_node->prev->u_data.pipe_data;
-			close(pre_pipe->pipe_in_fd);
-			close(pre_pipe->pipe_out_fd);
-			pre_pipe->pipe_in_fd = -1;
-		}
-		if (waitpid(-1, &status, 0) == -1)
+		if (waitpid(-1, &(pipe_node->u_data.pipe_data->exit_status), 0) == -1)
 			err = GENERAL_ERR;
-		now_node = now_node->next;
+		pipe_node = pipe_node->next;
 	}
 	if (err != 0)
 		return (err);
+	status = pipe_node->next->u_data.pipe_data->exit_status;
 	return (check_status(status));
+}
+
+static void	close_pipe_fds(t_pipelst *pipe_node)
+{
+	t_pipex		*pre_pipe_data;
+	t_pipex		*now_pipe_data;
+
+	while (pipe_node->u_data.pipe_data != NULL)
+	{
+		now_pipe_data = pipe_node->u_data.pipe_data;
+		if (pipe_node->prev->u_data.pipe_data != NULL)
+		{
+			pre_pipe_data = (t_pipex *)pipe_node->prev->u_data.pipe_data;
+			close(pre_pipe_data->pipe_in_fd);
+			close(now_pipe_data->pipe_out_fd);
+			pre_pipe_data->pipe_in_fd = -1;
+			now_pipe_data->pipe_out_fd = -1;
+		}
+		pipe_node = pipe_node->next;
+	}
+	return ;
 }
 
 static int	check_status(int status)

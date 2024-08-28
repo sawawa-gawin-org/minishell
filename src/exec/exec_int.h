@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/26 13:51:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/28 13:34:30 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,9 @@ int				exec(
 					char **env,
 					t_blst **env_lst);
 
-
-int				make_each_process(t_exec_parametors *param, t_callback callback);
+int				make_each_process(
+					t_exec_parametors *param, t_callback callback);
 int				init_pipeline(t_blst *pipe_node);
-int				wait_processes(t_pipelst *pipe_node);
 
 char			**parse_cmd(t_tokenlst *token_list, t_pipex *pipe);
 
