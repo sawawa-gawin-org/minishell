@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/08/17 15:46:55 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/28 13:26:04 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_pipex
 	pid_t	pids;
 	void	*head_node;
 	int		index;
+	int		exit_status;
 }				t_pipex;
 
 typedef struct s_node

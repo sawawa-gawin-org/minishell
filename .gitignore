@@ -58,3 +58,5 @@ minishell_debug
 lib
 .vscode/settings.json
 .DS_Store
+
+log/

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 18:48:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/26 13:45:25 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "builtin.h"
 
 static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node);
+static int			make_processes(t_exec_parametors *param);
 static t_pipelst	*init_pipe_node(int index);
 static void			close_fds_all(t_pipelst *pipe_head_node);
 
@@ -95,6 +96,44 @@ static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
 			token_node = token_node->next;
 	}
 	return (pipe_head_node);
+}
+
+/**
+ * @brief Makes processes for executing a command.
+ *
+ * This function is responsible for creating processes to execute
+ * a command in the minishell. It takes a pointer to a structure of
+ * type `t_exec_parametors` as a parameter.
+ *
+ * @param param A pointer to a structure of type `t_exec_parametors`.
+ * @return An integer representing the status of the process creation.
+ */
+static int	make_processes(t_exec_parametors *param)
+{
+	int			err;
+	t_pipelst	*initial_node;
+
+	err = 0;
+	if (init_pipeline(param->pipe_list))
+		return (GENERAL_ERR);
+	initial_node = param->pipe_list;
+	while (param->pipe_list->u_data.pipe_data != NULL)
+	{
+		if (param->pipe_list->prev->u_data.pipe_data == NULL)
+			err = make_each_process(param, do_first_process);
+		else if (param->pipe_list->next->u_data.pipe_data == NULL)
+			err = make_each_process(param, do_last_process);
+		else
+			err = make_each_process(param, do_middle_process);
+		if (err != 0)
+		{
+			param->pipe_list = initial_node;
+			return (wait_processes(param->pipe_list));
+		}
+		param->pipe_list = param->pipe_list->next;
+	}
+	param->pipe_list = initial_node;
+	return (wait_processes(param->pipe_list));
 }
 
 /**
