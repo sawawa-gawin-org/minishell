@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 16:35:20 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 13:42:36 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/29 13:23:09 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,14 @@ int	expander(t_blst **tokens_lst, t_blst *env_lst)
 		if (is_expandable_token_type(data) && err == OK)
 		{
 			err = expand_and_check_ambiguous(tokens_lst, env_lst);
-			if (err != OK)
-				break ;
-			err = re_tokenize(tokens_lst);
-			if (err != OK)
-				break ;
+			if (err == OK && data->token_type == VAL_FLAG
+				&& ft_strcmp(data->token_str, "") == 0)
+				purge_token_node(tokens_lst);
+			else if (err == OK && data->token_type == VAL_FLAG)
+				err = re_tokenize(tokens_lst);
 		}
 		(*tokens_lst) = (*tokens_lst)->next;
 	}
-	while ((*tokens_lst)->u_data.token_data != NULL)
-		(*tokens_lst) = (*tokens_lst)->next;
 	(*tokens_lst) = (*tokens_lst)->next;
 	if (err != OK)
 		return (err);
