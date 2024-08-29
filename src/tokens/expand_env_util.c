@@ -6,7 +6,7 @@
 /*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:15:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/29 14:14:58 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/08/29 14:34:03 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,12 @@ int	get_val_len(char *str, int now)
 	int	i;
 
 	i = 0;
-	while (ft_isalnum(str[i + now]) || str[i + now] == '_')
+	while (ft_isalnum(str[i + now]) || str[i + now] == '_'
+		|| str[i + now] == '?')
 	{
 		i++;
+		if (i > 0 && str[i + now] == '?')
+			break ;
 	}
 	return (i);
 }
