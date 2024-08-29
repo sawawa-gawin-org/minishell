@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_util.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:15:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/29 14:34:03 by syamasaw         ###   ########.fr       */
+/*   Updated: 2024/08/29 20:30:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	get_val_len(char *str, int now)
 		if (i > 0 && str[i + now] == '?')
 			break ;
 	}
+	if (str[i + now] == '$')
+		i++;
 	return (i);
 }
 
@@ -89,7 +91,10 @@ static char	*get_env_for_key(char *val_name, t_blst *env_lst)
 		}
 		env_lst = env_lst->next;
 	}
-	ret = ft_strdup("");
+	if (ft_strcmp(val_name, "$") == 0)
+		ret = ft_strdup("[PID]");
+	else
+		ret = ft_strdup("");
 	if (ret == NULL)
 		return (NULL);
 	return (ret);
