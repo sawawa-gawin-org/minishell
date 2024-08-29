@@ -6,13 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:15:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/17 18:06:44 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/29 18:15:53 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtin_int.h"
 #include "env.h"
 
+static int	key_validation(char *cmd, char *equal);
 static int	identify_key_value(
 				char *cmd, char *equal, char **key, char **value);
 static void	print_each_env(char *env);
@@ -50,9 +51,24 @@ static int	identify_key_value(
 	*key = cmd;
 	if (*key == equal || ft_isdigit((*key)[0]))
 		return (export_identifier_err(cmd));
+	if (key_validation(cmd, equal))
+		return (export_identifier_err(cmd));
 	if (equal != NULL)
 		*equal = '\0';
 	return (OK);
+}
+
+static int	key_validation(char *cmd, char *equal)
+{
+	if (equal == NULL && ft_strchr(cmd, ' ') != NULL)
+		return (1);
+	while (*cmd != '\0' && *cmd != '=')
+	{
+		if (ft_isalnum(*cmd) == 0 && *cmd != '_')
+			return (1);
+		cmd++;
+	}
+	return (0);
 }
 
 int	export_print(t_blst *envlst, int mode)

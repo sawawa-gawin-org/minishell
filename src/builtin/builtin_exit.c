@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:14:12 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/01 18:42:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/29 18:39:55 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static int	exit_status_handling(char **cmd)
 		flag = parse_str_to_numeric(cmd[1], &status);
 	else
 	{
-		exit_argc_err(); // dont exit terminal
+		exit_argc_err();
 		return (GENERAL_ERR);
 	}
 	if (flag > 0)
 	{
 		exit_numeric_err(cmd[1]);
-		return (MISUSE_OF_SHELL_BUILTINS); // exit terminal
+		return (MISUSE_OF_SHELL_BUILTINS);
 	}
 	return ((int)(status % 256));
 }
