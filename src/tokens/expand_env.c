@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/14 13:24:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/29 19:35:49 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst)
 		return (0);
 	while (tokendata->token_str[index.now] != '\0')
 	{
-		if (tokendata->token_str[index.now] == '$')
+		if (tokendata->token_str[index.now] == '$'
+			&& tokendata->token_str[index.now + 1] != '\0')
 		{
 			buff = add_val_to_str(tokendata->token_str, buff, &index, env_lst);
 			if (!buff)
