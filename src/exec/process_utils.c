@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 18:47:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/28 13:52:55 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/29 21:13:22 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,15 @@ int	wait_processes(t_pipelst *pipe_node)
 {
 	int			status;
 	int			err;
+	t_pipex		*data;
 
 	status = OK;
 	err = 0;
 	close_pipe_fds(pipe_node);
 	while (pipe_node->u_data.pipe_data != NULL)
 	{
-		if (waitpid(-1, &(pipe_node->u_data.pipe_data->exit_status), 0) == -1)
+		data = pipe_node->u_data.pipe_data;
+		if (data->pids != 0 && waitpid(-1, &(data->exit_status), 0) == -1)
 			err = GENERAL_ERR;
 		pipe_node = pipe_node->next;
 	}
