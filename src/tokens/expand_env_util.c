@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_util.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
+/*   By: syamasaw <syamasaw@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 14:15:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/17 18:31:06 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/29 14:14:58 by syamasaw         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ int	get_val_len(char *str, int now)
 	int	i;
 
 	i = 0;
-	while (str[i + now] != '\0' && str[i + now] != ' '
-		&& str[i + now] != '$' && str[i + now] != '=')
+	while (ft_isalnum(str[i + now]) || str[i + now] == '_')
 	{
 		i++;
 	}
