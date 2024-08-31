@@ -18,6 +18,7 @@ SRCS := ft_atoi.c ft_bzero.c ft_calloc.c ft_isalnum.c ft_isalpha.c ft_isascii.c 
 		ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c ft_lstsize.c
 ## Extra
 SRCS += ft_strcmp.c
+SRCS += ft_strjoin_sep.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)

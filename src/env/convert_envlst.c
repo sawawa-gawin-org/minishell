@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:03:56 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/17 17:21:00 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:45:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	**create_env_arr_from_lst(t_blst *env_lst, int is_val_is_nullable)
 		val = env_lst->u_data.env_data->val;
 		if (ft_strcmp(key, "?") != 0 && (val != NULL || is_val_is_nullable))
 		{
-			env_arr[i] = strjoin_with_sep(key, val, '=');
+			env_arr[i] = ft_strjoin_with_sep(key, val, '=');
 			if (env_arr[i] == NULL)
 			{
 				free_until_index(env_arr, i);

@@ -24,38 +24,25 @@ void	print_is_NULL(char *input)
 
 int	main()
 {
-    void *mem;
-    mem = malloc(9223372036854775807);
-    if (mem == NULL) {
-        perror(NULL);
-		printf("malloc failed\n");
-        return (1);
-    }
-	printf("malloc success\n");
-    free(mem);
+	char *a;
+
+	a = ft_strjoin_with_sep("key", "value", '=');
+	printf("%s\n", a);
+	free(a);
+	
+	a = ft_strjoin_with_sep("key", NULL, '=');
+	printf("%s\n", a);
+	free(a);
+
+	a = ft_strjoin_with_sep(NULL, "value", '=');
+	printf("%s\n", a);
+	free(a);
+
+	a = ft_strjoin_with_sep(NULL, NULL, '=');
+	if (a == NULL)
+		printf("NULL\n");
+	else
+		printf("%s\n", a);
+	free(a);
     return (0);
-	// char	*result = ft_itoa(2147483647);
-	// printf("%s\n", result);
-	// free(result);
-	// result = NULL;
-
-	// result = ft_itoa(-2147483648);
-	// printf("%s\n", result);
-	// free(result);
-	// result = NULL;
-
-	// result = ft_itoa(100);
-	// printf("%s\n", result);
-	// free(result);
-	// result = NULL;
-
-	// result = ft_itoa(0);
-	// printf("%s\n", result);
-	// free(result);
-	// result = NULL;
-
-	// result = ft_itoa(-100);
-	// printf("%s\n", result);
-	// free(result);
-	// result = NULL;
 }

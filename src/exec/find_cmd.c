@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 10:03:31 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:45:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 
 static char	*find_path(char *cmd, char *envs, int *status);
 static char	*cmd_is_accessable(char *path, char *cmd, int *status);
-static char	*join_path_cmd(char *path, char *cmd);
 static void	free_char_arr(char **arr);
 
 char	*find_cmd(char *cmd, char **env, int *status)
@@ -71,7 +70,7 @@ static char	*cmd_is_accessable(char *path, char *cmd, int *status)
 		*status = CMD_NOT_FOUND;
 		return (NULL);
 	}
-	full = join_path_cmd(path, cmd);
+	full = ft_strjoin_with_sep(path, cmd, '/');
 	if (full == NULL)
 		return (NULL);
 	if (access(full, X_OK) == 0)
@@ -85,27 +84,6 @@ static char	*cmd_is_accessable(char *path, char *cmd, int *status)
 		*status = CMD_CNT_EXECUTE;
 	free(full);
 	return (NULL);
-}
-
-static char	*join_path_cmd(char *path, char *cmd)
-{
-	char	*full;
-	size_t	path_len;
-	size_t	cmd_len;
-
-	if (cmd == NULL)
-		return (NULL);
-	if (path == NULL)
-		return (ft_strdup(cmd));
-	path_len = ft_strlen(path);
-	cmd_len = ft_strlen(cmd);
-	full = (char *) ft_calloc((path_len + cmd_len + 2), sizeof(char));
-	if (full == NULL)
-		return (NULL);
-	ft_memcpy(full, path, path_len);
-	ft_memcpy(full + path_len, "/", 1);
-	ft_memcpy(full + path_len + 1, cmd, cmd_len);
-	return (full);
 }
 
 static void	free_char_arr(char **arr)
