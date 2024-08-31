@@ -11,7 +11,7 @@ INT_HEADERS := exec_int.h
 SRCS :=
 
 SRCS += exec.c
-SRCS += find_cmd.c
+# SRCS += find_cmd.c
 SRCS += process.c
 SRCS += process_utils.c
 SRCS += process_callback.c
@@ -32,13 +32,13 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lbuiltin -lenv -lft -ldbllst -lcommon
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lbuiltin_debug -lenv_debug -lft_debug -ldbllst_debug -lcommon_debug
+LFLAGS := -L$(LIB_EXPORT_DIR) -lbuiltin -lenv -lpath -lft -ldbllst -lcommon
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lbuiltin_debug -lenv_debug -lpath_debug -lft_debug -ldbllst_debug -lcommon_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst common env builtin
-DEPENDENCY_LIB := libft.a libdbllst.a libcommon.a libenv.a libbuiltin.a
+DEPENDENCY := libft dbllst common env builtin path
+DEPENDENCY_LIB := libft.a libdbllst.a libcommon.a libenv.a libbuiltin.a libpath.a
 
 # *****************************************************************************
 # From here onward is the same

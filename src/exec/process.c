@@ -6,13 +6,14 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/28 13:34:44 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 20:37:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec_int.h"
 #include "builtin.h"
 #include "minishell.h"
+#include "path.h"
 
 static int	run_command(t_callback_parametors *callback_args,
 				t_exec_parametors *param, t_callback callback);
@@ -45,14 +46,8 @@ int	make_each_process(t_exec_parametors *param, t_callback callback)
 		return (OK);
 	}
 	if (!is_builtin(callback_args.cmd[0]))
-	{
 		callback_args.path = find_cmd(callback_args.cmd[0], param->env,
 				&(callback_args.status));
-		if (!callback_args.path && callback_args.status == CMD_NOT_FOUND)
-			cmdnotfound_error(callback_args.cmd[0]);
-		else if (!callback_args.path && callback_args.status == CMD_CNT_EXECUTE)
-			cmdnotexecutable_error(callback_args.cmd[0]);
-	}
 	return (run_command(&callback_args, param, callback));
 }
 

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/08/28 13:26:04 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 21:14:50 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ typedef struct s_node
 
 typedef t_blst	t_tokenlst;
 typedef t_blst	t_pipelst;
+
+int		malloc_error(void);
 
 // builtin command errs
 int		cd_argc_err(void);
