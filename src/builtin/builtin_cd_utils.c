@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/17 13:49:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 22:37:05 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "dbllst.h"
 #include "env.h"
 #include "libft.h"
+#include "path.h"
 
 static int	cwd_check(char *path, t_cd_path_routing *routing);
 
@@ -91,44 +92,40 @@ int	cd_check_err(char *path, t_cd_path_routing *routing)
 {
 	int	err;
 
-	if (chdir(routing->dist) == -1)
-	{
-		err = cwd_check(path, routing);
-		if (err == ERR_ALLOCATE_MEMORY)
-			return (ERR_ALLOCATE_MEMORY);
-		else if (err == OK)
-		{
-			cd_move_err(path);
-			free_all_params(routing);
-			return (GENERAL_ERR);
-		}
-	}
-	return (OK);
+	if (chdir(routing->dist) == 0)
+		return (OK);
+	err = cwd_check(path, routing);
+	if (err)
+		return (err);
+	if (!is_directory(routing->dist))
+		cd_not_a_directory_err(path);
+	else if (access(routing->dist, F_OK) == 0
+		&& access(routing->dist, X_OK) != 0)
+		cd_permission_err(path);
+	else
+		cd_no_such_file_err(path);
+	free_all_params(routing);
+	return (GENERAL_ERR);
 }
 
 static int	cwd_check(char *path, t_cd_path_routing *routing)
 {
 	char	*cwd;
 	char	*tmp;
+	char	pathname[PATHNAME_SIZE];
 
-	cwd = getcwd(NULL, 0);
-	if (cwd == NULL)
+	if (getcwd(pathname, PATHNAME_SIZE) == NULL)
 	{
 		cd_cwd_error();
-		tmp = ft_strjoin(routing->src, "/");
+		tmp = ft_strjoin_with_sep(routing->src, path, '/');
 		if (tmp == NULL)
-			return (ERR_ALLOCATE_MEMORY);
-		free(routing->dist);
-		routing->dist = ft_strjoin(tmp, path);
-		if (routing->dist == NULL)
 		{
-			free(tmp);
+			malloc_error();
 			return (ERR_ALLOCATE_MEMORY);
 		}
-		free(tmp);
-		free(cwd);
+		free(routing->dist);
+		routing->dist = tmp;
 		return (ERR);
 	}
-	free(cwd);
 	return (OK);
 }

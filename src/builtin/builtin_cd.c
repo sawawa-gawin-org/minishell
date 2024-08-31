@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 09:13:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 19:42:57 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 22:14:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 		return (err);
 	status = update_pwd_and_oldpwd_env(routing.src, routing.dist, envlst);
 	free_all_params(&routing);
-	if (status != OK)
-		return (status);
-	return (OK);
+	return (status);
 }
 
 /**
