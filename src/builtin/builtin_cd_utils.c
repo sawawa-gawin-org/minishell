@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 22:37:05 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 22:48:59 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,10 @@ int	cd_check_err(char *path, t_cd_path_routing *routing)
 
 static int	cwd_check(char *path, t_cd_path_routing *routing)
 {
-	char	*cwd;
 	char	*tmp;
-	char	pathname[PATHNAME_SIZE];
+	char	cwd[PATHNAME_SIZE];
 
-	if (getcwd(pathname, PATHNAME_SIZE) == NULL)
+	if (getcwd(cwd, PATHNAME_SIZE) == NULL)
 	{
 		cd_cwd_error();
 		tmp = ft_strjoin_with_sep(routing->src, path, '/');
