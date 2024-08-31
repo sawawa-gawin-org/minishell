@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 06:35:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/17 17:22:26 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:39:25 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,6 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	(void)envp;
-
-	char *a;
-
-	a = strjoin_with_sep("key", "value", '=');
-	printf("%s\n", a);
-	free(a);
-	
-	a = strjoin_with_sep("key", NULL, '=');
-	printf("%s\n", a);
-	free(a);
-
-	a = strjoin_with_sep(NULL, "value", '=');
-	printf("%s\n", a);
-	free(a);
-
-	a = strjoin_with_sep(NULL, NULL, '=');
-	if (a == NULL)
-		printf("NULL\n");
-	else
-		printf("%s\n", a);
-	free(a);
-
 	env_lst = create_envlist(envp);
 	env_arr = create_env_arr_from_lst(env_lst, 0);
 	print_env_arr(env_arr);

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 10:44:28 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 03:15:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:45:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static char	*join_path_nodes(t_blst *path_node)
 		return (NULL);
 	while (path_node->u_data.str != NULL)
 	{
-		tmp_path = strjoin_with_sep(joined_path, path_node->u_data.str, '/');
+		tmp_path = ft_strjoin_with_sep(joined_path, path_node->u_data.str, '/');
 		if (tmp_path == NULL)
 		{
 			free(joined_path);

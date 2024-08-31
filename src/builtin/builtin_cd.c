@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 09:13:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/07 03:39:24 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 18:45:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static int	normalize_path(
 	if (routing->src == NULL)
 		return (ERR);
 	if (path[0] != '/')
-		abspath = strjoin_with_sep(routing->src, path, '/');
+		abspath = ft_strjoin_with_sep(routing->src, path, '/');
 	else
 		abspath = ft_strdup(path);
 	if (abspath == NULL)
