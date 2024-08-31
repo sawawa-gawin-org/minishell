@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/28 13:53:16 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 20:01:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ int				wait_processes(t_pipelst *pipe_node);
 char			**parse_cmd(t_tokenlst *token_list, t_pipex *pipe);
 char			**convert_tokenlst_to_char_array(
 					t_tokenlst *section_start_node);
-
-// find_cmd.c
-char			*find_cmd(char *path, char **env, int *status);
 
 // parse_redirects.c
 int				parse_redirects(t_tokenlst *now_node, t_pipex *pipe);
