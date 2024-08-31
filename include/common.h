@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/08/31 21:14:50 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 22:20:05 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,10 @@ int		malloc_error(void);
 int		cd_argc_err(void);
 int		cd_home_not_set_err(void);
 int		cd_option_err(char *cmd);
-int		cd_move_err(char *path);
 int		cd_cwd_error(void);
+int		cd_no_such_file_err(char *path);
+int		cd_not_a_directory_err(char *path);
+int		cd_permission_err(char *path);
 
 int		export_option_err(char flag_char);
 int		export_identifier_err(char *str);
