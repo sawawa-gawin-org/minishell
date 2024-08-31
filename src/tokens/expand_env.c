@@ -28,7 +28,8 @@ int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst)
 	while (tokendata->token_str[index.now] != '\0')
 	{
 		if (tokendata->token_str[index.now] == '$'
-			&& tokendata->token_str[index.now + 1] != '\0')
+			&& tokendata->token_str[index.now + 1] != '\0'
+			&& tokendata->token_str[index.now + 1] != '$')
 		{
 			buff = add_val_to_str(tokendata->token_str, buff, &index, env_lst);
 			if (!buff)
