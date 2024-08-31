@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 09:13:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 18:45:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 19:42:57 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "env.h"
 #include "dbllst.h"
 #include "libft.h"
+#include "path.h"
 
 static int	normalize_path(
 				char *path, t_blst *envlst, t_cd_path_routing *routing);

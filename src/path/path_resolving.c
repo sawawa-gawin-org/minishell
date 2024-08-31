@@ -1,17 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_cd_path_utils.c                            :+:      :+:    :+:   */
+/*   path_resolving.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 10:44:28 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 18:45:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 19:45:41 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin_int.h"
-#include "env.h"
+#include "path_int.h"
 #include "dbllst.h"
 #include "libft.h"
 
@@ -20,6 +19,12 @@ static char		*join_path_nodes(t_blst *path_node);
 static size_t	count_string_array(char **arr);
 static void		*free_path_arr(char **path_arr, size_t arr_size);
 
+/**
+ * Resolves the path of a given absolute path.
+ *
+ * @param abspath The absolute path to be resolved.
+ * @return The resolved path.
+ */
 char	*path_resolving(char *abspath)
 {
 	t_blst	*path_node;

@@ -20,7 +20,7 @@ SRCS += builtin_unset.c
 SRCS += builtin_echo.c
 SRCS += builtin_cd.c
 SRCS += builtin_cd_utils.c
-SRCS += builtin_cd_path_utils.c
+# SRCS += builtin_cd_path_utils.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -34,13 +34,13 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lenv -ldbllst -lcommon
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lenv_debug -ldbllst_debug -lcommon_debug
+LFLAGS := -L$(LIB_EXPORT_DIR) -lenv -lpath -ldbllst -lcommon
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lenv_debug -lpath_debug -ldbllst_debug -lcommon_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := env dbllst common 
-DEPENDENCY_LIB := libenv.a libdbllst.a libcommon.a
+DEPENDENCY := env dbllst common path
+DEPENDENCY_LIB := libenv.a libdbllst.a libcommon.a libpath.a
 
 # *****************************************************************************
 # From here onward is the same
