@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:38:35 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/14 09:19:47 by saraki           ###   ########.fr       */
+/*   Updated: 2024/08/31 19:52:29 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ int		update_or_create_env(char *key, char *value, t_blst **envlst);
 int		builtin_cd(char **cmd, t_blst **envlst, int mode);
 void	free_all_params(t_cd_path_routing *param);
 // builtin_cd_utils.c
-char	*allocate_cwd_path(t_blst *envlst);
 int		update_pwd_and_oldpwd_env(
 			char *old_pwd, char *new_pwd, t_blst **envlst);
 int		get_home_path(char **path, t_blst *envlst);
 int		cd_check_err(char *path, t_cd_path_routing *routing);
-// builtin_cd_path_utils.c
-char	*path_resolving(char *abspath);
 
 // builtin_echo.c
 int		builtin_echo(char **cmd, t_blst **envlst, int mode);

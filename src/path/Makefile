@@ -4,25 +4,13 @@ BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/../../)
 
 # Parameters
-LIB_NAME := libtokens.a
-HEADERS := tokens.h
-INT_HEADERS := tokens_int.h
+LIB_NAME := libpath.a
+HEADERS := path.h
+INT_HEADERS := path_int.h
 
 SRCS :=
 
-SRCS += delete_blank.c
-SRCS += delete_quote.c
-SRCS += expand_env.c
-SRCS += expand_env_util.c
-SRCS += expander.c
-SRCS += expander_util.c
-SRCS += parser.c
-SRCS += syntax_checker.c
-SRCS += tokenizer.c
-SRCS += tokenizer_util.c
-SRCS += error_print.c
-SRCS += heredoc.c
-SRCS += heredoc_util.c
+SRCS += 
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
@@ -36,13 +24,13 @@ SUB_OBJ_DIR := ./
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-LFLAGS := -L$(LIB_EXPORT_DIR) -lexec -ldbllst -lft -lcommon -lreadline 
-DLFLAGS := -L$(LIB_EXPORT_DIR) -lexec_debug -ldbllst_debug -lft_debug -lcommon_debug -lreadline 
+LFLAGS := -L$(LIB_EXPORT_DIR) -lenv -ldbllst -lcommon
+DLFLAGS := -L$(LIB_EXPORT_DIR) -lenv_env -ldbllst_debug -lcommon_debug
 DFLAGS := -fdiagnostics-color=always -g3 -fsanitize=address
 IFLAGS := -I$(HEADER_DIR)
 
-DEPENDENCY := libft dbllst exec common
-DEPENDENCY_LIB := libft.a libdbllst.a libexec.a libcommon.a
+DEPENDENCY := env dbllst common
+DEPENDENCY_LIB := env libdbllst.a libcommon.a
 
 # *****************************************************************************
 # From here onward is the same
