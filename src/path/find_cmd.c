@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/31 23:04:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/01 16:17:12 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ static void	find_cmd_error_handling(int status_int, char *cmd);
 
 char	*find_cmd(char *cmd, char **env, int *status)
 {
-	int		i;
 	char	*full_path;
 	int		status_int;
 
-	i = 0;
 	*status = GENERAL_ERR;
 	status_int = COMMAND_NOT_FOUND;
 	if (check_invaild_cmd(cmd, status))
@@ -34,11 +32,14 @@ char	*find_cmd(char *cmd, char **env, int *status)
 		if (status_int == COMMAND_NOT_FOUND)
 			status_int = NO_SUCH_FILE_OR_DIR;
 	}
-	while (ft_strchr(cmd, '/') == NULL && env[i])
+	while (ft_strchr(cmd, '/') == NULL && *env)
 	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-			full_path = find_path(cmd, env[i], status, &status_int);
-		i ++;
+		if (ft_strncmp(*env, "PATH=", 5) == 0)
+		{
+			full_path = find_path(cmd, *env, status, &status_int);
+			break ;
+		}
+		env ++;
 	}
 	find_cmd_error_handling(status_int, cmd);
 	return (full_path);
@@ -64,7 +65,7 @@ static void	find_cmd_error_handling(int status_int, char *cmd)
 		is_a_directory_error(cmd);
 	else if (status_int == PERMISSION_DENIED)
 		permission_denied_error(cmd);
-	else
+	else if (status_int == COMMAND_NOT_FOUND)
 		cmdnotfound_error(cmd);
 	return ;
 }
