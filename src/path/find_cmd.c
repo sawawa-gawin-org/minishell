@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 18:36:08 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/01 16:17:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/11 16:53:35 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*find_cmd(char *cmd, char **env, int *status)
 	char	*full_path;
 	int		status_int;
 
+	full_path = NULL;
 	*status = GENERAL_ERR;
 	status_int = COMMAND_NOT_FOUND;
 	if (check_invaild_cmd(cmd, status))
