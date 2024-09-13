@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 03:43:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/07/21 20:02:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/13 08:16:07 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	close_fds_in_processes(t_blst *pipe_head_node, int index);
 void	do_first_process(t_callback_parametors *params)
 {
 	close_fds_in_processes(params->pipe->head_node, params->pipe->index);
-	if (params->status != 0)
+	if (params->status != 0 || params->cmd == NULL)
 		exit(params->status);
 	dup2(params->pipe->pipe_in_fd, STDOUT_FILENO);
 	if (params->pipe->file_in_fd >= 0)
@@ -40,7 +40,7 @@ void	do_first_process(t_callback_parametors *params)
 
 void	do_middle_process(t_callback_parametors *params)
 {
-	if (params->status != 0)
+	if (params->status != 0 || params->cmd == NULL)
 		exit(params->status);
 	dup2(params->pipe->pipe_out_fd, STDIN_FILENO);
 	if (params->pipe->file_in_fd >= 0)
@@ -65,7 +65,7 @@ void	do_middle_process(t_callback_parametors *params)
 void	do_last_process(t_callback_parametors *params)
 {
 	close_fds_in_processes(params->pipe->head_node, params->pipe->index);
-	if (params->status != 0)
+	if (params->status != 0 || params->cmd == NULL)
 		exit(params->status);
 	dup2(params->pipe->pipe_out_fd, STDIN_FILENO);
 	if (params->pipe->file_in_fd >= 0)
