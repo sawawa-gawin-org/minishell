@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 20:01:23 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/13 07:22:00 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ int				init_pipeline(t_blst *pipe_node);
 int				wait_processes(t_pipelst *pipe_node);
 
 // parse_cmd.c
-char			**parse_cmd(t_tokenlst *token_list, t_pipex *pipe);
+char			**parse_cmd(t_tokenlst *token_list, t_pipex *pipe,
+					int *status);
 char			**convert_tokenlst_to_char_array(
 					t_tokenlst *section_start_node);
 

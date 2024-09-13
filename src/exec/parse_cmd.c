@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 07:27:21 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/10 10:36:52 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/13 07:17:32 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,23 @@ static t_tokenlst	*shift_token_section(
 						t_tokenlst *token_head_node, int index);
 static int			is_redirection(char *token);
 
-char	**parse_cmd(t_tokenlst *token_list, t_pipex *pipe)
+char	**parse_cmd(t_tokenlst *token_list, t_pipex *pipe, int *status)
 {
 	char		**cmd;
 	t_tokenlst	*start_node;
 
 	start_node = shift_token_section(token_list, pipe->index);
 	if (parse_redirects(start_node, pipe) != OK)
+	{
+		*status = GENERAL_ERR;
 		return (NULL);
+	}
 	cmd = convert_tokenlst_to_char_array(start_node);
 	if (cmd == NULL)
+	{
+		*status = GENERAL_ERR;
 		return (NULL);
+	}
 	return (cmd);
 }
 

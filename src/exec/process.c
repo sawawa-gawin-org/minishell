@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 20:37:00 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/13 08:16:57 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,19 @@ int	make_each_process(t_exec_parametors *param, t_callback callback)
 	t_callback_parametors	callback_args;
 
 	callback_args.pipe = param->pipe_list->u_data.pipe_data;
-	callback_args.cmd = parse_cmd(param->token_list, callback_args.pipe);
-	if (callback_args.cmd == NULL)
-		return (GENERAL_ERR);
 	callback_args.status = 0;
+	callback_args.cmd = parse_cmd(param->token_list, callback_args.pipe,
+			&(callback_args.status));
 	callback_args.path = NULL;
 	callback_args.env = param->env;
 	callback_args.env_lst = param->env_lst;
+	if (callback_args.cmd == NULL)
+		return (run_command(&callback_args, param, callback));
 	if (*(callback_args.cmd) == NULL)
 	{
 		free(callback_args.cmd);
-		return (OK);
+		callback_args.cmd = NULL;
+		return (run_command(&callback_args, param, callback));
 	}
 	if (!is_builtin(callback_args.cmd[0]))
 		callback_args.path = find_cmd(callback_args.cmd[0], param->env,
@@ -70,19 +72,20 @@ static int	run_command(t_callback_parametors *callback_args,
 
 	cmd = callback_args->cmd;
 	pipe_cnt = doub_lstcnt(param->pipe_list->u_data.pipe_data->head_node);
-	if (is_builtin(cmd[0]) && pipe_cnt == 1)
+	if (cmd != NULL && is_builtin(cmd[0]) && pipe_cnt == 1)
 		callback_args->status = call_builtin(
 				cmd, (void **) param->env_lst, IS_MAIN_PROCESS);
 	callback_args->pipe->pids = fork();
 	init_signal_by_pid(callback_args->pipe->pids);
 	if (callback_args->pipe->pids == 0)
 		callback(callback_args);
-	if (cmd[0] != NULL && ft_strcmp(cmd[0], "exit") == 0
+	if (cmd != NULL && cmd[0] != NULL && ft_strcmp(cmd[0], "exit") == 0
 		&& pipe_cnt == 1)
 		param->is_exit_called = 1;
 	if (callback_args->path != NULL)
 		free(callback_args->path);
-	free(callback_args->cmd);
+	if (callback_args->cmd != NULL)
+		free(callback_args->cmd);
 	if (callback_args->pipe->pids < 0)
 		return (GENERAL_ERR);
 	return (OK);
