@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 09:13:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/14 15:28:14 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:48:12 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,29 +98,29 @@ static int	normalize_path(
 
 static int	valid_option(char **cmd, char **path, t_blst *envlst)
 {
-	size_t	i;
 	int		flag_value;
 	int		options;
 
 	options = 0;
-	i = 1;
-	while (cmd[i] != NULL && ft_strncmp(cmd[i], "-", 1) == 0
-		&& ft_strcmp(cmd[i], "--"))
+	cmd++;
+	while (*cmd != NULL && !ft_strncmp(*cmd, "-", 1) && ft_strcmp(*cmd, "--"))
 	{
-		flag_value = flag_parser(cmd[i]);
+		flag_value = flag_parser(*cmd);
 		if (flag_value == ERR)
 			return (MISUSE_OF_SHELL_BUILTINS);
 		options |= flag_value;
-		if (options & GO_OLDPWD && cmd[i + 1] == NULL)
+		if (options & GO_OLDPWD && *(cmd + 1) == NULL)
 			return (get_oldpwd_path(path, envlst));
-		else if (options & GO_OLDPWD && cmd[i + 1] != NULL)
+		else if (options & GO_OLDPWD && *(cmd + 1) != NULL)
 			return (cd_argc_err());
-		i++;
+		cmd ++;
 	}
-	*path = cmd[i];
-	if (cmd[i] == NULL)
+	if (ft_strcmp(*cmd, "--") == 0)
+		cmd ++;
+	*path = *cmd;
+	if (*cmd == NULL)
 		return (get_home_path(path, envlst));
-	else if (cmd[i] != NULL && cmd[i + 1] != NULL)
+	else if (*cmd != NULL && *(cmd + 1) != NULL)
 		return (cd_argc_err());
 	return (OK);
 }
