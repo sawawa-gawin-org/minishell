@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 09:13:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 22:14:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 13:28:31 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 	int					options;
 	int					err;
 
-	if (mode == IS_CHILD_PROCESS)
-		return (OK);
 	status = valid_option(cmd, &path, &options, *envlst);
 	if (status > 0)
 		return (status);

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 03:43:11 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/13 08:16:07 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 13:27:54 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,14 @@ void	do_first_process(t_callback_parametors *params)
 		dup2(params->pipe->file_out_fd, STDOUT_FILENO);
 	}
 	if (is_builtin(params->cmd[0]))
-		exit(call_builtin(params->cmd, (void **) params->env_lst,
-				IS_CHILD_PROCESS));
+	{
+		if (ft_strcmp(params->cmd[0], "cd") == 0
+			&& doub_lstcnt(params->pipe->head_node) == 1)
+			exit(OK);
+		else
+			exit(call_builtin(params->cmd,
+					(void **) params->env_lst, IS_CHILD_PROCESS));
+	}
 	else
 		execve(params->path, params->cmd, params->env);
 }
