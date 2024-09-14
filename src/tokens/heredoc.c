@@ -6,22 +6,28 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/06/26 15:58:02 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 18:35:42 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
+#include "minishell.h"
 
-static int	get_and_replace_delim(t_blst *now_node);
-static char	*get_delimiter(t_blst *now_node);
-static int	replace_delim_as_tok(char *delimiter_str, t_blst **delimiter_node);
+static void	delete_delimiter_blank(t_blst **delim_nodes);
+static int	set_heredoc_string_to_node(t_token_data *delimiter_node);
+static char	*append_newline(char *history_str, char *line);
+static char	*read_heredoc_lines(char *delimiter);
 
-// #Description
-// Update the token string to the heredoc string.
-// allocate the input string used `add_history`.
+/**
+ * Parses the heredoc tokens.
+ *
+ * @param tokens_lst A pointer to the list of tokens.
+ * @return An integer indicating the success or failure of the parsing process.
+ */
 int	parse_heredoc(t_blst **tokens_lst)
 {
 	t_blst			*now_node;
+	t_blst			*delim_nodes;
 	t_token_data	*data;
 	int				err;
 
@@ -31,7 +37,10 @@ int	parse_heredoc(t_blst **tokens_lst)
 		data = now_node->u_data.token_data;
 		if (data->token_type == HEREDOC_FLAG)
 		{
-			err = get_and_replace_delim(now_node);
+			delim_nodes = now_node->next;
+			delete_delimiter_blank(&delim_nodes);
+			concat_tokens_node(&delim_nodes);
+			err = set_heredoc_string_to_node(delim_nodes->u_data.token_data);
 			if (err == ERR || err == ERR_SIGINT)
 				return (err);
 			now_node = now_node->next;
@@ -41,51 +50,84 @@ int	parse_heredoc(t_blst **tokens_lst)
 	return (OK);
 }
 
-static int	get_and_replace_delim(t_blst *now_node)
+static void	delete_delimiter_blank(t_blst **delim_nodes)
 {
-	char	*delimiter_str;
-	int		err;
+	t_blst			*base_node;
+	t_token_data	*data;
 
-	delimiter_str = get_delimiter(now_node);
-	if (delimiter_str == NULL)
-		return (ERR);
-	if (now_node->next->u_data.token_data->token_type == SPACE_FLAG)
-		err = replace_delim_as_tok(delimiter_str, &(now_node->next->next));
-	else
-		err = replace_delim_as_tok(delimiter_str, &(now_node->next));
-	free(delimiter_str);
-	return (err);
+	base_node = (*delim_nodes)->prev;
+	while ((*delim_nodes)->u_data.token_data != NULL
+		&& (*delim_nodes)->u_data.token_data->token_type != META_FLAG)
+	{
+		data = (*delim_nodes)->u_data.token_data;
+		if (data->token_type == SPACE_FLAG)
+			purge_token_node(delim_nodes);
+		else
+			(*delim_nodes) = (*delim_nodes)->next;
+	}
+	*delim_nodes = base_node->next;
+	return ;
 }
 
-static int	replace_delim_as_tok(char *delimiter_str,
-		t_blst **delimiter_node)
+static int	set_heredoc_string_to_node(t_token_data *delimiter_node)
 {
-	t_token_data	*delimiter_data;
-	int				err;
+	char	*lines;
 
-	if (delimiter_str == NULL || delimiter_node == NULL
-		|| *delimiter_node == NULL)
+	init_signal(handler_for_heredoc_readline, SIG_IGN);
+	init_rl_for_heredoc();
+	lines = read_heredoc_lines(delimiter_node->token_str);
+	if (lines == NULL)
 		return (ERR);
-	delimiter_data = (*delimiter_node)->u_data.token_data;
-	err = set_heredoc_string_to_node(delimiter_str, delimiter_data);
-	return (err);
+	if (g_signal != 0)
+	{
+		if (lines != NULL)
+			free(lines);
+		return (ERR_SIGINT);
+	}
+	free(delimiter_node->token_str);
+	delimiter_node->token_str = lines;
+	return (OK);
 }
 
-static char	*get_delimiter(t_blst *now_node)
+static char	*read_heredoc_lines(char *delimiter)
 {
-	size_t	i;
-	char	*delimiter_str;
+	char	*line;
+	char	*all_lines;
+
+	all_lines = ft_strdup("");
+	if (all_lines == NULL)
+		return (NULL);
+	while (1)
+	{
+		line = readline("> ");
+		if (line == NULL && g_signal == 0)
+			ft_putstr_fd("\n", 2);
+		if (line == NULL || g_signal != 0)
+			break ;
+		if (ft_strcmp(line, delimiter) == 0)
+			break ;
+		all_lines = append_newline(all_lines, line);
+		free(line);
+		if (all_lines == NULL)
+			break ;
+	}
+	if (line != NULL)
+		free(line);
+	return (all_lines);
+}
+
+static char	*append_newline(char *all_line, char *line)
+{
 	char	*ret;
+	char	*ret_with_nl;
 
-	if (now_node->next->u_data.token_data->token_type == SPACE_FLAG)
-		delimiter_str = now_node->next->next->u_data.token_data->token_str;
-	else
-		delimiter_str = now_node->next->u_data.token_data->token_str;
-	i = 0;
-	while (delimiter_str[i] != '\0' && delimiter_str[i] != '\n')
-		i++;
-	ret = ft_substr(delimiter_str, 0, i);
+	ret = ft_strjoin(all_line, line);
+	free(all_line);
 	if (ret == NULL)
 		return (NULL);
-	return (ret);
+	ret_with_nl = ft_strjoin(ret, "\n");
+	free(ret);
+	if (ret_with_nl == NULL)
+		return (NULL);
+	return (ret_with_nl);
 }

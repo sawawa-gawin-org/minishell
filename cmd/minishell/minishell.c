@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/19 04:41:11 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 19:12:16 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static int	main_loop(void *env_lst)
 
 static int	execute(char *line, void *env_lst, void **tokens_lst)
 {
-	int	status;
+	int	exit_status;
 
 	add_history(line);
 	if (!syntax_checker(*tokens_lst, cmp_syntax))
@@ -112,20 +112,20 @@ static int	execute(char *line, void *env_lst, void **tokens_lst)
 			return (ERR);
 		return (CONTINUE);
 	}
-	status = parser(tokens_lst, &env_lst);
-	if (status == ERR)
+	exit_status = parser(tokens_lst, &env_lst);
+	if (exit_status == ERR)
 		return (ERR);
-	if (g_signal == 0 && status == OK)
+	if (g_signal == 0 && exit_status == OK)
 	{
-		if (exec_tokenslst_cmds(*tokens_lst, &env_lst, &status))
+		if (exec_tokenslst_cmds(*tokens_lst, &env_lst, &exit_status))
 			return (ERR);
-		if (status == EXIT_CALLED)
+		if (exit_status == EXIT_CALLED)
 			return (EXIT_CALLED);
 	}
 	else if (g_signal != 0)
-		status = g_signal + 128;
+		exit_status = g_signal + 128;
 	g_signal = 0;
-	if (add_exit_status_as_env(&env_lst, status))
+	if (add_exit_status_as_env(&env_lst, exit_status))
 		return (ERR);
 	return (OK);
 }
