@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/04 11:10:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 22:48:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 14:59:14 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,28 +38,6 @@ char	*allocate_cwd_path(t_blst *envlst)
 }
 
 /**
- * Updates the PWD and OLDPWD environment variables with the given paths.
- *
- * @param old_pwd The old working directory path.
- * @param new_pwd The new working directory path.
- * @param envlst  A pointer to the linked list of environment variables.
- * @return        Returns OK on success, ERR on failure.
- * @note          It doesn't matter if the both parameters are allocated or not.
- */
-int	update_pwd_and_oldpwd_env(char *old_pwd, char *new_pwd, t_blst **envlst)
-{
-	int		status;
-
-	if (old_pwd == NULL || new_pwd == NULL)
-		return (GENERAL_ERR);
-	status = OK;
-	status = update_or_create_env("OLDPWD", old_pwd, envlst);
-	if (status == OK)
-		status = update_or_create_env("PWD", new_pwd, envlst);
-	return (status);
-}
-
-/**
  * @brief Get the home path.
  *
  * This function retrieves the home path from the environment list
@@ -88,6 +66,23 @@ int	get_home_path(char **path, t_blst *envlst)
 	return (OK);
 }
 
+int	get_oldpwd_path(char **path, t_blst *envlst)
+{
+	t_blst	*target_node;
+
+	target_node = (t_blst *)doub_lstsearch(envlst, "OLDPWD", cmp_key);
+	if (target_node->u_data.env_data == NULL
+		|| target_node->u_data.env_data->val == NULL)
+		return (cd_oldpwd_not_set_err());
+	if (ft_strcmp(target_node->u_data.env_data->val, "") == 0)
+		*path = NULL;
+	else
+		*path = target_node->u_data.env_data->val;
+	if (*path == NULL)
+		return (cd_oldpwd_not_set_err());
+	return (OK);
+}
+
 int	cd_check_err(char *path, t_cd_path_routing *routing)
 {
 	int	err;
@@ -104,7 +99,10 @@ int	cd_check_err(char *path, t_cd_path_routing *routing)
 		cd_permission_err(path);
 	else
 		cd_no_such_file_err(path);
-	free_all_params(routing);
+	if (routing->src != NULL)
+		free(routing->src);
+	if (routing->dist != NULL)
+		free(routing->dist);
 	return (GENERAL_ERR);
 }
 

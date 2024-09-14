@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/03 09:13:18 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 22:14:27 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 15:48:12 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@
 
 static int	normalize_path(
 				char *path, t_blst *envlst, t_cd_path_routing *routing);
-static int	valid_option(
-				char **cmd, char **path, int *options, t_blst *envlst);
+static int	valid_option(char **cmd, char **path, t_blst *envlst);
 static int	flag_parser(char *flag_str);
+static int	update_pwd_and_oldpwd_env(
+				char *old_pwd,
+				char *new_pwd,
+				t_blst **envlst);
 
 /**
  * @brief Executes the built-in command "cd".
@@ -37,12 +40,10 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 	t_cd_path_routing	routing;
 	int					status;
 	char				*path;
-	int					options;
 	int					err;
 
-	if (mode == IS_CHILD_PROCESS)
-		return (OK);
-	status = valid_option(cmd, &path, &options, *envlst);
+	(void) mode;
+	status = valid_option(cmd, &path, *envlst);
 	if (status > 0)
 		return (status);
 	if (normalize_path(path, *envlst, &routing) > 0)
@@ -51,7 +52,10 @@ int	builtin_cd(char **cmd, t_blst **envlst, int mode)
 	if (err == ERR_ALLOCATE_MEMORY || err == GENERAL_ERR)
 		return (err);
 	status = update_pwd_and_oldpwd_env(routing.src, routing.dist, envlst);
-	free_all_params(&routing);
+	if (routing.src != NULL)
+		free(routing.src);
+	if (routing.dist != NULL)
+		free(routing.dist);
 	return (status);
 }
 
@@ -92,58 +96,83 @@ static int	normalize_path(
 	return (OK);
 }
 
-static int	valid_option(char **cmd, char **path, int *options, t_blst *envlst)
+static int	valid_option(char **cmd, char **path, t_blst *envlst)
 {
-	size_t	i;
 	int		flag_value;
+	int		options;
 
-	*path = NULL;
-	i = 1;
-	while (cmd[i] != NULL && ft_strncmp(cmd[i], "-", 1) == 0)
+	options = 0;
+	cmd++;
+	while (*cmd != NULL && !ft_strncmp(*cmd, "-", 1) && ft_strcmp(*cmd, "--"))
 	{
-		flag_value = flag_parser(cmd[i]);
+		flag_value = flag_parser(*cmd);
 		if (flag_value == ERR)
-			return (cd_option_err(cmd[i]));
-		*options |= flag_value;
-		i++;
+			return (MISUSE_OF_SHELL_BUILTINS);
+		options |= flag_value;
+		if (options & GO_OLDPWD && *(cmd + 1) == NULL)
+			return (get_oldpwd_path(path, envlst));
+		else if (options & GO_OLDPWD && *(cmd + 1) != NULL)
+			return (cd_argc_err());
+		cmd ++;
 	}
-	if (cmd[i] != NULL)
-		*path = cmd[i];
-	else if (cmd[i] != NULL && cmd[i + 1] != NULL)
-		return (cd_argc_err());
-	else
+	if (ft_strcmp(*cmd, "--") == 0)
+		cmd ++;
+	*path = *cmd;
+	if (*cmd == NULL)
 		return (get_home_path(path, envlst));
+	else if (*cmd != NULL && *(cmd + 1) != NULL)
+		return (cd_argc_err());
 	return (OK);
 }
 
 static int	flag_parser(char *flag_str)
 {
+	size_t	i;
 	int		flag;
 
-	flag_str ++;
+	i = 1;
 	flag = 0;
-	while (*flag_str)
+	if (ft_strcmp(flag_str, "-") == 0)
+		return (GO_OLDPWD);
+	while (flag_str[i])
 	{
-		if (*flag_str == 'L')
-			flag |= L_FLAG;
-		else if (*flag_str == 'P')
-			flag |= P_FLAG;
-		else if (*flag_str == 'e')
-			flag |= E_FLAG;
-		else if (*flag_str == '@')
-			flag |= AT_FLAG;
-		else
+		if (flag_str[i] == 'L' || flag_str[i] == 'P'
+			|| flag_str[i] == 'e' || flag_str[i] == '@')
+		{
+			cd_unimplemented_option_err(flag_str);
 			return (ERR);
-		flag_str++;
+		}
+		else
+		{
+			cd_option_err(flag_str);
+			return (ERR);
+		}
+		i ++;
 	}
 	return (flag);
 }
 
-void	free_all_params(t_cd_path_routing *param)
+/**
+ * Updates the PWD and OLDPWD environment variables with the given paths.
+ *
+ * @param old_pwd The old working directory path.
+ * @param new_pwd The new working directory path.
+ * @param envlst  A pointer to the linked list of environment variables.
+ * @return        Returns OK on success, ERR on failure.
+ * @note          It doesn't matter if the both parameters are allocated or not.
+ */
+static int	update_pwd_and_oldpwd_env(
+				char *old_pwd,
+				char *new_pwd,
+				t_blst **envlst)
 {
-	if (param->src != NULL)
-		free(param->src);
-	if (param->dist != NULL)
-		free(param->dist);
-	return ;
+	int		status;
+
+	if (old_pwd == NULL || new_pwd == NULL)
+		return (GENERAL_ERR);
+	status = OK;
+	status = update_or_create_env("OLDPWD", old_pwd, envlst);
+	if (status == OK)
+		status = update_or_create_env("PWD", new_pwd, envlst);
+	return (status);
 }
