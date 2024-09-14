@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/13 08:56:58 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/14 11:04:45 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 12:01:40 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	wait_processes(t_pipelst *pipe_node)
 	}
 	if (err != 0)
 		return (err);
-	return (check_status(pipe_node->next->u_data.pipe_data->exit_status));
+	return (check_status(pipe_node->prev->u_data.pipe_data->exit_status));
 }
 
 static int	cmp_pid(void *data, void *query_pt)
