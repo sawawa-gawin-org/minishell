@@ -11,9 +11,8 @@ INT_HEADERS := exec_int.h
 SRCS :=
 
 SRCS += exec.c
-# SRCS += find_cmd.c
 SRCS += process.c
-SRCS += process_utils.c
+SRCS += process_wait.c
 SRCS += process_callback.c
 SRCS += parse_cmd.c
 SRCS += parse_redirects.c

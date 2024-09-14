@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:23:14 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/13 07:22:00 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/13 09:05:53 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,15 @@ int				exec(
 // process.c
 int				make_each_process(
 					t_exec_parametors *param, t_callback callback);
-
-// process_utils.c
 int				init_pipeline(t_blst *pipe_node);
+
+// process_wait.c
 int				wait_processes(t_pipelst *pipe_node);
+
+// process_callback.c
+void			do_first_process(t_callback_parametors *params);
+void			do_middle_process(t_callback_parametors *params);
+void			do_last_process(t_callback_parametors *params);
 
 // parse_cmd.c
 char			**parse_cmd(t_tokenlst *token_list, t_pipex *pipe,
@@ -73,10 +78,5 @@ int				parse_redirects(t_tokenlst *now_node, t_pipex *pipe);
 // parse_redirects_util.c
 int				open_existing_file_for_write(char *dist, int appendflag);
 int				open_file_for_read(char *dist);
-
-// process_callback.c
-void			do_first_process(t_callback_parametors *params);
-void			do_middle_process(t_callback_parametors *params);
-void			do_last_process(t_callback_parametors *params);
 
 #endif

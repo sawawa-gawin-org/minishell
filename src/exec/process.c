@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:25:30 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/13 08:16:57 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/13 09:04:20 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 static int	run_command(t_callback_parametors *callback_args,
 				t_exec_parametors *param, t_callback callback);
+static int	pipe_fds(int *out_fd, int *in_fd);
 static void	init_signal_by_pid(pid_t pid);
 
 /**
@@ -97,4 +98,36 @@ static void	init_signal_by_pid(pid_t pid)
 		init_signal(SIG_DFL, SIG_DFL);
 	else
 		init_signal(SIG_IGN, SIG_IGN);
+}
+
+int	init_pipeline(t_pipelst *pipe_node)
+{
+	t_pipex	*pipe;
+	t_pipex	*next_pipe;
+
+	while (pipe_node->u_data.pipe_data != NULL)
+	{
+		pipe = (t_pipex *) pipe_node->u_data.pipe_data;
+		if (pipe_node->next->u_data.pipe_data != NULL)
+		{
+			next_pipe = pipe_node->next->u_data.pipe_data;
+			if (pipe_fds(&next_pipe->pipe_out_fd, &pipe->pipe_in_fd))
+				return (ERR);
+		}
+		pipe_node = pipe_node->next;
+	}
+	return (OK);
+}
+
+static int	pipe_fds(int *out_fd, int *in_fd)
+{
+	int	pipe_fd[2];
+
+	pipe_fd[0] = *out_fd;
+	pipe_fd[1] = *in_fd;
+	if (pipe(pipe_fd) < 0)
+		return (ERR);
+	*out_fd = pipe_fd[0];
+	*in_fd = pipe_fd[1];
+	return (OK);
 }
