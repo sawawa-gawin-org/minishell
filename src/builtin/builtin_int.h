@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 15:38:35 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/31 20:05:59 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/14 14:59:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ enum			e_CD_MODE
 	P_FLAG = 1 << 2,
 	E_FLAG = 1 << 3,
 	AT_FLAG = 1 << 4,
+	GO_OLDPWD = 1 << 5,
 };
 
 // core.c
@@ -38,12 +39,11 @@ int		update_or_create_env(char *key, char *value, t_blst **envlst);
 
 // builtin_cd.c
 int		builtin_cd(char **cmd, t_blst **envlst, int mode);
-void	free_all_params(t_cd_path_routing *param);
+
 // builtin_cd_utils.c
 char	*allocate_cwd_path(t_blst *envlst);
-int		update_pwd_and_oldpwd_env(
-			char *old_pwd, char *new_pwd, t_blst **envlst);
 int		get_home_path(char **path, t_blst *envlst);
+int		get_oldpwd_path(char **path, t_blst *envlst);
 int		cd_check_err(char *path, t_cd_path_routing *routing);
 
 // builtin_echo.c
