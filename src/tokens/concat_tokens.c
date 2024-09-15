@@ -6,17 +6,40 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:31:36 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/15 02:50:06 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 04:48:37 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-static int		join_consecutive_token(t_blst *now, t_blst **next);
+static int		join_consecutive_token(t_blst *now, t_blst **next, int is_delim_mode);
 static int		is_consecutive_types(int now, int next);
 static t_tokens	select_concat_type(t_tokens now, t_tokens next);
 
-int	concat_tokens_node(t_blst **tokens_lst)
+int	concat_consecutive_tokens_node(t_blst **tokens_lst)
+{
+	t_blst			*now;
+	t_blst			*next;
+
+	now = *tokens_lst;
+	while (now->u_data.token_data != NULL)
+	{
+		next = now->next;
+		if (next->u_data.token_data == NULL)
+			break ;
+		if (is_consecutive_types(now->u_data.token_data->token_type,
+				next->u_data.token_data->token_type))
+		{
+			if (join_consecutive_token(now, &next, 0))
+				return (ERR_ALLOCATE_MEMORY);
+		}
+		else
+			now = now->next;
+	}
+	return (OK);
+}
+
+int	concat_delim_tokens_node(t_blst **tokens_lst)
 {
 	t_blst			*now;
 	t_blst			*next;
@@ -32,7 +55,7 @@ int	concat_tokens_node(t_blst **tokens_lst)
 		if (is_consecutive_types(now->u_data.token_data->token_type,
 				next->u_data.token_data->token_type))
 		{
-			if (join_consecutive_token(now, &next))
+			if (join_consecutive_token(now, &next, 1))
 				return (ERR_ALLOCATE_MEMORY);
 		}
 		else
@@ -41,7 +64,7 @@ int	concat_tokens_node(t_blst **tokens_lst)
 	return (OK);
 }
 
-static int	join_consecutive_token(t_blst *now, t_blst **next)
+static int	join_consecutive_token(t_blst *now, t_blst **next, int is_delim_mode)
 {
 	char	*str1;
 	char	*str2;
@@ -54,9 +77,10 @@ static int	join_consecutive_token(t_blst *now, t_blst **next)
 		return (ERR_ALLOCATE_MEMORY);
 	free(str1);
 	now->u_data.token_data->token_str = new_str;
-	now->u_data.token_data->token_type = select_concat_type(
-			now->u_data.token_data->token_type,
-			(*next)->u_data.token_data->token_type);
+	if (is_delim_mode)
+		now->u_data.token_data->token_type = select_concat_type(
+				now->u_data.token_data->token_type,
+				(*next)->u_data.token_data->token_type);
 	purge_token_node(next);
 	return (OK);
 }

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/14 19:25:22 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 04:42:45 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ int			is_val(char *str);
 
 /* parser */
 // concat_tokens.c
-int			concat_tokens_node(t_blst **tokens_lst);
+// int			concat_tokens_node(t_blst **tokens_lst);
+int			concat_consecutive_tokens_node(t_blst **tokens_lst);
+int			concat_delim_tokens_node(t_blst **tokens_lst);
+
 
 // syntax_checker.c
 int			syntax_checker(t_blst *lst, t_cmp_f cmp_f);

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/14 19:17:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 04:43:51 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	parser(t_blst **tokens_lst, t_blst **env_lst)
 	err = expantion(tokens_lst, *env_lst);
 	if (err != OK)
 		return (err);
-	if (concat_tokens_node(tokens_lst))
+	if (concat_consecutive_tokens_node(tokens_lst))
 		return (ERR);
 	delete_blank(tokens_lst);
 	return (OK);
