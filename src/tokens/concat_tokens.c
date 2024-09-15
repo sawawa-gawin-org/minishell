@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:31:36 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/14 18:59:10 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 02:50:06 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	concat_tokens_node(t_blst **tokens_lst)
 	now = *tokens_lst;
 	while (now->u_data.token_data != NULL)
 	{
+		if (now->u_data.token_data->token_type == TOKEN_FLAG)
+			now->u_data.token_data->token_type = VAL_FLAG;
 		next = now->next;
 		if (next->u_data.token_data == NULL)
 			break ;

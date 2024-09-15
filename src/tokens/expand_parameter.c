@@ -1,21 +1,90 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_env.c                                       :+:      :+:    :+:   */
+/*   expand_parameter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 17:58:13 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/29 19:35:49 by saraki           ###   ########.fr       */
+/*   Created: 2024/08/23 09:07:46 by syamasaw          #+#    #+#             */
+/*   Updated: 2024/09/15 02:57:08 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
+static int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst);
 static int	overwite_token_str(
 				t_token_data *token, char *buff, int now, int old);
+static int	check_ambigious_redir(t_blst *tokens_lst);
+static int	find_illegal_blank(char *str);
 
-int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst)
+// GENERAL_ERR: bash error
+// ERR: malloc error
+int	expand_parameter(t_blst **tokens_lst, t_blst *env_lst)
+{
+	t_token_data	*data;
+	char			*tmp;
+
+	data = (*tokens_lst)->u_data.token_data;
+	tmp = ft_strdup(data->token_str);
+	if (tmp == NULL)
+		return (ERR);
+	if (expand_env_as_str(data, env_lst) == ERR)
+		return (ERR);
+	if (find_illegal_blank(data->token_str) != OK \
+		&& data->token_type != DOUBLE_QUOTE_VAL_FLAG)
+	{
+		if (check_ambigious_redir((*tokens_lst)->prev) != OK)
+		{
+			ambiguous_redir_err(tmp);
+			free(tmp);
+			return (GENERAL_ERR);
+		}
+	}
+	free(tmp);
+	return (OK);
+}
+
+static int	check_ambigious_redir(t_blst *tokens_lst)
+{
+	t_token_data	*data;
+
+	while (tokens_lst->u_data.token_data != NULL)
+	{
+		data = tokens_lst->u_data.token_data;
+		if (data->token_type & SPACE_FLAG)
+			tokens_lst = tokens_lst->prev;
+		else if (data->token_type & (LESS_FLAG | GREAT_FLAG | APPEND_FLAG))
+			return (ERR);
+		else
+			break ;
+	}
+	return (OK);
+}
+
+static int	find_illegal_blank(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && is_blank(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return (ERR);
+	while (str[i] != '\0' && !is_blank(str[i]))
+		i++;
+	if (str[i] == '\0')
+		return (OK);
+	while (str[i] != '\0')
+	{
+		if (!is_blank(str[i]))
+			return (ERR);
+		i++;
+	}
+	return (OK);
+}
+
+static int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst)
 {
 	t_indexes		index;
 	char			*buff;
@@ -24,7 +93,7 @@ int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst)
 	index.old = 0;
 	buff = (char *)ft_calloc(1, sizeof(char));
 	if (!buff)
-		return (0);
+		return (ERR);
 	while (tokendata->token_str[index.now] != '\0')
 	{
 		if (tokendata->token_str[index.now] == '$'
@@ -33,7 +102,7 @@ int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst)
 		{
 			buff = add_val_to_str(tokendata->token_str, buff, &index, env_lst);
 			if (!buff)
-				return (0);
+				return (ERR);
 			index.now += 1 + get_val_len(tokendata->token_str, index.now + 1);
 			index.old = index.now;
 		}
@@ -61,10 +130,10 @@ static int	overwite_token_str(
 	{
 		current = ft_substr(token->token_str, old, now - old);
 		if (!current)
-			return (0);
+			return (ERR);
 		new_str = strjoin_allfree(buff, current);
 		if (!new_str)
-			return (0);
+			return (ERR);
 		free(token->token_str);
 		token->token_str = new_str;
 	}
@@ -73,7 +142,8 @@ static int	overwite_token_str(
 		free(token->token_str);
 		token->token_str = buff;
 	}
+	token->token_type = TOKEN_FLAG;
 	if (token->token_str == NULL)
-		return (0);
-	return (1);
+		return (ERR);
+	return (OK);
 }

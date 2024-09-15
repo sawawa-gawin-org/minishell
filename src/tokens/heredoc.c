@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:41:27 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/14 18:35:42 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 02:49:01 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,9 @@ int	parse_heredoc(t_blst **tokens_lst)
 		{
 			delim_nodes = now_node->next;
 			delete_delimiter_blank(&delim_nodes);
-			concat_tokens_node(&delim_nodes);
+			err = concat_tokens_node(&delim_nodes);
+			if (err == ERR)
+				return (err);
 			err = set_heredoc_string_to_node(delim_nodes->u_data.token_data);
 			if (err == ERR || err == ERR_SIGINT)
 				return (err);

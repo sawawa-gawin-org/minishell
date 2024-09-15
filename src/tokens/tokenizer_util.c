@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/05/12 12:40:47 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 02:59:24 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static size_t	detect_token_len(char *line, int target_type)
 	else if (target_type == WORD_FLAG)
 	{
 		len = 0;
-		while (line[0] != '\0' && ft_strchr("<>|\"\'", line[len]) == NULL \
+		while (line[0] != '\0' && ft_strchr("<>|\"\'", line[len]) == NULL
 				&& is_blank(line[len]) == 0)
 			len++;
 	}
