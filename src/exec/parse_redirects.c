@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/15 19:11:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 10:24:58 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,23 @@ int	parse_redirects(t_tokenlst *now_node, t_pipex *pipe)
 static int	redirection(t_tokenlst *now_node, t_pipex *pipe)
 {
 	t_tokens		symbol;
+	t_tokens		ambiguous_flag;
 	t_token_data	*dist;
 	int				err;
 
 	symbol = now_node->u_data.token_data->token_type;
 	dist = now_node->next->u_data.token_data;
+	ambiguous_flag = AMBIGUOUS_REDIRECTION_FLAG;
 	err = OK;
-	if (symbol == GREAT_FLAG && dist->token_type != AMBIGUOUS_REDIRECTION_FLAG)
+	if (symbol == GREAT_FLAG && dist->token_type != ambiguous_flag)
 		err = open_out_files(dist->token_str, pipe, 0);
-	else if (symbol == APPEND_FLAG && dist->token_type != AMBIGUOUS_REDIRECTION_FLAG)
+	else if (symbol == APPEND_FLAG && dist->token_type != ambiguous_flag)
 		err = open_out_files(dist->token_str, pipe, 1);
-	else if (symbol == LESS_FLAG && dist->token_type != AMBIGUOUS_REDIRECTION_FLAG)
+	else if (symbol == LESS_FLAG && dist->token_type != ambiguous_flag)
 		err = open_in_files(dist->token_str, pipe, 0);
-	else if (symbol == HEREDOC_FLAG && dist->token_type != AMBIGUOUS_REDIRECTION_FLAG)
+	else if (symbol == HEREDOC_FLAG && dist->token_type != ambiguous_flag)
 		err = open_in_files(dist->token_str, pipe, 1);
-	else if (dist->token_type == AMBIGUOUS_REDIRECTION_FLAG)
+	else if (dist->token_type == ambiguous_flag)
 		err = ambiguous_redir_err(dist->token_str);
 	return (err);
 }
