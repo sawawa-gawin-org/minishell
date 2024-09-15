@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:07:46 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/15 06:04:31 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 17:37:20 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,26 @@ static int	find_illegal_blank(char *str);
 int	expand_parameter(t_blst **tokens_lst, t_blst *env_lst)
 {
 	t_token_data	*data;
-	char			*tmp;
+	char			*string_before_expantion;
 
 	data = (*tokens_lst)->u_data.token_data;
-	tmp = ft_strdup(data->token_str);
-	if (tmp == NULL)
+	string_before_expantion = ft_strdup(data->token_str);
+	if (string_before_expantion == NULL)
 		return (ERR);
 	if (expand_env_as_str(data, env_lst) == ERR)
 		return (ERR);
-	if (find_illegal_blank(data->token_str) != OK \
+	if (find_illegal_blank(data->token_str) != OK
 		&& data->token_type != DOUBLE_QUOTE_VAL_FLAG)
 	{
 		if (check_ambigious_redir((*tokens_lst)->prev) != OK)
 		{
-			ambiguous_redir_err(tmp);
-			free(tmp);
-			return (GENERAL_ERR);
+			free(data->token_str);
+			data->token_type = AMBIGUOUS_REDIRECTION_FLAG;
+			data->token_str = string_before_expantion;
+			return (OK);
 		}
 	}
-	free(tmp);
+	free(string_before_expantion);
 	return (OK);
 }
 
