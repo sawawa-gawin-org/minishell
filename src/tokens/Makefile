@@ -10,19 +10,17 @@ INT_HEADERS := tokens_int.h
 
 SRCS :=
 
+SRCS += concat_tokens.c
 SRCS += delete_blank.c
 SRCS += delete_quote.c
-SRCS += expand_env.c
-SRCS += expand_env_util.c
-SRCS += expander.c
-SRCS += expander_util.c
 SRCS += parser.c
+SRCS += expand_parameter.c
+SRCS += expand_parameter_util.c
 SRCS += syntax_checker.c
 SRCS += tokenizer.c
 SRCS += tokenizer_util.c
 SRCS += error_print.c
 SRCS += heredoc.c
-SRCS += heredoc_util.c
 
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
