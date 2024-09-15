@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 15:00:28 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/24 09:53:35 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 09:40:49 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,16 @@ static int	open_and_send_string_to_fd(char *str);
 // remove ">", ">>", "<", "<<"
 int	parse_redirects(t_tokenlst *now_node, t_pipex *pipe)
 {
-	char		*token;
+	t_token_data	*token_data;
+	t_tokens		type;
 
-	token = now_node->u_data.str;
-	while (now_node->u_data.str != NULL && ft_strcmp(token, "|") != 0)
+	token_data = now_node->u_data.token_data;
+	while (now_node->u_data.token_data != NULL
+		&& token_data->token_type != TUBE_FLAG)
 	{
-		token = now_node->u_data.str;
-		if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0
-			|| ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
+		token_data = now_node->u_data.token_data;
+		type = token_data->token_type;
+		if (type & (LESS_FLAG | GREAT_FLAG | HEREDOC_FLAG | APPEND_FLAG))
 		{
 			if (redirection(now_node, pipe))
 				return (ERR);
@@ -41,21 +43,21 @@ int	parse_redirects(t_tokenlst *now_node, t_pipex *pipe)
 
 static int	redirection(t_tokenlst *now_node, t_pipex *pipe)
 {
-	t_tokenlst	*symbol;
-	t_tokenlst	*dist;
+	t_tokens	symbol;
+	char		*dist;
 	int			err;
 
-	symbol = now_node;
-	dist = now_node->next;
+	symbol = now_node->u_data.token_data->token_type;
+	dist = now_node->next->u_data.token_data->token_str;
 	err = OK;
-	if (ft_strcmp(symbol->u_data.str, ">") == 0)
-		err = open_out_files(dist->u_data.str, pipe, 0);
-	else if (ft_strcmp(symbol->u_data.str, ">>") == 0)
-		err = open_out_files(dist->u_data.str, pipe, 1);
-	else if (ft_strcmp(symbol->u_data.str, "<") == 0)
-		err = open_in_files(dist->u_data.str, pipe, 0);
-	else if (ft_strcmp(symbol->u_data.str, "<<") == 0)
-		err = open_in_files(dist->u_data.str, pipe, 1);
+	if (symbol == GREAT_FLAG)
+		err = open_out_files(dist, pipe, 0);
+	else if (symbol == APPEND_FLAG)
+		err = open_out_files(dist, pipe, 1);
+	else if (symbol == LESS_FLAG)
+		err = open_in_files(dist, pipe, 0);
+	else if (symbol == HEREDOC_FLAG)
+		err = open_in_files(dist, pipe, 1);
 	if (err == ERR)
 		return (ERR);
 	return (OK);

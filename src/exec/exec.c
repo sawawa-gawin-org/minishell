@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/03 17:22:09 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/29 21:11:30 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 09:35:11 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,16 @@ int	exec(t_tokenlst **token_head_node, char **env, t_blst **env_lst)
  * @param token_head_node The head node of the token list.
  * @return A pointer to the initialized pipe list.
  */
-static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
+static t_pipelst	*init_pipe_lst(t_tokenlst *token_node)
 {
 	int			index;
 	t_pipelst	*pipe_head_node;
 	t_pipelst	*new_node;
-	t_tokenlst	*token_node;
 
 	index = 0;
-	token_node = token_head_node;
 	pipe_head_node = doub_lstnew(NULL);
-	while (pipe_head_node != NULL && token_node->u_data.str != NULL)
+	while (pipe_head_node != NULL
+		&& token_node->u_data.token_data != NULL)
 	{
 		new_node = init_pipe_node(index ++);
 		if (new_node == NULL)
@@ -89,10 +88,10 @@ static t_pipelst	*init_pipe_lst(t_tokenlst *token_head_node)
 		}
 		doub_lstappend((void **)&pipe_head_node, new_node);
 		new_node->u_data.pipe_data->head_node = pipe_head_node;
-		while (token_node->u_data.str != NULL
-			&& ft_strcmp((char *)token_node->u_data.str, "|"))
+		while (token_node->u_data.token_data != NULL
+			&& token_node->u_data.token_data->token_type != TUBE_FLAG)
 			token_node = token_node->next;
-		if (token_node->u_data.str != NULL)
+		if (token_node->u_data.token_data != NULL)
 			token_node = token_node->next;
 	}
 	return (pipe_head_node);
