@@ -34,9 +34,11 @@ int	main(int argc, char **argv, char **envp)
 {
 	void	*env_lst;
 	int		status;
+	int		flag;
 
 	(void)argc;
 	(void)argv;
+	flag = isatty(STDIN_FILENO);
 	env_lst = init_envlst(envp);
 	if (env_lst == NULL)
 		return (1);
@@ -45,9 +47,7 @@ int	main(int argc, char **argv, char **envp)
 		init_signal(handler_for_outer_readline, SIG_IGN);
 		init_rl_for_prompt();
 		status = main_loop(env_lst);
-		if (status == ERR)
-			break ;
-		else if (status == EXIT_CALLED)
+		if (status == ERR || status == EXIT_CALLED || flag == 0)
 			break ;
 		else if (status == CONTINUE)
 			continue ;
