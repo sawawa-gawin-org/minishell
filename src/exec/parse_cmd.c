@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 07:27:21 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/13 07:17:32 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 09:39:27 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static int			count_tokenlst_section_size(
 						t_tokenlst *section_start_node);
 static t_tokenlst	*shift_token_section(
 						t_tokenlst *token_head_node, int index);
-static int			is_redirection(char *token);
 
 char	**parse_cmd(t_tokenlst *token_list, t_pipex *pipe, int *status)
 {
@@ -51,14 +50,15 @@ char	**convert_tokenlst_to_char_array(t_tokenlst *head_node)
 		return (NULL);
 	i = 0;
 	now_node = head_node;
-	while (i < size && now_node->u_data.str != NULL)
+	while (i < size && now_node->u_data.token_data != NULL)
 	{
-		if (is_redirection(now_node->u_data.str))
+		if (now_node->u_data.token_data->token_type
+			& (LESS_FLAG | GREAT_FLAG | HEREDOC_FLAG | APPEND_FLAG))
 		{
 			now_node = now_node->next->next;
 			continue ;
 		}
-		cmd[i] = now_node->u_data.str;
+		cmd[i] = now_node->u_data.token_data->token_str;
 		now_node = now_node->next;
 		i++;
 	}
@@ -70,13 +70,15 @@ static int	count_tokenlst_section_size(t_tokenlst *head_node)
 {
 	t_tokenlst	*now_node;
 	int			size;
+	t_tokens	type;
 
 	size = 0;
 	now_node = head_node;
-	while (now_node->u_data.str != NULL
-		&& ft_strcmp(now_node->u_data.str, "|"))
+	while (now_node->u_data.token_data != NULL
+		&& now_node->u_data.token_data->token_type != TUBE_FLAG)
 	{
-		if (is_redirection(now_node->u_data.str))
+		type = now_node->u_data.token_data->token_type;
+		if (type & (LESS_FLAG | GREAT_FLAG | HEREDOC_FLAG | APPEND_FLAG))
 		{
 			now_node = now_node->next->next;
 			continue ;
@@ -87,29 +89,19 @@ static int	count_tokenlst_section_size(t_tokenlst *head_node)
 	return (size);
 }
 
-static t_tokenlst	*shift_token_section(t_tokenlst *token_head_node, int index)
+static t_tokenlst	*shift_token_section(t_tokenlst *token_node, int index)
 {
 	int			i;
-	t_tokenlst	*node;
 
 	i = 0;
-	node = token_head_node;
-	while (i < index && node->u_data.str != NULL)
+	while (i < index && token_node->u_data.token_data != NULL)
 	{
-		node = node->next;
-		if (ft_strcmp(node->u_data.str, "|") == 0)
+		token_node = token_node->next;
+		if (token_node->u_data.token_data->token_type == TUBE_FLAG)
 		{
 			i++;
-			node = node->next;
+			token_node = token_node->next;
 		}
 	}
-	return (node);
-}
-
-static int	is_redirection(char *token)
-{
-	if (ft_strcmp(token, ">") == 0 || ft_strcmp(token, ">>") == 0
-		|| ft_strcmp(token, "<") == 0 || ft_strcmp(token, "<<") == 0)
-		return (1);
-	return (0);
+	return (token_node);
 }

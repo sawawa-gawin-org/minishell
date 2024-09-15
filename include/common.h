@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/09/15 05:26:22 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 17:35:55 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef enum e_tokens
 	OPEN_QUOTE_FLAG = 1 << 11,
 	HEREDOC_EXPANDABLE_FLAG = 1 << 12,
 	HEREDOC_NON_EXPANDABLE_FLAG = 1 << 13,
-	COMMAND_FLAG = 1 << 14
+	COMMAND_FLAG = 1 << 14,
+	AMBIGUOUS_REDIRECTION_FLAG = 1 << 15,
 }			t_tokens;
 
 // # define META_FLAG (LESS_FLAG | GREAT_FLAG | TUBE_FLAG | 
