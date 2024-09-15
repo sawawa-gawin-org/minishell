@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/23 09:07:46 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/15 02:57:08 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 06:04:31 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,16 +123,13 @@ static int	expand_env_as_str(t_token_data *tokendata, t_blst *env_lst)
 static int	overwite_token_str(
 				t_token_data *token, char *buff, int now, int old)
 {
-	char	*current;
 	char	*new_str;
 
 	if (token->token_str[now] == '\0' && old < now)
 	{
-		current = ft_substr(token->token_str, old, now - old);
-		if (!current)
-			return (ERR);
-		new_str = strjoin_allfree(buff, current);
-		if (!new_str)
+		new_str = strjoin_allfree(buff,
+				ft_substr(token->token_str, old, now - old));
+		if (new_str == NULL)
 			return (ERR);
 		free(token->token_str);
 		token->token_str = new_str;
@@ -142,7 +139,9 @@ static int	overwite_token_str(
 		free(token->token_str);
 		token->token_str = buff;
 	}
-	token->token_type = TOKEN_FLAG;
+	if (token->token_type == HEREDOC_EXPANDABLE_FLAG
+		|| token->token_type == HEREDOC_NON_EXPANDABLE_FLAG)
+		token->token_type = TOKEN_FLAG;
 	if (token->token_str == NULL)
 		return (ERR);
 	return (OK);

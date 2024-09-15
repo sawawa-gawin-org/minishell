@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:57:22 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/15 04:43:51 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 05:26:09 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,8 @@ static void	inject_nodes(t_blst **replaced_node, t_blst *inject_nodes)
 static int	is_expandable_token_type(t_token_data *data)
 {
 	if ((data->token_type == VAL_FLAG
-			|| data->token_type == DOUBLE_QUOTE_VAL_FLAG)
-		&& (data->sub_type != HEREDOC_FLAG
-			&& data->sub_type != HEREDOC_QUOTE_FLAG))
+			|| data->token_type == DOUBLE_QUOTE_VAL_FLAG
+			|| data->token_type == HEREDOC_EXPANDABLE_FLAG))
 		return (1);
 	return (0);
 }

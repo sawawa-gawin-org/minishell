@@ -6,14 +6,15 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 16:31:36 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/15 04:48:37 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/15 05:46:53 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-static int		join_consecutive_token(t_blst *now, t_blst **next, int is_delim_mode);
-static int		is_consecutive_types(int now, int next);
+static int		join_consecutive_token(
+					t_blst *now, t_blst **next, int is_delim_mode);
+static int		is_consecutive_types(t_tokens now, t_tokens next);
 static t_tokens	select_concat_type(t_tokens now, t_tokens next);
 
 int	concat_consecutive_tokens_node(t_blst **tokens_lst)
@@ -47,8 +48,12 @@ int	concat_delim_tokens_node(t_blst **tokens_lst)
 	now = *tokens_lst;
 	while (now->u_data.token_data != NULL)
 	{
-		if (now->u_data.token_data->token_type == TOKEN_FLAG)
-			now->u_data.token_data->token_type = VAL_FLAG;
+		if (now->u_data.token_data->token_type
+			& (SINGLE_QUOTE_FLAG | DOUBLE_QUOTE_FLAG
+				| DOUBLE_QUOTE_VAL_FLAG | HEREDOC_NON_EXPANDABLE_FLAG))
+			now->u_data.token_data->token_type = HEREDOC_NON_EXPANDABLE_FLAG;
+		else
+			now->u_data.token_data->token_type = HEREDOC_EXPANDABLE_FLAG;
 		next = now->next;
 		if (next->u_data.token_data == NULL)
 			break ;
@@ -64,7 +69,8 @@ int	concat_delim_tokens_node(t_blst **tokens_lst)
 	return (OK);
 }
 
-static int	join_consecutive_token(t_blst *now, t_blst **next, int is_delim_mode)
+static int	join_consecutive_token(
+				t_blst *now, t_blst **next, int is_delim_mode)
 {
 	char	*str1;
 	char	*str2;
@@ -85,10 +91,15 @@ static int	join_consecutive_token(t_blst *now, t_blst **next, int is_delim_mode)
 	return (OK);
 }
 
-static int	is_consecutive_types(int now, int next)
+static int	is_consecutive_types(t_tokens now, t_tokens next)
 {
 	if ((now == TOKEN_FLAG
 			|| (now >= DOUBLE_QUOTE_FLAG && now <= VAL_FLAG))
+		&& (next == TOKEN_FLAG
+			|| (next >= DOUBLE_QUOTE_FLAG && next <= VAL_FLAG)))
+		return (1);
+	if ((now == HEREDOC_EXPANDABLE_FLAG
+			|| now == HEREDOC_NON_EXPANDABLE_FLAG)
 		&& (next == TOKEN_FLAG
 			|| (next >= DOUBLE_QUOTE_FLAG && next <= VAL_FLAG)))
 		return (1);
@@ -98,11 +109,11 @@ static int	is_consecutive_types(int now, int next)
 static t_tokens	select_concat_type(t_tokens now, t_tokens next)
 {
 	if (now == SINGLE_QUOTE_FLAG || next == SINGLE_QUOTE_FLAG)
-		return (SINGLE_QUOTE_FLAG);
+		return (HEREDOC_NON_EXPANDABLE_FLAG);
 	else if (now == DOUBLE_QUOTE_FLAG || next == DOUBLE_QUOTE_FLAG
 		|| now == DOUBLE_QUOTE_VAL_FLAG || next == DOUBLE_QUOTE_VAL_FLAG)
-		return (SINGLE_QUOTE_FLAG);
-	else
-		return (DOUBLE_QUOTE_VAL_FLAG);
-	return (now);
+		return (HEREDOC_NON_EXPANDABLE_FLAG);
+	else if (now == HEREDOC_NON_EXPANDABLE_FLAG)
+		return (HEREDOC_NON_EXPANDABLE_FLAG);
+	return (HEREDOC_EXPANDABLE_FLAG);
 }
