@@ -28,7 +28,7 @@ volatile sig_atomic_t	g_signal = 0;
 static void	*init_envlst(char **envp);
 static int	main_loop(void *env_lst);
 static int	execute(char *line, void *env_lst, void **tokens_lst);
-static int	is_blank_str(char *str);
+static int	handle_blank(char *line, void *env_lst);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -78,17 +78,13 @@ static int	main_loop(void *env_lst)
 	char	*line;
 	void	*tokens_lst;
 	int		status;
+	int		result;
 
+	g_signal = 0;
 	line = readline("minishell$ ");
-	if (g_signal != 0)
-		g_signal = 0;
-	if (line == NULL)
-		return (ERR);
-	if (is_blank_str(line))
-	{
-		free(line);
-		return (CONTINUE);
-	}
+	result = handle_blank(line, env_lst);
+	if (result != OK)
+		return (result);
 	tokens_lst = tokenizer(&line);
 	if (tokens_lst == NULL)
 	{
@@ -130,14 +126,20 @@ static int	execute(char *line, void *env_lst, void **tokens_lst)
 	return (OK);
 }
 
-static int	is_blank_str(char *str)
+static int	handle_blank(char *line, void *env_lst)
 {
 	int	i;
 
+	if (line == NULL)
+		return (ERR);
 	i = 0;
-	while (is_blank(str[i]))
+	while (is_blank(line[i]))
 		i++;
-	if (str[i] == '\0')
-		return (1);
-	return (0);
+	if (line[i] != '\0')
+		return (OK);
+	free(line);
+	if (g_signal != 0)
+		if (add_exit_status_as_env(&env_lst, g_signal + 128))
+			return (ERR);
+	return (CONTINUE);
 }
