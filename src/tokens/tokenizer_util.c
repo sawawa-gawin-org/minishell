@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 18:07:03 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/15 03:11:12 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/17 06:44:23 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static size_t	detect_token_len(char *line, int target_type)
 	size_t	len;
 
 	len = 1;
-	if (target_type == META_FLAG && line[0] != '|' && line[0] == line[len]) // bag
+	if (target_type == META_FLAG && line[0] != '|' && line[0] == line[len])
 		len = 2;
 	else if (target_type == QUOTE_FLAG)
 	{
@@ -117,7 +117,7 @@ static void	detect_meta_token_type(char *meta_token_str, int *type)
 		*type &= ~(HEREDOC_FLAG | APPEND_FLAG);
 }
 
-int	is_val(char *str) //$のあとがスペースやヌルだけでなく、予約語が来るのはよくない？
+int	is_val(char *str)
 {
 	char	*p;
 
