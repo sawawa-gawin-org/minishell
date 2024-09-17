@@ -1,7 +1,6 @@
 # Exec Makefile
 ## Hyper Parameter
 MAKEFILE_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-BASE_DIRNAME := $(shell basename ${MAKEFILE_DIR})
 REPOSITORY_ROOT := $(abspath $(MAKEFILE_DIR)/)
 
 NAME := minishell
@@ -20,7 +19,7 @@ SRCS += init_readline.c
 LIB_EXPORT_DIR := $(addprefix $(REPOSITORY_ROOT),/lib/)
 HEADER_DIR := $(addprefix $(REPOSITORY_ROOT),/include/)
 
-SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/cmd/$(BASE_DIRNAME)/)
+SRC_DIR := $(addprefix $(REPOSITORY_ROOT),/cmd/$(NAME)/)
 
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
@@ -84,6 +83,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all debug trace clean fclean re
-
-echo:
-	@echo $(SRCS) 
