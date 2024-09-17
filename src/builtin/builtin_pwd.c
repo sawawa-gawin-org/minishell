@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 14:34:17 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/01 15:29:05 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/17 06:44:41 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	get_cwd_from_cmd(void)
 	char	pathname[PATHNAME_SIZE];
 
 	if (getcwd(pathname, PATHNAME_SIZE) == NULL)
-		return (GENERAL_ERR); // this status code should be set later
+		return (GENERAL_ERR);
 	printf("%s\n", pathname);
 	return (OK);
 }
