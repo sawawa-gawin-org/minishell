@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <termios.h>
 # include <errno.h>
+# include <fcntl.h>
 
 extern volatile sig_atomic_t	g_signal;
 
@@ -30,6 +31,7 @@ extern volatile sig_atomic_t	g_signal;
 # define CONTINUE -1
 # define ERR -2
 # define EXIT_CALLED -3
+# define SHELL_PROMPT "minishell$ "
 
 typedef struct s_sig
 {
@@ -46,5 +48,7 @@ void	init_signal(void (*handler_for_sigint)(int), \
 void	set_signal(int signum, void (*handler)(int), int flags);
 void	handler_for_outer_readline(int signum);
 void	handler_for_heredoc_readline(int signum);
+
+int		read_eval_print_loop(void *env_lst, int flag);
 
 #endif
