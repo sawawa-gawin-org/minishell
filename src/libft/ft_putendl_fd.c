@@ -24,9 +24,3 @@ void	ft_putendl_fd(char *s, int fd)
 	ft_putchar_fd('\n', fd);
 	return ;
 }
-
-// int main()
-// {
-// 	ft_putendl_fd("abcdefg", STDOUT_FILENO);
-// 	ft_putendl_fd("abcdefg", STDERR_FILENO);
-// }

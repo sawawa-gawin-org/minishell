@@ -28,10 +28,3 @@ void	*ft_memset(void *s, int c, size_t n)
 	}
 	return (s);
 }
-
-// #include <stdio.h>
-// int main(){
-// 	char str[] = "Hello World";
-// 	ft_memset(str, 32, 10);
-// 	printf("%s\n", str);
-// }

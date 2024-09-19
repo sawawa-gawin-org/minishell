@@ -70,32 +70,3 @@ static int	count_digit(unsigned int value)
 	}
 	return (digits);
 }
-
-// #include <stdio.h>
-// int	main()
-// {
-// 	char	*result = ft_itoa(2147483647);
-// 	printf("%s\n", result);
-// 	free(result);
-// 	result = NULL;
-
-// 	result = ft_itoa(-2147483648);
-// 	printf("%s\n", result);
-// 	free(result);
-// 	result = NULL;
-
-// 	result = ft_itoa(100);
-// 	printf("%s\n", result);
-// 	free(result);
-// 	result = NULL;
-
-// 	result = ft_itoa(0);
-// 	printf("%s\n", result);
-// 	free(result);
-// 	result = NULL;
-
-// 	result = ft_itoa(-100);
-// 	printf("%s\n", result);
-// 	free(result);
-// 	result = NULL;
-// }

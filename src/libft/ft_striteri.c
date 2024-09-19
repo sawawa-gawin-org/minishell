@@ -26,19 +26,3 @@ void	ft_striteri(char *s, void (*f)(unsigned int, char*))
 	}
 	return ;
 }
-
-// void	my_lower(unsigned int index, char *c)
-// {
-// 	if ('A' <= *c && *c <= 'Z')
-// 		*c += 'a' - 'A';
-// 	return ;
-// }
-
-// int main()
-// {
-// 	char s[] = "ABCDEFG";
-// 	// char *s;
-// 	// s = NULL;
-// 	ft_striteri(s, my_lower);
-// 	ft_striteri(s, NULL);
-// }

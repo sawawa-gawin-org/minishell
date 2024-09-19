@@ -18,9 +18,3 @@ void	ft_putchar_fd(char c, int fd)
 		return ;
 	return ;
 }
-
-// int main()
-// {
-// 	ft_putchar_fd('c', STDOUT_FILENO);
-// 	ft_putchar_fd('c', STDERR_FILENO);
-// }

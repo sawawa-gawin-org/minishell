@@ -32,23 +32,3 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return (0);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main()
-// {
-// 	printf("original: %d\n", strcmp("ABCDEFG", "ABCDEFG"));
-// 	printf("ft: %d\n", ft_strcmp("ABCDEFG", "ABCDEFG"));
-// 	printf("--------------------\n");
-// 	printf("original: %d\n", strcmp("NULL", "ABCDEFG")); // ret > 0
-// 	printf("ft: %d\n", ft_strcmp("NULL", "ABCDEFG")); // ret > 0
-// 	printf("--------------------\n");
-// 	printf("original: %d\n", strcmp("0ULL", "ABCDEFG")); // ret < -1
-// 	printf("ft: %d\n", ft_strcmp("0ULL", "ABCDEFG")); // ret < -1
-// 	printf("--------------------\n");
-// 	printf("original: %d\n", strcmp(NULL, NULL)); // ret 0
-// 	printf("ft: %d\n", ft_strcmp(NULL, NULL)); // ret 0
-// 	printf("--------------------\n");
-// 	printf("original: %d\n", strcmp(NULL, "ABCDEFG")); // ret segfault
-// 	printf("ft: %d\n", ft_strcmp(NULL, "ABCDEFG"));  // ret segfault
-// }

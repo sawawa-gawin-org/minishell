@@ -31,11 +31,6 @@ extern volatile sig_atomic_t	g_signal;
 # define ERR -2
 # define EXIT_CALLED -3
 
-typedef struct s_sig
-{
-	int	interrupt;
-}		t_sig;
-
 int		add_history_wraper(
 			char *line, char *heredoc_gained_str);
 

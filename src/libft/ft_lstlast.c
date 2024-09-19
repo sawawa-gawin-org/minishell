@@ -28,24 +28,3 @@ t_list	*ft_lstlast(t_list *lst)
 	}
 	return (now_pt);
 }
-
-// #include "libft.h"
-// static void	del2(void* content)
-// {
-// 	content = NULL;
-// 	return ;
-// }
-// int	main(){
-// 	t_list	*test1 = ft_lstnew((void *) "abcdefg");
-// 	t_list	*test2 = ft_lstnew((void *) "hijklmn");
-// 	t_list	*test3 = ft_lstnew((void *) "opqrst");
-// 	// ft_lstadd_front(&test1, test2);
-// 	// ft_lstadd_front(&test3, test1);
-
-// 	t_list	*pt = ft_lstlast(test2);
-// 	t_list	*null =  NULL;
-// 	pt = ft_lstlast(null);
-// 	ft_lstadd_front(&null, test1);
-// 	pt = ft_lstlast(null);
-// 	ft_lstclear(&test3, del2);
-// }

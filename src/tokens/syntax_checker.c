@@ -6,14 +6,12 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/31 16:50:29 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/08/16 08:43:39 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/19 06:38:10 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tokens_int.h"
 
-// static int	find_contd_tube(t_blst *node);
-// static int	find_contd_redirect(t_blst *node);
 static int	next_token_is_specific_flag(int flag, t_blst *node);
 static int	is_token_terminal(t_blst *node);
 static char	*get_next_token_str(t_blst *node);

@@ -44,17 +44,3 @@ static void	dec_to_str(unsigned int n, int fd)
 	dec_to_str(n / 10, fd);
 	ft_putchar_fd(print_char, fd);
 }
-
-// int	main()
-// {
-// 	ft_putnbr_fd(2147483647, STDOUT_FILENO);
-// 	ft_putchar_fd('\n', STDOUT_FILENO);
-// 	ft_putnbr_fd(-2147483648, STDOUT_FILENO);
-// 	ft_putchar_fd('\n', STDOUT_FILENO);
-// 	ft_putnbr_fd(0, STDOUT_FILENO);
-// 	ft_putchar_fd('\n', STDOUT_FILENO);
-// 	ft_putnbr_fd(100, STDOUT_FILENO);
-// 	ft_putchar_fd('\n', STDOUT_FILENO);
-// 	ft_putnbr_fd(-100, STDOUT_FILENO);
-// 	ft_putchar_fd('\n', STDOUT_FILENO);
-// }

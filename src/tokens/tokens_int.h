@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 15:29:37 by saraki            #+#    #+#             */
-/*   Updated: 2024/09/15 05:24:43 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/19 06:44:39 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@
 # include <stdio.h>
 # include <stddef.h>
 # include <fcntl.h>
-# include <sys/wait.h> // Linux
-# include <sys/stat.h> // Linux
+// Linux
+# include <sys/wait.h>
+# include <sys/stat.h>
 
 # include <errno.h>
 
@@ -40,7 +41,6 @@ int			is_val(char *str);
 
 /* parser */
 // concat_tokens.c
-// int			concat_tokens_node(t_blst **tokens_lst);
 int			concat_consecutive_tokens_node(t_blst **tokens_lst);
 int			concat_delim_tokens_node(t_blst **tokens_lst);
 

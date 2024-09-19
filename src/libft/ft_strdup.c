@@ -31,29 +31,3 @@ char	*ft_strdup(const char *string)
 	str_cp[i] = '\0';
 	return (str_cp);
 }
-
-// #include <stdio.h>
-// #include <string.h>
-// int main()
-// {
-// 	char *s;
-// 	s = ft_strdup("ABCDEFG");
-// 	printf("%s\n", s);
-// 	free(s);
-// 	s = ft_strdup("");
-// 	printf("%s\n", s);
-// 	free(s);
-// 	// s = ft_strdup(NULL); //Error
-// 	// printf("%s\n", s);
-// 	// free(s);
-
-// 	s = strdup("ABCDEFG");
-// 	printf("%s\n", s);
-// 	free(s);
-// 	s = strdup("");
-// 	printf("%s\n", s);
-// 	free(s);
-// 	// s = strdup(NULL); //Error
-// 	// printf("%s\n", s);
-// 	// free(s);
-// }

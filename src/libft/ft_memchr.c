@@ -27,10 +27,3 @@ void	*ft_memchr(const void *s, int c, size_t n)
 	}
 	return (NULL);
 }
-
-// int main()
-// {
-// 	// char *s = "Hello World";
-// 	char s[] = {0, 1, 2 ,3 ,4 ,5};
-// 	char *p = ft_memchr(s, 2 + 256, 3);
-// }

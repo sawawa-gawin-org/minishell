@@ -26,10 +26,3 @@ void	ft_bzero(void *s, size_t n)
 	}
 	return ;
 }
-
-// #include <stdio.h>
-// int main(){
-// 	char str[] = "Hello World";
-// 	ft_bzero(str, 10);
-// 	printf("%s\n", str);
-// }

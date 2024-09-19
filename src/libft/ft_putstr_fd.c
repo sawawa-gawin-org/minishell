@@ -23,9 +23,3 @@ void	ft_putstr_fd(char *s, int fd)
 		return ;
 	return ;
 }
-
-// int main()
-// {
-// 	ft_putstr_fd("abcdefg\n", STDOUT_FILENO);
-// 	ft_putstr_fd("abcdefg\n", STDERR_FILENO);
-// }

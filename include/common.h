@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 13:51:56 by root              #+#    #+#             */
-/*   Updated: 2024/09/15 17:35:55 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/19 06:47:25 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ typedef enum e_tokens
 	AMBIGUOUS_REDIRECTION_FLAG = 1 << 15,
 }			t_tokens;
 
-// # define META_FLAG (LESS_FLAG | GREAT_FLAG | TUBE_FLAG | 
-// 					HEREDOC_FLAG | APPEND_FLAG)
-// # define QUOTE_FLAG (OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG | 
-// 					DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG)
-// # define WORD_FLAG (VAL_FLAG | TOKEN_FLAG)
-// # define BLANK_FLAG (SPACE_FLAG)
+// META_FLAG = (LESS_FLAG | GREAT_FLAG | TUBE_FLAG
+// 				| HEREDOC_FLAG | APPEND_FLAG)
+// QUOTE_FLAG = (OPEN_QUOTE_FLAG | SINGLE_QUOTE_FLAG
+// 				| DOUBLE_QUOTE_VAL_FLAG | DOUBLE_QUOTE_FLAG)
+// WORD_FLAG = (VAL_FLAG | TOKEN_FLAG)
+// BLANK_FLAG = (SPACE_FLAG)
 
 # define META_FLAG 62
 # define QUOTE_FLAG 2496

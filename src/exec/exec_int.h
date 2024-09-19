@@ -23,8 +23,9 @@
 # include <sys/types.h>
 # include <stdio.h>
 
-# include <sys/wait.h> // Linux
-# include <sys/stat.h> // Linux
+// Linux
+# include <sys/wait.h>
+# include <sys/stat.h>
 
 typedef struct s_exec_parametors
 {

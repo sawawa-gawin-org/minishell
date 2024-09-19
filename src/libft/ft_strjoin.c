@@ -29,12 +29,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcat(result, s2, s1_len + s2_len + 1);
 	return (result);
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	char *result;
-// 	result = ft_strjoin("asdf", "465");
-// 	printf("%s\n", result);
-// 	free(result);
-// }

@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 09:15:48 by saraki            #+#    #+#             */
-/*   Updated: 2024/08/29 18:15:53 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/19 06:32:25 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static int	identify_key_value(
 				char *cmd, char *equal, char **key, char **value);
 static void	print_each_env(char *env);
 
-//TODO: KEYに予約語が含まれる場合はエラーにする?
 int	export_env(char **cmd, t_blst **envlst, int mode)
 {
 	char	*key;

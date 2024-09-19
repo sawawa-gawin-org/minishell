@@ -36,37 +36,3 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	dst[j] = '\0';
 	return (dst_len + src_len);
 }
-
-// strlcat(dest, NULL, 0); Err
-// strlcat(NULL, src, 0); Pass : return strlen(src)
-// strlcat(NULL, NULL, 0); Err
-// #include <stdio.h>
-// #include <string.h> 
-// int main(void)
-// {
-// 	size_t	i = 0, j = 0;
-//     char dest1[30] = "5aac1a4-39f2";
-// 	char dest2[30] = "5aac1a4-39f2";
-
-// 	i = strlcat(dest1, ",Alice", 10);
-// 	j = ft_strlcat(dest2, ",Alice", 10);
-// 	printf("%s\t", dest1);
-// 	printf("%s\n", dest2);
-// 	printf("%d\n", (int) j);
-
-// 	i = strlcat(dest1, ",Alice", 18);
-// 	j = ft_strlcat(dest2, ",Alice", 18);
-// 	printf("%s\t", dest1);
-// 	printf("%s\n", dest2);	
-// 	printf("%d\n", (int) j);
-
-// 	i = strlcat(dest1, ",Bobby", 22);
-// 	j = ft_strlcat(dest2, ",Bobby", 22);
-// 	printf("%s\t", dest1);
-// 	printf("%s\n", dest2);
-// 	printf("%d\n", (int) j);
-// 	/* NULL test */
-// 	i = strlcat(NULL, dest1, 0);
-// 	j = ft_strlcat(NULL, dest1, 0);
-// 	printf("%d\t%d\n", (int) i, (int) j);
-// }

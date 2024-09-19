@@ -36,25 +36,3 @@ void	ft_lstclear(t_list **lst, void (*del)(void*))
 	*lst = NULL;
 	return ;
 }
-
-// #include "libft.h"
-// static void	del2(void* content)
-// {
-// 	free(content);
-// 	return ;
-// }
-
-// int	main(){
-// 	char *test_value1 = ft_strdup("Hello World");
-// 	char *test_value2 = ft_strdup("zzzzzzz");
-// 	t_list	*test1 = ft_lstnew((void *) "abcdefg");
-// 	t_list	*test2 = ft_lstnew((void *) "hijklmn");
-// 	t_list	*test3 = ft_lstnew(test_value1);
-// 	t_list	*test4 = ft_lstnew(test_value2);
-// 	ft_lstadd_front(&test1, test2);
-// 	ft_lstadd_front(&test2, test3);
-// 	ft_lstadd_back(&test1, test4);
-// 	ft_lstclear(&test3, del2);
-// 	free(test1);
-// 	free(test2);
-// }

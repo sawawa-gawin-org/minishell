@@ -106,34 +106,3 @@ static void	free_untill_index(char **result, size_t index)
 	free(result);
 	return ;
 }
-
-// #include <stdio.h>
-// int main(){
-// /* 	char **result1 = ft_split("  tripouille  42  ", ' ');
-// 	char **result2 = ft_split(",,,,,,abcd,efg,,h,,,", ',');
-// 	free_untill_index(result1, 1);
-// 	free_untill_index(result2, 4); */
-// 	// char **result3 = ft_split("tripouille", 0);
-// 	// free_untill_index(result3, 1);
-// 	char **result4 = ft_split("", ' ');
-// 	free(result4);
-// 	// char *none;
-// 	// none = NULL;
-// 	// char **result5 = ft_split(none, 0);
-// }
-
-// #include <stdio.h>
-// int main(){
-// 	char **result1 = ft_split(",asd,as,,,sa,a", ',');
-// 	for (int i = 0; i < 5 ; i ++)
-// 	{
-// 		printf("%s\n", result1[i]);
-// 	}
-// 	char **result2 = ft_split(",asd,as,,a,", ',');
-// 	for (int i = 0; i < 4 ; i ++)
-// 	{
-// 		printf("%s\n", result2[i]);
-// 	}
-// 	free_untill_index(result1, 5);
-// 	free_untill_index(result2, 4);
-// }

@@ -29,24 +29,3 @@ int	ft_memcmp(const void *s1, const void *s2, size_t n)
 	}
 	return (0);
 }
-
-// #include <stdio.h>
-// #include <string.h> 
-// int main(void)
-// {
-// 	printf(
-// 		"ture:%d\tmyAns:%d\n",
-// 		memcmp("Beca", "Because", 5),
-// 		ft_memcmp("Beca", "Because", 5)
-// 	);
-// 	printf(
-// 		"ture:%d\tmyAns:%d\n",
-// 		memcmp("Beca", "Because", 10),
-// 		ft_memcmp("Beca", "Because", 10)
-// 	);
-// 	printf(
-// 		"ture:%d\tmyAns:%d\n",
-// 		memcmp("ft_strncmp", "ft_strcmp", 3),
-// 		ft_memcmp("ft_strncmp", "ft_strcmp", 3)
-// 	);
-// }

@@ -57,17 +57,3 @@ static int	is_target(char s, char const *set)
 	}
 	return (0);
 }
-
-// #include <stdio.h>
-// int main()
-// {
-// 	char	*result = ft_strtrim("aaabc12c345bba6a7a8abb9accbc", "abc");
-// 	printf("%s\n", result);
-// 	free(result);
-// 	result = ft_strtrim("hello world", "world");
-// 	printf("%s\n", result);
-// 	free(result);
-// 	result = ft_strtrim("", "");
-// 	printf("%s\n", result);
-// 	free(result);
-// }

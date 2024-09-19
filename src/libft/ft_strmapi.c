@@ -32,25 +32,3 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 	}
 	return (result);
 }
-
-// char	my_lower(unsigned int index, char c)
-// {
-// 	if ('A' <= c && c <= 'Z')
-// 		return (c + 'a' - 'A');
-// 	return (c);
-// }
-// #include <stdio.h>
-// int main()
-// {
-// 	char s[] = "ABCDEFG";
-// 	char *s2;
-// 	s2 = ft_strmapi(s, my_lower);
-// 	printf("%s\n", s2);
-// 	free(s2);
-// 	s2 = ft_strmapi(s, NULL);
-// 	printf("%s\n", s2);
-// 	free(s2);
-// 	s2 = ft_strmapi("", my_lower);
-// 	printf("%s\n", s2);
-// 	free(s2);
-// }

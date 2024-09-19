@@ -23,9 +23,3 @@ t_list	*ft_lstnew(void *content)
 	new_list->next = NULL;
 	return (new_list);
 }
-
-// int	main(){
-// 	t_list	test1 = {(void *) "abcdefg", NULL};
-// 	t_list	*test2 = ft_lstnew((void *) "abcdefg");
-// 	free(test2);
-// }

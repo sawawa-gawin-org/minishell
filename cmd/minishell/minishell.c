@@ -6,7 +6,7 @@
 /*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 17:08:00 by syamasaw          #+#    #+#             */
-/*   Updated: 2024/09/14 19:12:16 by saraki           ###   ########.fr       */
+/*   Updated: 2024/09/19 06:45:25 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 #include "tokens.h"
 #include "dbllst.h"
 #include "libft.h"
-
-// void	end(void)__attribute__((destructor));
-
-// void	end(void)
-// {
-// 	system("leaks minishell");
-// }
 
 volatile sig_atomic_t	g_signal = 0;
 

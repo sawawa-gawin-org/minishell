@@ -29,14 +29,3 @@ char	*ft_strrchr(const char *s, int c)
 	}
 	return (last_match);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-// int main()
-// {
-// 	char *s = "tHello World";
-// 	char *p1 = ft_strrchr(s, 'o' + 256);
-// 	char *p2 = strrchr(s, 'o' + 256);
-// 	printf("%p\n", p1);
-// 	printf("%p\n", p2);
-// }

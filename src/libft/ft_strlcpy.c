@@ -29,34 +29,3 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	dst[i] = '\0';
 	return (src_len);
 }
-
-// #include <string.h>
-// #include <stdio.h>
-// 	int main(){
-// 	char	src1[] = {"abcde"};
-// 	char	src2[] = {"abcde"};
-// 	char	dst1[] = {"Red Sky in Morning Sailor take wArning"};
-// 	char	dst2[] = {"Red Sky in Morning Sailor take wArning"};
-// 	size_t	n1;
-// 	unsigned int	n2;
-
-// 	// n1 = strlcpy(dst1, src1, 0);
-// 	n2 = ft_strlcpy(dst2, src1, 0);
-// 	printf("src:%s\tdist:%s\n", src1, dst1);
-// 	printf("src:%s\tdist:%s\n", src2, dst2);
-
-// 	// n1 = strlcpy(dst1, src1, 5);
-// 	n2 = ft_strlcpy(dst2, src1, 5);
-// 	printf("src:%s\tdist:%s\n", src1, dst1);
-// 	printf("src:%s\tdist:%s\n", src2, dst2);
-
-// 	// n1 = strlcpy(dst1, src1, 6);
-// 	n2 = ft_strlcpy(dst2, src1, 6);
-// 	printf("src:%s\tdist:%s\n", src1, dst1);
-// 	printf("src:%s\tdist:%s\n", src2, dst2);
-
-// 	// n1 = strlcpy(dst1, src1, 99);
-// 	n2 = ft_strlcpy(dst2, src1, 99);
-// 	// printf("src:%s\tdist:%s\n", src1, dst1);
-// 	printf("src:%s\tdist:%s\n", src2, dst2);
-// }

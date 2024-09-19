@@ -34,16 +34,3 @@ void	*ft_calloc(size_t n, size_t size)
 	ft_bzero(pointer, checked_size);
 	return (pointer);
 }
-
-// #include <stdio.h>
-// #include <stdint.h>
-// int main() {
-//     size_t num = 4;
-// 	// int *a;
-// 	// a = (int *) ft_calloc(0, num);
-// 	// a[0] = 32;
-//     // if (a != NULL) {
-//     //     free(a);
-//     // }
-// 	return (0);
-// }
