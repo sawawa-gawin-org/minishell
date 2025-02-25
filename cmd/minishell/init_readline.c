@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_readline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: syamasaw <syamasaw@student.42.fr>          #+#  +:+       +#+        */
+/*   By: saraki <saraki@student.42tokyo.jp>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024-08-11 07:06:33 by syamasaw          #+#    #+#             */
-/*   Updated: 2024-08-11 07:06:33 by syamasaw         ###   ########.fr       */
+/*   Created: 2024/08/11 07:06:33 by syamasaw          #+#    #+#             */
+/*   Updated: 2025/02/25 14:20:56 by saraki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ static int	triggerd_event_in_heredoc(void);
 
 void	init_rl_for_prompt(void)
 {
-	extern int	_rl_echo_control_chars;
-
-	_rl_echo_control_chars = 0;
 	rl_outstream = stderr;
 	rl_done = 0;
 	rl_catch_signals = 1;
